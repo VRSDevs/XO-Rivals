@@ -18,7 +18,7 @@ Ignacio Calles | Game Designer | [Haz click aquí](https://linktr.ee/Nachete07)
 Alejandro Requena | Programador de gameplay | [Haz click aquí](https://linktr.ee/Requena21)
 Antonio Rafael Ruano | Technical artist y programador | [Haz click aquí](https://linktr.ee/blinx24)
 Pablo Romero | Programador  | [Haz click aquí](https://linktr.ee/Kalomano)
-Alberto Rodríguez | Programador | [Haz click aquí]()
+Alberto Rodríguez | Programador | [Haz click aquí](https://linktr.ee/AlberVicky09)
 Felipe Bermejo | Diseñador de audio | [Haz click aquí](https://linktr.ee/FelipeBermejo)
 
    
