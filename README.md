@@ -7,9 +7,9 @@
 -
 
 ## Créditos y Contacto
-- Para cualquier consulta no dudes en escribir al gmail -> vrsdevs@gmail.com
 ![Logo Virtual Ravens Games](https://github.com/VRSDevs/XO-Rivals/blob/LogoyDocumentos/GameArt/Logo/logoVRS.png)
- 
+
+Para cualquier consulta no dudes en escribir al gmail -> vrsdevs@gmail.com
   
 Nombre y Apellidos | Rol | Linktree
 ------------ | ------------- | -------------
