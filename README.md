@@ -7,7 +7,7 @@
 -
 
 ## Créditos y Contacto
-- [Gmail](vrsdevs@gmail.com)
+- Para cualquier consulta no dudes en escribir al gmail -> vrsdevs@gmail.com
  
 Nombre y Apellidos | Rol | Linktree
 ------------ | ------------- | -------------
