@@ -19,7 +19,7 @@ Alejandro Requena | Programador de gameplay | [Haz click aquí](https://linktr.e
 Antonio Rafael Ruano | Technical artist y programador | [Haz click aquí](https://linktr.ee/blinx24)
 Pablo Romero | Programador  | [Haz click aquí](https://linktr.ee/Kalomano)
 Alberto Rodríguez | Programador | [Haz click aquí]()
-Felipe Bermejo | Diseñador de audio | [Haz click aquí]()
+Felipe Bermejo | Diseñador de audio | [Haz click aquí](https://linktr.ee/FelipeBermejo)
 
    
 
