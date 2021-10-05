@@ -7,7 +7,7 @@
 -
 
 ## Créditos y Contacto
-- Nombre y Apellidos | Rol | Linktree
+Nombre y Apellidos | Rol | Linktree
 ------------ | ------------- | -------------
 Rocio Campo | Artista y community manager | [Haz click aquí](https://linktr.ee/rociiio_campo)
 Ignacio Calles | Game Designer | [Haz click aquí](https://linktr.ee/Nachete07)
