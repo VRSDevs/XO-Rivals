@@ -7,7 +7,7 @@
 -
 
 ## Créditos y Contacto
-- Nombre y Apellidos | Rol | Linktree
+Nombre y Apellidos | Rol | Linktree
 ------------ | ------------- | -------------
 Rocio Campo | Artista y community manager | [Haz click aquí](https://linktr.ee/rociiio_campo)
 Ignacio Calles | Game Designer | [Haz click aquí](https://linktr.ee/Nachete07)
@@ -17,7 +17,8 @@ Pablo Romero | programador  | [Haz click aquí](https://linktr.ee/Kalomano)
 Alberto Rodríguez | programador | [Haz click aquí]()
 Felipe Bermejo | Diseñador de audio | [Haz click aquí]()
 
-![Logo Virtual Ravens Games]()
+   
+![Logo Virtual Ravens Games](https://github.com/VRSDevs/XO-Rivals/blob/LogoyDocumentos/GameArt/Logo/logoVRS.png)
 
 ## Licencia
 -
