@@ -431,7 +431,7 @@ GameObject:
   - component: {fileID: 700963030}
   - component: {fileID: 700963031}
   m_Layer: 0
-  m_Name: Control
+  m_Name: '@Control'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -674,7 +674,7 @@ GameObject:
   - component: {fileID: 1099654829}
   - component: {fileID: 1099654828}
   m_Layer: 0
-  m_Name: Start
+  m_Name: '@Start'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
