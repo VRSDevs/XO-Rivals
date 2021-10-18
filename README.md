@@ -14,7 +14,7 @@ Al empezar una partida, el jugador deberá pulsar el botón de inicio de partida
 -
 
 ## Créditos y Contacto
-![Logo Virtual Ravens Games](https://github.com/VRSDevs/XO-Rivals/tree/main/GameArt/Logo)
+![Logo Virtual Ravens Games](https://github.com/VRSDevs/XO-Rivals/blob/main/GameArt/Logo/logoVRS.png)
 
 Para cualquier consulta no dudes en escribir al gmail -> vrsdevs@gmail.com
   
