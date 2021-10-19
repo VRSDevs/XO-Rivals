@@ -11,6 +11,13 @@ public class Victory : MonoBehaviour
         {
             Debug.Log("Ganaste wey");
             
+            
+        }
+        
+        if (other.gameObject.tag == "PLAYER")
+        {
+            Debug.Log("Ganaste wey");
+            
         }
     }
 }
