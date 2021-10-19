@@ -22,7 +22,9 @@ public class ControlBoton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     public void OnPointerUp(PointerEventData eventData)
     {
         controlCrono.finCrono();
-        
+        this.gameObject.SetActive(false);
+
+
     }
 
     // Update is called once per frame

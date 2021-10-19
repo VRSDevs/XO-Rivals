@@ -328,7 +328,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Suelta el bot\xF3n cuando\nel tiempo llegue a 0:00"
+  m_Text: "Suelta el bot\xF3n cuando\nel tiempo llegue a 0:00\n(Si te pasas pierdes!)"
 --- !u!222 &438854523
 CanvasRenderer:
   m_ObjectHideFlags: 0
