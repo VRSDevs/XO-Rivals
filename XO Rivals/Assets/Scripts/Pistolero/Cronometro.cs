@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Cronometro : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class Cronometro : MonoBehaviour
     public bool activo = false;
     public Text textoCrono;
     public Text textoExplicativo;
+    public float timeEnemy=-1;
+    public float maxEnemy = 2f;
 
     void Start()
     {
@@ -51,7 +54,7 @@ public class Cronometro : MonoBehaviour
     {
         activo = true;
         textoExplicativo.text = "Suelta el botón cuando el cronometro llegue a 0:00";
-
+        timeEnemy = UnityEngine.Random.Range(0f, maxEnemy);
     }
     public void finCrono()
     {
@@ -63,9 +66,43 @@ public class Cronometro : MonoBehaviour
         decimas = Math.Abs(decimas);//el signo negativo solo tiene que estar en los segundos
 
         textoCrono.text = segundos + ":" + decimas;
-        textoExplicativo.text = "ESTE ES TU RESULTADO!";
+
+  //TiempoEnemigo
+        int segundosEnemy = (int)Math.Truncate(timeEnemy);
+        int decimasEnemy = (int)((timeEnemy - segundosEnemy) * 100); //Sacamos dos decimas
+
+
+        //VICTORIA
+
+        if (time<timeEnemy && time >=0)
+        {
+
+            StartCoroutine("EsperarV");
+
+            textoExplicativo.text = "ESTE ES TU RESULTADO!\nVICTORIA CONTRA "+ segundosEnemy + ":" + decimasEnemy ;
+
+        }//DERROTA
+        else
+        {
+            StartCoroutine("EsperarD");
+            textoExplicativo.text = "ESTE ES TU RESULTADO!\nDERROTA CONTRA " + segundosEnemy + ":" + decimasEnemy ;
+
+        }
+      
 
     }
+
+    IEnumerator EsperarV()
+    {
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene("PistoleroVictoria");
+    }
+    IEnumerator EsperarD()
+    {
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene("Pistolero Derrota");
+    }
+
 
 
 }
