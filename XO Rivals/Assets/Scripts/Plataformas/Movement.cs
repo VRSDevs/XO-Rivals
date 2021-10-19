@@ -25,6 +25,8 @@ public class Movement : MonoBehaviour
         {
             jump();
         }
+
+      
     }
 
     private void jump()
