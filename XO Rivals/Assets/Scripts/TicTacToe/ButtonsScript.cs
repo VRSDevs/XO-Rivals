@@ -1,23 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ButtonsScript : MonoBehaviour
 {
-    //Set turn to whoever starts (pass a variable from the coin flip)
-    public static int turn = 0;
-
     //Circle and Cross
     [SerializeField] private Sprite circle;
     [SerializeField] private Sprite cross;
     private GameObject circleGO;
     private GameObject crossGO;
 
+    //Screen manager
+    private ScreenManager screenManager;
+
     //Array of positions
     private int[,] positions;
 
     //Variables for victory
-    int col, row, filled, type;
+    int col, row, filled;
 
     private void Awake() {
         //Create the circle
@@ -40,8 +39,11 @@ public class ButtonsScript : MonoBehaviour
             }
         }
 
+        //Initialize ScreenManager
+        screenManager = FindObjectOfType<ScreenManager>();
+
         //Start variables
-        filled = type = 0;
+        filled = 0;
     }
     
     public void PlaceTile(int pos){
@@ -54,22 +56,55 @@ public class ButtonsScript : MonoBehaviour
         if(positions[col,row] == 3){
             
             //Places a sprite or another depending on turn
-            if(turn == 0){
+            if(ScreenManager.turn == 0){
                 
                 GameObject newCircle = Instantiate(circleGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
                 newCircle.SetActive(true);
+                newCircle.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
 
+                /*//Go to minigame
+                public bool miniWin = false; //This variable will be written from minigames
+                switch(Random.Range(0,2)){
+                    case 0:
+                        SceneManager.LoadScene("Pistolero", LoadSceneMode.Additive);
+                    break;
+
+                    case 1:
+                        SceneManager.LoadScene("Minijuego1");
+                    break;
+
+                    case 2:
+                        SceneManager.LoadScene("Minijuego2");
+                    break;
+
+                }
+
+                //Check minigame win
+                if(miniWin){
+                    //Save position
+                    positions[col,row] = ScreenManager.turn;
+                    //Paint tile completely
+                    newCircle.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
+                }else{
+                    destroy(newCircle);
+                    StartCoroutine(screenManager.txtTimer("¡Turno perdido!"));
+                }
+
+                */
                 //Change turn and save pos
-                positions[col,row] = turn;
-                turn = 1;
+                positions[col,row] = ScreenManager.turn;
+                screenManager.UpdateTurn(1);
+                
             }else{
 
                 GameObject newCross = Instantiate(crossGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
                 newCross.SetActive(true);
+                newCross.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+
                 
                 //Change turn and save pos
-                positions[col,row] = turn;
-                turn = 0;
+                positions[col,row] = ScreenManager.turn;
+                screenManager.UpdateTurn(0);
             }
 
             //Add one to count
@@ -151,6 +186,9 @@ public class ButtonsScript : MonoBehaviour
             if(win){
                 //Call endgame
                 if(positions[col,row] == 0)
+                    /*
+                    //Go to Victory / Lose screen depending on who you are (must be a variable stored in the match within the player ID) 
+                    */
                     Debug.Log("CIRCLE WIN");
                 else
                     Debug.Log("CROSS WINS");
@@ -162,27 +200,27 @@ public class ButtonsScript : MonoBehaviour
     }   
 
     bool TestCol(int col){
-    int type;
-    int j = 0;
+        int type;
+        int j = 0;
 
-    //Pick first tile in column if its not empty
-    if(positions[col,j] != 3){
-        type = positions[col,j];
-        j++;
-    }else{
-        return false;
-    }
-
-    //Check if all other tiles are the same
-    do{
-        if(positions[col,j] != type){
+        //Pick first tile in column if its not empty
+        if(positions[col,j] != 3){
+            type = positions[col,j];
+            j++;
+        }else{
             return false;
         }
-        j++;
-    }while(j < 3);
 
-    return true;
-}
+        //Check if all other tiles are the same
+        do{
+            if(positions[col,j] != type){
+                return false;
+            }
+            j++;
+        }while(j < 3);
+
+        return true;
+    }
     
     bool TestRow(int row){
         int type;
