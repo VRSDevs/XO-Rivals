@@ -1,4 +1,5 @@
 # XO-Rivals
+![Logo XO Rivals](https://github.com/VRSDevs/XO-Rivals/blob/readme/GameArt/Logo_Juego/banner.png)
 
 ## Descripción
 El videojuego propone un multijugador desatendido donde sus partidas están basadas en el juego Tres en raya. 
