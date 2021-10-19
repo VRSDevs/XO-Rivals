@@ -468,6 +468,8 @@ MonoBehaviour:
   activo: 0
   textoCrono: {fileID: 2116263375}
   textoExplicativo: {fileID: 438854522}
+  timeEnemy: -1
+  maxEnemy: 2
 --- !u!1 &1068336222
 GameObject:
   m_ObjectHideFlags: 0
