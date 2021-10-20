@@ -8,17 +8,33 @@ public class Movement : MonoBehaviour
     [SerializeField] private float speed;
     private bool grounded;
     private Rigidbody2D body;
+    private PlayerActionsController playerActionsController;
 
     public GameObject player;
     // Start is called before the first frame update
     void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+        playerActionsController = new PlayerActionsController();
     }
-    
+
+    private void OnEnable()
+    {
+       playerActionsController.Enable();
+    }
+
+
+    private void OnDisable()
+    {
+       playerActionsController.Disable();
+    }
+
     // Update is called once per frame
     void Update()
     {
+        
+        playerActionsController.Movement
+        
         float horizontalInput = Input.GetAxis("Horizontal");
         body.velocity = new Vector2(horizontalInput*speed,body.velocity.y);
         if (Input.GetKey((KeyCode.Space))&&grounded)
