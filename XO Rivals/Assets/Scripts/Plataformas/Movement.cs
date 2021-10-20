@@ -33,7 +33,7 @@ public class Movement : MonoBehaviour
     void Update()
     {
         
-        playerActionsController.Movement
+        
         
         float horizontalInput = Input.GetAxis("Horizontal");
         body.velocity = new Vector2(horizontalInput*speed,body.velocity.y);
