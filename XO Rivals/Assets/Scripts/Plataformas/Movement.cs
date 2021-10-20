@@ -41,5 +41,19 @@ public class Movement : MonoBehaviour
         {
             grounded = true; 
         }
+        
+        if (collision.gameObject.tag == "Victory")
+        {
+            Debug.Log("Ganaste wey");
+        }
+    }
+
+    private void OnCollisionStay(Collision other)
+    {
+        if (other.gameObject.tag == "Victory")
+        {
+            Debug.Log("Ganaste wey");
+        }
+        
     }
 }
