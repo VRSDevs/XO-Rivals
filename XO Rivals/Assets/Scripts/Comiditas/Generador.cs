@@ -32,17 +32,9 @@ public class Generador : MonoBehaviour
         InvokeRepeating("generadorGlobal" ,spawnTime, spawnDelay);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-        
-
-    }
-
     public void generadorGlobal()
     {
-        int rand = Random.Range(0,3);
+        int rand = Random.Range(0,4);
 
         if (stopSpawning)
         {
