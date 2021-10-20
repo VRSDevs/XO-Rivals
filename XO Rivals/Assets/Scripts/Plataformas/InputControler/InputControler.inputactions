@@ -15,7 +15,7 @@
                 },
                 {
                     "name": "Jump",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "3c7d4ca0-530e-4003-b901-3acc1a59f672",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -92,7 +92,7 @@
                 {
                     "name": "",
                     "id": "d5029abb-04e0-4cfa-aaf5-41901bcfae07",
-                    "path": "",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
