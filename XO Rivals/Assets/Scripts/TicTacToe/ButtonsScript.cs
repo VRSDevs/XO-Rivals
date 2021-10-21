@@ -189,9 +189,9 @@ public class ButtonsScript : MonoBehaviour
                     /*
                     //Go to Victory / Lose screen depending on who you are (must be a variable stored in the match within the player ID) 
                     */
-                    Debug.Log("CIRCLE WIN");
+                    screenManager.UpdateText("CIRCLE WIN");
                 else
-                    Debug.Log("CROSS WINS");
+                    screenManager.UpdateText("CROSS WINS");
             break;
             }
 

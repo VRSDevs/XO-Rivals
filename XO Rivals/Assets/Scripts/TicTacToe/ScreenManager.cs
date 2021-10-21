@@ -35,7 +35,10 @@ public class ScreenManager : MonoBehaviour
         } 
     }
     
-    public IEnumerator txtTimer(string txt){
+    public void UpdateText(string txt){
+        txtTimer(txt);
+    }
+    private IEnumerator txtTimer(string txt){
 
         screenTxt.enabled = true;
         screenTxt.text = txt;
