@@ -2,14 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Movement : MonoBehaviour
 {
+    
+        
+    private string textValue;
+
+    public Text textElement;
     [SerializeField] private float speed;
     private bool grounded;
     private Rigidbody2D body;
     private PlayerActionsController playerActionsController;
-    [SerializeField] private float Speed = 3, jumpSpeed;
+    [SerializeField] private float Speed = 3, jumpSpeed = 4;
 
     public GameObject player;
 
@@ -34,25 +40,25 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        textElement.text = textValue;
+        
         float movementInput = playerActionsController.Movement.Move.ReadValue<float>();
         Vector3 currentPosition = transform.position;
         currentPosition.x += movementInput * Speed * Time.deltaTime;
         transform.position = currentPosition;
-    }
 
-    public void Start()
-    {
-        playerActionsController.Movement.Jump.performed += _ => jump();
-    }
-
-    private void jump()
-    {
         if (grounded = true)
         {
-            body.velocity = new Vector2(body.velocity.x, speed);
+            float jumpInput = playerActionsController.Movement.Jump.ReadValue<float>();
+            Vector3 currentJump = transform.position;
+            currentJump.y += jumpInput * jumpSpeed * Time.deltaTime;
+            transform.position = currentJump;
             grounded = false;
+
         }
     }
+    
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -61,10 +67,18 @@ public class Movement : MonoBehaviour
             grounded = true;
         }
 
-
         if (collision.gameObject.tag == "Victory")
         {
-            Debug.Log("Ganaste wey");
+            Debug.Log("Victoria");
+            textValue = "Victory";
         }
+
+        if (collision.gameObject.tag == "Muerte")
+        {
+            Debug.Log("Game Over");
+            textValue = "Game Over";
+
+        }
+        
     }
 }

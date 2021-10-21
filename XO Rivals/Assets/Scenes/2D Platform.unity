@@ -4325,6 +4325,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 13
+  Speed: 13
+  jumpSpeed: 0
   player: {fileID: 990121610}
 --- !u!1 &1025652368
 GameObject:
