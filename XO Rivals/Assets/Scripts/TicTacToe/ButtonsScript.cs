@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class ButtonsScript : MonoBehaviour
@@ -14,9 +15,17 @@ public class ButtonsScript : MonoBehaviour
 
     //Array of positions
     private int[,] positions;
+    private List<GameObject> chipList;
 
     //Variables for victory
     int col, row, filled;
+
+    //Minigame chosen
+    private int miniChosen;
+    private int opponentMinigame;
+
+    //Minigame won
+    private bool miniWin;
 
     private void Awake() {
         //Create the circle
@@ -44,6 +53,11 @@ public class ButtonsScript : MonoBehaviour
 
         //Start variables
         filled = 0;
+        chipList = new List<GameObject>();
+
+        //Return opponent chosen minigame (if exists)
+        if(PlayerPrefs.HasKey("minigameChosen"))
+            miniChosen = PlayerPrefs.GetInt("minigameChosen");
     }
     
     public void PlaceTile(int pos){
@@ -64,17 +78,17 @@ public class ButtonsScript : MonoBehaviour
 
                 /*//Go to minigame
                 public bool miniWin = false; //This variable will be written from minigames
-                switch(Random.Range(0,2)){
+                switch(miniChosen){
                     case 0:
                         SceneManager.LoadScene("Pistolero", LoadSceneMode.Additive);
                     break;
 
                     case 1:
-                        SceneManager.LoadScene("Minijuego1");
+                        SceneManager.LoadScene("Minijuego1", LoadSceneMode.Additive);
                     break;
 
                     case 2:
-                        SceneManager.LoadScene("Minijuego2");
+                        SceneManager.LoadScene("Minijuego2", LoadSceneMode.Additive);
                     break;
 
                 }
@@ -91,16 +105,64 @@ public class ButtonsScript : MonoBehaviour
                 }
 
                 */
+
+                //Add chip to list to hide
+                chipList.Add(newCircle);
+                for(int i = 0; i < chipList.Count; i++)
+                    chipList[i].SetActive(false);
+
+                //Go to selectMinigame for opponent
+                screenManager.MinigameSelectionActivation();
+                miniChosen = ScreenManager.minigame;
+                
+                //Unihide chips
+                for(int i = 0; i < chipList.Count; i++)
+                    chipList[i].SetActive(true);
+
                 //Change turn and save pos
                 positions[col,row] = ScreenManager.turn;
                 screenManager.UpdateTurn(1);
-                
             }else{
 
                 GameObject newCross = Instantiate(crossGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
                 newCross.SetActive(true);
                 newCross.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
 
+                /*//Go to minigame
+                public bool miniWin = false; //This variable will be written from minigames
+                switch(miniChosen){
+                    case 0:
+                        SceneManager.LoadScene("Pistolero", LoadSceneMode.Additive);
+                    break;
+
+                    case 1:
+                        SceneManager.LoadScene("Minijuego1", LoadSceneMode.Additive);
+                    break;
+
+                    case 2:
+                        SceneManager.LoadScene("Minijuego2", LoadSceneMode.Additive);
+                    break;
+
+                }
+
+                //Check minigame win
+                if(miniWin){
+                    //Save position
+                    positions[col,row] = ScreenManager.turn;
+                    //Paint tile completely
+                    newCross.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
+                }else{
+                    destroy(newCross);
+                    StartCoroutine(screenManager.txtTimer("¡Turno perdido!"));
+                }
+
+                */
+
+                //Go to selectMinigame for opponent
+                Time.timeScale = 0f;
+                screenManager.MinigameSelectionActivation();
+                miniChosen = ScreenManager.minigame;
+                Time.timeScale = 1f;
                 
                 //Change turn and save pos
                 positions[col,row] = ScreenManager.turn;
