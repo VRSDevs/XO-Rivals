@@ -69,6 +69,7 @@ public class Player : MonoBehaviour
             Debug.Log("Victoria");
             textValue = "Victory";
             Victoria = true;
+            OnDisable();
         }
     }
 
