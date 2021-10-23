@@ -28,13 +28,13 @@ public class Player : MonoBehaviour
         playerActionsController = new PlayerActionsController();
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         playerActionsController.Enable();
     }
 
 
-    private void OnDisable()
+    public void OnDisable()
     {
         playerActionsController.Disable();
     }

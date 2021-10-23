@@ -29,11 +29,12 @@ public class Timer : MonoBehaviour
         }
 
 
-        if (time < 1)
+        if (time < 0)
         {
             ScriptPlayer.textValue = " Game Over";
             lost = true;
-            Debug.Log("vergalarga de antonio rafael ruano rodriguez");
+            ScriptPlayer.OnDisable();
+            
         }
     }  
 }
