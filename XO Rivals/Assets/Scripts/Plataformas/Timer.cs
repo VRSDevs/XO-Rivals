@@ -12,7 +12,7 @@ public class Timer : MonoBehaviour
     public Player ScriptPlayer;
     public bool lost = false;
 
-    private float time = 30f;
+    private float time = 3f;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,10 +31,14 @@ public class Timer : MonoBehaviour
 
         if (time < 0)
         {
-            ScriptPlayer.textValue = " Game Over";
-            lost = true;
-            ScriptPlayer.OnDisable();
-            
+            if (ScriptPlayer.Victory == false)
+            {
+                ScriptPlayer.textValue = " Game Over";
+                lost = true;
+                ScriptPlayer.OnDisable();
+
+            }
+
         }
     }  
 }

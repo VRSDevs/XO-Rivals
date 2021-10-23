@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D body;
     private PlayerActionsController playerActionsController;
     [SerializeField] private float Speed = 3, jumpSpeed = 4;
-    public bool Victoria = false;
+    public bool Victory = false;
     public Transform respawn;
     private Vector2 respawnPlayer;
     public GameObject player;
@@ -63,12 +63,11 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
         if (other.gameObject.CompareTag("Victory"))
         {
             Debug.Log("Victoria");
             textValue = "Victory";
-            Victoria = true;
+            Victory = true;
             OnDisable();
         }
     }
