@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+/*
 using BrainCloud.LitJson;
-using UnityEngine;
 using JsonReader = BrainCloud.JsonFx.Json.JsonReader;
+*/
+using UnityEngine;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -12,7 +15,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public BrainCloudWrapper Server;
+    //public BrainCloudWrapper Server;
     
     ////////////////// USUARIO //////////////////
     /// <summary>
@@ -28,6 +31,7 @@ public class GameManager : MonoBehaviour
 
     #region UnityCB
 
+    /*
     private void Awake()
     {
         Server = gameObject.AddComponent<BrainCloudWrapper>();
@@ -35,6 +39,7 @@ public class GameManager : MonoBehaviour
         
         //.Init();
     }
+    */
 
     #endregion
 }

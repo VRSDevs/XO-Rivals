@@ -1,5 +1,4 @@
 using System;
-using BrainCloud.LitJson;
 
 public class PlayerInfo
 {
