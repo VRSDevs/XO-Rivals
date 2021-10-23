@@ -82,7 +82,7 @@ public class Movement : MonoBehaviour
                {
                    Debug.Log("Game Over");
                    textValue = "Game Over";
-                   player.transform.position = ;
+                   player.transform.position = new Vector2(respawn.position.x,respawn.position.y);
                }
 
                if (collision.gameObject.tag == "Ground") {
