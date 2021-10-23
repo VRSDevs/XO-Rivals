@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NetworkController : MonoBehaviourPunCallbacks
 {
@@ -53,6 +54,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
         
         Debug.Log("Conectado al lobby general.");
         Debug.Log("Hola, " + PhotonNetwork.NickName);
+
+        SceneManager.LoadScene("MainMenu");
     }
     
     /*
