@@ -9,6 +9,7 @@ public class Timer : MonoBehaviour
 {
 
     public TextMeshProUGUI crono;
+    public Player ScriptPlayer;
 
     private float time = 5f;
     // Start is called before the first frame update
@@ -29,7 +30,8 @@ public class Timer : MonoBehaviour
 
         if (time < 1)
         {
-            Debug.Log("vergalarga de atnonio rafael ruano rodriguez");
+            ScriptPlayer.textValue = " Game Over";
+            Debug.Log("vergalarga de antonio rafael ruano rodriguez");
         }
     }  
 }
