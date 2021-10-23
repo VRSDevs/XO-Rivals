@@ -5,7 +5,6 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 
-/*
 public class Login : MonoBehaviour
 {
     #region Variables
@@ -65,13 +64,17 @@ public class Login : MonoBehaviour
         {
             IsConnecting = true;
             LoginInfo.text = "Conectando...";
-            
-            _gameManager.Server.AuthenticateUniversal(UsernameInput.text, PasswordInput.text, true, OnAuthentication,
-                (status, code, error, cbObject) =>
-                {
-                    IsConnecting = false;
-                    LoginInfo.text = "Error";
-                });
+
+            if (_gameManager._networkController.OnConnectToServer())
+            {
+                LoginInfo.text = "Conectado.";
+                _gameManager.Username = UsernameInput.text;
+                _gameManager._networkController.SetNickName(UsernameInput.text);
+            }
+            else
+            {
+                LoginInfo.text = "Error al conectar.";
+            }
         }
     }
 
@@ -82,6 +85,7 @@ public class Login : MonoBehaviour
 
     private void OnAuthentication(string response, object cbObject)
     {
+        /*
         var data = JsonMapper.ToObject(response)["data"];
         _gameManager.UserId = data["profileId"].ToString();
         _gameManager.Username = data["playerName"].ToString();
@@ -94,6 +98,7 @@ public class Login : MonoBehaviour
         {
             SetupPlayer();
         }
+        */
     }
 
     #endregion
@@ -111,7 +116,7 @@ public class Login : MonoBehaviour
         PasswordInput.text = PasswordInput.text.Trim();
         
         //
-        if (UsernameInput.text.Length < MIN_CHARS || PasswordInput.text.Length < MIN_CHARS)
+        if (UsernameInput.text.Length < MIN_CHARS /*|| PasswordInput.text.Length < MIN_CHARS*/)
         {
             LoginInfo.text = "Longitud no correcta, mínimo " + MIN_CHARS;
             return false;
@@ -127,11 +132,13 @@ public class Login : MonoBehaviour
 
     private void SetupPlayer()
     {
+        /*
         _gameManager.Server.PlayerStateService.UpdateName(UsernameInput.text,
             (jsonResponse, o) =>
             {
                 Debug.Log("Inició sesión");
             });
+            */
     }
     
     /// <summary>
@@ -156,4 +163,3 @@ public class Login : MonoBehaviour
 
     #endregion
 }
-*/

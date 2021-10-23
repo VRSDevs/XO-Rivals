@@ -15,31 +15,24 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    //public BrainCloudWrapper Server;
+    public NetworkController _networkController;
     
     ////////////////// USUARIO //////////////////
     /// <summary>
     /// 
     /// </summary>
     public string Username;
-    /// <summary>
-    /// 
-    /// </summary>
-    public string UserId;
 
     #endregion
 
     #region UnityCB
-
-    /*
+    
     private void Awake()
     {
-        Server = gameObject.AddComponent<BrainCloudWrapper>();
+        _networkController = gameObject.AddComponent<NetworkController>();
         DontDestroyOnLoad(this);
         
-        //.Init();
     }
-    */
 
     #endregion
 }
