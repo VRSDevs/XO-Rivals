@@ -16,6 +16,8 @@ public class Movement : MonoBehaviour
     private Rigidbody2D body;
     private PlayerActionsController playerActionsController;
     [SerializeField] private float Speed = 3, jumpSpeed = 4;
+    public bool Victoria = false;
+    public Transform respawn;
 
     public GameObject player;
 
@@ -71,13 +73,14 @@ public class Movement : MonoBehaviour
         {
             Debug.Log("Victoria");
             textValue = "Victory";
+            Victoria = true;
         }
 
         if (collision.gameObject.tag == "Muerte")
         {
             Debug.Log("Game Over");
             textValue = "Game Over";
-
+            player.transform.position = respawn.transform.position;
         }
         
     }
