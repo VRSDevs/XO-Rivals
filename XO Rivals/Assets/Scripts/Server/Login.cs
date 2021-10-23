@@ -2,13 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using BrainCloud.LitJson;
 using UnityEditor;
 using UnityEngine;
 
-public class Login : GameManager
+public class Login : MonoBehaviour
 {
     #region Variables
 
+    /// <summary>
+    /// 
+    /// </summary>
+    [SerializeField] public GameManager _gameManager;
+    
     /// <summary>
     /// 
     /// </summary>
@@ -60,15 +66,12 @@ public class Login : GameManager
             IsConnecting = true;
             LoginInfo.text = "Conectando...";
             
-            /*
-            
-            Server.AuthenticateUniversal(Username.text, Password.text, true, OnAuthenticate,
+            _gameManager.Server.AuthenticateUniversal(UsernameInput.text, PasswordInput.text, true, OnAuthentication,
                 (status, code, error, cbObject) =>
                 {
                     IsConnecting = false;
                     LoginInfo.text = "Error";
                 });
-            */
         }
     }
 
@@ -77,9 +80,20 @@ public class Login : GameManager
   
     }
 
-    private void OnAuthenticate()
+    private void OnAuthentication(string response, object cbObject)
     {
+        var data = JsonMapper.ToObject(response)["data"];
+        _gameManager.UserId = data["profileId"].ToString();
+        _gameManager.Username = data["playerName"].ToString();
         
+        PlayerPrefs.SetString(_gameManager.Username + "_hasAuthenticated", "true");
+        
+        bool isNewUser = data["newUser"].ToString().Equals("true");
+
+        if (isNewUser)
+        {
+            SetupPlayer();
+        }
     }
 
     #endregion
@@ -111,6 +125,15 @@ public class Login : GameManager
 
     #region OtherMethods
 
+    private void SetupPlayer()
+    {
+        _gameManager.Server.PlayerStateService.UpdateName(UsernameInput.text,
+            (jsonResponse, o) =>
+            {
+                Debug.Log("Inició sesión");
+            });
+    }
+    
     /// <summary>
     /// 
     /// </summary>

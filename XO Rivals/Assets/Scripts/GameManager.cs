@@ -25,4 +25,16 @@ public class GameManager : MonoBehaviour
     public string UserId;
 
     #endregion
+
+    #region UnityCB
+
+    private void Awake()
+    {
+        Server = gameObject.AddComponent<BrainCloudWrapper>();
+        DontDestroyOnLoad(this);
+        
+        //.Init();
+    }
+
+    #endregion
 }
