@@ -10,6 +10,7 @@ public class Timer : MonoBehaviour
 
     public TextMeshProUGUI crono;
     public Player ScriptPlayer;
+    public bool lost = false;
 
     private float time = 5f;
     // Start is called before the first frame update
@@ -31,6 +32,7 @@ public class Timer : MonoBehaviour
         if (time < 1)
         {
             ScriptPlayer.textValue = " Game Over";
+            lost = true;
             Debug.Log("vergalarga de antonio rafael ruano rodriguez");
         }
     }  
