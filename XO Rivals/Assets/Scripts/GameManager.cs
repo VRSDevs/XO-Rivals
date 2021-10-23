@@ -1,18 +1,18 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using BrainCloud.LitJson;
 using UnityEngine;
+using JsonReader = BrainCloud.JsonFx.Json.JsonReader;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    #region Variables
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public BrainCloudWrapper Server;
+    
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    #endregion
 }
