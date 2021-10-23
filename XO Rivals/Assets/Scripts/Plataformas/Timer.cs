@@ -10,7 +10,7 @@ public class Timer : MonoBehaviour
 
     public TextMeshProUGUI crono;
 
-    private float time = 10f;
+    private float time = 5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +20,16 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        time -= Time.deltaTime;
-        crono.text = " " + time.ToString("f0");
+        if (time >= 0)
+        {
+            time -= Time.deltaTime;
+            crono.text = " " + time.ToString("f0"); 
+        }
+
+
+        if (time < 1)
+        {
+            Debug.Log("vergalarga de atnonio rafael ruano rodriguez");
+        }
     }  
 }
