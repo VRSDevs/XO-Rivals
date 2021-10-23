@@ -42,7 +42,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         textElement.text = textValue;
         
         float movementInput = playerActionsController.Movement.Move.ReadValue<float>();
@@ -75,19 +74,14 @@ public class Player : MonoBehaviour
 
  
   private void OnCollisionEnter2D(Collision2D collision)
-    {
+  {
         
-        
-               if (collision.gameObject.tag == "Muerte")
-               {
-                   Debug.Log("Game Over");
-                   textValue = "Game Over";
+      if (collision.gameObject.tag == "Muerte") {
                    player.transform.position = new Vector2(respawn.position.x,respawn.position.y);
-               }
+      }
 
-               if (collision.gameObject.tag == "Ground") {
-                grounded = true; 
-                
-               }
+      if (collision.gameObject.tag == "Ground") {
+                grounded = true;
+      }
     }
 }
