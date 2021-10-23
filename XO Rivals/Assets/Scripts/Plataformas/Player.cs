@@ -1,16 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Movement : MonoBehaviour
+public class Player : MonoBehaviour
 {
     
         
-    private string textValue;
-
-    public Text textElement;
+    public string textValue;
+    public TextMeshProUGUI textElement;
     [SerializeField] private float speed;
     private bool grounded;
     private Rigidbody2D body;
