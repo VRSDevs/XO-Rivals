@@ -12,7 +12,7 @@ public class Timer : MonoBehaviour
     public Player ScriptPlayer;
     public bool lost = false;
 
-    private float time = 3f;
+    private float time = 30f;
     // Start is called before the first frame update
     void Start()
     {
