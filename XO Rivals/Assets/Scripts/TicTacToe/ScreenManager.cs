@@ -14,6 +14,11 @@ public class ScreenManager : MonoBehaviour
     //Set turn to whoever starts (variable managed from other scene)
     public static int turn = 0;
 
+    //Control of miniGameChoosing
+    [SerializeField] private GameObject miniGameChoosing;
+    [SerializeField] private GameObject ticTacScreen;
+    public static int minigame = -1;
+
     void Start(){
 
         if(turn == 0){
@@ -43,5 +48,15 @@ public class ScreenManager : MonoBehaviour
         screenTxt.enabled = false;
 
     }
-    
+
+    public void MinigameSelectionActivation(){
+        ticTacScreen.SetActive(false);
+        miniGameChoosing.SetActive(true);
+    }    
+
+    public void MinigameSelection(int n){
+        minigame = n;
+        miniGameChoosing.SetActive(false);
+        ticTacScreen.SetActive(true);
+    }
 }
