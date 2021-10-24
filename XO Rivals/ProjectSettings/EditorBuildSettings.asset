@@ -14,4 +14,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Pistolero Derrota.unity
     guid: d2a129dd5b1028e4b90be4f6ab2c3244
+  - enabled: 1
+    path: Assets/Scenes/CreditosArte.unity
+    guid: 14388e3f95a6f9343b5b50f2cce0852a
+  - enabled: 1
+    path: Assets/Scenes/CreditosProgramacion.unity
+    guid: 6258a72d20d7acb43be6c61ef93c522d
+  - enabled: 1
+    path: Assets/Scenes/CreditosSonido.unity
+    guid: 2d0422a2219fa654a9ee75509c4f0134
+  - enabled: 1
+    path: Assets/Scenes/Creditos.unity
+    guid: cd9cac015955025458a89975f496ceb4
+  - enabled: 1
+    path: Assets/Scenes/MenuPrincipal.unity
+    guid: b4789cfb6e60866408ff3e9821005ca7
   m_configObjects: {}

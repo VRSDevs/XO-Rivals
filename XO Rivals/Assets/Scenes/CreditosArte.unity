@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 87425249}
   - component: {fileID: 87425248}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Rocio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
