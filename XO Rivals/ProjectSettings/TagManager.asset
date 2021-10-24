@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+
+  tags:
+  - ground
+  - Ground
+  - player
+  - pan
+  - queso
+  - lechuga
+  - carne
+
   layers:
   - Default
   - TransparentFX

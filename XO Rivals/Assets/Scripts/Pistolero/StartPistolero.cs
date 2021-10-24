@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StartPistolero : MonoBehaviour
 {
-   public TextMesh text;
-    public TextMesh boton;//HAY QUE CAMBIAR POR BOTON DE VERDAD
+   public Text text; //Texto explicativo
+    public Button boton;//Boton de disparo
 
 
     // Start is called before the first frame update
     void Start()
     {
  
-        StartCoroutine("Esperar");
+        StartCoroutine("Esperar"); //esperamos 3 segundos para que el jugador lea el texto
 
 
     }
@@ -29,14 +30,14 @@ public class StartPistolero : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         text.text = "El jugador que más \n se aproxime será \n el ganador...";//cambiamos el texto explicativo despues de 3 segundos
-        StartCoroutine("Esperar2");
+        StartCoroutine("Esperar2"); //volvemos a esperar 3 segundos para que el jugador lea el texto
     }
 
 
     IEnumerator Esperar2()
     {
         yield return new WaitForSeconds(3);
-        text.text = "Pulsa el botón para comenzar";//cambiamos el texto explicativo despues de 3 segundos
+        text.text = "Pulsa el botón para comenzar\n(Mantenlo pulsado)";//cambiamos el texto explicativo despues de 3 segundos
         boton.gameObject.SetActive(true);//Aparece elboton
     }
 
