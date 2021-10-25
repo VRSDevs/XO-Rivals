@@ -3002,8 +3002,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameManager: {fileID: 60405592}
-  UsernameInput: {fileID: 159621185}
-  PasswordInput: {fileID: 133569156}
+  Authenticator: {fileID: 64042871}
+  R_UsernameInput: {fileID: 879903579}
+  R_PasswordInput: {fileID: 2000885118}
+  RegisterInfo: {fileID: 421638212}
+  L_UsernameInput: {fileID: 159621185}
+  L_PasswordInput: {fileID: 133569156}
   LoginInfo: {fileID: 635212862}
 --- !u!4 &890295297
 Transform:
@@ -3496,9 +3500,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 890295296}
+      - m_Target: {fileID: 890295295}
         m_TargetAssemblyTypeName: Login, Assembly-CSharp
-        m_MethodName: OnConnect
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3818,6 +3822,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: '- Login -'
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 890295296}
+        m_TargetAssemblyTypeName: Login, Assembly-CSharp
+        m_MethodName: UpdateLoginMode
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1285289197
@@ -4297,6 +4313,18 @@ MonoBehaviour:
           m_StringArgument: '- Register -'
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 890295296}
+        m_TargetAssemblyTypeName: Login, Assembly-CSharp
+        m_MethodName: UpdateLoginMode
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1514130327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4601,6 +4629,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
         m_MethodName: set_text
         m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 890295296}
+        m_TargetAssemblyTypeName: Login, Assembly-CSharp
+        m_MethodName: UpdateLoginMode
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5212,6 +5252,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
         m_MethodName: set_text
         m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 890295296}
+        m_TargetAssemblyTypeName: Login, Assembly-CSharp
+        m_MethodName: UpdateLoginMode
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
