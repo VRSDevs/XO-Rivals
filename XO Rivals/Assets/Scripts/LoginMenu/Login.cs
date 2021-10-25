@@ -40,11 +40,11 @@ public class Login : MonoBehaviour
     /// <summary>
     /// Mínimo número de caracteres para nombre de usuario y contraseña
     /// </summary>
-    private const int MIN_CHARS = 3;
+    private const int MIN_CHARS = 6;
     /// <summary>
     /// Máximo número de caracteres para nombre de usuario y contraseña
     /// </summary>
-    private const int MAX_CHARS = 24;
+    private const int MAX_CHARS = 100;
     
     /// <summary>
     /// 
