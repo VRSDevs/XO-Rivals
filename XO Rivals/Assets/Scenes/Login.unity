@@ -299,9 +299,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09205dd68a18e7f4daea0806729c6011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Server: {fileID: 0}
+  _networkController: {fileID: 0}
   Username: 
-  UserId: 
+--- !u!1 &64042870
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 64042872}
+  - component: {fileID: 64042871}
+  m_Layer: 0
+  m_Name: '@PlayFabAuthenticator'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &64042871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64042870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b66eabeb2f689641837be3903d811e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &64042872
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64042870}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &67308185
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,7 +651,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &133569155
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1345,7 +1387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &438324527
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1778,7 +1820,7 @@ GameObject:
   - component: {fileID: 890295297}
   - component: {fileID: 890295296}
   m_Layer: 0
-  m_Name: LoginSystem
+  m_Name: '@LoginSystem'
   m_TagString: Untagged
   m_Icon: {fileID: 2800000, guid: c223e0c507e2c6549a2cb97441b62cbe, type: 3}
   m_NavMeshLayer: 0
