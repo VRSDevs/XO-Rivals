@@ -18,7 +18,8 @@ public class PlayFabAuthenticator : MonoBehaviour
                 RegisterPlayFabUserRequest registerRequest = new RegisterPlayFabUserRequest
                 {
                     Username = username,
-                    Password = password
+                    Password = password,
+                    RequireBothUsernameAndEmail = false
                 };
 
                 PlayFabClientAPI.RegisterPlayFabUser(
