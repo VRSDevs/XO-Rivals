@@ -3500,9 +3500,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 890295295}
+      - m_Target: {fileID: 890295296}
         m_TargetAssemblyTypeName: Login, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: OnConnect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

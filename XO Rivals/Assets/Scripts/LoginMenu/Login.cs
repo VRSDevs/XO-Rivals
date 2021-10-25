@@ -150,7 +150,7 @@ public class Login : MonoBehaviour
     private bool OnAuthentication(string username, string password)
     {
         Authenticator.AuthWithPlayfab(username, password, Mode);
-        return false;
+        return true;
     }
 
     #endregion
