@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Victory"))
+        if (other.gameObject.CompareTag("Finish"))
         {
             Debug.Log("Victoria");
             textValue = "Victory";
@@ -76,11 +76,11 @@ public class Player : MonoBehaviour
   private void OnCollisionEnter2D(Collision2D collision)
   {
         
-      if (collision.gameObject.tag == "Muerte") {
+      if (collision.gameObject.CompareTag ("Respawn")) {
                    player.transform.position = new Vector2(respawn.position.x,respawn.position.y);
       }
 
-      if (collision.gameObject.tag == "Ground") {
+      if (collision.gameObject.CompareTag("Ground")) {
                 grounded = true;
       }
     }
