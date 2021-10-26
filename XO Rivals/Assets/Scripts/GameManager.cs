@@ -37,13 +37,39 @@ public class GameManager : MonoBehaviour
 
     #region UnityCB
     
-    private void Start()
+    private void Awake()
     {
         _networkController = gameObject.AddComponent<NetworkController>();
         DontDestroyOnLoad(this);
         
+        
+    }
+
+    private void Start()
+    {
+        CheckWebGLVersion();
+        
         log.text = IsWebGLMobile ? "mobile" : "pc";
     }
+
+    #endregion
+    
+    #region CheckMethod
+    
+#if !UNITY_EDITOR && UNITY_WEBGL
+        [System.Runtime.InteropServices.DllImport("__Internal")] static extern bool IsMobile();
+#endif
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    void CheckWebGLVersion()
+    {
+#if !UNITY_EDITOR && UNITY_WEBGL
+        IsWebGLMobile = IsMobile();
+#endif
+    }
+
 
     #endregion
 
