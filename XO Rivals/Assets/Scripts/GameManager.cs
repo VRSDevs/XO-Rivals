@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
         
         CheckWebGLVersion();
         Debug.Log(IsWebGLMobile);
-        //log.text = IsWebGLMobile ? "stinky" : "pese";
+        //log.text = IsWebGLMobile ? "mobile" : "pc";
     }
 
     #endregion
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
     void CheckWebGLVersion()
     {
     #if !UNITY_EDITOR && UNITY_WEBGL
-        log.text = "sex";
+        log.text = "checking...";
         IsWebGLMobile = IsMobile();
     #endif
     }
