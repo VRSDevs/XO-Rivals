@@ -64,7 +64,11 @@ public class ComidaController : MonoBehaviour
                     panArriba.SetActive(true);
 
                     //SceneManager.UnloadSceneAsync("Minijuego Comida");
-                    
+
+                    // Aqui se manda a alberto
+                    PlayerPrefs.SetInt("minigameWin", 1);
+
+
 
                 } else
                 {

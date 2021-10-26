@@ -53,7 +53,7 @@ public class Cronometro : MonoBehaviour
     public void activarCrono()
     {
         activo = true;
-        textoExplicativo.text = "Suelta el botón cuando el cronometro llegue a 0:00";
+        textoExplicativo.text = "Suelta el botÃ³n cuando el cronometro llegue a 0:00";
         timeEnemy = UnityEngine.Random.Range(0f, maxEnemy);
     }
     public void finCrono()
