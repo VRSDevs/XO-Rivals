@@ -3443,7 +3443,7 @@ MonoBehaviour:
   - {fileID: 163385453}
   - {fileID: 338706317}
   platform: {fileID: 1598976930}
-  moveSpeed: 4
+  moveSpeed: 5
 --- !u!1 &679158076
 GameObject:
   m_ObjectHideFlags: 0
@@ -4502,7 +4502,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990121610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -146.11, y: -109.03, z: 0}
+  m_LocalPosition: {x: -348.86, y: -112.64, z: 0}
   m_LocalScale: {x: 0.60560334, y: 0.5862793, z: 0.35293}
   m_Children:
   - {fileID: 148672725}
@@ -5119,7 +5119,7 @@ MonoBehaviour:
   - {fileID: 1524360252}
   - {fileID: 1275395482}
   platform: {fileID: 1922522329}
-  moveSpeed: 5
+  moveSpeed: 6
 --- !u!1 &1144308789
 GameObject:
   m_ObjectHideFlags: 0
@@ -6452,7 +6452,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 20.3, y: 13}
+  m_AnchoredPosition: {x: 0.23, y: 13}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1396814966
@@ -7750,7 +7750,7 @@ MonoBehaviour:
   - {fileID: 1367139558}
   - {fileID: 761128974}
   platform: {fileID: 589836993}
-  moveSpeed: 5
+  moveSpeed: 7
 --- !u!1 &1579496407
 GameObject:
   m_ObjectHideFlags: 0
@@ -10627,4 +10627,4 @@ MonoBehaviour:
   - {fileID: 696505401}
   - {fileID: 2032204774}
   platform: {fileID: 322166569}
-  moveSpeed: 4
+  moveSpeed: 5
