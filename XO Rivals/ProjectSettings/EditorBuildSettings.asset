@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Pistolero Derrota.unity
     guid: d2a129dd5b1028e4b90be4f6ab2c3244
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Login.unity
     guid: 2e1ac476cb6c69a438bf2de5b8d56a3a
   - enabled: 1
