@@ -61,6 +61,11 @@ public class ComidaController : MonoBehaviour
                     // Fin minijuego mandar bool a alberto
                     panArriba.SetActive(true);
 
+
+                    // Aqui se manda a alberto
+                    PlayerPrefs.SetInt("minigameWin", true);
+
+
                 } else
                 {
                     panAbajo.SetActive(false);
