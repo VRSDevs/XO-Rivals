@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     #region Variables
+
+    [SerializeField] public TMP_Text log;
     
     ////////////////// SERVIDOR //////////////////
     /// <summary>
@@ -40,6 +43,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
         
         CheckWebGLVersion();
+        log.text = IsWebGLMobile ? "stinky" : "pese";
     }
 
     #endregion
