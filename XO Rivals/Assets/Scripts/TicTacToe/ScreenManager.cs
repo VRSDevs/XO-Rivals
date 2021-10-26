@@ -55,8 +55,12 @@ public class ScreenManager : MonoBehaviour
     }    
 
     public void MinigameSelection(int n){
-        minigame = n;
+        ButtonsScript.miniChosen = n;
         miniGameChoosing.SetActive(false);
         ticTacScreen.SetActive(true);
+        //Unihide chips
+        for(int i = 0; i < ButtonsScript.chipList.Count; i++)
+            ButtonsScript.chipList[i].SetActive(true);
+        UpdateTurn(Mathf.Abs(turn-1));
     }
 }

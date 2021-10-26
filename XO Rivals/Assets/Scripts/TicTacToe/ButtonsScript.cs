@@ -15,13 +15,13 @@ public class ButtonsScript : MonoBehaviour
 
     //Array of positions
     private int[,] positions;
-    private List<GameObject> chipList;
+    public static List<GameObject> chipList;
 
     //Variables for victory
     int col, row, filled;
 
     //Minigame chosen
-    private int miniChosen;
+    public static int miniChosen;
     private int opponentMinigame;
 
     //Minigame won
@@ -94,7 +94,8 @@ public class ButtonsScript : MonoBehaviour
                 }
 
                 //Check minigame win
-                if(miniWin){
+                miniWin = PlayerPrefs.GetInt("minigameWin");
+                if(miniWin == 1){
                     //Save position
                     positions[col,row] = ScreenManager.turn;
                     //Paint tile completely
@@ -113,15 +114,11 @@ public class ButtonsScript : MonoBehaviour
 
                 //Go to selectMinigame for opponent
                 screenManager.MinigameSelectionActivation();
-                miniChosen = ScreenManager.minigame;
-                
-                //Unihide chips
-                for(int i = 0; i < chipList.Count; i++)
-                    chipList[i].SetActive(true);
 
-                //Change turn and save pos
+                //Save pos
                 positions[col,row] = ScreenManager.turn;
-                screenManager.UpdateTurn(1);
+
+                //Disable input because its not your turn
             }else{
 
                 GameObject newCross = Instantiate(crossGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
@@ -157,16 +154,18 @@ public class ButtonsScript : MonoBehaviour
                 }
 
                 */
+                //Add chip to list to hide
+                chipList.Add(newCross);
+                for(int i = 0; i < chipList.Count; i++)
+                    chipList[i].SetActive(false);
 
                 //Go to selectMinigame for opponent
-                Time.timeScale = 0f;
                 screenManager.MinigameSelectionActivation();
-                miniChosen = ScreenManager.minigame;
-                Time.timeScale = 1f;
                 
-                //Change turn and save pos
+                //Save pos
                 positions[col,row] = ScreenManager.turn;
-                screenManager.UpdateTurn(0);
+
+                //Disable input because its not your turn
             }
 
             //Add one to count
