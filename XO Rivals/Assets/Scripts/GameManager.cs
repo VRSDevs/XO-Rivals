@@ -1,11 +1,6 @@
 using System;
 using System.Collections.Generic;
-/*
-using BrainCloud.LitJson;
-using JsonReader = BrainCloud.JsonFx.Json.JsonReader;
-*/
 using UnityEngine;
-
 
 public class GameManager : MonoBehaviour
 {
@@ -30,6 +25,10 @@ public class GameManager : MonoBehaviour
     /// 
     /// </summary>
     public string Username;
+    /// <summary>
+    /// 
+    /// </summary>
+    [NonSerialized] public bool IsWebGLMobile;
 
     #endregion
 
@@ -39,7 +38,28 @@ public class GameManager : MonoBehaviour
     {
         _networkController = gameObject.AddComponent<NetworkController>();
         DontDestroyOnLoad(this);
+        
+        CheckWebGLVersion();
     }
+
+    #endregion
+
+    #region OtherMethods
+    
+    #if !UNITY_EDITOR && UNITY_WEBGL
+        [System.Runtime.InteropServices.DllImport("__Internal")] static extern bool IsMobile();
+    #endif
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    void CheckWebGLVersion()
+    {
+    #if !UNITY_EDITOR && UNITY_WEBGL
+        IsWebGLMobile = IsMobile();
+    #endif
+    }
+
 
     #endregion
 }
