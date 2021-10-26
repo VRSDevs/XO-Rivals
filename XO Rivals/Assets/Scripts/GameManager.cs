@@ -16,14 +16,7 @@ public class GameManager : MonoBehaviour
     /// 
     /// </summary>
     public NetworkController _networkController;
-    /// <summary>
-    /// 
-    /// </summary>
-    private const int MIN_PLAYERS_IN_ROON = 2;
-    /// <summary>
-    /// 
-    /// </summary>
-    private const int MAX_PLAYERS_INROOM = 2;
+    
 
     ////////////////// USUARIO //////////////////
     /// <summary>

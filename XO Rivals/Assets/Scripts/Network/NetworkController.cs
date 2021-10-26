@@ -7,6 +7,19 @@ using UnityEngine.SceneManagement;
 
 public class NetworkController : MonoBehaviourPunCallbacks
 {
+    #region Variables
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private const int MIN_PLAYERS_IN_ROON = 2;
+    /// <summary>
+    /// 
+    /// </summary>
+    private const int MAX_PLAYERS_INROOM = 2;    
+
+    #endregion
+    
     #region ConnectMethods
 
     /// <summary>
@@ -22,9 +35,20 @@ public class NetworkController : MonoBehaviourPunCallbacks
         return false;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void OnConnectToLobby()
     {
         PhotonNetwork.JoinLobby(TypedLobby.Default);
+    }
+
+    public void OnConnectToRandomMatch()
+    {
+        if (!PhotonNetwork.JoinRandomRoom())
+        {
+            Debug.Log("Fallo al crear la sala");
+        }
     }
 
     #endregion
@@ -63,6 +87,21 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }    
      */
 
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.LogError(returnCode + ": " + message);
+        Debug.Log("No existen salas. Creando...");
+
+        if (PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions()
+            {MaxPlayers = MAX_PLAYERS_INROOM}))
+        {
+            Debug.Log("Sala creada con éxito");
+        }
+        else
+        {
+            Debug.Log("Fallo al crear la sala");
+        }
+    }
 
     #endregion
 
