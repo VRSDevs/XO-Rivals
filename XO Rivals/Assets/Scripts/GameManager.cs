@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     #region UnityCB
     
-    private void Awake()
+    private void Start()
     {
         _networkController = gameObject.AddComponent<NetworkController>();
         DontDestroyOnLoad(this);
