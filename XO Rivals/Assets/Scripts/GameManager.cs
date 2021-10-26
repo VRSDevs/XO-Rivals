@@ -45,32 +45,15 @@ public class GameManager : MonoBehaviour
         
     }
 
-    private void Start()
-    {
-        CheckWebGLVersion();
-        
-        log.text = IsWebGLMobile ? "mobile" : "pc";
-    }
-
     #endregion
     
-    #region CheckMethod
-    
-#if !UNITY_EDITOR && UNITY_WEBGL
-        [System.Runtime.InteropServices.DllImport("__Internal")] static extern bool IsMobile();
-#endif
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    void CheckWebGLVersion()
+    #region OtherMethods
+
+    public void updateLog(string s)
     {
-#if !UNITY_EDITOR && UNITY_WEBGL
-        IsWebGLMobile = IsMobile();
-#endif
+        log.text = s;
     }
-
-
+    
     #endregion
 
     

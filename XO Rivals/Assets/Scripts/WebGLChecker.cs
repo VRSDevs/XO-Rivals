@@ -15,7 +15,10 @@ public class WebGLChecker : MonoBehaviour
 
     void Start()
     {
-        CheckWebGLVersion();
+        _GameManager.IsWebGLMobile = CheckWebGLVersion();
+        _GameManager.updateLog(
+                _GameManager.IsWebGLMobile ? "mobile" : "pc"
+            );
     }
 
     #endregion
@@ -29,13 +32,14 @@ public class WebGLChecker : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    void CheckWebGLVersion()
+    bool CheckWebGLVersion()
     {
 #if !UNITY_EDITOR && UNITY_WEBGL
-        _GameManager.IsWebGLMobile = IsMobile();
+        return IsMobile();
 #endif
+        _GameManager.updateLog("holi");
+        return false;
     }
-
-
+    
     #endregion
 }
