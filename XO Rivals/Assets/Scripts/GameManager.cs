@@ -42,30 +42,10 @@ public class GameManager : MonoBehaviour
         _networkController = gameObject.AddComponent<NetworkController>();
         DontDestroyOnLoad(this);
         
-        CheckWebGLVersion();
-        Debug.Log(IsWebGLMobile);
-        //log.text = IsWebGLMobile ? "mobile" : "pc";
+        log.text = IsWebGLMobile ? "mobile" : "pc";
     }
 
     #endregion
 
-    #region OtherMethods
     
-    #if !UNITY_EDITOR && UNITY_WEBGL
-        [System.Runtime.InteropServices.DllImport("__Internal")] static extern bool IsMobile();
-    #endif
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    void CheckWebGLVersion()
-    {
-    #if !UNITY_EDITOR && UNITY_WEBGL
-        log.text = "checking...";
-        IsWebGLMobile = IsMobile();
-    #endif
-    }
-
-
-    #endregion
 }
