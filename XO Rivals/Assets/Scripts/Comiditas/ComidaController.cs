@@ -63,7 +63,7 @@ public class ComidaController : MonoBehaviour
 
 
                     // Aqui se manda a alberto
-                    PlayerPrefs.SetInt("minigameWin", true);
+                    PlayerPrefs.SetInt("minigameWin", 1);
 
 
                 } else
