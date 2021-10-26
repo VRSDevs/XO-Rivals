@@ -13,7 +13,7 @@ public class WebGLChecker : MonoBehaviour
     
     #region UnityCB
 
-    void Awake()
+    void Start()
     {
         CheckWebGLVersion();
     }
