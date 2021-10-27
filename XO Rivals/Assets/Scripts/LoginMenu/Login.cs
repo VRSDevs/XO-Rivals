@@ -149,8 +149,16 @@ public class Login : MonoBehaviour
 
     private bool OnAuthentication(string username, string password)
     {
-        Authenticator.AuthWithPlayfab(username, password, Mode);
-        return true;
+        try
+        {
+            Authenticator.AuthWithPlayfab(username, password, Mode);
+            return true;
+        }
+        catch (LoginFailedException e)
+        {
+            Debug.Log("[SISTEMA]: " + e.Message + "(" + e.ErrorCode + ")");
+            return false;
+        }
     }
 
     #endregion
