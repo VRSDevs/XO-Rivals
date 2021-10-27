@@ -1,3 +1,4 @@
+using System;
 using Photon.Pun;
 using Photon.Realtime;
 using PlayFab;
@@ -76,6 +77,9 @@ public class PlayFabAuthenticator : MonoBehaviour
 
     private void OnError(PlayFabError error)
     {
-        Debug.Log("PlayFab + Photon: " + error.GenerateErrorReport());
+        throw new LoginFailedException(error.GenerateErrorReport())
+        {
+            ErrorCode = error.Error
+        };
     }
 }
