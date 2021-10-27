@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class Jugador : MonoBehaviour
 {
+
+
+
+    ComidaController controlador;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        controlador = FindObjectOfType<ComidaController>();
     }
 
     // Update is called once per frame
@@ -21,29 +28,29 @@ public class Jugador : MonoBehaviour
         if (collision.gameObject.tag == "carne")
         {
             Destroy(collision.gameObject);
-
-            // ver posicion en la pila
+            controlador.recibirComida(3);
+            
         }
 
         if (collision.gameObject.tag == "lechuga")
         {
             Destroy(collision.gameObject);
-
-            // ver posicion en la pila
+            controlador.recibirComida(4);
+            
         }
 
         if (collision.gameObject.tag == "queso")
         {
             Destroy(collision.gameObject);
-
-            // ver posicion en la pila
+            controlador.recibirComida(2);
+            
         }
 
         if (collision.gameObject.tag == "pan")
         {
             Destroy(collision.gameObject);
-
-            // ver posicion en la pila
+            controlador.recibirComida(1);
+            
         }
     }
 }
