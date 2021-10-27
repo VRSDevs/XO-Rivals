@@ -23,7 +23,7 @@ public class Login : MonoBehaviour
 {
     #region Variables
     
-    ////////////////// REFERENCIAS //////////////////
+    ////////////////// REFERENCIAS A CLASES //////////////////
     /// <summary>
     /// Referencia a la clase GameManager
     /// </summary>
@@ -32,6 +32,8 @@ public class Login : MonoBehaviour
     /// Referencia a la clase de autentificación de inicio de sesión
     /// </summary>
     [SerializeField] public PlayFabAuthenticator Authenticator;
+    
+    ////////////////// REFERENCIAS A GAMEOBJECTS //////////////////
     /// <summary>
     /// Referencia (en Registro) al InputField del nombre de usuario
     /// </summary>
@@ -40,10 +42,6 @@ public class Login : MonoBehaviour
     /// Referencia (en Registro) al InputField de la constraseña
     /// </summary>
     [SerializeField] public TMP_InputField R_PasswordInput;
-    /// <summary>
-    /// Referencia al log de información del registro
-    /// </summary>
-    [SerializeField] public TMP_Text RegisterInfo;
     /// <summary>
     /// Referencia (en Login) al InputField del nombre de usuario
     /// </summary>
@@ -55,7 +53,7 @@ public class Login : MonoBehaviour
     /// <summary>
     /// Referencia al log de información del login
     /// </summary>
-    [SerializeField] public TMP_Text LoginInfo;
+    [SerializeField] public TMP_Text Log;
     
     ////////////////// INICIO DE SESIÓN //////////////////
     /// <summary>
@@ -87,9 +85,8 @@ public class Login : MonoBehaviour
         R_UsernameInput.characterLimit = MAX_CHARS;
         R_PasswordInput.characterLimit = MAX_CHARS;
 
-        // Limpieza del log de registro y login
-        RegisterInfo.text = "";
-        LoginInfo.text = "";
+        // Limpieza del log
+        Log.text = "";
     }
 
     #endregion
@@ -105,57 +102,22 @@ public class Login : MonoBehaviour
         {
             IsConnecting = true;
 
+            string username = "", password = "";
+
             switch (Mode)
             {
                 case LoginMode.REGISTER:
-                    
-                    RegisterInfo.text = "Conectando...";
-                    /*
-                    
-                    if (OnAuthentication(R_UsernameInput.text, R_PasswordInput.text))
-                    {
-                        if (_gameManager._networkController.OnConnectToServer())
-                        {
-                            RegisterInfo.text = "Conectado.";
-                            _gameManager.Username = R_UsernameInput.text;
-                            _gameManager._networkController.SetNickName(R_UsernameInput.text);
-                        }
-                        else
-                        {
-                            LoginInfo.text = "Error al conectar.";
-                            IsConnecting = false;
-                        }
-                    }
-                    */
-                    
+                    username = R_UsernameInput.text;
+                    password = R_PasswordInput.text;
                     break;
                 case LoginMode.LOGIN:
-                    
-                    LoginInfo.text = "Conectando...";
-                    
-                    OnAuthentication(L_UsernameInput.text, L_PasswordInput.text);
-
-                    StartCoroutine(OnEstablishConnection());
-                    /*
-                    
-                    if (OnAuthentication(L_UsernameInput.text, L_PasswordInput.text))
-                    {
-                        if (_gameManager._networkController.OnConnectToServer())
-                        {
-                            LoginInfo.text = "Conectado.";
-                            _gameManager.Username = L_UsernameInput.text;
-                            _gameManager._networkController.SetNickName(L_UsernameInput.text);
-                        }
-                        else
-                        {
-                            LoginInfo.text = "Error al conectar.";
-                            IsConnecting = false;
-                        }
-                    }
-                    */
-                    
+                    username = L_UsernameInput.text;
+                    password = L_PasswordInput.text;
                     break;
             }
+            
+            OnAuthentication(username, password);
+            StartCoroutine(OnEstablishConnection(username, password, Mode));
         }
     }
 
@@ -166,10 +128,11 @@ public class Login : MonoBehaviour
     /// <param name="password">Contraseña</param>
     private void OnAuthentication(string username, string password)
     {
+        Log.text = "Validando credenciales...";
         Authenticator.AuthWithPlayfab(username, password, Mode);
     }
 
-    private IEnumerator OnEstablishConnection()
+    private IEnumerator OnEstablishConnection(string username, string password, LoginMode mode)
     {
         yield return new WaitUntil(Authenticator.IsAuthenticated);
 
@@ -183,15 +146,17 @@ public class Login : MonoBehaviour
                 };
             }
             
+            Log.text = "Conectando...";
+            
             if (_gameManager._networkController.OnConnectToServer())
             {
-                LoginInfo.text = "Conectado.";
-                _gameManager.Username = L_UsernameInput.text;
-                _gameManager._networkController.SetNickName(L_UsernameInput.text);
+                Log.text = "Conectado.";
+                _gameManager.Username = username;
+                _gameManager._networkController.SetNickName(username);
             }
             else
             {
-                LoginInfo.text = "Error al conectar.";
+                Log.text = "Error al conectar.";
                 IsConnecting = false;
             }
         }
@@ -220,7 +185,7 @@ public class Login : MonoBehaviour
                 
                 if (R_UsernameInput.text.Length < MIN_CHARS || R_UsernameInput.text.Length < MIN_CHARS)
                 {
-                    RegisterInfo.text = "Longitud no correcta, mínimo " + MIN_CHARS;
+                    Log.text = "Longitud no correcta, mínimo " + MIN_CHARS;
                     return false;
                 }
 
@@ -232,7 +197,7 @@ public class Login : MonoBehaviour
                 
                 if (L_UsernameInput.text.Length < MIN_CHARS || L_UsernameInput.text.Length < MIN_CHARS)
                 {
-                    LoginInfo.text = "Longitud no correcta, mínimo " + MIN_CHARS;
+                    Log.text = "Longitud no correcta, mínimo " + MIN_CHARS;
                     return false;
                 }
 
