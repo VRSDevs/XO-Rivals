@@ -80,12 +80,12 @@ public class NetworkController : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("MainMenu");
     }
     
-    /*
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
+        
+        Debug.Log("Unido a la sala.");
     }    
-     */
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
@@ -96,6 +96,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
             {MaxPlayers = MAX_PLAYERS_INROOM}))
         {
             Debug.Log("Sala creada con éxito");
+            SceneManager.LoadScene("TicTacToe_Server");
         }
         else
         {
