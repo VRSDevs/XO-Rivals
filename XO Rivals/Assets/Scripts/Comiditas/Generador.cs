@@ -16,7 +16,8 @@ public class Generador : MonoBehaviour
     GameObject queso;
 
     // Variables
-    public bool stopSpawning = false;
+    public bool startedSpawning = true;
+    public bool stopSpawning = true;
     public float spawnTime;
     public float spawnDelay;
 
@@ -26,10 +27,26 @@ public class Generador : MonoBehaviour
 
     Quaternion quat = new Quaternion();
 
+
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("generadorGlobal" ,spawnTime, spawnDelay);
+        //InvokeRepeating("generadorGlobal" ,spawnTime, spawnDelay);
+    }
+
+    private void Update()
+    {      
+
+        if (!startedSpawning)
+        {
+            startedSpawning = true;
+            InvokeRepeating("generadorGlobal", spawnTime, spawnDelay);
+        }
+    }
+
+    public void ActivateGenerator()
+    {
+        startedSpawning = false;
     }
 
     public void generadorGlobal()
@@ -39,7 +56,7 @@ public class Generador : MonoBehaviour
         if (stopSpawning)
         {
             CancelInvoke("generadorGlobal");
-        }
+        } 
 
         switch (rand)
         {

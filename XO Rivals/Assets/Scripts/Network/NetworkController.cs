@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class NetworkController : MonoBehaviourPunCallbacks
 {
-    
-    
     #region ConnectMethods
 
     /// <summary>
