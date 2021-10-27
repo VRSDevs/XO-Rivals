@@ -87,10 +87,12 @@ public class PlayFabAuthenticator : MonoBehaviour
                     registerRequest,
                     result =>
                     {
-                        
+                        Authenticated = true;
                     },
                     OnError
                 );
+                
+                Debug.Log("Hola");
 
                 break;
             case LoginMode.LOGIN:
