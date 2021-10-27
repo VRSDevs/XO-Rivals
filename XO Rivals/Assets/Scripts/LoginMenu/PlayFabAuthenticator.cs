@@ -12,7 +12,6 @@ public class PlayFabAuthenticator : MonoBehaviour
 
     public void AuthWithPlayfab(string username, string password, LoginMode mode)
     {
-        // TO DO
         switch (mode)
         {
             case LoginMode.REGISTER:
@@ -30,8 +29,8 @@ public class PlayFabAuthenticator : MonoBehaviour
                         
                     },
                     OnError
-                    );
-                
+                );
+
                 break;
             case LoginMode.LOGIN:
                 LoginWithPlayFabRequest loginRequest = new LoginWithPlayFabRequest();
@@ -39,11 +38,10 @@ public class PlayFabAuthenticator : MonoBehaviour
                 loginRequest.Password = password;
                 
                 PlayFabClientAPI.LoginWithPlayFab(
-                        loginRequest,
-                        RequestToken,
-                        OnError
-                    );
-                
+                    loginRequest,
+                    RequestToken,
+                    OnError
+                );
                 break;
         }
     }
