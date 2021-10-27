@@ -299,6 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09205dd68a18e7f4daea0806729c6011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  log: {fileID: 1010440290}
   _networkController: {fileID: 0}
   Username: 
 --- !u!1 &64042870
