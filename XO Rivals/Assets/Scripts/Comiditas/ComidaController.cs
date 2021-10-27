@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ComidaController : MonoBehaviour
 {
-
+    
+    
 
     Generador generador;
 
@@ -61,9 +63,11 @@ public class ComidaController : MonoBehaviour
                     // Fin minijuego mandar bool a alberto
                     panArriba.SetActive(true);
 
+                    //SceneManager.UnloadSceneAsync("Minijuego Comida");
 
                     // Aqui se manda a alberto
                     PlayerPrefs.SetInt("minigameWin", 1);
+
 
 
                 } else

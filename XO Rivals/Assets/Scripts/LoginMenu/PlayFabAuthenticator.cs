@@ -1,17 +1,78 @@
+using System;
 using Photon.Pun;
 using Photon.Realtime;
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
 using CustomAuthenticationType = Photon.Chat.CustomAuthenticationType;
+using Object = System.Object;
+
+#region Structs
+
+/// <summary>
+/// 
+/// </summary>
+public struct AuthObject
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool Failed;
+    /// <summary>
+    /// 
+    /// </summary>
+    public PlayFabErrorCode ErrorCode;
+    /// <summary>
+    /// 
+    /// </summary>
+    public string Message;
+
+    #region Constructors
+
+    public AuthObject(bool status, PlayFabErrorCode error, string message)
+    {
+        Failed = status;
+        ErrorCode = error;
+        Message = message;
+    }
+
+    #endregion
+}
+
+#endregion
+
 
 public class PlayFabAuthenticator : MonoBehaviour
 {
-    private string _playFabPlayerIdCache;
+    #region Variables
+
+    /// <summary>
+    /// ID del usuario en el proceso de autentificación
+    /// </summary>
+    private string _playFabPlayerIdCache = "";
+    /// <summary>
+    /// 
+    /// </summary>
+    public AuthObject Obj;
+
+    private bool Authenticated;
+    
+    #endregion
+
+    #region UnityCB
+
+    private void Start()
+    {
+        Authenticated = false;
+        Obj = new AuthObject(false, PlayFabErrorCode.Unknown, "");
+    }
+
+    #endregion
+
+    #region AuthMethods
 
     public void AuthWithPlayfab(string username, string password, LoginMode mode)
     {
-        // TO DO
         switch (mode)
         {
             case LoginMode.REGISTER:
@@ -26,11 +87,13 @@ public class PlayFabAuthenticator : MonoBehaviour
                     registerRequest,
                     result =>
                     {
-                        
+                        Authenticated = true;
                     },
                     OnError
-                    );
+                );
                 
+                Debug.Log("Hola");
+
                 break;
             case LoginMode.LOGIN:
                 LoginWithPlayFabRequest loginRequest = new LoginWithPlayFabRequest();
@@ -38,10 +101,10 @@ public class PlayFabAuthenticator : MonoBehaviour
                 loginRequest.Password = password;
                 
                 PlayFabClientAPI.LoginWithPlayFab(
-                        loginRequest,
-                        RequestToken,
-                        OnError
-                    );
+                    loginRequest,
+                    RequestToken,
+                    OnError
+                );
                 
                 break;
         }
@@ -72,10 +135,30 @@ public class PlayFabAuthenticator : MonoBehaviour
         customAuth.AddAuthParameter("token", obj.PhotonCustomAuthenticationToken);
 
         PhotonNetwork.AuthValues = customAuth;
+
+        Authenticated = true;
     }
 
     private void OnError(PlayFabError error)
     {
-        Debug.Log("PlayFab + Photon: " + error.GenerateErrorReport());
+        Obj.Failed = true;
+        Obj.ErrorCode = error.Error;
+        Obj.Message = error.GenerateErrorReport();
+
+        Authenticated = true;
+    }
+
+    #endregion
+
+    public bool IsAuthenticated()
+    {
+        return Authenticated;
+    }
+
+    public void Reset()
+    {
+        _playFabPlayerIdCache = "";
+        Authenticated = false;
+        Obj = new AuthObject(false, PlayFabErrorCode.Unknown, "");
     }
 }
