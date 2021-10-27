@@ -1,8 +1,8 @@
-using System;
+
 using PlayFab;
 
-[Serializable]
-public class LoginFailedException : Exception
+
+public class LoginFailedException : System.Exception
 {
     #region MyRegion
 
@@ -24,7 +24,7 @@ public class LoginFailedException : Exception
     {
     }
 
-    public LoginFailedException(string message, Exception inner)
+    public LoginFailedException(string message, System.Exception inner)
         : base(message, inner)
     {
     }

@@ -5,6 +5,42 @@ using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
 using CustomAuthenticationType = Photon.Chat.CustomAuthenticationType;
+using Object = System.Object;
+
+#region Structs
+
+/// <summary>
+/// 
+/// </summary>
+struct AuthObject
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool Failed;
+    /// <summary>
+    /// 
+    /// </summary>
+    public PlayFabErrorCode ErrorCode;
+    /// <summary>
+    /// 
+    /// </summary>
+    public string Message;
+
+    #region Constructors
+
+    public AuthObject(bool status, PlayFabErrorCode error, string message)
+    {
+        Failed = status;
+        ErrorCode = error;
+        Message = message;
+    }
+
+    #endregion
+}
+
+#endregion
+
 
 public class PlayFabAuthenticator : MonoBehaviour
 {
@@ -14,6 +50,19 @@ public class PlayFabAuthenticator : MonoBehaviour
     /// ID del usuario en el proceso de autentificación
     /// </summary>
     private string _playFabPlayerIdCache;
+    /// <summary>
+    /// 
+    /// </summary>
+    private AuthObject obj;
+    
+    #endregion
+
+    #region UnityCB
+
+    private void Start()
+    {
+        obj = new AuthObject(false, PlayFabErrorCode.Unknown, "");
+    }
 
     #endregion
 
@@ -51,7 +100,16 @@ public class PlayFabAuthenticator : MonoBehaviour
                     RequestToken,
                     OnError
                 );
+                
                 break;
+        }
+
+        if (obj.Failed)
+        {
+            throw new LoginFailedException(obj.Message)
+            {
+                ErrorCode = obj.ErrorCode
+            };
         }
     }
 
@@ -84,10 +142,9 @@ public class PlayFabAuthenticator : MonoBehaviour
 
     private void OnError(PlayFabError error)
     {
-        throw new LoginFailedException(error.GenerateErrorReport())
-        {
-            ErrorCode = error.Error
-        };
+        obj.Failed = true;
+        obj.ErrorCode = error.Error;
+        obj.Message = error.GenerateErrorReport();
     }
 
     #endregion

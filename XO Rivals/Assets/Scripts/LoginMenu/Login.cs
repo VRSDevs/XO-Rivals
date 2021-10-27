@@ -167,7 +167,7 @@ public class Login : MonoBehaviour
         }
         catch (LoginFailedException e)
         {
-            Debug.Log("a");
+            Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
             status = false;
         }
 
