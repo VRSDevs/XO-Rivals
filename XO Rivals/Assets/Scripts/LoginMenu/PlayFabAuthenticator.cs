@@ -12,7 +12,7 @@ using Object = System.Object;
 /// <summary>
 /// 
 /// </summary>
-struct AuthObject
+public struct AuthObject
 {
     /// <summary>
     /// 
@@ -53,7 +53,9 @@ public class PlayFabAuthenticator : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    private AuthObject obj;
+    public AuthObject Obj;
+
+    private bool Authenticated;
     
     #endregion
 
@@ -61,7 +63,8 @@ public class PlayFabAuthenticator : MonoBehaviour
 
     private void Start()
     {
-        obj = new AuthObject(false, PlayFabErrorCode.Unknown, "");
+        Authenticated = false;
+        Obj = new AuthObject(false, PlayFabErrorCode.Unknown, "");
     }
 
     #endregion
@@ -103,14 +106,6 @@ public class PlayFabAuthenticator : MonoBehaviour
                 
                 break;
         }
-
-        if (obj.Failed)
-        {
-            throw new LoginFailedException(obj.Message)
-            {
-                ErrorCode = obj.ErrorCode
-            };
-        }
     }
 
     private void RequestToken(LoginResult result)
@@ -138,16 +133,23 @@ public class PlayFabAuthenticator : MonoBehaviour
         customAuth.AddAuthParameter("token", obj.PhotonCustomAuthenticationToken);
 
         PhotonNetwork.AuthValues = customAuth;
+
+        Authenticated = true;
     }
 
     private void OnError(PlayFabError error)
     {
-        obj.Failed = true;
-        obj.ErrorCode = error.Error;
-        obj.Message = error.GenerateErrorReport();
+        Obj.Failed = true;
+        Obj.ErrorCode = error.Error;
+        Obj.Message = error.GenerateErrorReport();
+
+        Authenticated = true;
     }
 
     #endregion
 
-    
+    public bool IsAuthenticated()
+    {
+        return Authenticated;
+    }
 }

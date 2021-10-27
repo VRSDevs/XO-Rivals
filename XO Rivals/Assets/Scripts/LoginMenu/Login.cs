@@ -110,6 +110,7 @@ public class Login : MonoBehaviour
                 case LoginMode.REGISTER:
                     
                     RegisterInfo.text = "Conectando...";
+                    /*
                     
                     if (OnAuthentication(R_UsernameInput.text, R_PasswordInput.text))
                     {
@@ -125,11 +126,17 @@ public class Login : MonoBehaviour
                             IsConnecting = false;
                         }
                     }
+                    */
                     
                     break;
                 case LoginMode.LOGIN:
                     
                     LoginInfo.text = "Conectando...";
+                    
+                    OnAuthentication(L_UsernameInput.text, L_PasswordInput.text);
+
+                    StartCoroutine(OnEstablishConnection());
+                    /*
                     
                     if (OnAuthentication(L_UsernameInput.text, L_PasswordInput.text))
                     {
@@ -145,6 +152,7 @@ public class Login : MonoBehaviour
                             IsConnecting = false;
                         }
                     }
+                    */
                     
                     break;
             }
@@ -156,22 +164,41 @@ public class Login : MonoBehaviour
     /// </summary>
     /// <param name="username">Nombre de usuario</param>
     /// <param name="password">Contraseña</param>
-    /// <returns>Estado de la autentificación</returns>
-    private bool OnAuthentication(string username, string password)
+    private void OnAuthentication(string username, string password)
     {
-        bool status;
+        Authenticator.AuthWithPlayfab(username, password, Mode);
+    }
+
+    private IEnumerator OnEstablishConnection()
+    {
+        yield return new WaitUntil(Authenticator.IsAuthenticated);
+
         try
         {
-            Authenticator.AuthWithPlayfab(username, password, Mode);
-            status = true;
+            if (Authenticator.Obj.Failed)
+            {
+                throw new LoginFailedException(Authenticator.Obj.Message)
+                {
+                    ErrorCode = Authenticator.Obj.ErrorCode
+                };
+            }
+            
+            if (_gameManager._networkController.OnConnectToServer())
+            {
+                LoginInfo.text = "Conectado.";
+                _gameManager.Username = L_UsernameInput.text;
+                _gameManager._networkController.SetNickName(L_UsernameInput.text);
+            }
+            else
+            {
+                LoginInfo.text = "Error al conectar.";
+                IsConnecting = false;
+            }
         }
         catch (LoginFailedException e)
         {
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
-            status = false;
         }
-
-        return status;
     }
 
     #endregion
