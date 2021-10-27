@@ -4,8 +4,17 @@ using PlayFab;
 [Serializable]
 public class LoginFailedException : Exception
 {
+    #region MyRegion
+
+    /// <summary>
+    /// Código del error producido
+    /// </summary>
     public PlayFabErrorCode ErrorCode;
-    
+
+    #endregion
+
+    #region Constructors
+
     public LoginFailedException()
     {
     }
@@ -19,4 +28,6 @@ public class LoginFailedException : Exception
         : base(message, inner)
     {
     }
+
+    #endregion
 }
