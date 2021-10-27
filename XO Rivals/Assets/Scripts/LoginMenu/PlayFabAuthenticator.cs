@@ -49,7 +49,7 @@ public class PlayFabAuthenticator : MonoBehaviour
     /// <summary>
     /// ID del usuario en el proceso de autentificación
     /// </summary>
-    private string _playFabPlayerIdCache;
+    private string _playFabPlayerIdCache = "";
     /// <summary>
     /// 
     /// </summary>
@@ -151,5 +151,12 @@ public class PlayFabAuthenticator : MonoBehaviour
     public bool IsAuthenticated()
     {
         return Authenticated;
+    }
+
+    public void Reset()
+    {
+        _playFabPlayerIdCache = "";
+        Authenticated = false;
+        Obj = new AuthObject(false, PlayFabErrorCode.Unknown, "");
     }
 }

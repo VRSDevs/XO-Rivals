@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PlayFab;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -37,19 +38,11 @@ public class Login : MonoBehaviour
     /// <summary>
     /// Referencia (en Registro) al InputField del nombre de usuario
     /// </summary>
-    [SerializeField] public TMP_InputField R_UsernameInput;
+    [SerializeField] public TMP_InputField UsernameInput;
     /// <summary>
     /// Referencia (en Registro) al InputField de la constraseña
     /// </summary>
-    [SerializeField] public TMP_InputField R_PasswordInput;
-    /// <summary>
-    /// Referencia (en Login) al InputField del nombre de usuario
-    /// </summary>
-    [SerializeField] public TMP_InputField L_UsernameInput;
-    /// <summary>
-    /// Referencia (en Login) al InputField de la constraseña
-    /// </summary>
-    [SerializeField] public TMP_InputField L_PasswordInput;
+    [SerializeField] public TMP_InputField PasswordInput;
     /// <summary>
     /// Referencia al log de información del login
     /// </summary>
@@ -80,10 +73,8 @@ public class Login : MonoBehaviour
     private void Start()
     {
         // Limitación de caracteres máximos de los inputs
-        L_UsernameInput.characterLimit = MAX_CHARS;
-        L_PasswordInput.characterLimit = MAX_CHARS;
-        R_UsernameInput.characterLimit = MAX_CHARS;
-        R_PasswordInput.characterLimit = MAX_CHARS;
+        UsernameInput.characterLimit = MAX_CHARS;
+        PasswordInput.characterLimit = MAX_CHARS;
 
         // Limpieza del log
         Log.text = "";
@@ -102,19 +93,7 @@ public class Login : MonoBehaviour
         {
             IsConnecting = true;
 
-            string username = "", password = "";
-
-            switch (Mode)
-            {
-                case LoginMode.REGISTER:
-                    username = R_UsernameInput.text;
-                    password = R_PasswordInput.text;
-                    break;
-                case LoginMode.LOGIN:
-                    username = L_UsernameInput.text;
-                    password = L_PasswordInput.text;
-                    break;
-            }
+            string username = UsernameInput.text, password = PasswordInput.text;
             
             OnAuthentication(username, password);
             StartCoroutine(OnEstablishConnection(username, password, Mode));
@@ -128,10 +107,19 @@ public class Login : MonoBehaviour
     /// <param name="password">Contraseña</param>
     private void OnAuthentication(string username, string password)
     {
+        Debug.Log("Modo: " + Mode);
         Log.text = "Validando credenciales...";
         Authenticator.AuthWithPlayfab(username, password, Mode);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="username"></param>
+    /// <param name="password"></param>
+    /// <param name="mode"></param>
+    /// <returns></returns>
+    /// <exception cref="LoginFailedException"></exception>
     private IEnumerator OnEstablishConnection(string username, string password, LoginMode mode)
     {
         yield return new WaitUntil(Authenticator.IsAuthenticated);
@@ -146,6 +134,8 @@ public class Login : MonoBehaviour
                 };
             }
             
+            Authenticator.Reset();
+
             Log.text = "Conectando...";
             
             if (_gameManager._networkController.OnConnectToServer())
@@ -162,6 +152,21 @@ public class Login : MonoBehaviour
         }
         catch (LoginFailedException e)
         {
+            switch (e.ErrorCode)
+            {
+                case PlayFabErrorCode.UsernameNotAvailable:
+                    Log.text = "Nombre de usuario no disponible.";
+                    break;
+                case PlayFabErrorCode.AccountNotFound:
+                    Log.text = "Cuenta no encontrada.";
+                    break;
+                case PlayFabErrorCode.InvalidUsernameOrPassword:
+                    Log.text = "Nombre de usuario o contraseña inválido.";
+                    break;
+            }
+
+            IsConnecting = false;
+            
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
         }
     }
@@ -176,35 +181,17 @@ public class Login : MonoBehaviour
     /// <returns>¿Inputs válidos?</returns>
     private bool ValidateInputs()
     {
-        switch (Mode)
+        // Eliminación de espacios en la cadena de caracteres
+        UsernameInput.text = UsernameInput.text.Trim();
+        PasswordInput.text = PasswordInput.text.Trim();
+                
+        if (UsernameInput.text.Length < MIN_CHARS || PasswordInput.text.Length < MIN_CHARS)
         {
-            case LoginMode.REGISTER:
-                // Eliminación de espacios en la cadena de caracteres
-                R_UsernameInput.text = R_UsernameInput.text.Trim();
-                R_PasswordInput.text = R_PasswordInput.text.Trim();
-                
-                if (R_UsernameInput.text.Length < MIN_CHARS || R_UsernameInput.text.Length < MIN_CHARS)
-                {
-                    Log.text = "Longitud no correcta, mínimo " + MIN_CHARS;
-                    return false;
-                }
-
-                return true;
-            case LoginMode.LOGIN:
-                // Eliminación de espacios en la cadena de caracteres
-                L_UsernameInput.text = L_UsernameInput.text.Trim();
-                L_PasswordInput.text = L_PasswordInput.text.Trim();
-                
-                if (L_UsernameInput.text.Length < MIN_CHARS || L_UsernameInput.text.Length < MIN_CHARS)
-                {
-                    Log.text = "Longitud no correcta, mínimo " + MIN_CHARS;
-                    return false;
-                }
-
-                return true;
+            Log.text = "Longitud no correcta, mínimo " + MIN_CHARS;
+            return false;
         }
 
-        return false;
+        return true;
     }
     
     #endregion
@@ -236,39 +223,31 @@ public class Login : MonoBehaviour
     /// </summary>
     public void ShowPasswordField()
     {
-        switch (Mode)
+        switch (PasswordInput.contentType)
         {
-            case LoginMode.REGISTER:
-                switch (R_PasswordInput.contentType)
-                {
-                    case TMP_InputField.ContentType.Standard:
-                        R_PasswordInput.contentType = TMP_InputField.ContentType.Password;
-                        break;
-                    case TMP_InputField.ContentType.Password:
-                        R_PasswordInput.contentType = TMP_InputField.ContentType.Standard;
-                        break;
-                }
-        
-                // Método para forzar la actualización de muestra del input
-                R_PasswordInput.ForceLabelUpdate();
-                
+            case TMP_InputField.ContentType.Standard:
+                PasswordInput.contentType = TMP_InputField.ContentType.Password;
                 break;
-            case LoginMode.LOGIN:
-                switch (L_PasswordInput.contentType)
-                {
-                    case TMP_InputField.ContentType.Standard:
-                        L_PasswordInput.contentType = TMP_InputField.ContentType.Password;
-                        break;
-                    case TMP_InputField.ContentType.Password:
-                        L_PasswordInput.contentType = TMP_InputField.ContentType.Standard;
-                        break;
-                }
-        
-                // Método para forzar la actualización de muestra del input
-                L_PasswordInput.ForceLabelUpdate();
-                
+            case TMP_InputField.ContentType.Password:
+                PasswordInput.contentType = TMP_InputField.ContentType.Standard;
                 break;
         }
+        
+        // Método para forzar la actualización de muestra del input
+        PasswordInput.ForceLabelUpdate();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void ClearFields()
+    {
+        UsernameInput.text = "";
+        PasswordInput.text = "";
+        
+        // Método para forzar la actualización de muestra del input
+        UsernameInput.ForceLabelUpdate();
+        PasswordInput.ForceLabelUpdate();
     }
 
     #endregion
