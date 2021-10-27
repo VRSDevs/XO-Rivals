@@ -5,6 +5,12 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// Modo de inicio de sesión activo
+///     NONE - Ninguno
+///     REGISTER - Registrarse
+///     LOGIN - Iniciar sesión
+/// </summary>
 [Serializable]
 public enum LoginMode
 {
@@ -17,48 +23,27 @@ public class Login : MonoBehaviour
 {
     #region Variables
     
+    ////////////////// REFERENCIAS //////////////////
     /// <summary>
-    /// 
-    /// </summary>
-    [NonSerialized] public LoginMode Mode;
-
-    /// <summary>
-    /// 
+    /// Referencia a la clase GameManager
     /// </summary>
     [SerializeField] public GameManager _gameManager;
-
     /// <summary>
-    /// 
+    /// Referencia a la clase de autentificación de inicio de sesión
     /// </summary>
     [SerializeField] public PlayFabAuthenticator Authenticator;
-    
     /// <summary>
-    /// 
-    /// </summary>
-    private bool IsConnecting;
-    
-    /// <summary>
-    /// Mínimo número de caracteres para nombre de usuario y contraseña
-    /// </summary>
-    private const int MIN_CHARS = 6;
-    /// <summary>
-    /// Máximo número de caracteres para nombre de usuario y contraseña
-    /// </summary>
-    private const int MAX_CHARS = 100;
-    
-    /// <summary>
-    /// 
+    /// Referencia (en Registro) al InputField del nombre de usuario
     /// </summary>
     [SerializeField] public TMP_InputField R_UsernameInput;
     /// <summary>
-    /// 
+    /// Referencia (en Registro) al InputField de la constraseña
     /// </summary>
     [SerializeField] public TMP_InputField R_PasswordInput;
     /// <summary>
-    /// 
+    /// Referencia al log de información del registro
     /// </summary>
     [SerializeField] public TMP_Text RegisterInfo;
-
     /// <summary>
     /// Referencia (en Login) al InputField del nombre de usuario
     /// </summary>
@@ -71,6 +56,24 @@ public class Login : MonoBehaviour
     /// Referencia al log de información del login
     /// </summary>
     [SerializeField] public TMP_Text LoginInfo;
+    
+    ////////////////// INICIO DE SESIÓN //////////////////
+    /// <summary>
+    /// Modo del inicio de sesión
+    /// </summary>
+    [NonSerialized] public LoginMode Mode;
+    /// <summary>
+    /// ¿Se está conectando el usuario?
+    /// </summary>
+    private bool IsConnecting;
+    /// <summary>
+    /// Mínimo número de caracteres para nombre de usuario y contraseña
+    /// </summary>
+    private const int MIN_CHARS = 6;
+    /// <summary>
+    /// Máximo número de caracteres para nombre de usuario y contraseña
+    /// </summary>
+    private const int MAX_CHARS = 100;
 
     #endregion
 
@@ -78,11 +81,13 @@ public class Login : MonoBehaviour
 
     private void Start()
     {
+        // Limitación de caracteres máximos de los inputs
         L_UsernameInput.characterLimit = MAX_CHARS;
         L_PasswordInput.characterLimit = MAX_CHARS;
         R_UsernameInput.characterLimit = MAX_CHARS;
         R_PasswordInput.characterLimit = MAX_CHARS;
 
+        // Limpieza del log de registro y login
         RegisterInfo.text = "";
         LoginInfo.text = "";
     }
@@ -92,9 +97,8 @@ public class Login : MonoBehaviour
     #region LoginMethods
 
     /// <summary>
-    /// 
+    /// Método para establecer conexión
     /// </summary>
-    /// <param name="mode"></param>
     public void OnConnect()
     {
         if (!IsConnecting && ValidateInputs())
@@ -147,6 +151,12 @@ public class Login : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Método para realizar la autentificación de inicio de sesión
+    /// </summary>
+    /// <param name="username">Nombre de usuario</param>
+    /// <param name="password">Contraseña</param>
+    /// <returns>Estado de la autentificación</returns>
     private bool OnAuthentication(string username, string password)
     {
         bool status;
@@ -169,19 +179,18 @@ public class Login : MonoBehaviour
     #region CheckMethods
 
     /// <summary>
-    /// 
+    /// Método para validar la longitud de los inputs
     /// </summary>
-    /// <returns></returns>
+    /// <returns>¿Inputs válidos?</returns>
     private bool ValidateInputs()
     {
         switch (Mode)
         {
             case LoginMode.REGISTER:
-                //
+                // Eliminación de espacios en la cadena de caracteres
                 R_UsernameInput.text = R_UsernameInput.text.Trim();
                 R_PasswordInput.text = R_PasswordInput.text.Trim();
-        
-                //
+                
                 if (R_UsernameInput.text.Length < MIN_CHARS || R_UsernameInput.text.Length < MIN_CHARS)
                 {
                     RegisterInfo.text = "Longitud no correcta, mínimo " + MIN_CHARS;
@@ -190,11 +199,10 @@ public class Login : MonoBehaviour
 
                 return true;
             case LoginMode.LOGIN:
-                //
+                // Eliminación de espacios en la cadena de caracteres
                 L_UsernameInput.text = L_UsernameInput.text.Trim();
                 L_PasswordInput.text = L_PasswordInput.text.Trim();
-        
-                //
+                
                 if (L_UsernameInput.text.Length < MIN_CHARS || L_UsernameInput.text.Length < MIN_CHARS)
                 {
                     LoginInfo.text = "Longitud no correcta, mínimo " + MIN_CHARS;
@@ -207,11 +215,14 @@ public class Login : MonoBehaviour
         return false;
     }
     
-
     #endregion
 
     #region OtherMethods
 
+    /// <summary>
+    /// Método para actualizar la variable de modo de inicio sesión
+    /// </summary>
+    /// <param name="mode">Código del modo</param>
     public void UpdateLoginMode(int mode)
     {
         switch (mode)
@@ -229,7 +240,7 @@ public class Login : MonoBehaviour
     }
     
     /// <summary>
-    /// 
+    /// Método para mostrar la contraseña
     /// </summary>
     public void ShowPasswordField()
     {
@@ -246,6 +257,7 @@ public class Login : MonoBehaviour
                         break;
                 }
         
+                // Método para forzar la actualización de muestra del input
                 R_PasswordInput.ForceLabelUpdate();
                 
                 break;
@@ -260,6 +272,7 @@ public class Login : MonoBehaviour
                         break;
                 }
         
+                // Método para forzar la actualización de muestra del input
                 L_PasswordInput.ForceLabelUpdate();
                 
                 break;
