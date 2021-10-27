@@ -8,38 +8,57 @@ public class WebGLChecker : MonoBehaviour
     #region Variables
 
     [SerializeField] public GameManager _GameManager;
-
-    #endregion
-    
-    #region UnityCB
-
-    void Start()
-    {
-        _GameManager.IsWebGLMobile = CheckWebGLVersion();
-        _GameManager.updateLog(
-                _GameManager.IsWebGLMobile ? "mobile" : "pc"
-            );
-    }
+    public bool isMobile;
 
     #endregion
 
     #region CheckMethod
-    
+
 #if !UNITY_EDITOR && UNITY_WEBGL
-        [System.Runtime.InteropServices.DllImport("__Internal")] static extern bool IsMobile();
+    [System.Runtime.InteropServices.DllImport("__Internal")]
+    static extern bool IsMobile();
 #endif
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    bool CheckWebGLVersion()
+
+    void CheckIfMobile()
     {
 #if !UNITY_EDITOR && UNITY_WEBGL
-        return IsMobile();
+        isMobile = IsMobile();
+
 #endif
-        _GameManager.updateLog("holi");
-        return false;
     }
-    
+
     #endregion
+
+
+    #region UnityCB
+
+    void Start()
+    {
+
+
+
+        CheckIfMobile();
+        if (isMobile) //PLAYING ON MOBILE
+        {
+            _GameManager.IsWebGLMobile = true;
+            _GameManager.updateLog("MOBILE");
+        }
+        else //PLAYING ON PC
+        {
+            _GameManager.IsWebGLMobile = false;
+            _GameManager.updateLog("PC");
+        }
+
+
+
+
+
+
+    }
+
+
+
+    #endregion
+
+
 }
