@@ -8,7 +8,16 @@ using CustomAuthenticationType = Photon.Chat.CustomAuthenticationType;
 
 public class PlayFabAuthenticator : MonoBehaviour
 {
+    #region Variables
+
+    /// <summary>
+    /// ID del usuario en el proceso de autentificación
+    /// </summary>
     private string _playFabPlayerIdCache;
+
+    #endregion
+
+    #region AuthMethods
 
     public void AuthWithPlayfab(string username, string password, LoginMode mode)
     {
@@ -80,4 +89,8 @@ public class PlayFabAuthenticator : MonoBehaviour
             ErrorCode = error.Error
         };
     }
+
+    #endregion
+
+    
 }
