@@ -45,11 +45,15 @@ public class NetworkController : MonoBehaviourPunCallbacks
     
     
 
-    public void OnConnectToRandomMatch()
+    public void OnConnectToRandomRoom()
     {
         if (!PhotonNetwork.JoinRandomRoom())
         {
             Debug.Log("Fallo al crear la sala");
+        }
+        else
+        {
+            Debug.Log(":0");
         }
     }
 
@@ -64,7 +68,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnConnectedToMaster();
         
-        Debug.Log("Conectado al servidor.");
+        Debug.Log("Conectado al servidor. Conectando al lobby...");
         OnConnectToLobby();
         
     }
