@@ -7,6 +7,19 @@ using UnityEngine.SceneManagement;
 
 public class NetworkController : MonoBehaviourPunCallbacks
 {
+    #region Variables
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private const int MIN_PLAYERS_IN_ROON = 2;
+    /// <summary>
+    /// 
+    /// </summary>
+    private const int MAX_PLAYERS_INROOM = 2;    
+
+    #endregion
+    
     #region ConnectMethods
 
     /// <summary>
@@ -22,9 +35,40 @@ public class NetworkController : MonoBehaviourPunCallbacks
         return false;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void OnConnectToLobby()
     {
         PhotonNetwork.JoinLobby(TypedLobby.Default);
+    }
+
+    public void OnCreateRoom()
+    {
+        Debug.Log("Creando sala...");
+
+        if (PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions()
+        {
+            MaxPlayers = MAX_PLAYERS_INROOM
+        }))
+        {
+            Debug.Log("Sala creada con éxito");
+            
+        }
+        else
+        {
+            Debug.Log("Fallo al crear la sala");
+        }
+    }
+    
+    
+
+    public void OnConnectToRandomRoom()
+    {
+        if (!PhotonNetwork.JoinRandomRoom())
+        {
+            Debug.Log("Fallo al crear la sala");
+        }
     }
 
     #endregion
@@ -38,7 +82,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnConnectedToMaster();
         
-        Debug.Log("Conectado al servidor.");
+        Debug.Log("Conectado al servidor. Conectando al lobby...");
         OnConnectToLobby();
         
     }
@@ -56,13 +100,44 @@ public class NetworkController : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("MainMenu");
     }
     
-    /*
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-    }    
-     */
 
+        Debug.Log("Unido a la sala: " + PhotonNetwork.CurrentRoom.Name);
+        Debug.Log("Buscando jugadores...");
+        if (PhotonNetwork.CurrentRoom.PlayerCount == MAX_PLAYERS_INROOM)
+        {
+            Debug.Log("Sala llena. Empezando partida...");
+            
+            SceneManager.LoadScene("TicTacToe_Server");
+        }
+    }    
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.LogError(returnCode + ": " + message);
+        Debug.Log("No existen salas. Creando...");
+    }
+
+    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+        
+        Debug.Log("Buscando jugadores...");
+
+        if (PhotonNetwork.CurrentRoom.PlayerCount == MAX_PLAYERS_INROOM)
+        {
+            Debug.Log("Sala llena. Empezando partida...");
+            
+            SceneManager.LoadScene("TicTacToe_Server");
+        }
+    }
+
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
+    }
 
     #endregion
 
