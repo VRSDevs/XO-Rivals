@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using Photon.Pun;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -26,6 +27,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [NonSerialized] public bool IsWebGLMobile;
 
+    [NonSerialized] public bool IsPlaying;
+
     #endregion
 
     #region UnityCB
@@ -33,9 +36,20 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _networkController = gameObject.AddComponent<NetworkController>();
+        IsPlaying = false;
+        
         DontDestroyOnLoad(this);
         
         
+    }
+
+    private void FixedUpdate()
+    {
+        if(!IsPlaying)
+            return;
+        /*
+        PlayerCounter.text = PhotonNetwork.CurrentRoom.PlayerCount + " / " + PhotonNetwork.CurrentRoom.MaxPlayers;
+        */
     }
 
     #endregion
