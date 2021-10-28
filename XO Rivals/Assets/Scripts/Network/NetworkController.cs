@@ -42,6 +42,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
+    
+    
 
     public void OnConnectToRandomMatch()
     {
@@ -96,12 +98,31 @@ public class NetworkController : MonoBehaviourPunCallbacks
             {MaxPlayers = MAX_PLAYERS_INROOM}))
         {
             Debug.Log("Sala creada con éxito");
-            SceneManager.LoadScene("TicTacToe_Server");
+            
         }
         else
         {
             Debug.Log("Fallo al crear la sala");
         }
+    }
+
+    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+        
+        Debug.Log("Buscando jugadores...");
+
+        if (PhotonNetwork.CurrentRoom.PlayerCount == MAX_PLAYERS_INROOM)
+        {
+            Debug.Log("Sala llena. Empezando partida...");
+            
+            SceneManager.LoadScene("TicTacToe_Server");
+        }
+    }
+
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
     }
 
     #endregion
