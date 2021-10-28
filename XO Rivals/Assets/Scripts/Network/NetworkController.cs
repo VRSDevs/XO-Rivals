@@ -48,7 +48,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
         Debug.Log("Creando sala...");
 
         if (PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions()
-            {MaxPlayers = MAX_PLAYERS_INROOM}))
+        {
+            MaxPlayers = MAX_PLAYERS_INROOM
+        }))
         {
             Debug.Log("Sala creada con éxito");
             
