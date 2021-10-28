@@ -22,7 +22,7 @@ public enum LoginMode
 
 public class Login : MonoBehaviour
 {
-    #region Variables
+     #region Variables
     
     ////////////////// REFERENCIAS A CLASES //////////////////
     /// <summary>
