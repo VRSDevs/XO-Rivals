@@ -103,23 +103,19 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
 
         Debug.Log("Unido a la sala: " + PhotonNetwork.CurrentRoom.Name);
+        Debug.Log("Buscando jugadores...");
+        if (PhotonNetwork.CurrentRoom.PlayerCount == MAX_PLAYERS_INROOM)
+        {
+            Debug.Log("Sala llena. Empezando partida...");
+            
+            SceneManager.LoadScene("TicTacToe_Server");
+        }
     }    
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         Debug.LogError(returnCode + ": " + message);
         Debug.Log("No existen salas. Creando...");
-
-        if (PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions()
-            {MaxPlayers = MAX_PLAYERS_INROOM}))
-        {
-            Debug.Log("Sala creada con éxito");
-            
-        }
-        else
-        {
-            Debug.Log("Fallo al crear la sala");
-        }
     }
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
