@@ -101,8 +101,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        
-        Debug.Log("Unido a la sala.");
+
+        Debug.Log("Unido a la sala: " + PhotonNetwork.CurrentRoom.Name);
     }    
 
     public override void OnJoinRoomFailed(short returnCode, string message)
