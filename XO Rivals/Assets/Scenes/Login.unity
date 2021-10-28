@@ -299,7 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09205dd68a18e7f4daea0806729c6011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  log: {fileID: 1010440290}
+  log: {fileID: 0}
   _networkController: {fileID: 0}
   Username: 
 --- !u!1 &64042870
@@ -2113,7 +2113,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 890295295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6c79488b2c74d449a99ac4ce0d9167f, type: 3}
+  m_Script: {fileID: 11500000, guid: 779e873e17459f1438d8c6db68888a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _gameManager: {fileID: 60405592}
