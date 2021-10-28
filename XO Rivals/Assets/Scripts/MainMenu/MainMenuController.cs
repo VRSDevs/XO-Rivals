@@ -22,16 +22,4 @@ public class MainMenuController : MonoBehaviour
     {
         _gameManager._networkController.OnConnectToRandomRoom();
     }
-
-    public void goToGame(){
-        SceneManager.LoadScene("Tic Tac Toe");
-    }
-
-    public void goToSettings(){
-        SceneManager.LoadScene("Tic Tac Toe");
-    }
-
-    public void goToCredits(){
-        SceneManager.LoadScene("Tic Tac Toe");
-    }
 }

@@ -77,6 +77,14 @@ public class NetworkController : MonoBehaviourPunCallbacks
         }
     }
 
+    /// <summary>
+    /// Método para abandonar la sala de la partida
+    /// </summary>
+    public void OnLeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+
     #endregion
 
     #region PUN_CB
@@ -160,6 +168,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
+        
+        Debug.Log("El otro jugador abandonó la partida. Ganaste.");
+        
+        SceneManager.LoadScene("MainMenu");
     }
 
     #endregion
