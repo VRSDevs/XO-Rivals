@@ -141,7 +141,6 @@ public class Login : MonoBehaviour
             if (_gameManager._networkController.OnConnectToServer())
             {
                 Log.text = "Conectado.";
-                _gameManager.Username = username;
                 _gameManager._networkController.SetNickName(username);
             }
             else

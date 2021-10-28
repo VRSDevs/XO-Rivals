@@ -2,18 +2,21 @@ using System;
 
 public class PlayerInfo
 {
-    //************************* VARIABLES *************************//
-    #region Vars
+    
+    #region Variables
     
     /// <summary>
-    /// 
+    /// Nombre de usuario
     /// </summary>
-    public string Name;
-
+    public string Name = "";
     /// <summary>
-    /// 
+    /// ID del jugador
     /// </summary>
-    public string PlayerId;
+    public string Id = "";
+    /// <summary>
+    /// Elo del jugador
+    /// </summary>
+    public string Elo = "";
 
     #endregion
     
