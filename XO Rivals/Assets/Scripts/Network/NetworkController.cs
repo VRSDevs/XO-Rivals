@@ -42,6 +42,22 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
+
+    public void OnCreateRoom()
+    {
+        Debug.Log("Creando sala...");
+
+        if (PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions()
+            {MaxPlayers = MAX_PLAYERS_INROOM}))
+        {
+            Debug.Log("Sala creada con éxito");
+            
+        }
+        else
+        {
+            Debug.Log("Fallo al crear la sala");
+        }
+    }
     
     
 
@@ -50,10 +66,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.JoinRandomRoom())
         {
             Debug.Log("Fallo al crear la sala");
-        }
-        else
-        {
-            Debug.Log(":0");
         }
     }
 

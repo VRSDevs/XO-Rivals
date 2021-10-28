@@ -15,7 +15,7 @@ public class MainMenuController : MonoBehaviour
 
     public void OnConnectToRandomMatch()
     {
-        _gameManager._networkController.OnConnectToRandomRoom();
+        _gameManager._networkController.OnCreateRoom();
     }
 
     public void goToGame(){
