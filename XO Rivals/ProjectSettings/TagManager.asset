@@ -3,16 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-
   tags:
-  - ground
-  - Ground
-  - player
-  - pan
-  - queso
-  - lechuga
-  - carne
-
+  - Checkpoint9
+  - Checkpoint1
+  - Checkpoint6
+  - Checkpoint5
+  - Checkpoint10
+  - Checkpoint7
+  - FinishLine
+  - Checkpoint4
+  - Checkpoint8
+  - Checkpoint3
+  - Checkpoint2
+  - Log
   layers:
   - Default
   - TransparentFX

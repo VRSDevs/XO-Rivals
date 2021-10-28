@@ -16,7 +16,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public NetworkController _networkController;
     
-
+    ////////////////// PARTIDA //////////////////
+    
+    
     ////////////////// USUARIO //////////////////
     /// <summary>
     /// 

@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class NetworkController : MonoBehaviourPunCallbacks
 {
     #region Variables
-
     /// <summary>
     /// 
     /// </summary>
@@ -45,19 +45,18 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
     public void OnCreateRoom()
     {
-        Debug.Log("Creando sala...");
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Creando sala...";
 
         if (PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions()
         {
             MaxPlayers = MAX_PLAYERS_INROOM
         }))
         {
-            Debug.Log("Sala creada con éxito");
-            
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala creada con éxito.";
         }
         else
         {
-            Debug.Log("Fallo al crear la sala");
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
         }
     }
     
@@ -67,7 +66,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.JoinRandomRoom())
         {
-            Debug.Log("Fallo al crear la sala");
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
         }
     }
 
@@ -82,7 +81,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnConnectedToMaster();
         
-        Debug.Log("Conectado al servidor. Conectando al lobby...");
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Conectado al servidor. Conectando al lobby...";
         OnConnectToLobby();
         
     }
@@ -94,7 +93,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnJoinedLobby();
         
-        Debug.Log("Conectado al lobby general.");
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Conectado al lobby general.";
         Debug.Log("Hola, " + PhotonNetwork.NickName);
 
         SceneManager.LoadScene("MainMenu");
@@ -104,12 +103,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
 
-        Debug.Log("Unido a la sala: " + PhotonNetwork.CurrentRoom.Name);
-        Debug.Log("Buscando jugadores...");
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Unido a la sala: " + PhotonNetwork.CurrentRoom.Name;
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Buscando jugadores...";
+        
         if (PhotonNetwork.CurrentRoom.PlayerCount == MAX_PLAYERS_INROOM)
         {
-            Debug.Log("Sala llena. Empezando partida...");
-            
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala llena. Empezando partida...";
+
             SceneManager.LoadScene("TicTacToe_Server");
         }
     }    
@@ -117,18 +117,18 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         Debug.LogError(returnCode + ": " + message);
-        Debug.Log("No existen salas. Creando...");
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No existen salas. Creando...";
     }
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
         
-        Debug.Log("Buscando jugadores...");
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Buscando jugadores...";
 
         if (PhotonNetwork.CurrentRoom.PlayerCount == MAX_PLAYERS_INROOM)
         {
-            Debug.Log("Sala llena. Empezando partida...");
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala llena. Empezando partida...";
             
             SceneManager.LoadScene("TicTacToe_Server");
         }
