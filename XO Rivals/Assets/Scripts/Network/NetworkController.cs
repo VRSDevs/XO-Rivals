@@ -4,17 +4,19 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
 
 public class NetworkController : MonoBehaviourPunCallbacks
 {
     #region Variables
+
     /// <summary>
-    /// 
+    /// Jugadores mínimos en la sala
     /// </summary>
     private const int MIN_PLAYERS_IN_ROON = 2;
     /// <summary>
-    /// 
+    /// Jugadores máximos en la sala
     /// </summary>
     private const int MAX_PLAYERS_INROOM = 2;    
 
@@ -23,8 +25,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
     #region ConnectMethods
 
     /// <summary>
-    /// 
+    /// Método para conectarse al servidor de Photon
     /// </summary>
+    /// <returns>Valor del estado de la conexión</returns>
     public bool OnConnectToServer()
     {
         if (PhotonNetwork.ConnectUsingSettings())
@@ -36,13 +39,16 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
-    /// 
+    /// Método de conexión a la lobby general
     /// </summary>
     public void OnConnectToLobby()
     {
         PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
 
+    /// <summary>
+    /// Método para crear una sala de partida
+    /// </summary>
     public void OnCreateRoom()
     {
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Creando sala...";
@@ -60,8 +66,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
         }
     }
     
-    
-
+    /// <summary>
+    /// Método para conectarse a una sala
+    /// </summary>
     public void OnConnectToRandomRoom()
     {
         if (!PhotonNetwork.JoinRandomRoom())
@@ -75,7 +82,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     #region PUN_CB
 
     /// <summary>
-    /// 
+    /// Método ejecutado cuando se conecta al servidor
     /// </summary>
     public override void OnConnectedToMaster()
     {
@@ -87,7 +94,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
-    /// 
+    /// Método ejecutado cuando se conecta a la lobby
     /// </summary>
     public override void OnJoinedLobby()
     {
@@ -99,6 +106,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("MainMenu");
     }
     
+    /// <summary>
+    /// Método ejecutado cuando se une a una sala
+    /// </summary>
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
@@ -114,12 +124,21 @@ public class NetworkController : MonoBehaviourPunCallbacks
         }
     }    
 
+    /// <summary>
+    /// Método ejecutado cuando falla el acceso a la sala
+    /// </summary>
+    /// <param name="returnCode">Código de error</param>
+    /// <param name="message">Mensaje de error</param>
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         Debug.LogError(returnCode + ": " + message);
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No existen salas. Creando...";
     }
 
+    /// <summary>
+    /// Método ejecutado cuando se une un jugador a la sala
+    /// </summary>
+    /// <param name="newPlayer">Nuevo jugador unido</param>
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
@@ -134,6 +153,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
         }
     }
 
+    /// <summary>
+    /// Método ejecutado cuando un jugador abandona la sala
+    /// </summary>
+    /// <param name="otherPlayer"></param>
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
@@ -144,7 +167,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     #region UpdateNetworkVars
 
     /// <summary>
-    /// 
+    /// Método para actualizar el nick en Photon
     /// </summary>
     /// <param name="nick"></param>
     public void SetNickName(string nick)
@@ -155,6 +178,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     #endregion
     
     /*
+    #region UnityCB
+
     // Start is called before the first frame update
     void Start()
     {
@@ -166,5 +191,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         
     }
+    
+    #endregion
+
     */
+    
 }

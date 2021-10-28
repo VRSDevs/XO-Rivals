@@ -113,13 +113,13 @@ public class Login : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Método ejecutado como corutina para establecer conexión con el servidor
     /// </summary>
-    /// <param name="username"></param>
-    /// <param name="password"></param>
-    /// <param name="mode"></param>
+    /// <param name="username">Nombre de usuario</param>
+    /// <param name="password">Contraseña</param>
+    /// <param name="mode">Modo de inicio de sesión</param>
     /// <returns></returns>
-    /// <exception cref="LoginFailedException"></exception>
+    /// <exception cref="LoginFailedException">Excepción producida por fallo al iniciar sesión</exception>
     private IEnumerator OnEstablishConnection(string username, string password, LoginMode mode)
     {
         yield return new WaitUntil(Authenticator.IsAuthenticated);
@@ -141,7 +141,6 @@ public class Login : MonoBehaviour
             if (_gameManager._networkController.OnConnectToServer())
             {
                 Log.text = "Conectado.";
-                _gameManager.Username = username;
                 _gameManager._networkController.SetNickName(username);
             }
             else
@@ -238,7 +237,7 @@ public class Login : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Método para limpiar los campos de los inputs
     /// </summary>
     public void ClearFields()
     {
