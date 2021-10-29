@@ -12,7 +12,10 @@ public class ComidaController : MonoBehaviour
     private GameManager _gameManager;
 
     // Controles de movil
-    
+    [SerializeField]
+    private GameObject leftButton;
+    [SerializeField]
+    private GameObject rightButton;
 
     // Cronometro
     public TextMeshProUGUI crono;
@@ -43,9 +46,10 @@ public class ComidaController : MonoBehaviour
         generador = FindObjectOfType<Generador>();
 
 
-        if (_gameManager.IsWebGLMobile)
+        if (!_gameManager.IsWebGLMobile)
         {
-
+            leftButton.SetActive(false);
+            rightButton.SetActive(false);
         }
     }
 

@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9d30fbc956474f4cb441853494ddb16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftButton: {fileID: 1732832436}
+  rightButton: {fileID: 915791121}
   crono: {fileID: 104272338}
   orden: 1
   panAbajo: {fileID: 103362902}
@@ -339,8 +341,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -772,7 +774,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 489, y: -281}
+  m_AnchoredPosition: {x: 500, y: -280}
   m_SizeDelta: {x: 179.3885, y: 74.836}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &915791123
@@ -1505,7 +1507,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -495.30573, y: -281}
+  m_AnchoredPosition: {x: -500, y: -280}
   m_SizeDelta: {x: 179.3885, y: 74.836}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1732832438
