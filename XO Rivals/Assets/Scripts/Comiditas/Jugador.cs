@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Jugador : MonoBehaviour
 {
 
-    [SerializeField] private float speed = 10;
-
     ComidaController controlador;
 
     private Rigidbody2D player;
+
+    private float horizontal;
+    private float speed = 8f;
+
 
     // Start is called before the first frame update
     void Awake()
