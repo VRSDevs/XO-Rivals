@@ -30,6 +30,7 @@ public class Jugador : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         player.velocity = new Vector2(horizontal * speed, player.velocity.y);
         if (!isFacingRight && horizontal > 0f)
         {
@@ -83,5 +84,20 @@ public class Jugador : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         horizontal = context.ReadValue<Vector2>().x;
+    }
+
+    public void MoveLeft()
+    {
+        horizontal = -1;
+    }
+
+    public void MoveRight()
+    {
+        horizontal = 1;
+    }
+
+    public void Stop()
+    {
+        horizontal = 0;   
     }
 }

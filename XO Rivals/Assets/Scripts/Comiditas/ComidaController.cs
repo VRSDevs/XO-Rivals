@@ -13,9 +13,9 @@ public class ComidaController : MonoBehaviour
 
     // Controles de movil
     [SerializeField]
-    private GameObject leftButton;
+    public GameObject leftButton;
     [SerializeField]
-    private GameObject rightButton;
+    public GameObject rightButton;
 
     // Cronometro
     public TextMeshProUGUI crono;
