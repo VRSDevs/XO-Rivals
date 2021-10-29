@@ -11,6 +11,9 @@ public class ComidaController : MonoBehaviour
     // Gamemanager
     private GameManager _gameManager;
 
+    // Controles de movil
+    
+
     // Cronometro
     public TextMeshProUGUI crono;
     private float time = 20;
@@ -40,7 +43,10 @@ public class ComidaController : MonoBehaviour
         generador = FindObjectOfType<Generador>();
 
 
+        if (_gameManager.IsWebGLMobile)
+        {
 
+        }
     }
 
     // Update is called once per frame
