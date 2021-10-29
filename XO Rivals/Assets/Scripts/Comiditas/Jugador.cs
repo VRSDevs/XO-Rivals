@@ -12,7 +12,7 @@ public class Jugador : MonoBehaviour
 
     private float horizontal;
     private float speed = 8f;
-
+    private bool isFacingRight = true;
 
     // Start is called before the first frame update
     void Awake()
@@ -30,8 +30,15 @@ public class Jugador : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        player.velocity = new Vector2(horizontalInput * speed, player.velocity.y);
+        player.velocity = new Vector2(horizontal * speed, player.velocity.y);
+        if (!isFacingRight && horizontal > 0f)
+        {
+            Flip();
+        } 
+        else if (isFacingRight && horizontal < 0f)
+        {
+            Flip();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -63,5 +70,18 @@ public class Jugador : MonoBehaviour
             controlador.recibirComida(1);
             
         }
+    }
+
+    private void Flip()
+    {
+        isFacingRight = !isFacingRight;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1f;
+        transform.localScale = localScale;
+    }
+
+    public void Move(InputAction.CallbackContext context)
+    {
+        horizontal = context.ReadValue<Vector2>().x;
     }
 }
