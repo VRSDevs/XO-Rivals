@@ -2,14 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class ComidaController : MonoBehaviour
 {
-    
-    
 
+    // Gamemanager
+    private GameManager _gameManager;
+
+    // Controles de movil
+    [SerializeField]
+    public GameObject leftButton;
+    [SerializeField]
+    public GameObject rightButton;
+
+    // Cronometro
+    public TextMeshProUGUI crono;
+    private float time = 20;
+
+    // Minijuegos
     Generador generador;
-
     [SerializeField]
     private int orden = 1;
     [SerializeField]
@@ -26,13 +39,35 @@ public class ComidaController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        crono.text = " " + time;
+
+        _gameManager = FindObjectOfType<GameManager>();
+
         generador = FindObjectOfType<Generador>();
+
+
+        if (!_gameManager.IsWebGLMobile)
+        {
+            leftButton.SetActive(false);
+            rightButton.SetActive(false);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (time >= 0)
+        {
+            time -= Time.deltaTime;
+            crono.text = " " + time.ToString("f0");
+        }
+
+        if (time < 0)
+        {
+            SceneManager.UnloadSceneAsync("Minijuego Comida");
+            // Aqui se manda a alberto la derrota
+            PlayerPrefs.SetInt("minigameWin", 0);
+        }
     }
 
 
@@ -48,7 +83,6 @@ public class ComidaController : MonoBehaviour
 
     public void recibirComida(int tipo)
     {
-
         switch (tipo)
         {
             // Recibimos un pan
@@ -62,14 +96,9 @@ public class ComidaController : MonoBehaviour
                 {
                     // Fin minijuego mandar bool a alberto
                     panArriba.SetActive(true);
-
-                    //SceneManager.UnloadSceneAsync("Minijuego Comida");
-
-                    // Aqui se manda a alberto
+                    SceneManager.UnloadSceneAsync("Minijuego Comida");
+                    // Aqui se manda a alberto la victoria
                     PlayerPrefs.SetInt("minigameWin", 1);
-
-
-
                 } else
                 {
                     panAbajo.SetActive(false);
@@ -97,8 +126,6 @@ public class ComidaController : MonoBehaviour
                     panArriba.SetActive(false);
                     orden = 1;
                 }
-
-
                 break;
 
             // Recibimos carne
@@ -118,8 +145,6 @@ public class ComidaController : MonoBehaviour
                     panArriba.SetActive(false);
                     orden = 1;
                 }
-
-
                 break;
 
             // Recibimos lechuga
@@ -139,8 +164,6 @@ public class ComidaController : MonoBehaviour
                     panArriba.SetActive(false);
                     orden = 1;
                 }
-
-
                 break;
 
         }
