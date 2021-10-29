@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9d30fbc956474f4cb441853494ddb16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crono: {fileID: 104272338}
   orden: 1
   panAbajo: {fileID: 103362902}
   panArriba: {fileID: 1039419326}

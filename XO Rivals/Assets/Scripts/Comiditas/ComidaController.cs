@@ -7,8 +7,10 @@ using TMPro;
 
 public class ComidaController : MonoBehaviour
 {
-    
-    
+
+    public TextMeshProUGUI crono;
+
+    private float time = 20;
 
     Generador generador;
 
@@ -28,13 +30,24 @@ public class ComidaController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        crono.text = " " + time;
+
         generador = FindObjectOfType<Generador>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (time >= 0)
+        {
+            time -= Time.deltaTime;
+            crono.text = " " + time.ToString("f0");
+        }
+
+        if (time < 0)
+        {   
+            
+        }
     }
 
 
