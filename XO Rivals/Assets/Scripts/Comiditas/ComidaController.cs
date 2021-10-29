@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class ComidaController : MonoBehaviour
 {
@@ -48,7 +50,6 @@ public class ComidaController : MonoBehaviour
 
     public void recibirComida(int tipo)
     {
-
         switch (tipo)
         {
             // Recibimos un pan
