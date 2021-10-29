@@ -16,7 +16,7 @@ public class Generador : MonoBehaviour
     GameObject queso;
 
     // Variables
-    public bool startedSpawning = true;
+    public bool startedSpawning = false;
     public bool stopSpawning = true;
     public float spawnTime;
     public float spawnDelay;

@@ -947,7 +947,7 @@ MonoBehaviour:
   lechuga: {fileID: 1858217047647334258, guid: 15948a27a27ea9e41a1ca1842f743384, type: 3}
   pan: {fileID: 1838569870276373899, guid: ca8975f08685992419018296a5a1b0bf, type: 3}
   queso: {fileID: 6409814463341035600, guid: e63aba6a52bc9d141a027b8bd4b4d6d3, type: 3}
-  startedSpawning: 1
+  startedSpawning: 0
   stopSpawning: 0
   spawnTime: 3
   spawnDelay: 2
