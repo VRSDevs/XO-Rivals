@@ -949,8 +949,8 @@ MonoBehaviour:
   queso: {fileID: 6409814463341035600, guid: e63aba6a52bc9d141a027b8bd4b4d6d3, type: 3}
   startedSpawning: 0
   stopSpawning: 0
-  spawnTime: 3
-  spawnDelay: 2
+  spawnTime: 0
+  spawnDelay: 1.5
 --- !u!1 &1299412363
 GameObject:
   m_ObjectHideFlags: 0

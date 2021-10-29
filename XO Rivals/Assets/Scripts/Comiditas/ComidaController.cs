@@ -8,12 +8,15 @@ using TMPro;
 public class ComidaController : MonoBehaviour
 {
 
-    public TextMeshProUGUI crono;
+    // Gamemanager
+    private GameManager _gameManager;
 
+    // Cronometro
+    public TextMeshProUGUI crono;
     private float time = 20;
 
+    // Minijuegos
     Generador generador;
-
     [SerializeField]
     private int orden = 1;
     [SerializeField]
@@ -32,7 +35,12 @@ public class ComidaController : MonoBehaviour
     {
         crono.text = " " + time;
 
+        _gameManager = FindObjectOfType<GameManager>();
+
         generador = FindObjectOfType<Generador>();
+
+
+
     }
 
     // Update is called once per frame
