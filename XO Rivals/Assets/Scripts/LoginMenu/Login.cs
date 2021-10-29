@@ -1,10 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PlayFab;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// Modo de inicio de sesión activo
+///     NONE - Ninguno
+///     REGISTER - Registrarse
+///     LOGIN - Iniciar sesión
+/// </summary>
 [Serializable]
 public enum LoginMode
 {
@@ -15,28 +22,41 @@ public enum LoginMode
 
 public class Login : MonoBehaviour
 {
-    #region Variables
+     #region Variables
     
+    ////////////////// REFERENCIAS A CLASES //////////////////
     /// <summary>
-    /// 
-    /// </summary>
-    [NonSerialized] public LoginMode Mode;
-
-    /// <summary>
-    /// 
+    /// Referencia a la clase GameManager
     /// </summary>
     [SerializeField] public GameManager _gameManager;
-
     /// <summary>
-    /// 
+    /// Referencia a la clase de autentificación de inicio de sesión
     /// </summary>
     [SerializeField] public PlayFabAuthenticator Authenticator;
     
+    ////////////////// REFERENCIAS A GAMEOBJECTS //////////////////
     /// <summary>
-    /// 
+    /// Referencia (en Registro) al InputField del nombre de usuario
+    /// </summary>
+    [SerializeField] public TMP_InputField UsernameInput;
+    /// <summary>
+    /// Referencia (en Registro) al InputField de la constraseña
+    /// </summary>
+    [SerializeField] public TMP_InputField PasswordInput;
+    /// <summary>
+    /// Referencia al log de información del login
+    /// </summary>
+    [SerializeField] public TMP_Text Log;
+    
+    ////////////////// INICIO DE SESIÓN //////////////////
+    /// <summary>
+    /// Modo del inicio de sesión
+    /// </summary>
+    [NonSerialized] public LoginMode Mode;
+    /// <summary>
+    /// ¿Se está conectando el usuario?
     /// </summary>
     private bool IsConnecting;
-    
     /// <summary>
     /// Mínimo número de caracteres para nombre de usuario y contraseña
     /// </summary>
@@ -45,32 +65,6 @@ public class Login : MonoBehaviour
     /// Máximo número de caracteres para nombre de usuario y contraseña
     /// </summary>
     private const int MAX_CHARS = 100;
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    [SerializeField] public TMP_InputField R_UsernameInput;
-    /// <summary>
-    /// 
-    /// </summary>
-    [SerializeField] public TMP_InputField R_PasswordInput;
-    /// <summary>
-    /// 
-    /// </summary>
-    [SerializeField] public TMP_Text RegisterInfo;
-
-    /// <summary>
-    /// Referencia (en Login) al InputField del nombre de usuario
-    /// </summary>
-    [SerializeField] public TMP_InputField L_UsernameInput;
-    /// <summary>
-    /// Referencia (en Login) al InputField de la constraseña
-    /// </summary>
-    [SerializeField] public TMP_InputField L_PasswordInput;
-    /// <summary>
-    /// Referencia al log de información del login
-    /// </summary>
-    [SerializeField] public TMP_Text LoginInfo;
 
     #endregion
 
@@ -78,13 +72,12 @@ public class Login : MonoBehaviour
 
     private void Start()
     {
-        L_UsernameInput.characterLimit = MAX_CHARS;
-        L_PasswordInput.characterLimit = MAX_CHARS;
-        R_UsernameInput.characterLimit = MAX_CHARS;
-        R_PasswordInput.characterLimit = MAX_CHARS;
+        // Limitación de caracteres máximos de los inputs
+        UsernameInput.characterLimit = MAX_CHARS;
+        PasswordInput.characterLimit = MAX_CHARS;
 
-        RegisterInfo.text = "";
-        LoginInfo.text = "";
+        // Limpieza del log
+        Log.text = "";
     }
 
     #endregion
@@ -92,65 +85,89 @@ public class Login : MonoBehaviour
     #region LoginMethods
 
     /// <summary>
-    /// 
+    /// Método para establecer conexión
     /// </summary>
-    /// <param name="mode"></param>
     public void OnConnect()
     {
         if (!IsConnecting && ValidateInputs())
         {
             IsConnecting = true;
 
-            switch (Mode)
-            {
-                case LoginMode.REGISTER:
-                    
-                    RegisterInfo.text = "Conectando...";
-                    
-                    if (OnAuthentication(R_UsernameInput.text, R_PasswordInput.text))
-                    {
-                        if (_gameManager._networkController.OnConnectToServer())
-                        {
-                            RegisterInfo.text = "Conectado.";
-                            _gameManager.Username = R_UsernameInput.text;
-                            _gameManager._networkController.SetNickName(R_UsernameInput.text);
-                        }
-                        else
-                        {
-                            LoginInfo.text = "Error al conectar.";
-                            IsConnecting = false;
-                        }
-                    }
-                    
-                    break;
-                case LoginMode.LOGIN:
-                    
-                    LoginInfo.text = "Conectando...";
-                    
-                    if (OnAuthentication(L_UsernameInput.text, L_PasswordInput.text))
-                    {
-                        if (_gameManager._networkController.OnConnectToServer())
-                        {
-                            LoginInfo.text = "Conectado.";
-                            _gameManager.Username = L_UsernameInput.text;
-                            _gameManager._networkController.SetNickName(L_UsernameInput.text);
-                        }
-                        else
-                        {
-                            LoginInfo.text = "Error al conectar.";
-                            IsConnecting = false;
-                        }
-                    }
-                    
-                    break;
-            }
+            string username = UsernameInput.text, password = PasswordInput.text;
+            
+            OnAuthentication(username, password);
+            StartCoroutine(OnEstablishConnection(username, password, Mode));
         }
     }
 
-    private bool OnAuthentication(string username, string password)
+    /// <summary>
+    /// Método para realizar la autentificación de inicio de sesión
+    /// </summary>
+    /// <param name="username">Nombre de usuario</param>
+    /// <param name="password">Contraseña</param>
+    private void OnAuthentication(string username, string password)
     {
+        Debug.Log("Modo: " + Mode);
+        Log.text = "Validando credenciales...";
         Authenticator.AuthWithPlayfab(username, password, Mode);
-        return true;
+    }
+
+    /// <summary>
+    /// Método ejecutado como corutina para establecer conexión con el servidor
+    /// </summary>
+    /// <param name="username">Nombre de usuario</param>
+    /// <param name="password">Contraseña</param>
+    /// <param name="mode">Modo de inicio de sesión</param>
+    /// <returns></returns>
+    /// <exception cref="LoginFailedException">Excepción producida por fallo al iniciar sesión</exception>
+    private IEnumerator OnEstablishConnection(string username, string password, LoginMode mode)
+    {
+        yield return new WaitUntil(Authenticator.IsAuthenticated);
+
+        try
+        {
+            if (Authenticator.Obj.Failed)
+            {
+                throw new LoginFailedException(Authenticator.Obj.Message)
+                {
+                    ErrorCode = Authenticator.Obj.ErrorCode
+                };
+            }
+            
+            Authenticator.Reset();
+
+            Log.text = "Conectando...";
+            
+            if (_gameManager._networkController.OnConnectToServer())
+            {
+                Log.text = "Conectado.";
+                _gameManager._networkController.SetNickName(username);
+            }
+            else
+            {
+                Log.text = "Error al conectar.";
+                IsConnecting = false;
+            }
+        }
+        catch (LoginFailedException e)
+        {
+            switch (e.ErrorCode)
+            {
+                case PlayFabErrorCode.UsernameNotAvailable:
+                    Log.text = "Nombre de usuario no disponible.";
+                    break;
+                case PlayFabErrorCode.AccountNotFound:
+                    Log.text = "Cuenta no encontrada.";
+                    break;
+                case PlayFabErrorCode.InvalidUsernameOrPassword:
+                    Log.text = "Nombre de usuario o contraseña inválido.";
+                    break;
+            }
+
+            IsConnecting = false;
+            
+            Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
+        }
     }
 
     #endregion
@@ -158,49 +175,32 @@ public class Login : MonoBehaviour
     #region CheckMethods
 
     /// <summary>
-    /// 
+    /// Método para validar la longitud de los inputs
     /// </summary>
-    /// <returns></returns>
+    /// <returns>¿Inputs válidos?</returns>
     private bool ValidateInputs()
     {
-        switch (Mode)
+        // Eliminación de espacios en la cadena de caracteres
+        UsernameInput.text = UsernameInput.text.Trim();
+        PasswordInput.text = PasswordInput.text.Trim();
+                
+        if (UsernameInput.text.Length < MIN_CHARS || PasswordInput.text.Length < MIN_CHARS)
         {
-            case LoginMode.REGISTER:
-                //
-                R_UsernameInput.text = R_UsernameInput.text.Trim();
-                R_PasswordInput.text = R_PasswordInput.text.Trim();
-        
-                //
-                if (R_UsernameInput.text.Length < MIN_CHARS || R_UsernameInput.text.Length < MIN_CHARS)
-                {
-                    RegisterInfo.text = "Longitud no correcta, mínimo " + MIN_CHARS;
-                    return false;
-                }
-
-                return true;
-            case LoginMode.LOGIN:
-                //
-                L_UsernameInput.text = L_UsernameInput.text.Trim();
-                L_PasswordInput.text = L_PasswordInput.text.Trim();
-        
-                //
-                if (L_UsernameInput.text.Length < MIN_CHARS || L_UsernameInput.text.Length < MIN_CHARS)
-                {
-                    LoginInfo.text = "Longitud no correcta, mínimo " + MIN_CHARS;
-                    return false;
-                }
-
-                return true;
+            Log.text = "Longitud no correcta, mínimo " + MIN_CHARS;
+            return false;
         }
 
-        return false;
+        return true;
     }
     
-
     #endregion
 
     #region OtherMethods
 
+    /// <summary>
+    /// Método para actualizar la variable de modo de inicio sesión
+    /// </summary>
+    /// <param name="mode">Código del modo</param>
     public void UpdateLoginMode(int mode)
     {
         switch (mode)
@@ -218,41 +218,35 @@ public class Login : MonoBehaviour
     }
     
     /// <summary>
-    /// 
+    /// Método para mostrar la contraseña
     /// </summary>
     public void ShowPasswordField()
     {
-        switch (Mode)
+        switch (PasswordInput.contentType)
         {
-            case LoginMode.REGISTER:
-                switch (R_PasswordInput.contentType)
-                {
-                    case TMP_InputField.ContentType.Standard:
-                        R_PasswordInput.contentType = TMP_InputField.ContentType.Password;
-                        break;
-                    case TMP_InputField.ContentType.Password:
-                        R_PasswordInput.contentType = TMP_InputField.ContentType.Standard;
-                        break;
-                }
-        
-                R_PasswordInput.ForceLabelUpdate();
-                
+            case TMP_InputField.ContentType.Standard:
+                PasswordInput.contentType = TMP_InputField.ContentType.Password;
                 break;
-            case LoginMode.LOGIN:
-                switch (L_PasswordInput.contentType)
-                {
-                    case TMP_InputField.ContentType.Standard:
-                        L_PasswordInput.contentType = TMP_InputField.ContentType.Password;
-                        break;
-                    case TMP_InputField.ContentType.Password:
-                        L_PasswordInput.contentType = TMP_InputField.ContentType.Standard;
-                        break;
-                }
-        
-                L_PasswordInput.ForceLabelUpdate();
-                
+            case TMP_InputField.ContentType.Password:
+                PasswordInput.contentType = TMP_InputField.ContentType.Standard;
                 break;
         }
+        
+        // Método para forzar la actualización de muestra del input
+        PasswordInput.ForceLabelUpdate();
+    }
+
+    /// <summary>
+    /// Método para limpiar los campos de los inputs
+    /// </summary>
+    public void ClearFields()
+    {
+        UsernameInput.text = "";
+        PasswordInput.text = "";
+        
+        // Método para forzar la actualización de muestra del input
+        UsernameInput.ForceLabelUpdate();
+        PasswordInput.ForceLabelUpdate();
     }
 
     #endregion
