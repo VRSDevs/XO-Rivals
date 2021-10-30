@@ -17,12 +17,6 @@ public class Cronometro : MonoBehaviour
     public float timeEnemy=-1;
     public float maxEnemy = 2f;
 
-    void Start()
-    {
-        
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -88,19 +82,21 @@ public class Cronometro : MonoBehaviour
             textoExplicativo.text = "ESTE ES TU RESULTADO!\nDERROTA CONTRA " + segundosEnemy + ":" + decimasEnemy ;
 
         }
-      
-
     }
 
     IEnumerator EsperarV()
     {
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene("PistoleroVictoria");
+        PlayerPrefs.SetInt("minigameWin", 1);
+        SceneManager.UnloadSceneAsync("Pistolero");
+        SceneManager.LoadScene("PistoleroVictoria", LoadSceneMode.Additive);
     }
     IEnumerator EsperarD()
     {
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene("Pistolero Derrota");
+        PlayerPrefs.SetInt("minigameWin", 1);
+        SceneManager.UnloadSceneAsync("Pistolero");
+        SceneManager.LoadScene("Pistolero Derrota", LoadSceneMode.Additive);
     }
 
 

@@ -1,11 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
 
 public class Player : MonoBehaviour
 {
@@ -51,7 +46,7 @@ public class Player : MonoBehaviour
         currentPosition.x += movementInput * Speed * Time.deltaTime;
         transform.position = currentPosition;
 
-        if (grounded = true)
+        if (grounded == true)
         {
             float jumpInput = playerActionsController.Movement.Jump.ReadValue<float>();
             Vector3 currentJump = transform.position;
@@ -71,16 +66,14 @@ public class Player : MonoBehaviour
             textValue = "Victory";
             Victory = true;
             OnDisable();
-            SceneManager.UnloadSceneAsync("2D platform");
-            PlayerPrefs.SetInt("minigameWin", 0);
-
+            PlayerPrefs.SetInt("minigameWin", 1);
+            SceneManager.UnloadSceneAsync("2D Platform");
         }
     }
 
  
   private void OnCollisionEnter2D(Collision2D collision)
   {
-        
       if (collision.gameObject.CompareTag ("Respawn")) {
                    player.transform.position = new Vector2(respawn.position.x,respawn.position.y);
       }

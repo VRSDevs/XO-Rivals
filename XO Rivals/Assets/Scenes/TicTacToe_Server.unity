@@ -2147,6 +2147,7 @@ MonoBehaviour:
   screenTxt: {fileID: 1645783950}
   miniGameChoosing: {fileID: 182991351}
   ticTacScreen: {fileID: 8973622830577669342}
+  buttonsScript: {fileID: 8973622830952278642}
   buttonsReference:
   - {fileID: 8973622832333863753}
   - {fileID: 8973622831659900303}
@@ -2321,6 +2322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circle: {fileID: 21300000, guid: ad0f0796b033909459e01f6021989ebb, type: 3}
   cross: {fileID: 21300000, guid: 1e7c7a5b107dec6459fa0a030475b736, type: 3}
+  gameState: {fileID: 0}
 --- !u!224 &8973622830952278643
 RectTransform:
   m_ObjectHideFlags: 0

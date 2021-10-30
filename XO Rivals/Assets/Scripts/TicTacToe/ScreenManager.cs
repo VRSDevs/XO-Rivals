@@ -10,9 +10,6 @@ public class ScreenManager : MonoBehaviour
 
     //Timer variable
     private float totalTime = 2f;
-   
-    //Set turn to whoever starts (variable managed from other scene)
-    public static int turn = 0;
 
     //Control of miniGameChoosing
     [SerializeField] private GameObject miniGameChoosing;
@@ -25,19 +22,23 @@ public class ScreenManager : MonoBehaviour
 
     void Start(){
 
-        if(turn == 0){
+        if(buttonsScript.gameState.WhosTurn == buttonsScript.gameState.PlayerInfoO){
             StartCoroutine(txtTimer("Turno de O"));
         }else{
             StartCoroutine(txtTimer("Turno de X"));
         }        
     }
 
-    public void UpdateTurn(int num){
+    public void UpdateTurn(PlayerInfo playerTurn){
 
-        turn = num;
+        if(buttonsScript.gameState.PlayerInfoO == playerTurn)
+            buttonsScript.gameState.WhosTurn = buttonsScript.gameState.PlayerInfoX;
+        else
+            buttonsScript.gameState.WhosTurn = buttonsScript.gameState.PlayerInfoO;
         
+        buttonsScript.gameState.turnMoment = 0;
         //Display turn in screen
-        if(turn == 0){            
+        if(buttonsScript.gameState.WhosTurn == buttonsScript.gameState.PlayerInfoO){            
             StartCoroutine(txtTimer("Turno de O"));
         }else{
             StartCoroutine(txtTimer("Turno de X"));
@@ -67,7 +68,7 @@ public class ScreenManager : MonoBehaviour
         for(int i = 0; i < buttonsScript.gameState.chips.Count; i++)
             buttonsScript.gameState.chips[i].SetActive(true);
 
-        UpdateTurn(Mathf.Abs(turn-1));
+        UpdateTurn(buttonsScript.gameState.WhosTurn);
 
         //Disable interaction with tictac
         DisableButtons();

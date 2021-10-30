@@ -95,5 +95,17 @@ public class GameManager : MonoBehaviour
     
     #endregion
 
+    #region Photon
     
+    public void OnCreateRoom(PlayerInfo player){
+        //Match ID y OwnerID for beta version
+        PlayerInfoO = player;
+        WhosTurn = player;
+    }
+
+    public void OnConnectToRoom(PlayerInfo player){
+
+        PlayerInfoX = player;
+    }
+    #endregion
 }

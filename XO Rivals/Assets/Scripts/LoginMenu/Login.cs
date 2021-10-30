@@ -146,7 +146,7 @@ public class Login : MonoBehaviour
                 PlayerInfo playerInfo = myPlayer.AddComponent<PlayerInfo>();
                 DontDestroyOnLoad(myPlayer);
                 playerInfo.name = username;
-                //myPlayer.Id = get ID from server
+                //myPlayer.Id = get ID from server //innecesario
                 //myPlayer.Elo = get ELO from server
             }
             else
