@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class Player : MonoBehaviour
 {
@@ -69,6 +71,9 @@ public class Player : MonoBehaviour
             textValue = "Victory";
             Victory = true;
             OnDisable();
+            SceneManager.UnloadSceneAsync("2D platform");
+            PlayerPrefs.SetInt("minigameWin", 0);
+
         }
     }
 
