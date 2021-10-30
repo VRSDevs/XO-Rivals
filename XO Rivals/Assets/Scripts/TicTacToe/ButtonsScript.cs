@@ -27,6 +27,15 @@ public class ButtonsScript : MonoBehaviour
     //Minigame won
     private bool miniWin;
 
+<<<<<<< Updated upstream
+=======
+    //Match controller
+    public GameManager gameState;
+
+    //Local player
+    private PlayerInfo localPlayer;
+
+>>>>>>> Stashed changes
     private void Awake() {
         //Create the circle
         circleGO = new GameObject();
@@ -40,24 +49,59 @@ public class ButtonsScript : MonoBehaviour
         crossRenderer.sprite = cross;
         crossGO.SetActive(false);
 
+<<<<<<< Updated upstream
         //Fill array
         positions = new int[3,3];
         for(int i = 0; i < positions.GetLength(0); i++){
             for(int j = 0; j < positions.GetLength(1); j++){
                 positions[i,j] = 3;
+=======
+        gameState = FindObjectOfType<GameManager>();
+        localPlayer = FindObjectOfType<PlayerInfo>();
+
+        //If its a new match, there is no playerX
+        if(gameState.PlayerInfoX == null){ 
+
+            //Fill array
+            gameState.filledPositions = new int[3,3];
+            for(int i = 0; i < gameState.filledPositions.GetLength(0); i++){
+                for(int j = 0; j < gameState.filledPositions.GetLength(1); j++){
+                    gameState.filledPositions[i,j] = 3;
+                }
+>>>>>>> Stashed changes
             }
         }
 
         //Initialize ScreenManager
         screenManager = FindObjectOfType<ScreenManager>();
+<<<<<<< Updated upstream
+=======
+    }
+    
+    public void Start(){
+
+        //If its your turn, play, if its not, only can see
+        if(gameState.WhosTurn == localPlayer){
+>>>>>>> Stashed changes
 
         //Start variables
         filled = 0;
         chipList = new List<GameObject>();
 
+<<<<<<< Updated upstream
         //Return opponent chosen minigame (if exists)
         if(PlayerPrefs.HasKey("minigameChosen"))
             miniChosen = PlayerPrefs.GetInt("minigameChosen");
+=======
+            }else if(gameState.turnMoment == 2){
+                //Go to choose minigame
+                screenManager.MinigameSelectionActivation();
+            }
+        }else{
+            //Disable interaction with tictac cause its not your turn
+            screenManager.DisableButtons();
+        }
+>>>>>>> Stashed changes
     }
     
     public void PlaceTile(int pos){
@@ -70,7 +114,7 @@ public class ButtonsScript : MonoBehaviour
         if(positions[col,row] == 3){
             
             //Places a sprite or another depending on turn
-            if(ScreenManager.turn == 0){
+            if(gameState.PlayerInfoO == localPlayer){
                 
                 GameObject newCircle = Instantiate(circleGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
                 newCircle.SetActive(true);
@@ -116,7 +160,11 @@ public class ButtonsScript : MonoBehaviour
                 screenManager.MinigameSelectionActivation();
 
                 //Save pos
+<<<<<<< Updated upstream
                 positions[col,row] = ScreenManager.turn;
+=======
+                gameState.filledPositions[col,row] = 0;
+>>>>>>> Stashed changes
 
                 //Disable input because its not your turn
             }else{
@@ -165,6 +213,9 @@ public class ButtonsScript : MonoBehaviour
                 //Save pos
                 positions[col,row] = ScreenManager.turn;
 
+                //Save pos
+                gameState.filledPositions[col,row] = 1;
+
                 //Disable input because its not your turn
             }
 
@@ -183,6 +234,40 @@ public class ButtonsScript : MonoBehaviour
         }
     }
 
+<<<<<<< Updated upstream
+=======
+    private void PlayMinigame(){
+
+        miniWin = false;
+        switch(gameState.miniGameChosen){
+            case 0:
+                SceneManager.LoadScene("Pistolero", LoadSceneMode.Additive);
+            break;
+
+            case 1:
+                SceneManager.LoadScene("MinijuegoComida", LoadSceneMode.Additive);
+            break;
+
+            case 2:
+                SceneManager.LoadScene("2D Platform", LoadSceneMode.Additive);
+            break;
+        }
+
+        //Check minigame win
+        miniWin = (PlayerPrefs.GetInt("minigameWin") == 1);
+        if(miniWin == true){
+            //Save position
+            gameState.filledPositions[col,row] = (gameState.WhosTurn == gameState.PlayerInfoO ? 0: 1);
+            //Paint tile completely
+            actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
+        }else{
+            Destroy(actualChip);
+            StartCoroutine(screenManager.txtTimer("¡Turno perdido!"));
+        }
+        gameState.turnMoment = 2;
+    }
+
+>>>>>>> Stashed changes
     public void CheckVictory(){
 
         bool[] array = new bool[8];
