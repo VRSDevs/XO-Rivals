@@ -263,16 +263,40 @@ public class ButtonsScript : MonoBehaviour
                 win = TestDiag(i%6);
             }
 
-            if(win){
+            if(win)
+            {
+                PlayerInfo localPlayer = FindObjectOfType<PlayerInfo>();
+
+                gameState.IsPlaying = false;
+                
                 //Call endgame
-                if(gameState.filledPositions[col,row] == 0)
-                    /*
-                    //Go to Victory / Lose screen depending on who you are (must be a variable stored in the match within the player ID) 
-                    */
+                if (gameState.filledPositions[col, row] == 0)
+                {
                     Debug.Log("CIRCLE WIN");
+                    
+                    if (localPlayer.Name == gameState.PlayerInfoO.Name)
+                    {
+                        FindObjectOfType<EndGameScript>().ShowMatchVictory();
+                    }
+                    else
+                    {
+                        FindObjectOfType<EndGameScript>().ShowMatchDefeat();
+                    }
+                }
                 else
+                {
                     Debug.Log("CROSS WINS");
-            break;
+
+                    if (localPlayer.Name == gameState.PlayerInfoX.Name)
+                    {
+                        FindObjectOfType<EndGameScript>().ShowMatchVictory();
+                    }
+                    else
+                    {
+                        FindObjectOfType<EndGameScript>().ShowMatchDefeat();
+                    }
+                }
+                break;
             }
 
             i++;
