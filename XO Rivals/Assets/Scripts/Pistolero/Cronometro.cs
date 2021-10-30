@@ -16,6 +16,7 @@ public class Cronometro : MonoBehaviour
     public Text textoExplicativo;
     public float timeEnemy=-1;
     public float maxEnemy = 2f;
+    public CambioEscenaDerrotaVictoria cambioEscena;
 
     // Update is called once per frame
     void Update()
@@ -71,14 +72,15 @@ public class Cronometro : MonoBehaviour
         if (time<timeEnemy && time >=0)
         {
 
-            StartCoroutine("EsperarV");
-
+            //StartCoroutine("EsperarV");
+            cambioEscena.win = true;
             textoExplicativo.text = "This is your result!\nVICTORY AGAINST "+ segundosEnemy + ":" + decimasEnemy ;
 
         }//DERROTA
         else
         {
-            StartCoroutine("EsperarD");
+            cambioEscena.win = false;
+            //StartCoroutine("EsperarD");
             textoExplicativo.text = "This is your result!\nLOOSE AGAINST " + segundosEnemy + ":" + decimasEnemy ;
 
         }
