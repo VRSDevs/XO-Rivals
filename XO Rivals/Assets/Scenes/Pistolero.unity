@@ -476,6 +476,7 @@ MonoBehaviour:
   textoExplicativo: {fileID: 438854522}
   timeEnemy: -1
   maxEnemy: 2
+  cambioEscena: {fileID: 1016032010}
 --- !u!1 &1016032009
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,9 +503,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1016032009}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea7ba0c59179b6b4e95e5fe37fcb4bb4, type: 3}
+  m_Script: {fileID: 11500000, guid: 183069d3e9be2c84ab1429544fc787e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  win: 0
 --- !u!4 &1016032011
 Transform:
   m_ObjectHideFlags: 0
@@ -798,9 +800,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1016032010}
-        m_TargetAssemblyTypeName: CambiarEscena, Assembly-CSharp
+        m_TargetAssemblyTypeName: CambioEscenaDerrotaVictoria, Assembly-CSharp
         m_MethodName: cambiarEscena
-        m_Mode: 5
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
