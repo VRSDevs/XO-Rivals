@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 
 public class Player : MonoBehaviour
@@ -22,12 +23,14 @@ public class Player : MonoBehaviour
     public Transform respawn;
     private Vector2 respawnPlayer;
     public GameObject player;
+    private float movementInput;
 
     // Start is called before the first frame update
     void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         playerActionsController = new PlayerActionsController();
+     
     }
 
     public void OnEnable()
@@ -46,11 +49,8 @@ public class Player : MonoBehaviour
     {
         textElement.text = textValue;
         
-        float movementInput = playerActionsController.Movement.Move.ReadValue<float>();
-        Vector3 currentPosition = transform.position;
-        currentPosition.x += movementInput * Speed * Time.deltaTime;
-        transform.position = currentPosition;
-
+        body.velocity = new Vector2(movementInput*speed,body.velocity.y);
+        
         if (grounded = true)
         {
             float jumpInput = playerActionsController.Movement.Jump.ReadValue<float>();
@@ -59,11 +59,51 @@ public class Player : MonoBehaviour
             transform.position = currentJump;
             grounded = false;
 
-        }
+        } 
     }
 
+    public void Jump2()
+    {
+        if (grounded = true)
+        {
+            body.velocity = new Vector2(body.velocity.x,jumpSpeed);
 
-    private void OnTriggerEnter2D(Collider2D other)
+        } 
+    }
+    
+    public void Jump(float jumpInput)
+    {
+        if (grounded = true)
+        {
+            jumpInput = playerActionsController.Movement.Jump.ReadValue<float>();
+            Vector3 currentJump = transform.position;
+            currentJump.y += jumpInput * jumpSpeed * Time.deltaTime;
+            transform.position = currentJump;
+            grounded = false;
+
+        } 
+    }
+
+    public void MoveLeft()
+    {
+        movementInput = -1;
+    }
+    
+    public void MoveRight()
+    {
+        movementInput = 1;
+    }
+
+    public void Stop()
+    {
+        movementInput = 0;
+    }
+    public void Move(InputAction.CallbackContext context)
+    {
+        movementInput = context.ReadValue<Vector2>().x;
+    }
+
+private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Finish"))
         {
