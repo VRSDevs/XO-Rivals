@@ -51,15 +51,7 @@ public class Player : MonoBehaviour
         
         body.velocity = new Vector2(movementInput*speed,body.velocity.y);
         
-        if (grounded = true)
-        {
-            float jumpInput = playerActionsController.Movement.Jump.ReadValue<float>();
-            Vector3 currentJump = transform.position;
-            currentJump.y += jumpInput * jumpSpeed * Time.deltaTime;
-            transform.position = currentJump;
-            grounded = false;
-
-        } 
+ 
     }
 
     public void Jump2(InputAction.CallbackContext context)
@@ -78,24 +70,14 @@ public class Player : MonoBehaviour
         }
         
         
-        {
-            body.velocity = new Vector2(body.velocity.x,jumpSpeed);
-
-        }
-        
-        
-        if (grounded = true)
-        {
-            body.velocity = new Vector2(body.velocity.x,jumpSpeed);
-
-        } 
+       
     }
     
-    public void Jump(float jumpInput)
+    public void Jump()
     {
         if (grounded = true)
         {
-            jumpInput = playerActionsController.Movement.Jump.ReadValue<float>();
+            float jumpInput = playerActionsController.Movement.Jump.ReadValue<float>();
             Vector3 currentJump = transform.position;
             currentJump.y += jumpInput * jumpSpeed * Time.deltaTime;
             transform.position = currentJump;
