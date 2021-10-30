@@ -1,8 +1,8 @@
 using System;
+using UnityEngine;
 
-public class PlayerInfo
-{
-    
+public class PlayerInfo : MonoBehaviour {
+        
     #region Variables
     
     /// <summary>

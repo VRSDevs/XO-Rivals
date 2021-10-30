@@ -2147,6 +2147,16 @@ MonoBehaviour:
   screenTxt: {fileID: 1645783950}
   miniGameChoosing: {fileID: 182991351}
   ticTacScreen: {fileID: 8973622830577669342}
+  buttonsReference:
+  - {fileID: 8973622832333863753}
+  - {fileID: 8973622831659900303}
+  - {fileID: 8973622832271774250}
+  - {fileID: 8973622830539711081}
+  - {fileID: 8973622832415988407}
+  - {fileID: 8973622831788748484}
+  - {fileID: 8973622831829132099}
+  - {fileID: 8973622831828787378}
+  - {fileID: 8973622831403405501}
 --- !u!222 &8973622830711506364
 CanvasRenderer:
   m_ObjectHideFlags: 0

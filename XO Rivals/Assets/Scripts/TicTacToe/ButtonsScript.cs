@@ -14,18 +14,19 @@ public class ButtonsScript : MonoBehaviour
     private ScreenManager screenManager;
 
     //Array of positions
-    private int[,] positions;
-    public static List<GameObject> chipList;
+    private GameObject actualChip;
 
     //Variables for victory
-    int col, row, filled;
+    int col, row;
 
     //Minigame chosen
-    public static int miniChosen;
     private int opponentMinigame;
 
     //Minigame won
     private bool miniWin;
+
+    //Match controller
+    public GameManager gameState;
 
     private void Awake() {
         //Create the circle
@@ -40,24 +41,54 @@ public class ButtonsScript : MonoBehaviour
         crossRenderer.sprite = cross;
         crossGO.SetActive(false);
 
-        //Fill array
-        positions = new int[3,3];
-        for(int i = 0; i < positions.GetLength(0); i++){
-            for(int j = 0; j < positions.GetLength(1); j++){
-                positions[i,j] = 3;
+        gameState = FindObjectOfType<GameManager>();
+
+        //If its a new match (dont know how to know it)
+        if(gameState == null){  //??
+
+            //Fill array
+            gameState.filledPositions = new int[3,3];
+            for(int i = 0; i < gameState.filledPositions.GetLength(0); i++){
+                for(int j = 0; j < gameState.filledPositions.GetLength(1); j++){
+                    gameState.filledPositions[i,j] = 3;
+                }
             }
+            
+            //Start variables
+            gameState.numFilled = 0;
+            gameState.chips = new List<GameObject>(); 
+            
+            //El minijuego es elegido automaticamente
+            gameState.miniGameChosen = Random.Range(0,2);
+            gameState.turnMoment = 0;
         }
 
         //Initialize ScreenManager
         screenManager = FindObjectOfType<ScreenManager>();
+    }
+    
+    public void Start(){
 
-        //Start variables
-        filled = 0;
-        chipList = new List<GameObject>();
+        //If its your turn, play, if its not, only can see
+        //if(gameState.WhosTurn == playerInfo me){
 
-        //Return opponent chosen minigame (if exists)
-        if(PlayerPrefs.HasKey("minigameChosen"))
-            miniChosen = PlayerPrefs.GetInt("minigameChosen");
+            //Depending of turn moment, player will encounter a "different scene"
+            //if(turnInstant == 0){
+                //Nothing happens
+            /*}else*/
+            if(gameState.turnMoment == 1){
+                //Go directly to minigame
+                PlayMinigame();
+
+            }else if(gameState.turnMoment == 2){
+                //Go to choose minigame
+                screenManager.MinigameSelectionActivation();
+
+            }
+        //}else{
+            //Disable interaction with tictac cause its not your turn
+        //    screenManager.DisableButtons();
+        //}
     }
     
     public void PlaceTile(int pos){
@@ -67,120 +98,100 @@ public class ButtonsScript : MonoBehaviour
         row = pos / 3;
         
         //Check if position is already filled
-        if(positions[col,row] == 3){
+        if(gameState.filledPositions[col,row] == 3){
             
             //Places a sprite or another depending on turn
             if(ScreenManager.turn == 0){
                 
-                GameObject newCircle = Instantiate(circleGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
-                newCircle.SetActive(true);
-                newCircle.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+                //Place chip
+                actualChip = Instantiate(circleGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
+                actualChip.SetActive(true);
+                actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+                gameState.turnMoment = 1;
 
-                /*//Go to minigame
-                public bool miniWin = false; //This variable will be written from minigames
-                switch(miniChosen){
-                    case 0:
-                        SceneManager.LoadScene("Pistolero", LoadSceneMode.Additive);
-                    break;
-
-                    case 1:
-                        SceneManager.LoadScene("Minijuego1", LoadSceneMode.Additive);
-                    break;
-
-                    case 2:
-                        SceneManager.LoadScene("Minijuego2", LoadSceneMode.Additive);
-                    break;
-
-                }
-
-                //Check minigame win
-                miniWin = PlayerPrefs.GetInt("minigameWin");
-                if(miniWin == 1){
-                    //Save position
-                    positions[col,row] = ScreenManager.turn;
-                    //Paint tile completely
-                    newCircle.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
-                }else{
-                    destroy(newCircle);
-                    StartCoroutine(screenManager.txtTimer("¡Turno perdido!"));
-                }
-
-                */
+                //Go to minigame
+                PlayMinigame();
 
                 //Add chip to list to hide
-                chipList.Add(newCircle);
-                for(int i = 0; i < chipList.Count; i++)
-                    chipList[i].SetActive(false);
+                gameState.chips.Add(actualChip);
+                for(int i = 0; i < gameState.chips.Count; i++)
+                    gameState.chips[i].SetActive(false);
 
                 //Go to selectMinigame for opponent
                 screenManager.MinigameSelectionActivation();
 
                 //Save pos
-                positions[col,row] = ScreenManager.turn;
+                gameState.filledPositions[col,row] = ScreenManager.turn;
 
                 //Disable input because its not your turn
+                screenManager.DisableButtons();
+
             }else{
 
-                GameObject newCross = Instantiate(crossGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
-                newCross.SetActive(true);
-                newCross.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+                //Place chip
+                actualChip = Instantiate(crossGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
+                actualChip.SetActive(true);
+                actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
 
-                /*//Go to minigame
-                public bool miniWin = false; //This variable will be written from minigames
-                switch(miniChosen){
-                    case 0:
-                        SceneManager.LoadScene("Pistolero", LoadSceneMode.Additive);
-                    break;
+                //Go to minigame
+                PlayMinigame();
 
-                    case 1:
-                        SceneManager.LoadScene("Minijuego1", LoadSceneMode.Additive);
-                    break;
-
-                    case 2:
-                        SceneManager.LoadScene("Minijuego2", LoadSceneMode.Additive);
-                    break;
-
-                }
-
-                //Check minigame win
-                if(miniWin){
-                    //Save position
-                    positions[col,row] = ScreenManager.turn;
-                    //Paint tile completely
-                    newCross.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
-                }else{
-                    destroy(newCross);
-                    StartCoroutine(screenManager.txtTimer("¡Turno perdido!"));
-                }
-
-                */
                 //Add chip to list to hide
-                chipList.Add(newCross);
-                for(int i = 0; i < chipList.Count; i++)
-                    chipList[i].SetActive(false);
+                gameState.chips.Add(actualChip);
+                for(int i = 0; i < gameState.chips.Count; i++)
+                    gameState.chips[i].SetActive(false);
 
                 //Go to selectMinigame for opponent
                 screenManager.MinigameSelectionActivation();
-                
-                //Save pos
-                positions[col,row] = ScreenManager.turn;
 
                 //Disable input because its not your turn
+                screenManager.DisableButtons();
             }
 
             //Add one to count
-            filled++;
+            gameState.numFilled++;
         
             //Check victory
             CheckVictory();
 
             //Table full (draw)
-            if(filled == 9){
+            if(gameState.numFilled == 9){
                 Debug.Log("Draw");
             }
         }else{
             Debug.Log("Tile not empty");
         }
+    }
+
+    private void PlayMinigame(){
+
+            miniWin = false;
+            switch(gameState.miniGameChosen){
+                case 0:
+                    SceneManager.LoadScene("Pistolero", LoadSceneMode.Additive);
+                break;
+
+                case 1:
+                    SceneManager.LoadScene("MinijuegoComida", LoadSceneMode.Additive);
+                break;
+
+                case 2:
+                    SceneManager.LoadScene("2D Platform", LoadSceneMode.Additive);
+                break;
+            }
+
+            //Check minigame win
+                miniWin = (PlayerPrefs.GetInt("minigameWin") == 1);
+                if(miniWin == true){
+                    //Save position
+                    gameState.filledPositions[col,row] = ScreenManager.turn;
+                    //Paint tile completely
+                    actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
+                }else{
+                    Destroy(actualChip);
+                    StartCoroutine(screenManager.txtTimer("¡Turno perdido!"));
+                }
+            gameState.turnMoment = 2;
     }
 
     public void CheckVictory(){
@@ -246,7 +257,7 @@ public class ButtonsScript : MonoBehaviour
 
             if(win){
                 //Call endgame
-                if(positions[col,row] == 0)
+                if(gameState.filledPositions[col,row] == 0)
                     /*
                     //Go to Victory / Lose screen depending on who you are (must be a variable stored in the match within the player ID) 
                     */
@@ -265,8 +276,8 @@ public class ButtonsScript : MonoBehaviour
         int j = 0;
 
         //Pick first tile in column if its not empty
-        if(positions[col,j] != 3){
-            type = positions[col,j];
+        if(gameState.filledPositions[col,j] != 3){
+            type = gameState.filledPositions[col,j];
             j++;
         }else{
             return false;
@@ -274,7 +285,7 @@ public class ButtonsScript : MonoBehaviour
 
         //Check if all other tiles are the same
         do{
-            if(positions[col,j] != type){
+            if(gameState.filledPositions[col,j] != type){
                 return false;
             }
             j++;
@@ -288,8 +299,8 @@ public class ButtonsScript : MonoBehaviour
         int j = 0;
 
         //Pick first tile in column if its not empty
-        if(positions[j,row] != 3){
-            type = positions[j,row];
+        if(gameState.filledPositions[j,row] != 3){
+            type = gameState.filledPositions[j,row];
             j++;
         }else{
             return false;
@@ -297,7 +308,7 @@ public class ButtonsScript : MonoBehaviour
 
         //Check if all other tiles are the same
         do{
-            if(positions[j,row] != type){
+            if(gameState.filledPositions[j,row] != type){
                 return false;
             }
             j++;
@@ -313,8 +324,8 @@ public class ButtonsScript : MonoBehaviour
         //First diagonal
         if(diag == 0){
             //Pick first tile in column if its not empty
-            if(positions[diag,j] != 3){
-                type = positions[diag,j];
+            if(gameState.filledPositions[diag,j] != 3){
+                type = gameState.filledPositions[diag,j];
                 j++;
                 diag++;
             }else{
@@ -323,7 +334,7 @@ public class ButtonsScript : MonoBehaviour
 
             //Check if all other tiles are the same
             do{
-                if(positions[diag,j] != type){
+                if(gameState.filledPositions[diag,j] != type){
                     return false;
                 }
                 diag++;
@@ -336,8 +347,8 @@ public class ButtonsScript : MonoBehaviour
         }else{
             diag++;
             //Pick first tile in column if its not empty
-            if(positions[diag,j] != 3){
-                type = positions[diag,j];
+            if(gameState.filledPositions[diag,j] != 3){
+                type = gameState.filledPositions[diag,j];
                 j++;
                 diag--;
             }else{
@@ -346,7 +357,7 @@ public class ButtonsScript : MonoBehaviour
 
             //Check if all other tiles are the same
             do{
-                if(positions[diag,j] != type){
+                if(gameState.filledPositions[diag,j] != type){
                     return false;
                 }
                 diag--;

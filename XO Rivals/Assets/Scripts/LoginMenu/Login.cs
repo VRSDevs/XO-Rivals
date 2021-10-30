@@ -142,6 +142,12 @@ public class Login : MonoBehaviour
             {
                 Log.text = "Conectado.";
                 _gameManager._networkController.SetNickName(username);
+                GameObject myPlayer = new GameObject();
+                PlayerInfo playerInfo = myPlayer.AddComponent<PlayerInfo>();
+                DontDestroyOnLoad(myPlayer);
+                playerInfo.name = username;
+                //myPlayer.Id = get ID from server
+                //myPlayer.Elo = get ELO from server
             }
             else
             {

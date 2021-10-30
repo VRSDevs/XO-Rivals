@@ -38,6 +38,30 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public PlayerInfo WhosTurn;
     
+    /// <summary>
+    /// Información del momento del turno en el que esta el jugador
+    /// turnMoment = 0 -> Toca colocar ficha
+    /// turnMoment = 1 -> Toca jugar el minijuego
+    /// turnMoment = 2 -> Toca elegir minijuego
+    /// </summary>
+    public int turnMoment;      
+    /// <summary>
+    /// Numero de fichas colocadas
+    /// </summary>
+    public int numFilled;
+    /// <summary>
+    /// Posicion de fichas colocadas
+    /// </summary>
+    public int[,] filledPositions;    
+    /// <summary>
+    /// Array de fichas colocadas
+    /// </summary>
+    public List<GameObject> chips;
+    /// <summary>
+    /// Minijuego elegido
+    /// </summary>
+    public int miniGameChosen;
+    
     ////////////////// USUARIO //////////////////
     /// <summary>
     /// ¿En qué versión de WebGL está?
