@@ -169,9 +169,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnPlayerLeftRoom(otherPlayer);
         
-        Debug.Log("El otro jugador abandonó la partida. Ganaste.");
-        
-        SceneManager.LoadScene("MainMenu");
+        FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
     }
 
     #endregion
