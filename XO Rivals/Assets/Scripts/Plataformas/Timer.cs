@@ -34,6 +34,7 @@ public class Timer : MonoBehaviour
                 lost = true;
                 ScriptPlayer.OnDisable();
                 PlayerPrefs.SetInt("minigameWin", 0);
+
                 SceneManager.UnloadSceneAsync("2D Platform");
             }
 

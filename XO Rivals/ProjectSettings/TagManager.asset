@@ -16,6 +16,7 @@ TagManager:
   - Checkpoint3
   - Checkpoint2
   - Log
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Ground
   - 
   - 
   - 
