@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class Timer : MonoBehaviour
@@ -35,6 +36,9 @@ public class Timer : MonoBehaviour
                 ScriptPlayer.textValue = " Game Over";
                 lost = true;
                 ScriptPlayer.OnDisable();
+                PlayerPrefs.SetInt("minigameWin", 1);
+                SceneManager.UnloadSceneAsync("2D platform");
+
 
             }
 
