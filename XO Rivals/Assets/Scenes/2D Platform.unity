@@ -3850,7 +3850,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 990121615}
           m_TargetAssemblyTypeName: Player, Assembly-CSharp
-          m_MethodName: Jump2
+          m_MethodName: Jump
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4215,7 +4215,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704283832}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -224.76822, y: -56.80599, z: 0}
+  m_LocalPosition: {x: -224.76822, y: -57.5, z: 0}
   m_LocalScale: {x: 5.036914, y: 0.6176579, z: 1}
   m_Children: []
   m_Father: {fileID: 239996378}
@@ -5008,18 +5008,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.015831158, y: 0.024524212}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.56, y: 2.56}
+    oldSize: {x: 1.9377778, y: 2.951111}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.56, y: 2.56}
+  m_Size: {x: 1.0088483, y: 2.9360352}
   m_EdgeRadius: 0
 --- !u!212 &990121613
 SpriteRenderer:
@@ -5061,7 +5061,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4cd77cf0782d69948997db4d5e503f1e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b681af5b834cf546b1deda9cd50fa74, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5080,8 +5080,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990121610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -348.86, y: -112.64, z: 0}
-  m_LocalScale: {x: 0.60560334, y: 0.5862793, z: 0.35293}
+  m_LocalPosition: {x: -348.86, y: -112.288, z: 0}
+  m_LocalScale: {x: 0.9292377, y: 0.8995869, z: 0.5415358}
   m_Children:
   - {fileID: 148672725}
   m_Father: {fileID: 0}
@@ -5102,7 +5102,6 @@ MonoBehaviour:
   textValue: 
   textElement: {fileID: 568630036}
   speed: 13
-  Speed: 13
   jumpSpeed: 20
   Victory: 0
   respawn: {fileID: 1569721264}
@@ -5149,7 +5148,19 @@ MonoBehaviour:
     m_ActionId: b25a6939-c9b0-44f3-9fe7-ad7cb23c9e82
     m_ActionName: Movement/Move[/Keyboard/a,/Keyboard/d,/Keyboard/leftArrow,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 990121615}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Jump2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f6567d88-f7c5-4d8c-80ce-8011e0c567a5
     m_ActionName: Movement/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
@@ -9579,7 +9590,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1822789535}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -225.85715, y: -51.36148, z: 0}
+  m_LocalPosition: {x: -225.85715, y: -50.45, z: 0}
   m_LocalScale: {x: 3.9642391, y: 1.5967094, z: 1}
   m_Children: []
   m_Father: {fileID: 239996378}
