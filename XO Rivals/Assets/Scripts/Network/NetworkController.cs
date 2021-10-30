@@ -127,6 +127,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.PlayerCount == MAX_PLAYERS_INROOM)
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala llena. Empezando partida...";
+            
+            FindObjectOfType<GameManager>().IsPlaying = true;
 
             SceneManager.LoadScene("TicTacToe_Server");
         }
@@ -158,7 +160,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala llena. Empezando partida...";
 
             FindObjectOfType<GameManager>().IsPlaying = true;
-            
+
             SceneManager.LoadScene("TicTacToe_Server");
         }
     }
