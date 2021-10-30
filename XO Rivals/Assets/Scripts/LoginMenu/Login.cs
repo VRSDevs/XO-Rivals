@@ -172,7 +172,7 @@ public class Login : MonoBehaviour
             }
 
             IsConnecting = false;
-            
+
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
         }
     }
