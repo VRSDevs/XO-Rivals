@@ -66,7 +66,7 @@ public class ComidaController : MonoBehaviour
         {
             // Aqui se manda a alberto la derrota
             PlayerPrefs.SetInt("minigameWin", 0);
-            SceneManager.UnloadSceneAsync("Minijuego Comida");            
+            SceneManager.UnloadSceneAsync("MinijuegoComida");            
         }
     }
 

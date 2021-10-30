@@ -73,6 +73,9 @@ public class ButtonsScript : MonoBehaviour
     
     public void Start(){
 
+        Debug.Log(gameState.WhosTurn);
+        Debug.Log(localPlayer);
+
         //If its your turn, play, if its not, only can see
         if(gameState.WhosTurn == localPlayer){
 
