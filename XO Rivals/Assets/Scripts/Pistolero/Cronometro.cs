@@ -16,12 +16,7 @@ public class Cronometro : MonoBehaviour
     public Text textoExplicativo;
     public float timeEnemy=-1;
     public float maxEnemy = 2f;
-
-    void Start()
-    {
-        
-        
-    }
+    public CambioEscenaDerrotaVictoria cambioEscena;
 
     // Update is called once per frame
     void Update()
@@ -53,7 +48,7 @@ public class Cronometro : MonoBehaviour
     public void activarCrono()
     {
         activo = true;
-        textoExplicativo.text = "Suelta el botón cuando el cronometro llegue a 0:00";
+        textoExplicativo.text = "Release when the timer reaches 0:00";
         timeEnemy = UnityEngine.Random.Range(0f, maxEnemy);
     }
     public void finCrono()
@@ -77,30 +72,33 @@ public class Cronometro : MonoBehaviour
         if (time<timeEnemy && time >=0)
         {
 
-            StartCoroutine("EsperarV");
-
-            textoExplicativo.text = "ESTE ES TU RESULTADO!\nVICTORIA CONTRA "+ segundosEnemy + ":" + decimasEnemy ;
+            //StartCoroutine("EsperarV");
+            cambioEscena.win = true;
+            textoExplicativo.text = "This is your result!\nVICTORY AGAINST "+ segundosEnemy + ":" + decimasEnemy ;
 
         }//DERROTA
         else
         {
-            StartCoroutine("EsperarD");
-            textoExplicativo.text = "ESTE ES TU RESULTADO!\nDERROTA CONTRA " + segundosEnemy + ":" + decimasEnemy ;
+            cambioEscena.win = false;
+            //StartCoroutine("EsperarD");
+            textoExplicativo.text = "This is your result!\nLOOSE AGAINST " + segundosEnemy + ":" + decimasEnemy ;
 
         }
-      
-
     }
 
     IEnumerator EsperarV()
     {
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene("PistoleroVictoria");
+        PlayerPrefs.SetInt("minigameWin", 1);
+        SceneManager.UnloadSceneAsync("Pistolero");
+        //SceneManager.LoadScene("PistoleroVictoria", LoadSceneMode.Additive);
     }
     IEnumerator EsperarD()
     {
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene("Pistolero Derrota");
+        PlayerPrefs.SetInt("minigameWin", 1);
+        SceneManager.UnloadSceneAsync("Pistolero");
+        //SceneManager.LoadScene("Pistolero Derrota", LoadSceneMode.Additive);
     }
 
 

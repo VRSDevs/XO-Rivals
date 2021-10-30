@@ -28,6 +28,9 @@ public class ButtonsScript : MonoBehaviour
     //Match controller
     public GameManager gameState;
 
+    //Local player
+    private PlayerInfo localPlayer;
+
     private void Awake() {
         //Create the circle
         circleGO = new GameObject();
@@ -42,9 +45,10 @@ public class ButtonsScript : MonoBehaviour
         crossGO.SetActive(false);
 
         gameState = FindObjectOfType<GameManager>();
+        localPlayer = FindObjectOfType<PlayerInfo>();
 
-        //If its a new match (dont know how to know it)
-        if(gameState == null){  //??
+        //If its a new match, there is no playerX
+        if(gameState.PlayerInfoX == null){ 
 
             //Fill array
             gameState.filledPositions = new int[3,3];
@@ -69,8 +73,11 @@ public class ButtonsScript : MonoBehaviour
     
     public void Start(){
 
+        Debug.Log(gameState.WhosTurn);
+        Debug.Log(localPlayer);
+
         //If its your turn, play, if its not, only can see
-        //if(gameState.WhosTurn == playerInfo me){
+        if(gameState.WhosTurn == localPlayer){
 
             //Depending of turn moment, player will encounter a "different scene"
             //if(turnInstant == 0){
@@ -79,16 +86,14 @@ public class ButtonsScript : MonoBehaviour
             if(gameState.turnMoment == 1){
                 //Go directly to minigame
                 PlayMinigame();
-
             }else if(gameState.turnMoment == 2){
                 //Go to choose minigame
                 screenManager.MinigameSelectionActivation();
-
             }
-        //}else{
+        }else{
             //Disable interaction with tictac cause its not your turn
-        //    screenManager.DisableButtons();
-        //}
+            screenManager.DisableButtons();
+        }
     }
     
     public void PlaceTile(int pos){
@@ -101,7 +106,7 @@ public class ButtonsScript : MonoBehaviour
         if(gameState.filledPositions[col,row] == 3){
             
             //Places a sprite or another depending on turn
-            if(ScreenManager.turn == 0){
+            if(gameState.PlayerInfoO == localPlayer){
                 
                 //Place chip
                 actualChip = Instantiate(circleGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
@@ -121,7 +126,7 @@ public class ButtonsScript : MonoBehaviour
                 screenManager.MinigameSelectionActivation();
 
                 //Save pos
-                gameState.filledPositions[col,row] = ScreenManager.turn;
+                gameState.filledPositions[col,row] = 0;
 
                 //Disable input because its not your turn
                 screenManager.DisableButtons();
@@ -144,6 +149,9 @@ public class ButtonsScript : MonoBehaviour
                 //Go to selectMinigame for opponent
                 screenManager.MinigameSelectionActivation();
 
+                //Save pos
+                gameState.filledPositions[col,row] = 1;
+
                 //Disable input because its not your turn
                 screenManager.DisableButtons();
             }
@@ -165,35 +173,35 @@ public class ButtonsScript : MonoBehaviour
 
     private void PlayMinigame(){
 
-            miniWin = false;
-            switch(gameState.miniGameChosen){
-                case 0:
-                    SceneManager.LoadScene("Pistolero", LoadSceneMode.Additive);
-                break;
+        miniWin = false;
+        switch(gameState.miniGameChosen){
+            case 0:
+                SceneManager.LoadScene("Pistolero", LoadSceneMode.Additive);
+            break;
 
-                case 1:
-                    SceneManager.LoadScene("MinijuegoComida", LoadSceneMode.Additive);
-                break;
+            case 1:
+                SceneManager.LoadScene("MinijuegoComida", LoadSceneMode.Additive);
+            break;
 
-                case 2:
-                    SceneManager.LoadScene("2D Platform", LoadSceneMode.Additive);
-                break;
-            }
+            case 2:
+                SceneManager.LoadScene("2D Platform", LoadSceneMode.Additive);
+            break;
+        }
 
-            //Check minigame win
-                miniWin = (PlayerPrefs.GetInt("minigameWin") == 1);
-                if(miniWin == true){
-                    //Save position
-                    gameState.filledPositions[col,row] = ScreenManager.turn;
-                    //Paint tile completely
-                    actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
-                }else{
-                    Destroy(actualChip);
-                    StartCoroutine(screenManager.txtTimer("¡Turno perdido!"));
-                }
-            gameState.turnMoment = 2;
+        //Check minigame win
+        miniWin = (PlayerPrefs.GetInt("minigameWin") == 1);
+        if(miniWin == true){
+            //Save position
+            gameState.filledPositions[col,row] = (gameState.WhosTurn == gameState.PlayerInfoO ? 0: 1);
+            //Paint tile completely
+            actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
+        }else{
+            Destroy(actualChip);
+            StartCoroutine(screenManager.txtTimer("¡Turno perdido!"));
+        }
+        gameState.turnMoment = 2;
     }
-
+    
     public void CheckVictory(){
 
         bool[] array = new bool[8];
@@ -255,16 +263,40 @@ public class ButtonsScript : MonoBehaviour
                 win = TestDiag(i%6);
             }
 
-            if(win){
+            if(win)
+            {
+                PlayerInfo localPlayer = FindObjectOfType<PlayerInfo>();
+
+                gameState.IsPlaying = false;
+                
                 //Call endgame
-                if(gameState.filledPositions[col,row] == 0)
-                    /*
-                    //Go to Victory / Lose screen depending on who you are (must be a variable stored in the match within the player ID) 
-                    */
+                if (gameState.filledPositions[col, row] == 0)
+                {
                     Debug.Log("CIRCLE WIN");
+                    
+                    if (localPlayer.Name == gameState.PlayerInfoO.Name)
+                    {
+                        FindObjectOfType<EndGameScript>().ShowMatchVictory();
+                    }
+                    else
+                    {
+                        FindObjectOfType<EndGameScript>().ShowMatchDefeat();
+                    }
+                }
                 else
+                {
                     Debug.Log("CROSS WINS");
-            break;
+
+                    if (localPlayer.Name == gameState.PlayerInfoX.Name)
+                    {
+                        FindObjectOfType<EndGameScript>().ShowMatchVictory();
+                    }
+                    else
+                    {
+                        FindObjectOfType<EndGameScript>().ShowMatchDefeat();
+                    }
+                }
+                break;
             }
 
             i++;

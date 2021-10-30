@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     /// Información del jugador del turno
     /// </summary>
     public PlayerInfo WhosTurn;
-    
+
     /// <summary>
     /// Información del momento del turno en el que esta el jugador
     /// turnMoment = 0 -> Toca colocar ficha
@@ -95,5 +95,17 @@ public class GameManager : MonoBehaviour
     
     #endregion
 
+    #region Photon
     
+    public void OnCreateRoom(PlayerInfo player){
+        //Match ID y OwnerID for beta version
+        PlayerInfoO = player;
+        WhosTurn = player;
+    }
+
+    public void OnConnectToRoom(PlayerInfo player){
+
+        PlayerInfoX = player;
+    }
+    #endregion
 }

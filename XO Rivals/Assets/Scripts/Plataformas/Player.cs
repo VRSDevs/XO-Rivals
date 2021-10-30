@@ -1,12 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
-
 
 public class Player : MonoBehaviour
 {
@@ -74,7 +69,9 @@ public class Player : MonoBehaviour
     public void Jump2(InputAction.CallbackContext context)
     {
 
+
         if (context.performed)
+
         {
             body.velocity = new Vector2(body.velocity.x,jumpSpeed);
 
@@ -118,13 +115,14 @@ private void OnTriggerEnter2D(Collider2D other)
             textValue = "Victory";
             Victory = true;
             OnDisable();
-            SceneManager.UnloadSceneAsync("2D platform");
+
             PlayerPrefs.SetInt("minigameWin", 1);
+            SceneManager.UnloadSceneAsync("2D Platform");
+
         }
     }
 private void OnCollisionEnter2D(Collision2D collision)
   {
-        
       if (collision.gameObject.CompareTag ("Respawn")) {
                    player.transform.position = new Vector2(respawn.position.x,respawn.position.y);
       }

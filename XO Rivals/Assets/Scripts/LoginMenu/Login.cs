@@ -145,8 +145,9 @@ public class Login : MonoBehaviour
                 GameObject myPlayer = new GameObject();
                 PlayerInfo playerInfo = myPlayer.AddComponent<PlayerInfo>();
                 DontDestroyOnLoad(myPlayer);
-                playerInfo.name = username;
-                //myPlayer.Id = get ID from server
+                playerInfo.name = "PlayerObject";
+                playerInfo.Name = username;
+                //myPlayer.Id = get ID from server //innecesario
                 //myPlayer.Elo = get ELO from server
             }
             else
@@ -171,10 +172,13 @@ public class Login : MonoBehaviour
             }
 
             IsConnecting = false;
-            
+            Authenticator = new PlayFabAuthenticator();
+
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
         }
     }
+
+
 
     #endregion
 
@@ -254,6 +258,9 @@ public class Login : MonoBehaviour
         UsernameInput.ForceLabelUpdate();
         PasswordInput.ForceLabelUpdate();
     }
+
+
+    
 
     #endregion
 }

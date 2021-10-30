@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
@@ -37,9 +34,8 @@ public class Timer : MonoBehaviour
                 lost = true;
                 ScriptPlayer.OnDisable();
                 PlayerPrefs.SetInt("minigameWin", 0);
-                SceneManager.UnloadSceneAsync("2D platform");
 
-
+                SceneManager.UnloadSceneAsync("2D Platform");
             }
 
         }

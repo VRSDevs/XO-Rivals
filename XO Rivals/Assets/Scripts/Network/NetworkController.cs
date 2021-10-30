@@ -127,6 +127,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.PlayerCount == MAX_PLAYERS_INROOM)
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala llena. Empezando partida...";
+            
+            FindObjectOfType<GameManager>().IsPlaying = true;
 
             SceneManager.LoadScene("TicTacToe_Server");
         }
@@ -156,7 +158,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.PlayerCount == MAX_PLAYERS_INROOM)
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala llena. Empezando partida...";
-            
+
+            FindObjectOfType<GameManager>().IsPlaying = true;
+
             SceneManager.LoadScene("TicTacToe_Server");
         }
     }
@@ -168,10 +172,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
-        
-        Debug.Log("El otro jugador abandonó la partida. Ganaste.");
-        
-        SceneManager.LoadScene("MainMenu");
+
+        if (FindObjectOfType<GameManager>().IsPlaying)
+        {
+            FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
+        }
     }
 
     #endregion
