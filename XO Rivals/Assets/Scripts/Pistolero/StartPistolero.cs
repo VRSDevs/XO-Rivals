@@ -29,7 +29,7 @@ public class StartPistolero : MonoBehaviour
     IEnumerator Esperar()
     {
         yield return new WaitForSeconds(3);
-        text.text = "El jugador que más \n se aproxime será \n el ganador...";//cambiamos el texto explicativo despues de 3 segundos
+        text.text = "The closer you release \n higher chances to win \n good luck...";//cambiamos el texto explicativo despues de 3 segundos
         StartCoroutine("Esperar2"); //volvemos a esperar 3 segundos para que el jugador lea el texto
     }
 
@@ -37,7 +37,7 @@ public class StartPistolero : MonoBehaviour
     IEnumerator Esperar2()
     {
         yield return new WaitForSeconds(3);
-        text.text = "Pulsa el botón para comenzar\n(Mantenlo pulsado)";//cambiamos el texto explicativo despues de 3 segundos
+        text.text = "Press the button to start\n(Hold it)";//cambiamos el texto explicativo despues de 3 segundos
         boton.gameObject.SetActive(true);//Aparece elboton
     }
 

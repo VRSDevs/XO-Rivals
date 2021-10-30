@@ -8,6 +8,7 @@ public class ControlBoton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
 
     public Cronometro controlCrono;
+    public GameObject botonExit;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,7 @@ public class ControlBoton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         controlCrono.finCrono();
         this.gameObject.SetActive(false);
-
+        botonExit.SetActive(true);
 
     }
 

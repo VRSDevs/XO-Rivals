@@ -47,7 +47,7 @@ public class Cronometro : MonoBehaviour
     public void activarCrono()
     {
         activo = true;
-        textoExplicativo.text = "Suelta el botón cuando el cronometro llegue a 0:00";
+        textoExplicativo.text = "Release when the timer reaches 0:00";
         timeEnemy = UnityEngine.Random.Range(0f, maxEnemy);
     }
     public void finCrono()
@@ -73,13 +73,13 @@ public class Cronometro : MonoBehaviour
 
             StartCoroutine("EsperarV");
 
-            textoExplicativo.text = "ESTE ES TU RESULTADO!\nVICTORIA CONTRA "+ segundosEnemy + ":" + decimasEnemy ;
+            textoExplicativo.text = "This is your result!\nVICTORY AGAINST "+ segundosEnemy + ":" + decimasEnemy ;
 
         }//DERROTA
         else
         {
             StartCoroutine("EsperarD");
-            textoExplicativo.text = "ESTE ES TU RESULTADO!\nDERROTA CONTRA " + segundosEnemy + ":" + decimasEnemy ;
+            textoExplicativo.text = "This is your result!\nLOOSE AGAINST " + segundosEnemy + ":" + decimasEnemy ;
 
         }
     }
