@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
     {
         textElement.text = textValue;
         
-        body.velocity = new Vector2(movementInput*speed,body.velocity.y);
+        //body.velocity = new Vector2(movementInput*speed,body.velocity.y);
         
         if (!isFacingRight && movementInput < 0f)
         {
@@ -75,7 +75,6 @@ public class Player : MonoBehaviour
             Flip();
         }
     }
-
     public void Jump2(InputAction.CallbackContext context)
     {
 
@@ -91,18 +90,10 @@ public class Player : MonoBehaviour
 
         }
     }
-    
     public void Jump()
     {
-        if (grounded = true)
-        {
-            float jumpInput = playerActionsController.Movement.Jump.ReadValue<float>();
-            Vector3 currentJump = transform.position;
-            currentJump.y += jumpInput * jumpSpeed * Time.deltaTime;
-            transform.position = currentJump;
-            grounded = false;
+        body.velocity = Vector2.up * jumpSpeed;
 
-        } 
     }
 
     public void MoveLeft()
