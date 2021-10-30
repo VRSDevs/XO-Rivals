@@ -1013,6 +1013,7 @@ GameObject:
   - component: {fileID: 761732803}
   - component: {fileID: 761732802}
   - component: {fileID: 761732801}
+  - component: {fileID: 761732805}
   m_Layer: 5
   m_Name: EndingGame
   m_TagString: EndingUI
@@ -1103,6 +1104,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &761732805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761732800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9a06c307416d2a4a9760a8784ffdf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MatchVictory: {fileID: 1571318606}
+  MatchDefeat: {fileID: 1807290353}
+  SurrenderVictory: {fileID: 445435585}
 --- !u!1 &793464990
 GameObject:
   m_ObjectHideFlags: 0
