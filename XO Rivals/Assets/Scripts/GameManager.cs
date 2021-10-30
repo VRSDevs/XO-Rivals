@@ -48,19 +48,19 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Numero de fichas colocadas
     /// </summary>
-    public int numFilled;
+    public int NumFilled;
     /// <summary>
     /// Posicion de fichas colocadas
     /// </summary>
-    public int[,] filledPositions;    
+    public int[,] FilledPositions;    
     /// <summary>
     /// Array de fichas colocadas
     /// </summary>
-    public List<GameObject> chips;
+    public List<GameObject> Chips;
     /// <summary>
     /// Minijuego elegido
     /// </summary>
-    public int miniGameChosen;
+    public int MiniGameChosen;
     
     ////////////////// USUARIO //////////////////
     /// <summary>
@@ -107,5 +107,31 @@ public class GameManager : MonoBehaviour
 
         PlayerInfoX = player;
     }
+    
+    #endregion
+
+    #region OtherMethods
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="localPlayer"></param>
+    /// <returns></returns>
+    public Package ToPackage(PlayerInfo localPlayer)
+    {
+        Package pck = new Package();
+
+        pck.MatchId = MatchId;
+        pck.OwnerId = OwnerId;
+        pck.Player = localPlayer.Name.Equals(PlayerInfoO.Name) ? PlayerInfoO : PlayerInfoX;
+        pck.WhosTurn = WhosTurn;
+        pck.NumFilled = NumFilled;
+        pck.FilledPositions = FilledPositions;
+        pck.Chips = Chips;
+        pck.MinigameChosen = MiniGameChosen;
+
+        return pck;
+    }
+
     #endregion
 }
