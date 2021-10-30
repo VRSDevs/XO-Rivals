@@ -2573,7 +2573,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: 'Right
+
+'
 --- !u!222 &359536746
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4322,9 +4324,9 @@ GameObject:
   - component: {fileID: 809507963}
   - component: {fileID: 809507962}
   - component: {fileID: 809507961}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4944,7 +4946,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Left
 --- !u!222 &960453377
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5102,7 +5104,7 @@ MonoBehaviour:
   textValue: 
   textElement: {fileID: 568630036}
   speed: 13
-  jumpSpeed: 20
+  jumpSpeed: 15
   Victory: 0
   respawn: {fileID: 1569721264}
   player: {fileID: 990121610}
@@ -6795,7 +6797,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Jump
 --- !u!222 &1382083338
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10139,7 +10141,7 @@ GameObject:
   - component: {fileID: 1933559648}
   - component: {fileID: 1933559651}
   m_Layer: 5
-  m_Name: Right
+  m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10871,7 +10873,7 @@ GameObject:
   - component: {fileID: 2071143504}
   - component: {fileID: 2071143507}
   m_Layer: 5
-  m_Name: Left
+  m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
