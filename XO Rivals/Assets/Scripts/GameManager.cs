@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     /// Información del jugador del turno
     /// </summary>
     public PlayerInfo WhosTurn;
-    
+
     /// <summary>
     /// Información del momento del turno en el que esta el jugador
     /// turnMoment = 0 -> Toca colocar ficha
