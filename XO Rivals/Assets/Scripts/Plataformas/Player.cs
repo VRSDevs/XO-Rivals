@@ -34,6 +34,10 @@ public class Player : MonoBehaviour
      
     }
     
+    private void FixedUpdate()
+    {
+        body.velocity = new Vector2(movementInput * speed, body.velocity.y);
+    }
 
     public void OnEnable()
     {
@@ -62,11 +66,11 @@ public class Player : MonoBehaviour
         
         //body.velocity = new Vector2(movementInput*speed,body.velocity.y);
         
-        if (!isFacingRight && movementInput < 0f)
+        if (!isFacingRight && movementInput > 0f)
         {
             Flip();
         }
-        else if (isFacingRight && movementInput > 0f)
+        else if (isFacingRight && movementInput < 0f)
         {
             Flip();
         }
@@ -78,7 +82,6 @@ public class Player : MonoBehaviour
         {
             body.velocity = new Vector2(body.velocity.x,jumpSpeed);
 
-
         }
 
         if (context.canceled && body.velocity.y > 0f)
@@ -89,7 +92,9 @@ public class Player : MonoBehaviour
     }
     public void Jump()
     {
+        
         body.velocity = Vector2.up * jumpSpeed;
+
     }
 
     public void MoveLeft()
