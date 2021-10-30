@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     private Vector2 respawnPlayer;
     public GameObject player;
     private float movementInput;
+    private bool isFacingRight = true;
 
     // Start is called before the first frame update
     void Awake()
@@ -32,12 +33,26 @@ public class Player : MonoBehaviour
         playerActionsController = new PlayerActionsController();
      
     }
+    
+    private void FixedUpdate()
+    {
+        body.velocity = new Vector2(movementInput * speed, body.velocity.y);
+    }
 
     public void OnEnable()
     {
         playerActionsController.Enable();
     }
 
+    private void Flip()
+    {
+        isFacingRight = !isFacingRight;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1f;
+        transform.localScale = localScale;
+    }
+    
+    
 
     public void OnDisable()
     {
@@ -51,7 +66,14 @@ public class Player : MonoBehaviour
         
         body.velocity = new Vector2(movementInput*speed,body.velocity.y);
         
- 
+        if (!isFacingRight && movementInput < 0f)
+        {
+            Flip();
+        }
+        else if (isFacingRight && movementInput > 0f)
+        {
+            Flip();
+        }
     }
 
     public void Jump2(InputAction.CallbackContext context)
@@ -68,9 +90,6 @@ public class Player : MonoBehaviour
             body.velocity = new Vector2(body.velocity.x,body.velocity.y * 0.5f);
 
         }
-        
-        
-       
     }
     
     public void Jump()
@@ -114,13 +133,10 @@ private void OnTriggerEnter2D(Collider2D other)
             Victory = true;
             OnDisable();
             SceneManager.UnloadSceneAsync("2D platform");
-            PlayerPrefs.SetInt("minigameWin", 0);
-
+            PlayerPrefs.SetInt("minigameWin", 1);
         }
     }
-
- 
-  private void OnCollisionEnter2D(Collision2D collision)
+private void OnCollisionEnter2D(Collision2D collision)
   {
         
       if (collision.gameObject.CompareTag ("Respawn")) {

@@ -36,7 +36,7 @@ public class Timer : MonoBehaviour
                 ScriptPlayer.textValue = " Game Over";
                 lost = true;
                 ScriptPlayer.OnDisable();
-                PlayerPrefs.SetInt("minigameWin", 1);
+                PlayerPrefs.SetInt("minigameWin", 0);
                 SceneManager.UnloadSceneAsync("2D platform");
 
 
