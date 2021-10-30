@@ -31,9 +31,7 @@ public class Player : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         playerActionsController = new PlayerActionsController();
-     
     }
-    
     private void FixedUpdate()
     {
         body.velocity = new Vector2(movementInput * speed, body.velocity.y);
@@ -51,9 +49,6 @@ public class Player : MonoBehaviour
         localScale.x *= -1f;
         transform.localScale = localScale;
     }
-    
-    
-
     public void OnDisable()
     {
         playerActionsController.Disable();
@@ -62,6 +57,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         textElement.text = textValue;
         
         //body.velocity = new Vector2(movementInput*speed,body.velocity.y);
@@ -78,7 +74,7 @@ public class Player : MonoBehaviour
     public void Jump2(InputAction.CallbackContext context)
     {
 
-        if (context.performed && grounded)
+        if (context.performed)
         {
             body.velocity = new Vector2(body.velocity.x,jumpSpeed);
 
@@ -92,9 +88,7 @@ public class Player : MonoBehaviour
     }
     public void Jump()
     {
-        
         body.velocity = Vector2.up * jumpSpeed;
-
     }
 
     public void MoveLeft()
