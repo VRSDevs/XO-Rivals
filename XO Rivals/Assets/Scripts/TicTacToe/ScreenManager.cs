@@ -14,7 +14,11 @@ public class ScreenManager : MonoBehaviour
     //Control of miniGameChoosing
     [SerializeField] private GameObject miniGameChoosing;
     [SerializeField] private GameObject ticTacScreen;
+    [SerializeField] private ButtonsScript buttonsScript;
     public static int minigame = -1;
+
+    //Reference to all butons
+    [SerializeField] private Button[] buttonsReference;
 
     void Start(){
 
@@ -56,15 +60,11 @@ public class ScreenManager : MonoBehaviour
     }    
 
     public void MinigameSelection(int n){
-        ButtonsScript.miniChosen = n;
+        buttonsScript.gameState.miniGameChosen = n;
         miniGameChoosing.SetActive(false);
         ticTacScreen.SetActive(true);
+
         //Unihide chips
-<<<<<<< Updated upstream
-        for(int i = 0; i < ButtonsScript.chipList.Count; i++)
-            ButtonsScript.chipList[i].SetActive(true);
-        UpdateTurn(Mathf.Abs(turn-1));
-=======
         for(int i = 0; i < buttonsScript.gameState.chips.Count; i++)
             buttonsScript.gameState.chips[i].SetActive(true);
 
@@ -78,6 +78,5 @@ public class ScreenManager : MonoBehaviour
         for(int i = 0; i < buttonsReference.Length; i++){
             buttonsReference[i].interactable = false;
         }
->>>>>>> Stashed changes
     }
 }
