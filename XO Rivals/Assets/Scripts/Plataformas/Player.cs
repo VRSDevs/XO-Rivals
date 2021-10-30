@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     private bool grounded;
     private Rigidbody2D body;
     private PlayerActionsController playerActionsController;
-    [SerializeField] private float Speed = 3, jumpSpeed = 4;
+    [SerializeField] private float jumpSpeed = 4;
     public bool Victory = false;
     public Transform respawn;
     private Vector2 respawnPlayer;
@@ -62,8 +62,28 @@ public class Player : MonoBehaviour
         } 
     }
 
-    public void Jump2()
+    public void Jump2(InputAction.CallbackContext context)
     {
+
+        if (context.performed && grounded)
+        {
+            body.velocity = new Vector2(body.velocity.x,jumpSpeed);
+
+        }
+
+        if (context.canceled && body.velocity.y > 0f)
+        {
+            body.velocity = new Vector2(body.velocity.x,body.velocity.y * 0.5f);
+
+        }
+        
+        
+        {
+            body.velocity = new Vector2(body.velocity.x,jumpSpeed);
+
+        }
+        
+        
         if (grounded = true)
         {
             body.velocity = new Vector2(body.velocity.x,jumpSpeed);
