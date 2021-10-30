@@ -266,6 +266,8 @@ public class ButtonsScript : MonoBehaviour
             if(win)
             {
                 PlayerInfo localPlayer = FindObjectOfType<PlayerInfo>();
+
+                gameState.IsPlaying = false;
                 
                 //Call endgame
                 if (gameState.filledPositions[col, row] == 0)
