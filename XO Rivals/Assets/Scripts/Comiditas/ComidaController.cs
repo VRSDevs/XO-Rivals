@@ -70,7 +70,7 @@ public class ComidaController : MonoBehaviour
         {
             // Aqui se manda a alberto la derrota
             stopGenerador();
-            crono.SetText("Has perdido");
+            crono.SetText("You Lost");
             panAbajo.SetActive(false);
             queso.SetActive(false);
             carne.SetActive(false);
@@ -121,7 +121,7 @@ public class ComidaController : MonoBehaviour
                     // Fin minijuego mandar bool a alberto
                     panArriba.SetActive(true);
                     finished = true;
-                    crono.SetText("Has ganado");
+                    crono.SetText("You won");
                     stopGenerador();
                     player.constraints = RigidbodyConstraints2D.FreezeAll;
                     // Aqui se manda a alberto la victoria
