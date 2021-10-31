@@ -124,20 +124,23 @@ public class GameManager : MonoBehaviour
         switch (type)
         {
             case 'a':
-                object[] obj_admin = new object[4];
+                object[] objAdmin = new object[4];
 
-                obj_admin[0] = MatchId;
-                obj_admin[1] = OwnerId;
-                obj_admin[2] = PlayerInfoO.Name;
-                obj_admin[3] = WhosTurn.Name;
+                objAdmin[0] = MatchId;
+                objAdmin[1] = OwnerId;
+                objAdmin[2] = PlayerInfoO.Name;
+                objAdmin[3] = WhosTurn.Name;
         
-                return obj_admin;
-                break;
+                return objAdmin;
             case 'p':
+                object[] objPlayer = new object[1];
                 
-                break;
+                objPlayer[0] = PlayerInfoX.Name;
+                
+                return objPlayer;
         }
-        
+
+        return null;
     }
     
 
