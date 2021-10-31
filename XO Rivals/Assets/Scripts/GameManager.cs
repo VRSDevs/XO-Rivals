@@ -186,5 +186,30 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
+    public object[] EndMatchInfoToObject(string type, string winner)
+    {
+        object[] obj;
+        
+        switch (type)
+        {
+            case "win":
+            case "defeat":
+                obj = new object[2];
+
+                obj[0] = type;
+                obj[1] = winner;
+
+                return obj;
+            case "draw":
+                obj = new object[1];
+                
+                obj[0] = type;
+                
+                return obj;
+        }
+
+        return null;
+    }
+
     #endregion
 }
