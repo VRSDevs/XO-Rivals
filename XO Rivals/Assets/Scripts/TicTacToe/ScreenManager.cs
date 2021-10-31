@@ -45,8 +45,7 @@ public class ScreenManager : MonoBehaviour
             StartCoroutine(txtTimer("Turno de X"));
         }
 
-        Package packageToSend = buttonsScript.gameState.ToPackage(buttonsScript.localPlayer);
-        PhotonView.Get(this).RPC("RPC_UpdateTurn", RpcTarget.All, packageToSend);
+        buttonsScript.gameState._NetworkCommunications.SendPackage();
     }
     
     public IEnumerator txtTimer(string txt){
