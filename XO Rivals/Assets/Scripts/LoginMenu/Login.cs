@@ -66,6 +66,10 @@ public class Login : MonoBehaviour
     /// </summary>
     private const int MAX_CHARS = 100;
 
+    ////////////////// TECLADO EN MÓVILES //////////////////
+    TouchScreenKeyboard keyboard;
+
+
     #endregion
 
     #region UnityCallbacks
@@ -260,7 +264,22 @@ public class Login : MonoBehaviour
         PasswordInput.ForceLabelUpdate();
     }
 
+    public void ShowKeyboard()
+    {
+        if (_gameManager.IsWebGLMobile)
+        {
+            keyboard = TouchScreenKeyboard.Open("");
+            keyboard.active = true;
+        }
+    }
 
+    public void HideKeyboard()
+    {
+        if (_gameManager.IsWebGLMobile)
+        {
+            keyboard.active = false;
+        }
+    }
     
 
     #endregion
