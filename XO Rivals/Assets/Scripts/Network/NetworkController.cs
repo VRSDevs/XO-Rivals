@@ -89,6 +89,12 @@ public class NetworkController : MonoBehaviourPunCallbacks
         FindObjectOfType<GameManager>().PlayerInfoO = null;
         FindObjectOfType<GameManager>().PlayerInfoX = null;
         FindObjectOfType<GameManager>().WhosTurn = "";
+        FindObjectOfType<GameManager>().NumFilled = 0;
+        FindObjectOfType<GameManager>().FilledPositions = new int[3,3];
+        FindObjectOfType<GameManager>().turnMoment = 0;
+        FindObjectOfType<GameManager>().Chips = new List<GameObject>();
+        FindObjectOfType<GameManager>().MiniGameChosen = 0;
+
     }
 
     #endregion
