@@ -25,13 +25,13 @@ public class CambioEscenaDerrotaVictoria : MonoBehaviour
         if (win)
         {
             SceneManager.UnloadSceneAsync("Pistolero");
-            PlayerPrefs.SetInt("minigameWin", 1);
+            PlayerPrefs.SetInt("minigameWin", 0);
 
         }
         else
         {
             SceneManager.UnloadSceneAsync("Pistolero");
-            PlayerPrefs.SetInt("minigameWin", 0);
+            PlayerPrefs.SetInt("minigameWin", 1);
 
         }
 
