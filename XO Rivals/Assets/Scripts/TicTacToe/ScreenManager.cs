@@ -23,7 +23,7 @@ public class ScreenManager : MonoBehaviour
 
     void Start(){
 
-        if(buttonsScript.gameState.WhosTurn == buttonsScript.gameState.PlayerInfoO){
+        if(buttonsScript.gameState.WhosTurn.Name == buttonsScript.gameState.PlayerInfoO.Name){
             StartCoroutine(txtTimer("Turno de O"));
         }else{
             StartCoroutine(txtTimer("Turno de X"));
