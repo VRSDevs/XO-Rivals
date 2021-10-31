@@ -16,4 +16,19 @@ public class Package
     public int MinigameChosen;
 
     #endregion
+
+    #region SerializationMethods
+/*
+    public static object Deserialize(byte[] data)
+    {
+        var pck = new Package();
+
+        byte[] matchIdBytes = new byte[sizeof()];
+
+        return pck;
+    }
+    
+    */
+
+    #endregion
 }

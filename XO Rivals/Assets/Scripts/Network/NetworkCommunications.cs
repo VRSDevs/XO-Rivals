@@ -6,6 +6,13 @@ using Photon.Pun;
 
 public class NetworkCommunications : MonoBehaviourPun
 {
+    private PhotonView _View;
+    
+    private void Start()
+    {
+        _View = gameObject.AddComponent<PhotonView>();
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -15,7 +22,7 @@ public class NetworkCommunications : MonoBehaviourPun
         
         Debug.Log("Vamos a mandar: " + packageToSend);        
         
-        photonView.RPC("RPC_UpdateTurn", RpcTarget.All, packageToSend);
+        _View.RPC("RPCUpdateTurn", RpcTarget.All, packageToSend);
     }
     
     #region RPCMethods
@@ -25,7 +32,7 @@ public class NetworkCommunications : MonoBehaviourPun
     /// </summary>
     /// <param name="recievedPackage"></param>
     [PunRPC]
-    public void RPC_UpdateTurn(Package recievedPackage)
+    public void RPCUpdateTurn(Package recievedPackage)
     {
         Debug.Log("RPC recibido");
         

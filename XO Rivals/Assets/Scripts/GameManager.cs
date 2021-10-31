@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
         pck.FilledPositions = FilledPositions;
         pck.Chips = Chips;
         pck.MinigameChosen = MiniGameChosen;
-
+        
         return pck;
     }
 
