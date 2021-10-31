@@ -45,7 +45,7 @@ public class ScreenManager : MonoBehaviour
             StartCoroutine(txtTimer("Turno de X"));
         }
 
-        buttonsScript.gameState._NetworkCommunications.SendPackage();
+        //buttonsScript.gameState._NetworkCommunications.SendPackage();
     }
     
     public IEnumerator txtTimer(string txt){
