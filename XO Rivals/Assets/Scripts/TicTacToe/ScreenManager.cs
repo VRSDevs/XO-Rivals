@@ -31,7 +31,6 @@ public class ScreenManager : MonoBehaviour
     }
 
     public void UpdateTurn(){
-
         Debug.Log("X: " + buttonsScript.gameState.PlayerInfoX.Name);
         Debug.Log("O: " + buttonsScript.gameState.PlayerInfoO.Name);
         
@@ -59,7 +58,6 @@ public class ScreenManager : MonoBehaviour
     }
     
     public IEnumerator txtTimer(string txt){
-
         screenTxt.enabled = true;
         screenTxt.text = txt;
         yield return new WaitForSeconds(totalTime);
