@@ -92,6 +92,7 @@ public class ComidaController : MonoBehaviour
     void stopGenerador()
     {
         generador.stopSpawning = true;
+        time = 20;
     }
 
     public void recibirComida(int tipo)
