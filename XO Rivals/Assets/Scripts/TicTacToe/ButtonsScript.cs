@@ -425,38 +425,6 @@ public class ButtonsScript : MonoBehaviour
 
     #endregion
 
-    #region RPCMethods
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="recievedPackage"></param>
-    [PunRPC]
-    void RPC_UpdateTurn(Package recievedPackage)
-    {
-        gameState.MatchId = recievedPackage.MatchId;
-        gameState.OwnerId = recievedPackage.OwnerId;
-        if (localPlayer.Name == gameState.PlayerInfoO.Name)
-        {
-            gameState.PlayerInfoO = recievedPackage.Player;
-        }
-        else
-        {
-            gameState.PlayerInfoX = recievedPackage.Player;
-        }
-        gameState.WhosTurn = recievedPackage.WhosTurn;
-        gameState.NumFilled = recievedPackage.NumFilled;
-        gameState.FilledPositions = recievedPackage.FilledPositions;
-        gameState.Chips = recievedPackage.Chips;
-        gameState.MiniGameChosen = recievedPackage.MinigameChosen;
-
-        gameState.turnMoment = 0;
-
-        UpdateTurn();
-    }
-
-    #endregion
-    
 }
 
     
