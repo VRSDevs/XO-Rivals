@@ -9,6 +9,7 @@ public class EndGameScript : MonoBehaviour
 
     [SerializeField] private GameObject MatchVictory;
     [SerializeField] private GameObject MatchDefeat;
+    [SerializeField] private GameObject MatchDraw;
     [SerializeField] private GameObject SurrenderVictory;
 
     #endregion
@@ -19,6 +20,7 @@ public class EndGameScript : MonoBehaviour
     {
         MatchVictory.SetActive(true);
         MatchDefeat.SetActive(false);
+        MatchDraw.SetActive(false);
         SurrenderVictory.SetActive(false);
     }
 
@@ -26,6 +28,15 @@ public class EndGameScript : MonoBehaviour
     {
         MatchVictory.SetActive(false);
         MatchDefeat.SetActive(true);
+        MatchDraw.SetActive(false);
+        SurrenderVictory.SetActive(false);
+    }
+    
+    public void ShowMatchDraw()
+    {
+        MatchVictory.SetActive(false);
+        MatchDefeat.SetActive(false);
+        MatchDraw.SetActive(true);
         SurrenderVictory.SetActive(false);
     }
 
@@ -33,6 +44,7 @@ public class EndGameScript : MonoBehaviour
     {
         MatchVictory.SetActive(false);
         MatchDefeat.SetActive(false);
+        MatchDraw.SetActive(false);
         SurrenderVictory.SetActive(true);
     }
 
