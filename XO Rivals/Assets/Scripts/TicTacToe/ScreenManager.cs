@@ -100,15 +100,15 @@ public class ScreenManager : MonoBehaviour
                 switch (buttonsScript.gameState.FilledPositions[i,j])
                 {
                     case 0:
-                        GameObject updateOChip = Instantiate(buttonsScript.circleGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
-                        updateOChip.SetActive(true);
-                        updateOChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+                        buttonsScript.actualChip = Instantiate(buttonsScript.circleGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
+                        buttonsScript.actualChip.SetActive(true);
+                        buttonsScript.actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
                         
                         break;
                     case 1:
-                        GameObject updateXChip = Instantiate(buttonsScript.crossGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
-                        updateXChip.SetActive(true);
-                        updateXChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+                        buttonsScript.actualChip = Instantiate(buttonsScript.crossGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
+                        buttonsScript.actualChip.SetActive(true);
+                        buttonsScript.actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
                         
                         break;
                 }

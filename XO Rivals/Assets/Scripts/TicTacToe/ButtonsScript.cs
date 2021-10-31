@@ -19,7 +19,7 @@ public class ButtonsScript : MonoBehaviour
     private ScreenManager screenManager;
 
     //Array of positions
-    private GameObject actualChip;
+    public GameObject actualChip;
 
     //Variables for victory
     public int col, row;
