@@ -96,6 +96,8 @@ public class ComidaController : MonoBehaviour
                 {
                     // Fin minijuego mandar bool a alberto
                     panArriba.SetActive(true);
+
+                    stopGenerador();
                      // Aqui se manda a alberto la victoria
                     PlayerPrefs.SetInt("minigameWin", 1);
                     SceneManager.UnloadSceneAsync("Minijuego Comida");                   
