@@ -129,7 +129,16 @@ public class GameManager : MonoBehaviour
 
         pck.MatchId = MatchId;
         pck.OwnerId = OwnerId;
-        pck.Player = localPlayer.Name.Equals(PlayerInfoO.Name) ? PlayerInfoO : PlayerInfoX;
+
+        if (PlayerInfoX == null)
+        {
+            pck.Player = localPlayer.Name.Equals(PlayerInfoO.Name) ? PlayerInfoO : PlayerInfoX;
+        }
+        else
+        {
+            pck.Player = localPlayer.Name.Equals(PlayerInfoX.Name) ? PlayerInfoX : PlayerInfoO;
+        }
+        
         pck.WhosTurn = WhosTurn;
         pck.NumFilled = NumFilled;
         pck.FilledPositions = FilledPositions;
