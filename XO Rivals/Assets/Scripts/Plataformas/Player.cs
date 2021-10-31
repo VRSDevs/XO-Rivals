@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,17 +10,29 @@ public class Player : MonoBehaviour
         
     public string textValue;
     public TextMeshProUGUI textElement;
+    
     [SerializeField] private float speed;
     private bool grounded;
     private Rigidbody2D body;
     private PlayerActionsController playerActionsController;
     [SerializeField] private float jumpSpeed = 4;
     public bool Victory = false;
+    
     public Transform respawn;
     private Vector2 respawnPlayer;
     public GameObject player;
     private float movementInput;
     private bool isFacingRight = true;
+    
+    // Gamemanager
+    private GameManager _gameManager;
+
+    // Controles de movil
+    [SerializeField]
+    public GameObject leftButton;
+    [SerializeField]
+    public GameObject rightButton;
+    public GameObject jumpButton;
 
     // Start is called before the first frame update
     void Awake()
@@ -49,13 +62,19 @@ public class Player : MonoBehaviour
         playerActionsController.Disable();
     }
 
+    public void Start()
+    {
+        _gameManager = FindObjectOfType<GameManager>();
+
+    }
+
     // Update is called once per frame
     void Update()
     {
 
         textElement.text = textValue;
         
-        //body.velocity = new Vector2(movementInput*speed,body.velocity.y);
+        
         
         if (!isFacingRight && movementInput > 0f)
         {
