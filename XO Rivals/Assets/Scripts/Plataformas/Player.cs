@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
 
     //Pistas de audio 
     public AudioClip sonidoJump;
+    public AudioClip sonidoMuerte;
 
     public string textValue;
     public TextMeshProUGUI textElement;
@@ -158,7 +159,8 @@ private void OnCollisionEnter2D(Collision2D collision)
   {
       if (collision.gameObject.CompareTag ("Respawn")) {
                    player.transform.position = new Vector2(respawn.position.x,respawn.position.y);
-      }
+                   managerSonido.PlayOneShot(sonidoMuerte);
+        }
 
       if (collision.gameObject.CompareTag("Ground")) {
                 grounded = true;

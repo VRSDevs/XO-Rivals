@@ -5103,6 +5103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sonidoJump: {fileID: 8300000, guid: c5e69231de54a6a4eb2efecee13a53a6, type: 3}
+  sonidoMuerte: {fileID: 8300000, guid: cc685622859bd8340bd0c16fb130e962, type: 3}
   textValue: 
   textElement: {fileID: 568630036}
   speed: 13
