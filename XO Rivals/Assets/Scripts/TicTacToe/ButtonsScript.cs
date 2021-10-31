@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class ButtonsScript : MonoBehaviour
 {
+    #region Variables
+
     //Circle and Cross
     [SerializeField] private Sprite circle;
     [SerializeField] private Sprite cross;
@@ -17,19 +20,23 @@ public class ButtonsScript : MonoBehaviour
     private GameObject actualChip;
 
     //Variables for victory
-    int col, row;
+    public int col, row;
 
     //Minigame chosen
     private int opponentMinigame;
 
     //Minigame won
-    private bool miniWin;
+    public bool miniWin;
 
     //Match controller
     public GameManager gameState;
 
     //Local player
-    private PlayerInfo localPlayer;
+    public PlayerInfo localPlayer;
+
+    #endregion
+
+    #region UnityCB
 
     private void Awake() {
         //Create the circle
@@ -45,45 +52,53 @@ public class ButtonsScript : MonoBehaviour
         crossGO.SetActive(false);
 
         gameState = FindObjectOfType<GameManager>();
-        localPlayer = FindObjectOfType<PlayerInfo>();
+        localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
 
-        //If its a new match, there is no playerX
-        if(gameState.PlayerInfoX == null){ 
-
-            //Fill array
-            gameState.filledPositions = new int[3,3];
-            for(int i = 0; i < gameState.filledPositions.GetLength(0); i++){
-                for(int j = 0; j < gameState.filledPositions.GetLength(1); j++){
-                    gameState.filledPositions[i,j] = 3;
-                }
+        //Fill array
+        gameState.FilledPositions = new int[3,3];
+        for(int i = 0; i < gameState.FilledPositions.GetLength(0); i++){
+            for(int j = 0; j < gameState.FilledPositions.GetLength(1); j++){
+                gameState.FilledPositions[i,j] = 3;
             }
-            
-            //Start variables
-            gameState.numFilled = 0;
-            gameState.chips = new List<GameObject>(); 
-            
-            //El minijuego es elegido automaticamente
-            gameState.miniGameChosen = Random.Range(0,2);
-            gameState.turnMoment = 0;
         }
+            
+        //Start variables
+        gameState.NumFilled = 0;
+        gameState.Chips = new List<GameObject>(); 
+            
+        //El minijuego es elegido automaticamente
+        gameState.MiniGameChosen = Random.Range(0,2);
+        gameState.turnMoment = 0;
 
         //Initialize ScreenManager
         screenManager = FindObjectOfType<ScreenManager>();
     }
     
     public void Start(){
+        UpdateTurn();
+    }
 
+    #endregion
+
+    #region MainMethods
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void UpdateTurn()
+    {
         Debug.Log(gameState.WhosTurn);
-        Debug.Log(localPlayer);
+        Debug.Log(localPlayer.Name);
 
         //If its your turn, play, if its not, only can see
-        if(gameState.WhosTurn == localPlayer){
+        if(gameState.WhosTurn == localPlayer.Name){
 
             //Depending of turn moment, player will encounter a "different scene"
-            //if(turnInstant == 0){
-                //Nothing happens
-            /*}else*/
-            if(gameState.turnMoment == 1){
+            if (gameState.turnMoment == 0)
+            {
+                screenManager.EnableButtons();
+            }
+            else if(gameState.turnMoment == 1){
                 //Go directly to minigame
                 PlayMinigame();
             }else if(gameState.turnMoment == 2){
@@ -95,7 +110,7 @@ public class ButtonsScript : MonoBehaviour
             screenManager.DisableButtons();
         }
     }
-    
+
     public void PlaceTile(int pos){
 
         //Get row and column
@@ -103,10 +118,10 @@ public class ButtonsScript : MonoBehaviour
         row = pos / 3;
         
         //Check if position is already filled
-        if(gameState.filledPositions[col,row] == 3){
+        if(gameState.FilledPositions[col,row] == 3){
             
             //Places a sprite or another depending on turn
-            if(gameState.PlayerInfoO == localPlayer){
+            if(gameState.PlayerInfoO.Name == localPlayer.Name){
                 
                 //Place chip
                 actualChip = Instantiate(circleGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
@@ -118,15 +133,15 @@ public class ButtonsScript : MonoBehaviour
                 PlayMinigame();
 
                 //Add chip to list to hide
-                gameState.chips.Add(actualChip);
-                for(int i = 0; i < gameState.chips.Count; i++)
-                    gameState.chips[i].SetActive(false);
+                gameState.Chips.Add(actualChip);
+                for(int i = 0; i < gameState.Chips.Count; i++)
+                    gameState.Chips[i].SetActive(false);
 
                 //Go to selectMinigame for opponent
                 screenManager.MinigameSelectionActivation();
 
                 //Save pos
-                gameState.filledPositions[col,row] = 0;
+                gameState.FilledPositions[col,row] = 0;
 
                 //Disable input because its not your turn
                 screenManager.DisableButtons();
@@ -142,28 +157,28 @@ public class ButtonsScript : MonoBehaviour
                 PlayMinigame();
 
                 //Add chip to list to hide
-                gameState.chips.Add(actualChip);
-                for(int i = 0; i < gameState.chips.Count; i++)
-                    gameState.chips[i].SetActive(false);
+                gameState.Chips.Add(actualChip);
+                for(int i = 0; i < gameState.Chips.Count; i++)
+                    gameState.Chips[i].SetActive(false);
 
                 //Go to selectMinigame for opponent
                 screenManager.MinigameSelectionActivation();
 
                 //Save pos
-                gameState.filledPositions[col,row] = 1;
+                gameState.FilledPositions[col,row] = 1;
 
                 //Disable input because its not your turn
                 screenManager.DisableButtons();
             }
 
             //Add one to count
-            gameState.numFilled++;
+            gameState.NumFilled++;
         
             //Check victory
             CheckVictory();
 
             //Table full (draw)
-            if(gameState.numFilled == 9){
+            if(gameState.NumFilled == 9){
                 Debug.Log("Draw");
             }
         }else{
@@ -174,7 +189,7 @@ public class ButtonsScript : MonoBehaviour
     private void PlayMinigame(){
 
         miniWin = false;
-        switch(gameState.miniGameChosen){
+        switch(gameState.MiniGameChosen){
             case 0:
                 SceneManager.LoadScene("Pistolero", LoadSceneMode.Additive);
             break;
@@ -192,7 +207,7 @@ public class ButtonsScript : MonoBehaviour
         miniWin = (PlayerPrefs.GetInt("minigameWin") == 1);
         if(miniWin == true){
             //Save position
-            gameState.filledPositions[col,row] = (gameState.WhosTurn == gameState.PlayerInfoO ? 0: 1);
+            gameState.FilledPositions[col,row] = (gameState.WhosTurn == gameState.PlayerInfoO.Name ? 0: 1);
             //Paint tile completely
             actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
         }else{
@@ -270,7 +285,7 @@ public class ButtonsScript : MonoBehaviour
                 gameState.IsPlaying = false;
                 
                 //Call endgame
-                if (gameState.filledPositions[col, row] == 0)
+                if (gameState.FilledPositions[col, row] == 0)
                 {
                     Debug.Log("CIRCLE WIN");
                     
@@ -301,15 +316,19 @@ public class ButtonsScript : MonoBehaviour
 
             i++;
         }while(i < 8);
-    }   
+    }
+
+    #endregion
+
+    #region TestMethods
 
     bool TestCol(int col){
         int type;
         int j = 0;
 
         //Pick first tile in column if its not empty
-        if(gameState.filledPositions[col,j] != 3){
-            type = gameState.filledPositions[col,j];
+        if(gameState.FilledPositions[col,j] != 3){
+            type = gameState.FilledPositions[col,j];
             j++;
         }else{
             return false;
@@ -317,7 +336,7 @@ public class ButtonsScript : MonoBehaviour
 
         //Check if all other tiles are the same
         do{
-            if(gameState.filledPositions[col,j] != type){
+            if(gameState.FilledPositions[col,j] != type){
                 return false;
             }
             j++;
@@ -331,8 +350,8 @@ public class ButtonsScript : MonoBehaviour
         int j = 0;
 
         //Pick first tile in column if its not empty
-        if(gameState.filledPositions[j,row] != 3){
-            type = gameState.filledPositions[j,row];
+        if(gameState.FilledPositions[j,row] != 3){
+            type = gameState.FilledPositions[j,row];
             j++;
         }else{
             return false;
@@ -340,7 +359,7 @@ public class ButtonsScript : MonoBehaviour
 
         //Check if all other tiles are the same
         do{
-            if(gameState.filledPositions[j,row] != type){
+            if(gameState.FilledPositions[j,row] != type){
                 return false;
             }
             j++;
@@ -356,8 +375,8 @@ public class ButtonsScript : MonoBehaviour
         //First diagonal
         if(diag == 0){
             //Pick first tile in column if its not empty
-            if(gameState.filledPositions[diag,j] != 3){
-                type = gameState.filledPositions[diag,j];
+            if(gameState.FilledPositions[diag,j] != 3){
+                type = gameState.FilledPositions[diag,j];
                 j++;
                 diag++;
             }else{
@@ -366,7 +385,7 @@ public class ButtonsScript : MonoBehaviour
 
             //Check if all other tiles are the same
             do{
-                if(gameState.filledPositions[diag,j] != type){
+                if(gameState.FilledPositions[diag,j] != type){
                     return false;
                 }
                 diag++;
@@ -379,8 +398,8 @@ public class ButtonsScript : MonoBehaviour
         }else{
             diag++;
             //Pick first tile in column if its not empty
-            if(gameState.filledPositions[diag,j] != 3){
-                type = gameState.filledPositions[diag,j];
+            if(gameState.FilledPositions[diag,j] != 3){
+                type = gameState.FilledPositions[diag,j];
                 j++;
                 diag--;
             }else{
@@ -389,7 +408,7 @@ public class ButtonsScript : MonoBehaviour
 
             //Check if all other tiles are the same
             do{
-                if(gameState.filledPositions[diag,j] != type){
+                if(gameState.FilledPositions[diag,j] != type){
                     return false;
                 }
                 diag--;
@@ -399,6 +418,9 @@ public class ButtonsScript : MonoBehaviour
             return true;
         }
     }
+
+    #endregion
+
 }
 
     

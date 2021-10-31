@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour
     /// Referencia a funciones del servidor
     /// </summary>
     public NetworkController _networkController;
+    /// <summary>
+    /// 
+    /// </summary>
+    public NetworkCommunications _NetworkCommunications;
     
     ////////////////// PARTIDA //////////////////
     /// <summary>
@@ -36,7 +40,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Información del jugador del turno
     /// </summary>
-    public PlayerInfo WhosTurn;
+    public string WhosTurn;
 
     /// <summary>
     /// Información del momento del turno en el que esta el jugador
@@ -48,19 +52,19 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Numero de fichas colocadas
     /// </summary>
-    public int numFilled;
+    public int NumFilled;
     /// <summary>
     /// Posicion de fichas colocadas
     /// </summary>
-    public int[,] filledPositions;    
+    public int[,] FilledPositions;    
     /// <summary>
     /// Array de fichas colocadas
     /// </summary>
-    public List<GameObject> chips;
+    public List<GameObject> Chips;
     /// <summary>
     /// Minijuego elegido
     /// </summary>
-    public int miniGameChosen;
+    public int MiniGameChosen;
     
     ////////////////// USUARIO //////////////////
     /// <summary>
@@ -79,6 +83,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _networkController = gameObject.AddComponent<NetworkController>();
+        _NetworkCommunications = gameObject.AddComponent<NetworkCommunications>();
+        
         IsPlaying = false;
         
         DontDestroyOnLoad(this);
@@ -99,13 +105,87 @@ public class GameManager : MonoBehaviour
     
     public void OnCreateRoom(PlayerInfo player){
         //Match ID y OwnerID for beta version
+        OwnerId = player.Name;
         PlayerInfoO = player;
-        WhosTurn = player;
+        WhosTurn = player.Name;
     }
 
     public void OnConnectToRoom(PlayerInfo player){
 
         PlayerInfoX = player;
     }
+    
+    #endregion
+
+    #region ConversionToObjectMethods
+    
+    public object[] PlayerInfoToObject(string type)
+    {
+        switch (type)
+        {
+            case "host":
+                object[] objHost = new object[5];
+
+                objHost[0] = type;
+                objHost[1] = MatchId;
+                objHost[2] = OwnerId;
+                objHost[3] = PlayerInfoO.Name;
+                objHost[4] = WhosTurn;
+        
+                return objHost;
+            case "user":
+                object[] objPlayer = new object[2];
+                
+                objPlayer[0] = type;
+                objPlayer[1] = PlayerInfoX.Name;
+                
+                return objPlayer;
+        }
+
+        return null;
+    }
+    
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="localPlayer"></param>
+    /// <returns></returns>
+    public object[] MatchInfoToObject(string type)
+    {
+        switch (type)
+        {
+            case "OppWon":
+                object[] objOppWon = new object[7];
+                
+                Debug.Log(FindObjectOfType<ButtonsScript>().col + ", " + FindObjectOfType<ButtonsScript>().row);
+
+                objOppWon[0] = type;
+                objOppWon[1] = WhosTurn;
+                objOppWon[2] = NumFilled;
+                objOppWon[3] = FindObjectOfType<ButtonsScript>().col;
+                objOppWon[4] = FindObjectOfType<ButtonsScript>().row;
+                objOppWon[5] = FilledPositions[
+                    FindObjectOfType<ButtonsScript>().col,
+                    FindObjectOfType<ButtonsScript>().row
+                ];
+                objOppWon[6] = MiniGameChosen;
+        
+                return objOppWon;
+            case "OppLost":
+                object[] objOppLost = new object[3];
+                
+                Debug.Log(WhosTurn);
+                
+                objOppLost[0] = type;
+                objOppLost[1] = WhosTurn;
+                objOppLost[2] = MiniGameChosen;
+                
+                return objOppLost;
+        }
+
+        return null;
+    }
+
     #endregion
 }

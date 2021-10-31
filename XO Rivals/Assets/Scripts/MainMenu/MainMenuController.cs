@@ -12,7 +12,7 @@ public class MainMenuController : MonoBehaviour
     private void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
-        _localPlayer = FindObjectOfType<PlayerInfo>();
+        _localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
     }
 
     public void OnCreateMatch()
