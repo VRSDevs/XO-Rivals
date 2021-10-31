@@ -119,23 +119,25 @@ public class GameManager : MonoBehaviour
 
     #region ConversionToObjectMethods
     
-    public object[] PlayerInfoToObject(char type)
+    public object[] PlayerInfoToObject(string type)
     {
         switch (type)
         {
-            case 'h':
-                object[] objHost = new object[4];
+            case "host":
+                object[] objHost = new object[5];
 
-                objHost[0] = MatchId;
-                objHost[1] = OwnerId;
-                objHost[2] = PlayerInfoO.Name;
-                objHost[3] = WhosTurn.Name;
+                objHost[0] = type;
+                objHost[1] = MatchId;
+                objHost[2] = OwnerId;
+                objHost[3] = PlayerInfoO.Name;
+                objHost[4] = WhosTurn.Name;
         
                 return objHost;
-            case 'p':
-                object[] objPlayer = new object[1];
+            case "user":
+                object[] objPlayer = new object[2];
                 
-                objPlayer[0] = PlayerInfoX.Name;
+                objPlayer[0] = type;
+                objPlayer[1] = PlayerInfoX.Name;
                 
                 return objPlayer;
         }
