@@ -23,11 +23,11 @@ public class NetworkCommunications : MonoBehaviourPun
     /// <summary>
     /// 
     /// </summary>
-    public void SendPackage()
+    public void SendMatchInfo(string type)
     {
-        object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.ToObject(FindObjectOfType<ButtonsScript>().localPlayer);
+        object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.MatchInfoToObject(type);
         Debug.Log("Vamos a mandar: " + objToSend);
-        _View.RPC("RPCUpdateTurn", RpcTarget.OthersBuffered, (object)objToSend);
+        _View.RPC("RPCUpdateMatch", RpcTarget.Others, (object)objToSend);
     }
     
     #region RPCMethods
@@ -47,10 +47,9 @@ public class NetworkCommunications : MonoBehaviourPun
                     FindObjectOfType<GameManager>().PlayerInfoO.Name = obj[2] as string;
                 }
 
-                if (FindObjectOfType<GameManager>().WhosTurn == null)
+                if (FindObjectOfType<GameManager>().WhosTurn == "")
                 {
-                    FindObjectOfType<GameManager>().WhosTurn = gameObject.AddComponent<PlayerInfo>();
-                    FindObjectOfType<GameManager>().WhosTurn.Name = obj[3] as string;
+                    FindObjectOfType<GameManager>().WhosTurn = obj[3] as string;
                 }
                 
                 break;
@@ -59,7 +58,7 @@ public class NetworkCommunications : MonoBehaviourPun
                 if (FindObjectOfType<GameManager>().PlayerInfoX == null)
                 {
                     FindObjectOfType<GameManager>().PlayerInfoX = gameObject.AddComponent<PlayerInfo>();
-                    FindObjectOfType<GameManager>().PlayerInfoX.Name = obj[2] as string;
+                    FindObjectOfType<GameManager>().PlayerInfoX.Name = obj[1] as string;
                 }
                 
                 break;
@@ -71,41 +70,35 @@ public class NetworkCommunications : MonoBehaviourPun
     /// </summary>
     /// <param name="obj"></param>
     [PunRPC]
-    public void RPCUpdateTurn(object[] obj)
+    public void RPCUpdateMatch(object[] obj)
     {
         Debug.Log("RPC recibido");
-        
-        FindObjectOfType<GameManager>().MatchId = obj[0] as string;
-        FindObjectOfType<GameManager>().OwnerId = obj[1] as string;
 
-        if (FindObjectOfType<GameManager>().PlayerInfoO == null)
+        switch (obj[0] as string)
         {
-            FindObjectOfType<GameManager>().PlayerInfoO = gameObject.AddComponent<PlayerInfo>();
-            FindObjectOfType<GameManager>().PlayerInfoO.Name = obj[2] as string;
-        }
-        else
-        {
-            FindObjectOfType<GameManager>().PlayerInfoX = gameObject.AddComponent<PlayerInfo>();
-            FindObjectOfType<GameManager>().PlayerInfoX.Name = obj[2] as string;
-        }
+            case "OppWon":
+                
+                FindObjectOfType<GameManager>().WhosTurn = obj[1] as string;
+                FindObjectOfType<GameManager>().NumFilled = (int)obj[2];
+                FindObjectOfType<GameManager>().FilledPositions = (int[,])obj[3];
+                FindObjectOfType<GameManager>().MiniGameChosen = (int)obj[4];
 
-        if (FindObjectOfType<GameManager>().WhosTurn == null)
-        {
-            FindObjectOfType<GameManager>().WhosTurn = gameObject.AddComponent<PlayerInfo>();
-            FindObjectOfType<GameManager>().WhosTurn.Name = obj[3] as string;
-        }
-        else
-        {
-            FindObjectOfType<GameManager>().WhosTurn.Name = obj[3] as string;
-        }
-        
-        FindObjectOfType<GameManager>().NumFilled = (int)obj[4];
-        FindObjectOfType<GameManager>().FilledPositions = (int[,])obj[5];
-        FindObjectOfType<GameManager>().MiniGameChosen = (int)obj[7];
+                FindObjectOfType<GameManager>().turnMoment = 0;
 
-        FindObjectOfType<GameManager>().turnMoment = 0;
+                FindObjectOfType<ButtonsScript>().UpdateTurn();
+                
+                break;
+            case "OppLost":
+                
+                FindObjectOfType<GameManager>().WhosTurn = obj[1] as string;
+                FindObjectOfType<GameManager>().MiniGameChosen = (int)obj[2];
+                
+                FindObjectOfType<GameManager>().turnMoment = 0;
 
-        FindObjectOfType<ButtonsScript>().UpdateTurn();
+                FindObjectOfType<ButtonsScript>().UpdateTurn();
+                
+                break;
+        }
     }
 
     #endregion

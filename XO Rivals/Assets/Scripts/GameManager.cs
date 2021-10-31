@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Información del jugador del turno
     /// </summary>
-    public PlayerInfo WhosTurn;
+    public string WhosTurn;
 
     /// <summary>
     /// Información del momento del turno en el que esta el jugador
@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
         //Match ID y OwnerID for beta version
         OwnerId = player.Name;
         PlayerInfoO = player;
-        WhosTurn = player;
+        WhosTurn = player.Name;
     }
 
     public void OnConnectToRoom(PlayerInfo player){
@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
                 objHost[1] = MatchId;
                 objHost[2] = OwnerId;
                 objHost[3] = PlayerInfoO.Name;
-                objHost[4] = WhosTurn.Name;
+                objHost[4] = WhosTurn;
         
                 return objHost;
             case "user":
@@ -151,32 +151,35 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="localPlayer"></param>
     /// <returns></returns>
-    public object[] ToObject(PlayerInfo localPlayer)
+    public object[] MatchInfoToObject(string type)
     {
-        object[] obj = new object[7];
+        switch (type)
+        {
+            case "OppWon":
+                object[] objOppWon = new object[5];
+                
+                Debug.Log(WhosTurn);
 
-        obj[0] = MatchId;
-        obj[1] = OwnerId;
+                objOppWon[0] = type;
+                objOppWon[1] = WhosTurn;
+                objOppWon[2] = NumFilled;
+                objOppWon[3] = FilledPositions;
+                objOppWon[4] = MiniGameChosen;
         
-        if (PlayerInfoX == null)
-        {
-            obj[2] = localPlayer.Name.Equals(PlayerInfoO.Name) ? PlayerInfoO.Name : PlayerInfoX.Name;
-        }
-        else
-        {
-            obj[2] = localPlayer.Name.Equals(PlayerInfoX.Name) ? PlayerInfoX.Name : PlayerInfoO.Name;
+                return objOppWon;
+            case "OppLost":
+                object[] objOppLost = new object[3];
+                
+                Debug.Log(WhosTurn);
+                
+                objOppLost[0] = type;
+                objOppLost[1] = WhosTurn;
+                objOppLost[2] = MiniGameChosen;
+                
+                return objOppLost;
         }
 
-        if (WhosTurn != null)
-        {
-            obj[3] = WhosTurn.Name;
-        }
-        
-        obj[4] = NumFilled;
-        obj[5] = FilledPositions;
-        obj[6] = MiniGameChosen;
-        
-        return obj;
+        return null;
     }
 
     #endregion

@@ -26,7 +26,7 @@ public class ButtonsScript : MonoBehaviour
     private int opponentMinigame;
 
     //Minigame won
-    private bool miniWin;
+    public bool miniWin;
 
     //Match controller
     public GameManager gameState;
@@ -92,17 +92,18 @@ public class ButtonsScript : MonoBehaviour
     /// </summary>
     public void UpdateTurn()
     {
-        Debug.Log(gameState.WhosTurn.Name);
+        Debug.Log(gameState.WhosTurn);
         Debug.Log(localPlayer.Name);
 
         //If its your turn, play, if its not, only can see
-        if(gameState.WhosTurn.Name == localPlayer.Name){
+        if(gameState.WhosTurn == localPlayer.Name){
 
             //Depending of turn moment, player will encounter a "different scene"
-            //if(turnInstant == 0){
-            //Nothing happens
-            /*}else*/
-            if(gameState.turnMoment == 1){
+            if (gameState.turnMoment == 0)
+            {
+                screenManager.EnableButtons();
+            }
+            else if(gameState.turnMoment == 1){
                 //Go directly to minigame
                 PlayMinigame();
             }else if(gameState.turnMoment == 2){
@@ -211,7 +212,7 @@ public class ButtonsScript : MonoBehaviour
         miniWin = (PlayerPrefs.GetInt("minigameWin") == 1);
         if(miniWin == true){
             //Save position
-            gameState.FilledPositions[col,row] = (gameState.WhosTurn == gameState.PlayerInfoO ? 0: 1);
+            gameState.FilledPositions[col,row] = (gameState.WhosTurn == gameState.PlayerInfoO.Name ? 0: 1);
             //Paint tile completely
             actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
         }else{

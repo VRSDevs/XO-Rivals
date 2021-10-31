@@ -23,29 +23,39 @@ public class ScreenManager : MonoBehaviour
 
     void Start(){
 
-        if(buttonsScript.gameState.WhosTurn.Name == buttonsScript.gameState.PlayerInfoO.Name){
+        if(buttonsScript.gameState.WhosTurn == buttonsScript.gameState.PlayerInfoO.Name){
             StartCoroutine(txtTimer("Turno de O"));
         }else{
             StartCoroutine(txtTimer("Turno de X"));
         }
     }
 
-    public void UpdateTurn(PlayerInfo playerTurn){
+    public void UpdateTurn(){
 
-        if(buttonsScript.gameState.PlayerInfoO == playerTurn)
-            buttonsScript.gameState.WhosTurn = buttonsScript.gameState.PlayerInfoX;
+        Debug.Log("X: " + buttonsScript.gameState.PlayerInfoX.Name);
+        Debug.Log("O: " + buttonsScript.gameState.PlayerInfoO.Name);
+        
+        if(buttonsScript.gameState.PlayerInfoO.Name == buttonsScript.gameState.WhosTurn)
+            buttonsScript.gameState.WhosTurn = buttonsScript.gameState.PlayerInfoX.Name;
         else
-            buttonsScript.gameState.WhosTurn = buttonsScript.gameState.PlayerInfoO;
+            buttonsScript.gameState.WhosTurn = buttonsScript.gameState.PlayerInfoO.Name;
         
         buttonsScript.gameState.turnMoment = 0;
         //Display turn in screen
-        if(buttonsScript.gameState.WhosTurn == buttonsScript.gameState.PlayerInfoO){            
+        if(buttonsScript.gameState.WhosTurn == buttonsScript.gameState.PlayerInfoO.Name){            
             StartCoroutine(txtTimer("Turno de O"));
         }else{
             StartCoroutine(txtTimer("Turno de X"));
         }
 
-        //buttonsScript.gameState._NetworkCommunications.SendPackage();
+        if (buttonsScript.miniWin)
+        {
+            buttonsScript.gameState._NetworkCommunications.SendMatchInfo("OppWon");
+        }
+        else
+        {
+            buttonsScript.gameState._NetworkCommunications.SendMatchInfo("OppLost");
+        }
     }
     
     public IEnumerator txtTimer(string txt){
@@ -76,12 +86,19 @@ public class ScreenManager : MonoBehaviour
             buttonsScript.gameState.Chips[i].SetActive(true);
         }
         
-        UpdateTurn(buttonsScript.gameState.WhosTurn);
+        UpdateTurn();
 
         //Disable interaction with tictac
         DisableButtons();
     }
 
+    public void EnableButtons()
+    {
+        for(int i = 0; i < buttonsReference.Length; i++){
+            buttonsReference[i].interactable = true;
+        }
+    }
+    
     public void DisableButtons(){
         for(int i = 0; i < buttonsReference.Length; i++){
             buttonsReference[i].interactable = false;
