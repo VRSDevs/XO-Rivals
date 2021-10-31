@@ -26,8 +26,13 @@ public class NetworkCommunications : MonoBehaviourPun
     public void SendMatchInfo(string type)
     {
         object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.MatchInfoToObject(type);
-        Debug.Log("Vamos a mandar: " + objToSend);
         _View.RPC("RPCUpdateMatch", RpcTarget.Others, (object)objToSend);
+    }
+
+    public void SendEndMatchInfo(string type, string winner)
+    {
+        object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.EndMatchInfoToObject(type, winner);
+        _View.RPC("RPCEndMatch", RpcTarget.All, (object)objToSend);
     }
     
     #region RPCMethods
@@ -108,6 +113,31 @@ public class NetworkCommunications : MonoBehaviourPun
                 FindObjectOfType<GameManager>().turnMoment = 0;
 
                 FindObjectOfType<ButtonsScript>().UpdateTurn();
+                
+                break;
+        }
+    }
+    
+    public void RPCEndMatch(object[] obj)
+    {
+        switch (obj[0] as string)
+        {
+            case "win":
+            case "defeat":
+
+                if (obj[1].Equals(GameObject.Find("PlayerObject").GetComponent<PlayerInfo>().Name))
+                {
+                    FindObjectOfType<EndGameScript>().ShowMatchVictory();
+                }
+                else
+                {
+                    FindObjectOfType<EndGameScript>().ShowMatchDefeat();
+                }
+
+                break;
+            case "draw":
+                
+                FindObjectOfType<EndGameScript>().ShowMatchDraw();
                 
                 break;
         }
