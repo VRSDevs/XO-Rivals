@@ -20,6 +20,7 @@ public class ComidaController : MonoBehaviour
     // Cronometro
     public TextMeshProUGUI crono;
     private float time = 20;
+    private bool finished = false;
 
     // Minijuegos
     Generador generador;
@@ -56,7 +57,7 @@ public class ComidaController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (time >= 0)
+        if (time >= 0 && !finished)
         {
             time -= Time.deltaTime;
             crono.text = " " + time.ToString("f0");
@@ -109,6 +110,7 @@ public class ComidaController : MonoBehaviour
                 {
                     // Fin minijuego mandar bool a alberto
                     panArriba.SetActive(true);
+                    finished = true;
                     crono.SetText("Has ganado");
                     stopGenerador();
                     // Aqui se manda a alberto la victoria
