@@ -173,9 +173,13 @@ public class Login : MonoBehaviour
 
             IsConnecting = false;
 
+            Authenticator = new PlayFabAuthenticator();
+
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
         }
     }
+
+
 
     #endregion
 
@@ -255,6 +259,9 @@ public class Login : MonoBehaviour
         UsernameInput.ForceLabelUpdate();
         PasswordInput.ForceLabelUpdate();
     }
+
+
+    
 
     #endregion
 }

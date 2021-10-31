@@ -1,6 +1,8 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -8,15 +10,30 @@ public class Player : MonoBehaviour
         
     public string textValue;
     public TextMeshProUGUI textElement;
+    
     [SerializeField] private float speed;
     private bool grounded;
     private Rigidbody2D body;
     private PlayerActionsController playerActionsController;
-    [SerializeField] private float Speed = 3, jumpSpeed = 4;
+    [SerializeField] private float jumpSpeed = 4;
     public bool Victory = false;
+    
     public Transform respawn;
     private Vector2 respawnPlayer;
     public GameObject player;
+    private float movementInput;
+    private bool isFacingRight = true;
+    
+    // Gamemanager
+    private GameManager _gameManager;
+
+    // Controles de movil
+    [SerializeField]
+    public GameObject leftButton;
+    [SerializeField]
+    public GameObject rightButton;
+    [SerializeField]
+    public GameObject jumpButton;
 
     // Start is called before the first frame update
     void Awake()
@@ -24,41 +41,99 @@ public class Player : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         playerActionsController = new PlayerActionsController();
     }
+    private void FixedUpdate()
+    {
+        body.velocity = new Vector2(movementInput * speed, body.velocity.y);
+    }
 
     public void OnEnable()
     {
         playerActionsController.Enable();
     }
 
-
+    private void Flip()
+    {
+        isFacingRight = !isFacingRight;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1f;
+        transform.localScale = localScale;
+    }
     public void OnDisable()
     {
         playerActionsController.Disable();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Start()
     {
-        textElement.text = textValue;
-        
-        float movementInput = playerActionsController.Movement.Move.ReadValue<float>();
-        Vector3 currentPosition = transform.position;
-        currentPosition.x += movementInput * Speed * Time.deltaTime;
-        transform.position = currentPosition;
+        _gameManager = FindObjectOfType<GameManager>();
 
-        if (grounded == true)
+        if (!_gameManager.IsWebGLMobile)
         {
-            float jumpInput = playerActionsController.Movement.Jump.ReadValue<float>();
-            Vector3 currentJump = transform.position;
-            currentJump.y += jumpInput * jumpSpeed * Time.deltaTime;
-            transform.position = currentJump;
-            grounded = false;
+            leftButton.SetActive(false);
+            rightButton.SetActive(false);
+            jumpButton.SetActive(false);
 
         }
     }
 
+    // Update is called once per frame
+    void Update()
+    {
 
-    private void OnTriggerEnter2D(Collider2D other)
+        textElement.text = textValue;
+
+        
+        if (!isFacingRight && movementInput > 0f)
+        {
+            Flip();
+        }
+        else if (isFacingRight && movementInput < 0f)
+        {
+            Flip();
+        }
+    }
+    public void Jump2(InputAction.CallbackContext context)
+    {
+
+
+        if (context.performed)
+
+        {
+            body.velocity = new Vector2(body.velocity.x,jumpSpeed);
+
+        }
+
+        if (context.canceled && body.velocity.y > 0f)
+        {
+            body.velocity = new Vector2(body.velocity.x,body.velocity.y * 0.5f);
+
+        }
+    }
+    public void Jump()
+    {
+        body.velocity = Vector2.up * jumpSpeed;
+    }
+
+    public void MoveLeft()
+    {
+        movementInput = -1;
+    }
+    
+    public void MoveRight()
+    {
+        movementInput = 1;
+    }
+
+    public void Stop()
+    {
+        movementInput = 0;
+    }
+    public void Move(InputAction.CallbackContext context)
+    {
+        movementInput = context.ReadValue<Vector2>().x;
+    }
+
+private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Finish"))
         {
@@ -66,13 +141,13 @@ public class Player : MonoBehaviour
             textValue = "Victory";
             Victory = true;
             OnDisable();
+
             PlayerPrefs.SetInt("minigameWin", 1);
             SceneManager.UnloadSceneAsync("2D Platform");
+
         }
     }
-
- 
-  private void OnCollisionEnter2D(Collision2D collision)
+private void OnCollisionEnter2D(Collision2D collision)
   {
       if (collision.gameObject.CompareTag ("Respawn")) {
                    player.transform.position = new Vector2(respawn.position.x,respawn.position.y);
