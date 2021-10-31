@@ -77,7 +77,7 @@ public class ComidaController : MonoBehaviour
             lechuga.SetActive(false);
             panArriba.SetActive(false);
             orden = 1;
-            player.isKinematic = true;
+            player.constraints = RigidbodyConstraints2D.FreezeAll;
             Invoke("EndSceneLost", 5f);         
         }
     }
@@ -123,6 +123,7 @@ public class ComidaController : MonoBehaviour
                     finished = true;
                     crono.SetText("Has ganado");
                     stopGenerador();
+                    player.constraints = RigidbodyConstraints2D.FreezeAll;
                     // Aqui se manda a alberto la victoria
                     Invoke("EndSceneWin", 5f);                
 
