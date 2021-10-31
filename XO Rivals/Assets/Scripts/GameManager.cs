@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
     /// Minijuego elegido
     /// </summary>
     public int miniGameChosen;
+    PlayerInfo playeraux;
     
     ////////////////// USUARIO //////////////////
     /// <summary>
@@ -101,11 +102,13 @@ public class GameManager : MonoBehaviour
         //Match ID y OwnerID for beta version
         PlayerInfoO = player;
         WhosTurn = player;
+
     }
 
     public void OnConnectToRoom(PlayerInfo player){
 
         PlayerInfoX = player;
+       
     }
     #endregion
 }

@@ -3683,6 +3683,7 @@ GameObject:
   - component: {fileID: 8973622830577669340}
   - component: {fileID: 8973622830577669341}
   - component: {fileID: 8973622830577669343}
+  - component: {fileID: 8973622830577669344}
   m_Layer: 5
   m_Name: MainGame
   m_TagString: Untagged
@@ -3716,6 +3717,28 @@ MonoBehaviour:
   - {fileID: 8973622831829132099}
   - {fileID: 8973622831828787378}
   - {fileID: 8973622831403405501}
+--- !u!114 &8973622830577669344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8973622830577669342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!222 &8973622830711506364
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3881,6 +3904,7 @@ MonoBehaviour:
   circle: {fileID: 21300000, guid: ad0f0796b033909459e01f6021989ebb, type: 3}
   cross: {fileID: 21300000, guid: 1e7c7a5b107dec6459fa0a030475b736, type: 3}
   gameState: {fileID: 0}
+  whosName: 
 --- !u!224 &8973622830952278643
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3910,6 +3934,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8973622830952278643}
   - component: {fileID: 8973622830952278642}
+  - component: {fileID: 8973622830952278653}
   m_Layer: 5
   m_Name: PlacingSystem
   m_TagString: Untagged
@@ -3917,6 +3942,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8973622830952278653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8973622830952278652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 1
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 8973622830952278642}
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!114 &8973622831018763760
 MonoBehaviour:
   m_ObjectHideFlags: 0

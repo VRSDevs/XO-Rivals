@@ -74,6 +74,8 @@ namespace Photon.Realtime
             }
         }
 
+      
+
         /// <summary>
         /// Defines if the room can be joined.
         /// </summary>

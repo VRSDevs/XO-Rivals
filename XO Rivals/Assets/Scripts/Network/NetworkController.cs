@@ -37,7 +37,19 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
         return false;
     }
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        //if (Verbose)
+        //{
+        //    Debug.Log(string.Format("OnRoomPropertiesUpdate ( propertiesThatChanged: {0} )", propertiesThatChanged.Count), this);
 
+        //    foreach (DictionaryEntry dictionaryEntry in propertiesThatChanged)
+        //    {
+        //        Debug.Log(string.Format("{0} | {1}", dictionaryEntry.Key, dictionaryEntry.Value), this);
+        //    }
+        //}
+        Debug.Log("EEEE");
+    }
     /// <summary>
     /// Método de conexión a la lobby general
     /// </summary>

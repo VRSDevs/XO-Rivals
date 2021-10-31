@@ -29,20 +29,10 @@ public class ScreenManager : MonoBehaviour
         }        
     }
 
-    public void UpdateTurn(PlayerInfo playerTurn){
+    public void UpdateTurn(int miniJuego){
 
-        if(buttonsScript.gameState.PlayerInfoO == playerTurn)
-            buttonsScript.gameState.WhosTurn = buttonsScript.gameState.PlayerInfoX;
-        else
-            buttonsScript.gameState.WhosTurn = buttonsScript.gameState.PlayerInfoO;
-        
-        buttonsScript.gameState.turnMoment = 0;
-        //Display turn in screen
-        if(buttonsScript.gameState.WhosTurn == buttonsScript.gameState.PlayerInfoO){            
-            StartCoroutine(txtTimer("Turno de O"));
-        }else{
-            StartCoroutine(txtTimer("Turno de X"));
-        } 
+        buttonsScript.actualizarTurno(miniJuego);
+
     }
     
     public IEnumerator txtTimer(string txt){
@@ -64,14 +54,14 @@ public class ScreenManager : MonoBehaviour
         miniGameChoosing.SetActive(false);
         ticTacScreen.SetActive(true);
 
-        //Unihide chips
-        for(int i = 0; i < buttonsScript.gameState.chips.Count; i++)
-            buttonsScript.gameState.chips[i].SetActive(true);
+        Debug.Log("MINIJUEGO SELECCIONADO PARA MI");
 
-        UpdateTurn(buttonsScript.gameState.WhosTurn);
 
         //Disable interaction with tictac
         DisableButtons();
+        UpdateTurn(n);
+
+        
     }
 
     public void DisableButtons(){
@@ -79,4 +69,14 @@ public class ScreenManager : MonoBehaviour
             buttonsReference[i].interactable = false;
         }
     }
+
+    public void EnableButtons()
+    {
+        for (int i = 0; i < buttonsReference.Length; i++)
+        {
+            buttonsReference[i].interactable = true;
+        }
+    }
+
 }
+ 

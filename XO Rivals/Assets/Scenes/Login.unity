@@ -301,7 +301,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   log: {fileID: 0}
   _networkController: {fileID: 0}
-  Username: 
+  MatchId: 
+  OwnerId: 
+  PlayerInfoO: {fileID: 0}
+  PlayerInfoX: {fileID: 0}
+  WhosTurn: {fileID: 0}
+  turnMoment: 0
+  numFilled: 0
+  chips: []
+  miniGameChosen: 0
 --- !u!1 &64042870
 GameObject:
   m_ObjectHideFlags: 0

@@ -39,6 +39,14 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - cargarTurno
+  - actualizarTurno
+  - actualizarWhos
+  - actualizarWhosName
+  - actualizarplayerO
+  - actualizarplayerX
+  - actualizarTurnoRPC
+  - actualizarTablero
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
