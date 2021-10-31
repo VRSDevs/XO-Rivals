@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour
     
     public void OnCreateRoom(PlayerInfo player){
         //Match ID y OwnerID for beta version
+        OwnerId = player.Name;
         PlayerInfoO = player;
         WhosTurn = player;
     }
@@ -116,7 +117,29 @@ public class GameManager : MonoBehaviour
     
     #endregion
 
-    #region OtherMethods
+    #region ConversionToObjectMethods
+    
+    public object[] PlayerInfoToObject(char type)
+    {
+        switch (type)
+        {
+            case 'a':
+                object[] obj_admin = new object[4];
+
+                obj_admin[0] = MatchId;
+                obj_admin[1] = OwnerId;
+                obj_admin[2] = PlayerInfoO.Name;
+                obj_admin[3] = WhosTurn.Name;
+        
+                return obj_admin;
+                break;
+            case 'p':
+                
+                break;
+        }
+        
+    }
+    
 
     /// <summary>
     /// 
