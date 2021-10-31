@@ -185,6 +185,8 @@ public class ButtonsScript : MonoBehaviour
             //Table full (draw)
             if(gameState.NumFilled == 9){
                 Debug.Log("Draw");
+                
+                FindObjectOfType<EndGameScript>().ShowMatchDraw();
             }
         }else{
             Debug.Log("Tile not empty");
