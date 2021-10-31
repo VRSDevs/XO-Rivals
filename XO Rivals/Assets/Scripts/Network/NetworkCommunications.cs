@@ -14,11 +14,11 @@ public class NetworkCommunications : MonoBehaviourPun
         _View.ViewID = 1;
     }
 
-    public void SendHostInfoPackage()
+    public void SendPlayerInfoPackage(string type)
     {
-        object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject('h');
+        object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject(type);
         Debug.Log("Vamos a mandar: " + objToSend);  
-        _View.RPC("RPCGetHostInfo", RpcTarget.OthersBuffered, (object)objToSend);
+        _View.RPC("RPCGetPlayerInfo", RpcTarget.OthersBuffered, (object)objToSend);
     }
 
     /// <summary>
@@ -34,25 +34,42 @@ public class NetworkCommunications : MonoBehaviourPun
     #region RPCMethods
     
     [PunRPC]
-    public void RPCGetHostInfo(object[] obj)
+    public void RPCGetPlayerInfo(object[] obj)
     {
-        Debug.Log("RPC recibido");
-        
-        FindObjectOfType<GameManager>().MatchId = obj[0] as string;
-        FindObjectOfType<GameManager>().OwnerId = obj[1] as string;
-
-        if (FindObjectOfType<GameManager>().PlayerInfoO == null)
+        switch (obj[0] as string)
         {
-            Debug.Log("No hay información del PlayerO");
-            FindObjectOfType<GameManager>().PlayerInfoO = gameObject.AddComponent<PlayerInfo>();
-            FindObjectOfType<GameManager>().PlayerInfoO.Name = obj[2] as string;
-        }
+            case "host":
+                Debug.Log("RPC recibido del host");
+                
+                FindObjectOfType<GameManager>().MatchId = obj[0] as string;
+                FindObjectOfType<GameManager>().OwnerId = obj[1] as string;
 
-        if (FindObjectOfType<GameManager>().WhosTurn == null)
-        {
-            Debug.Log("No hay información del jugador del turno actual");
-            FindObjectOfType<GameManager>().WhosTurn = gameObject.AddComponent<PlayerInfo>();
-            FindObjectOfType<GameManager>().WhosTurn.Name = obj[3] as string;
+                if (FindObjectOfType<GameManager>().PlayerInfoO == null)
+                {
+                    Debug.Log("No hay información del PlayerO");
+                    FindObjectOfType<GameManager>().PlayerInfoO = gameObject.AddComponent<PlayerInfo>();
+                    FindObjectOfType<GameManager>().PlayerInfoO.Name = obj[2] as string;
+                }
+
+                if (FindObjectOfType<GameManager>().WhosTurn == null)
+                {
+                    Debug.Log("No hay información del jugador del turno actual");
+                    FindObjectOfType<GameManager>().WhosTurn = gameObject.AddComponent<PlayerInfo>();
+                    FindObjectOfType<GameManager>().WhosTurn.Name = obj[3] as string;
+                }
+                
+                break;
+            case "user":
+                Debug.Log("RPC recibido del usuario");
+                
+                if (FindObjectOfType<GameManager>().PlayerInfoX == null)
+                {
+                    Debug.Log("No hay información del PlayerO");
+                    FindObjectOfType<GameManager>().PlayerInfoX = gameObject.AddComponent<PlayerInfo>();
+                    FindObjectOfType<GameManager>().PlayerInfoX.Name = obj[2] as string;
+                }
+                
+                break;
         }
     }
 
