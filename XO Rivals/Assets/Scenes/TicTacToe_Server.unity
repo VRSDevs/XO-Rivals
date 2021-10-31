@@ -2061,6 +2061,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MatchVictory: {fileID: 1571318606}
   MatchDefeat: {fileID: 1807290353}
+  MatchDraw: {fileID: 786690316}
   SurrenderVictory: {fileID: 445435585}
 --- !u!1 &786690316
 GameObject:

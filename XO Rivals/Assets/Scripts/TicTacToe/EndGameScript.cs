@@ -9,6 +9,7 @@ public class EndGameScript : MonoBehaviour
 
     [SerializeField] private GameObject MatchVictory;
     [SerializeField] private GameObject MatchDefeat;
+    [SerializeField] private GameObject MatchDraw;
     [SerializeField] private GameObject SurrenderVictory;
 
     #endregion
