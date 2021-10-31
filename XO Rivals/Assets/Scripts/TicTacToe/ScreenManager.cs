@@ -28,8 +28,6 @@ public class ScreenManager : MonoBehaviour
         }else{
             StartCoroutine(txtTimer("Turno de X"));
         }
-        
-        buttonsScript.gameState._NetworkCommunications.SendPackage();
     }
 
     public void UpdateTurn(PlayerInfo playerTurn){
