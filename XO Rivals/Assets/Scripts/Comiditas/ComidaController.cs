@@ -84,13 +84,13 @@ public class ComidaController : MonoBehaviour
 
     void EndSceneLost()
     {
-        PlayerPrefs.SetInt("minigameWin", 1);
+        PlayerPrefs.SetInt("minigameWin", 0);
         SceneManager.UnloadSceneAsync("MinijuegoComida");
     }
 
     void EndSceneWin()
     {
-        PlayerPrefs.SetInt("minigameWin", 0);
+        PlayerPrefs.SetInt("minigameWin", 1);
         SceneManager.UnloadSceneAsync("MinijuegoComida");
     }
 
