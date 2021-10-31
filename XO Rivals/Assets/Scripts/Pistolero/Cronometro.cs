@@ -81,7 +81,7 @@ public class Cronometro : MonoBehaviour
         {
             cambioEscena.win = false;
             //StartCoroutine("EsperarD");
-            textoExplicativo.text = "This is your result!\nLOOSE AGAINST " + segundosEnemy + ":" + decimasEnemy ;
+            textoExplicativo.text = "This is your result!\nLOST AGAINST " + segundosEnemy + ":" + decimasEnemy ;
 
         }
     }
