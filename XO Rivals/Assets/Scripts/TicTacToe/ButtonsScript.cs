@@ -186,7 +186,7 @@ public class ButtonsScript : MonoBehaviour
             if(gameState.NumFilled == 9){
                 Debug.Log("Draw");
                 
-                FindObjectOfType<EndGameScript>().ShowMatchDraw();
+                gameState._NetworkCommunications.SendEndMatchInfo("draw", "");
             }
         }else{
             Debug.Log("Tile not empty");
@@ -296,11 +296,11 @@ public class ButtonsScript : MonoBehaviour
                     
                     if (localPlayer.Name == gameState.PlayerInfoO.Name)
                     {
-                        FindObjectOfType<EndGameScript>().ShowMatchVictory();
+                        gameState._NetworkCommunications.SendEndMatchInfo("win", gameState.PlayerInfoO.Name);
                     }
                     else
                     {
-                        FindObjectOfType<EndGameScript>().ShowMatchDefeat();
+                        gameState._NetworkCommunications.SendEndMatchInfo("defeat", gameState.PlayerInfoX.Name);
                     }
                 }
                 else
@@ -309,11 +309,11 @@ public class ButtonsScript : MonoBehaviour
 
                     if (localPlayer.Name == gameState.PlayerInfoX.Name)
                     {
-                        FindObjectOfType<EndGameScript>().ShowMatchVictory();
+                        gameState._NetworkCommunications.SendEndMatchInfo("win", gameState.PlayerInfoX.Name);
                     }
                     else
                     {
-                        FindObjectOfType<EndGameScript>().ShowMatchDefeat();
+                        gameState._NetworkCommunications.SendEndMatchInfo("defeat", gameState.PlayerInfoO.Name);
                     }
                 }
                 break;
