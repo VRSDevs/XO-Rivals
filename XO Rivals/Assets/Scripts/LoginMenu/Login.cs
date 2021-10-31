@@ -172,6 +172,7 @@ public class Login : MonoBehaviour
             }
 
             IsConnecting = false;
+
             Authenticator = new PlayFabAuthenticator();
 
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
