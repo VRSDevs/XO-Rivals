@@ -110,6 +110,8 @@ public class ScreenManager : MonoBehaviour
                         
                 break;
         }
+        
+        buttonsScript.gameState.Chips.Add(buttonsScript.actualChip);
     }
     
     public void EnableButtons()
