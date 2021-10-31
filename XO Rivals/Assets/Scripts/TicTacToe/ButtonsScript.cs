@@ -19,6 +19,7 @@ public class ButtonsScript : MonoBehaviour
     private ScreenManager screenManager;
 
     //Array of positions
+    public string SelectedTile;
     public GameObject actualChip;
 
     //Variables for victory
@@ -77,14 +78,9 @@ public class ButtonsScript : MonoBehaviour
     }
     
     public void Start(){
-        //UpdateTurn();
-    }
-
-    public void Update()
-    {
         UpdateTurn();
     }
-    
+
     /// <summary>
     /// 
     /// </summary>
@@ -96,7 +92,6 @@ public class ButtonsScript : MonoBehaviour
             //Depending of turn moment, player will encounter a "different scene"
             if (gameState.turnMoment == 0)
             {
-                screenManager.UpdateBoard();
                 screenManager.EnableButtons();
             }
             else if(gameState.turnMoment == 1){
@@ -126,10 +121,13 @@ public class ButtonsScript : MonoBehaviour
         if(gameState.FilledPositions[col,row] == 3){
             
             //Places a sprite or another depending on turn
-            if(gameState.PlayerInfoO.Name == localPlayer.Name){
-                
+            if(gameState.PlayerInfoO.Name == localPlayer.Name)
+            {
+                GameObject tile = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+                SelectedTile = tile.name;
+
                 //Place chip
-                actualChip = Instantiate(circleGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
+                actualChip = Instantiate(circleGO, tile.transform.position, Quaternion.identity);
                 actualChip.SetActive(true);
                 actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
                 gameState.turnMoment = 1;
@@ -152,9 +150,11 @@ public class ButtonsScript : MonoBehaviour
                 screenManager.DisableButtons();
 
             }else{
-
+                GameObject tile = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+                SelectedTile = tile.name;
+                
                 //Place chip
-                actualChip = Instantiate(crossGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
+                actualChip = Instantiate(crossGO, tile.transform.position, Quaternion.identity);
                 actualChip.SetActive(true);
                 actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
 
