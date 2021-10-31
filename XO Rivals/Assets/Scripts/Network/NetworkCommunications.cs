@@ -79,24 +79,23 @@ public class NetworkCommunications : MonoBehaviourPun
                 Debug.Log("RPC oponente ganó");
                 
                 FindObjectOfType<GameManager>().WhosTurn = obj[1] as string;
-                
-                Debug.Log("Espacios rellenos: " + (int)obj[2]);
                 FindObjectOfType<GameManager>().NumFilled = (int)obj[2];
-                
-                Debug.Log("Celda: " + (int)obj[3] + " / " + (int)obj[4]);
                 FindObjectOfType<GameManager>().FilledPositions[
                     (int)obj[3], (int)obj[4]
                 ] = (int)obj[5];
                 
-                Debug.Log("Valor: " +  FindObjectOfType<GameManager>().FilledPositions[
-                    (int)obj[3], (int)obj[4]
-                ]);
+
+                FindObjectOfType<ScreenManager>().UpdateBoard(
+                    (int)obj[3], 
+                    (int)obj[4], 
+                    (string)obj[6]
+                );
                 
-                FindObjectOfType<GameManager>().MiniGameChosen = (int)obj[6];
+                FindObjectOfType<GameManager>().MiniGameChosen = (int)obj[7];
 
                 FindObjectOfType<GameManager>().turnMoment = 0;
 
-                //FindObjectOfType<ButtonsScript>().UpdateTurn();
+                FindObjectOfType<ButtonsScript>().UpdateTurn();
                 
                 break;
             case "OppLost":
@@ -108,7 +107,7 @@ public class NetworkCommunications : MonoBehaviourPun
                 
                 FindObjectOfType<GameManager>().turnMoment = 0;
 
-                //FindObjectOfType<ButtonsScript>().UpdateTurn();
+                FindObjectOfType<ButtonsScript>().UpdateTurn();
                 
                 break;
         }
