@@ -54,32 +54,27 @@ public class ButtonsScript : MonoBehaviour
         gameState = FindObjectOfType<GameManager>();
         localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
 
-        //If its a new match, there is no playerX
-        if(gameState.PlayerInfoX == null){ 
-
-            //Fill array
-            gameState.FilledPositions = new int[3,3];
-            for(int i = 0; i < gameState.FilledPositions.GetLength(0); i++){
-                for(int j = 0; j < gameState.FilledPositions.GetLength(1); j++){
-                    gameState.FilledPositions[i,j] = 3;
-                }
+        //Fill array
+        gameState.FilledPositions = new int[3,3];
+        for(int i = 0; i < gameState.FilledPositions.GetLength(0); i++){
+            for(int j = 0; j < gameState.FilledPositions.GetLength(1); j++){
+                gameState.FilledPositions[i,j] = 3;
             }
-            
-            //Start variables
-            gameState.NumFilled = 0;
-            gameState.Chips = new List<GameObject>(); 
-            
-            //El minijuego es elegido automaticamente
-            gameState.MiniGameChosen = Random.Range(0,2);
-            gameState.turnMoment = 0;
         }
+            
+        //Start variables
+        gameState.NumFilled = 0;
+        gameState.Chips = new List<GameObject>(); 
+            
+        //El minijuego es elegido automaticamente
+        gameState.MiniGameChosen = Random.Range(0,2);
+        gameState.turnMoment = 0;
 
         //Initialize ScreenManager
         screenManager = FindObjectOfType<ScreenManager>();
     }
     
     public void Start(){
-        
         UpdateTurn();
     }
 

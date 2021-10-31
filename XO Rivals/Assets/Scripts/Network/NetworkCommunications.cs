@@ -72,11 +72,11 @@ public class NetworkCommunications : MonoBehaviourPun
     [PunRPC]
     public void RPCUpdateMatch(object[] obj)
     {
-        Debug.Log("RPC recibido");
-
         switch (obj[0] as string)
         {
             case "OppWon":
+                
+                Debug.Log("RPC oponente ganó");
                 
                 FindObjectOfType<GameManager>().WhosTurn = obj[1] as string;
                 FindObjectOfType<GameManager>().NumFilled = (int)obj[2];
@@ -96,6 +96,8 @@ public class NetworkCommunications : MonoBehaviourPun
                 
                 break;
             case "OppLost":
+                
+                Debug.Log("RPC oponente perdió");
                 
                 FindObjectOfType<GameManager>().WhosTurn = obj[1] as string;
                 FindObjectOfType<GameManager>().MiniGameChosen = (int)obj[2];
