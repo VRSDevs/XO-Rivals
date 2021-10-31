@@ -16,7 +16,7 @@ public class NetworkCommunications : MonoBehaviourPun
 
     public void SendHostInfoPackage()
     {
-        object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject();
+        object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject('h');
         Debug.Log("Vamos a mandar: " + objToSend);  
         _View.RPC("RPCGetHostInfo", RpcTarget.OthersBuffered, (object)objToSend);
     }
