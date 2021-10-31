@@ -1,4 +1,5 @@
 using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -42,7 +43,10 @@ public class ScreenManager : MonoBehaviour
             StartCoroutine(txtTimer("Turno de O"));
         }else{
             StartCoroutine(txtTimer("Turno de X"));
-        } 
+        }
+
+        Package packageToSend = buttonsScript.gameState.ToPackage(buttonsScript.localPlayer);
+        PhotonView.Get(this).RPC("RPC_UpdateTurn", RpcTarget.All, packageToSend);
     }
     
     public IEnumerator txtTimer(string txt){
@@ -60,13 +64,13 @@ public class ScreenManager : MonoBehaviour
     }    
 
     public void MinigameSelection(int n){
-        buttonsScript.gameState.miniGameChosen = n;
+        buttonsScript.gameState.MiniGameChosen = n;
         miniGameChoosing.SetActive(false);
         ticTacScreen.SetActive(true);
 
         //Unihide chips
-        for(int i = 0; i < buttonsScript.gameState.chips.Count; i++)
-            buttonsScript.gameState.chips[i].SetActive(true);
+        for(int i = 0; i < buttonsScript.gameState.Chips.Count; i++)
+            buttonsScript.gameState.Chips[i].SetActive(true);
 
         UpdateTurn(buttonsScript.gameState.WhosTurn);
 
