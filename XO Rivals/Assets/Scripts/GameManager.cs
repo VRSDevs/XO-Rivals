@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour
     /// Referencia a funciones del servidor
     /// </summary>
     public NetworkController _networkController;
+    /// <summary>
+    /// 
+    /// </summary>
+    public NetworkCommunications _NetworkCommunications;
     
     ////////////////// PARTIDA //////////////////
     /// <summary>
@@ -79,6 +83,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _networkController = gameObject.AddComponent<NetworkController>();
+        _NetworkCommunications = gameObject.AddComponent<NetworkCommunications>();
+        
         IsPlaying = false;
         
         DontDestroyOnLoad(this);
