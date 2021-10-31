@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,9 @@ public class NetworkCommunications : MonoBehaviourPun
     public void SendPackage()
     {
         Package packageToSend = FindObjectOfType<ButtonsScript>().gameState.ToPackage(FindObjectOfType<ButtonsScript>().localPlayer);
+        
+        Debug.Log("Vamos a mandar: " + packageToSend);        
+        
         photonView.RPC("RPC_UpdateTurn", RpcTarget.All, packageToSend);
     }
     
@@ -23,6 +27,8 @@ public class NetworkCommunications : MonoBehaviourPun
     [PunRPC]
     public void RPC_UpdateTurn(Package recievedPackage)
     {
+        Debug.Log("RPC recibido");
+        
         FindObjectOfType<GameManager>().MatchId = recievedPackage.MatchId;
         FindObjectOfType<GameManager>().OwnerId = recievedPackage.OwnerId;
         if (FindObjectOfType<PlayerInfo>().Name == FindObjectOfType<GameManager>().PlayerInfoO.Name)
