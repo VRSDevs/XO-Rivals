@@ -19,10 +19,13 @@ public class MainMenuController : MonoBehaviour
     public GameManager _gameManager;
     public PlayerInfo _localPlayer;
 
+    private int Mode;
+
     private void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
         _localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
+        Mode = 0;
     }
 
     public void OnCreateMatch()
@@ -39,19 +42,27 @@ public class MainMenuController : MonoBehaviour
 
     public void OnBackButtonClick()
     {
-        if (PhotonNetwork.CurrentRoom != null)
+        switch (Mode)
         {
-            JoinOrBackButton_Text.text = "Back";
+            case 0:
+                MainMenuObject.SetActive(true);
+                PlayMenuObject.SetActive(false);
+                break;
+            case 1:
+                JoinOrBackButton_Text.text = "Back";
+                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Se canceló la búsqueda.";
 
-            CreateGameButton.interactable = true;
-            JoinGameButton.interactable = true;
+                CreateGameButton.interactable = true;
+                JoinGameButton.interactable = true;
             
-            _gameManager._networkController.OnLeaveRoom();
+                _gameManager._networkController.OnLeaveRoom();
+
+                break;
         }
-        else
-        {
-            MainMenuObject.SetActive(true);
-            PlayMenuObject.SetActive(false);
-        }
+    }
+
+    public void ChangeMode(int n)
+    {
+        Mode = n;
     }
 }

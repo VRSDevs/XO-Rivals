@@ -83,18 +83,20 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public void OnLeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
-        
-        FindObjectOfType<GameManager>().MatchId = "";
-        FindObjectOfType<GameManager>().OwnerId = "";
-        FindObjectOfType<GameManager>().PlayerInfoO = null;
-        FindObjectOfType<GameManager>().PlayerInfoX = null;
-        FindObjectOfType<GameManager>().WhosTurn = "";
-        FindObjectOfType<GameManager>().NumFilled = 0;
-        FindObjectOfType<GameManager>().FilledPositions = new int[3,3];
-        FindObjectOfType<GameManager>().turnMoment = 0;
-        FindObjectOfType<GameManager>().Chips = new List<GameObject>();
-        FindObjectOfType<GameManager>().MiniGameChosen = 0;
 
+        if (FindObjectOfType<GameManager>().IsPlaying)
+        {
+            FindObjectOfType<GameManager>().MatchId = "";
+            FindObjectOfType<GameManager>().OwnerId = "";
+            FindObjectOfType<GameManager>().PlayerInfoO = null;
+            FindObjectOfType<GameManager>().PlayerInfoX = null;
+            FindObjectOfType<GameManager>().WhosTurn = "";
+            FindObjectOfType<GameManager>().NumFilled = 0;
+            FindObjectOfType<GameManager>().FilledPositions = new int[3,3];
+            FindObjectOfType<GameManager>().turnMoment = 0;
+            FindObjectOfType<GameManager>().Chips = new List<GameObject>();
+            FindObjectOfType<GameManager>().MiniGameChosen = 0;
+        }
     }
 
     #endregion
@@ -199,6 +201,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         if (FindObjectOfType<GameManager>().IsPlaying)
         {
             FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
+            FindObjectOfType<GameManager>().IsPlaying = false;
         }
     }
 
@@ -235,5 +238,4 @@ public class NetworkController : MonoBehaviourPunCallbacks
     #endregion
 
     */
-    
 }
