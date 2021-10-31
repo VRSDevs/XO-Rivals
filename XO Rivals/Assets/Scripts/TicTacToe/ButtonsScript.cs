@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using Random = UnityEngine.Random;
 
 public class ButtonsScript : MonoBehaviour
 {
@@ -10,14 +12,15 @@ public class ButtonsScript : MonoBehaviour
     //Circle and Cross
     [SerializeField] private Sprite circle;
     [SerializeField] private Sprite cross;
-    private GameObject circleGO;
-    private GameObject crossGO;
+    public GameObject circleGO;
+    public GameObject crossGO;
 
     //Screen manager
     private ScreenManager screenManager;
 
     //Array of positions
-    private GameObject actualChip;
+    public string SelectedTile;
+    public GameObject actualChip;
 
     //Variables for victory
     public int col, row;
@@ -78,18 +81,11 @@ public class ButtonsScript : MonoBehaviour
         UpdateTurn();
     }
 
-    #endregion
-
-    #region MainMethods
-
     /// <summary>
     /// 
     /// </summary>
     public void UpdateTurn()
     {
-        Debug.Log(gameState.WhosTurn);
-        Debug.Log(localPlayer.Name);
-
         //If its your turn, play, if its not, only can see
         if(gameState.WhosTurn == localPlayer.Name){
 
@@ -111,6 +107,10 @@ public class ButtonsScript : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region MainMethods
+    
     public void PlaceTile(int pos){
 
         //Get row and column
@@ -121,10 +121,13 @@ public class ButtonsScript : MonoBehaviour
         if(gameState.FilledPositions[col,row] == 3){
             
             //Places a sprite or another depending on turn
-            if(gameState.PlayerInfoO.Name == localPlayer.Name){
-                
+            if(gameState.PlayerInfoO.Name == localPlayer.Name)
+            {
+                GameObject tile = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+                SelectedTile = tile.name;
+
                 //Place chip
-                actualChip = Instantiate(circleGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
+                actualChip = Instantiate(circleGO, tile.transform.position, Quaternion.identity);
                 actualChip.SetActive(true);
                 actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
                 gameState.turnMoment = 1;
@@ -147,9 +150,11 @@ public class ButtonsScript : MonoBehaviour
                 screenManager.DisableButtons();
 
             }else{
-
+                GameObject tile = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+                SelectedTile = tile.name;
+                
                 //Place chip
-                actualChip = Instantiate(crossGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
+                actualChip = Instantiate(crossGO, tile.transform.position, Quaternion.identity);
                 actualChip.SetActive(true);
                 actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
 

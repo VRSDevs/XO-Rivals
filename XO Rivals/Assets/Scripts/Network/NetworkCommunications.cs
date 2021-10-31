@@ -84,11 +84,14 @@ public class NetworkCommunications : MonoBehaviourPun
                     (int)obj[3], (int)obj[4]
                 ] = (int)obj[5];
                 
-                Debug.Log("Valor: " +  FindObjectOfType<GameManager>().FilledPositions[
-                    (int)obj[3], (int)obj[4]
-                ]);
+
+                FindObjectOfType<ScreenManager>().UpdateBoard(
+                    (int)obj[3], 
+                    (int)obj[4], 
+                    (string)obj[6]
+                );
                 
-                FindObjectOfType<GameManager>().MiniGameChosen = (int)obj[6];
+                FindObjectOfType<GameManager>().MiniGameChosen = (int)obj[7];
 
                 FindObjectOfType<GameManager>().turnMoment = 0;
 
