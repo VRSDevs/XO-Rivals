@@ -11,6 +11,14 @@ public class NetworkCommunications : MonoBehaviourPun
     private void Start()
     {
         _View = gameObject.AddComponent<PhotonView>();
+        _View.ViewID = 1;
+    }
+
+    public void SendHostInfoPackage()
+    {
+        object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject();
+        Debug.Log("Vamos a mandar: " + objToSend);  
+        _View.RPC("RPCGetHostInfo", RpcTarget.OthersBuffered, (object)objToSend);
     }
 
     /// <summary>
@@ -19,13 +27,34 @@ public class NetworkCommunications : MonoBehaviourPun
     public void SendPackage()
     {
         object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.ToObject(FindObjectOfType<ButtonsScript>().localPlayer);
-        
-        Debug.Log("Vamos a mandar: " + objToSend);       
-        
-        _View.RPC("RPCUpdateTurn", RpcTarget.All, (object)objToSend);
+        Debug.Log("Vamos a mandar: " + objToSend);
+        _View.RPC("RPCUpdateTurn", RpcTarget.OthersBuffered, (object)objToSend);
     }
     
     #region RPCMethods
+    
+    [PunRPC]
+    public void RPCGetHostInfo(object[] obj)
+    {
+        Debug.Log("RPC recibido");
+        
+        FindObjectOfType<GameManager>().MatchId = obj[0] as string;
+        FindObjectOfType<GameManager>().OwnerId = obj[1] as string;
+
+        if (FindObjectOfType<GameManager>().PlayerInfoO == null)
+        {
+            Debug.Log("No hay información del PlayerO");
+            FindObjectOfType<GameManager>().PlayerInfoO = gameObject.AddComponent<PlayerInfo>();
+            FindObjectOfType<GameManager>().PlayerInfoO.Name = obj[2] as string;
+        }
+
+        if (FindObjectOfType<GameManager>().WhosTurn == null)
+        {
+            Debug.Log("No hay información del jugador del turno actual");
+            FindObjectOfType<GameManager>().WhosTurn = gameObject.AddComponent<PlayerInfo>();
+            FindObjectOfType<GameManager>().WhosTurn.Name = obj[3] as string;
+        }
+    }
 
     /// <summary>
     /// 
