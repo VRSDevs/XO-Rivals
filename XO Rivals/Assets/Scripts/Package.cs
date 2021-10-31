@@ -12,22 +12,34 @@ public class Package
     public PlayerInfo WhosTurn;
     public int NumFilled;
     public int[,] FilledPositions;
-    public List<GameObject> Chips;
+    //public List<GameObject> Chips;
     public int MinigameChosen;
 
     #endregion
 
     #region SerializationMethods
-/*
-    public static object Deserialize(byte[] data)
+
+    /*
+    public object Deserialize(byte[] data)
     {
         var pck = new Package();
 
-        byte[] matchIdBytes = new byte[sizeof()];
+        int[] sizes =
+        {
+            sizeof(char) * MatchId.Length,
+            sizeof(char) * OwnerId.Length,
+            sizeof(char) * Player.Name.Length,
+            sizeof(char) * WhosTurn.Name.Length,
+            sizeof(int),
+            sizeof(int) * FilledPositions.Length,
+            sizeof(int)
+        };
+
+        byte[] matchIdBytes = new byte[sizes[0]];
 
         return pck;
+        
     }
-    
     */
 
     #endregion

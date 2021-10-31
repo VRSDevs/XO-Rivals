@@ -123,29 +123,28 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="localPlayer"></param>
     /// <returns></returns>
-    public Package ToPackage(PlayerInfo localPlayer)
+    public object[] ToObject(PlayerInfo localPlayer)
     {
-        Package pck = new Package();
+        object[] obj = new object[7];
 
-        pck.MatchId = MatchId;
-        pck.OwnerId = OwnerId;
-
+        obj[0] = MatchId;
+        obj[1] = OwnerId;
+        
         if (PlayerInfoX == null)
         {
-            pck.Player = localPlayer.Name.Equals(PlayerInfoO.Name) ? PlayerInfoO : PlayerInfoX;
+            obj[2] = localPlayer.Name.Equals(PlayerInfoO.Name) ? PlayerInfoO.Name : PlayerInfoX.Name;
         }
         else
         {
-            pck.Player = localPlayer.Name.Equals(PlayerInfoX.Name) ? PlayerInfoX : PlayerInfoO;
+            obj[2] = localPlayer.Name.Equals(PlayerInfoX.Name) ? PlayerInfoX.Name : PlayerInfoO.Name;
         }
+
+        obj[3] = WhosTurn.Name;
+        obj[4] = NumFilled;
+        obj[5] = FilledPositions;
+        obj[6] = MiniGameChosen;
         
-        pck.WhosTurn = WhosTurn;
-        pck.NumFilled = NumFilled;
-        pck.FilledPositions = FilledPositions;
-        pck.Chips = Chips;
-        pck.MinigameChosen = MiniGameChosen;
-        
-        return pck;
+        return obj;
     }
 
     #endregion
