@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 315764783}
   - component: {fileID: 315764786}
   - component: {fileID: 315764788}
+  - component: {fileID: 315764787}
   m_Layer: 5
   m_Name: BotonDisp
   m_TagString: Untagged
@@ -207,7 +208,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 315764784}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1555870949}
+        m_TargetAssemblyTypeName: SFXManager_Pistolero, Assembly-CSharp
+        m_MethodName: playRecarga
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &315764784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,6 +273,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlCrono: {fileID: 700963031}
   botonExit: {fileID: 1096370046}
+--- !u!114 &315764787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315764781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1555870949}
+          m_TargetAssemblyTypeName: SFXManager_Pistolero, Assembly-CSharp
+          m_MethodName: playRecarga
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &315764788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,8 +319,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 315764786}
-          m_TargetAssemblyTypeName: ControlBoton, Assembly-CSharp
+        - m_Target: {fileID: 1555870949}
+          m_TargetAssemblyTypeName: SFXManager_Pistolero, Assembly-CSharp
           m_MethodName: playDisparo
           m_Mode: 1
           m_Arguments:
@@ -1013,6 +1055,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1555870948}
   - component: {fileID: 1555870947}
+  - component: {fileID: 1555870949}
   m_Layer: 0
   m_Name: SFXManager_Pistolero
   m_TagString: Untagged
@@ -1130,6 +1173,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1555870949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555870946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ddaa342acbb0a0499537bf2bde6ff79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sonidoDisparo: {fileID: 8300000, guid: cc59e4709f92e6b4096e9e50fb51f00f, type: 3}
+  sonidoRecarga: {fileID: 8300000, guid: a7a84ff8ab8435b47980247b50442798, type: 3}
 --- !u!1 &1649746582
 GameObject:
   m_ObjectHideFlags: 0
