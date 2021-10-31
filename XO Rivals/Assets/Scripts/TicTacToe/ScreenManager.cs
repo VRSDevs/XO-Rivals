@@ -27,7 +27,9 @@ public class ScreenManager : MonoBehaviour
             StartCoroutine(txtTimer("Turno de O"));
         }else{
             StartCoroutine(txtTimer("Turno de X"));
-        }        
+        }
+        
+        buttonsScript.gameState._NetworkCommunications.SendPackage();
     }
 
     public void UpdateTurn(PlayerInfo playerTurn){
@@ -68,9 +70,14 @@ public class ScreenManager : MonoBehaviour
         ticTacScreen.SetActive(true);
 
         //Unihide chips
-        for(int i = 0; i < buttonsScript.gameState.Chips.Count; i++)
+        for (int i = 0; i < buttonsScript.gameState.Chips.Count; i++)
+        {
+            if(buttonsScript.gameState.Chips[i] == null)
+                continue;
+            
             buttonsScript.gameState.Chips[i].SetActive(true);
-
+        }
+        
         UpdateTurn(buttonsScript.gameState.WhosTurn);
 
         //Disable interaction with tictac
