@@ -92,27 +92,25 @@ public class ScreenManager : MonoBehaviour
         DisableButtons();
     }
 
-    public void UpdateBoard()
+    public void UpdateBoard(int col, int row, string tileName)
     {
-        for(int i = 0; i < buttonsScript.gameState.FilledPositions.GetLength(0); i++){
-            for(int j = 0; j < buttonsScript.gameState.FilledPositions.GetLength(1); j++){
-
-                switch (buttonsScript.gameState.FilledPositions[i,j])
-                {
-                    case 0:
-                        buttonsScript.actualChip = Instantiate(buttonsScript.circleGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
-                        buttonsScript.actualChip.SetActive(true);
-                        buttonsScript.actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+        
+        GameObject tile = GameObject.Find(tileName);
+        
+        switch (buttonsScript.gameState.FilledPositions[col, row])
+        {
+            case 0:
+                buttonsScript.actualChip = Instantiate(buttonsScript.circleGO, tile.transform.position, Quaternion.identity);
+                buttonsScript.actualChip.SetActive(true);
+                buttonsScript.actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
                         
-                        break;
-                    case 1:
-                        buttonsScript.actualChip = Instantiate(buttonsScript.crossGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
-                        buttonsScript.actualChip.SetActive(true);
-                        buttonsScript.actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+                break;
+            case 1:
+                buttonsScript.actualChip = Instantiate(buttonsScript.crossGO, tile.transform.position, Quaternion.identity);
+                buttonsScript.actualChip.SetActive(true);
+                buttonsScript.actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
                         
-                        break;
-                }
-            }
+                break;
         }
     }
     
