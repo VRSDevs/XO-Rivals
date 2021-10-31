@@ -83,6 +83,12 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public void OnLeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
+        
+        FindObjectOfType<GameManager>().MatchId = "";
+        FindObjectOfType<GameManager>().OwnerId = "";
+        FindObjectOfType<GameManager>().PlayerInfoO = null;
+        FindObjectOfType<GameManager>().PlayerInfoX = null;
+        FindObjectOfType<GameManager>().WhosTurn = "";
     }
 
     #endregion
