@@ -127,16 +127,14 @@ public class NetworkController : MonoBehaviourPunCallbacks
         if (FindObjectOfType<GameManager>().OwnerId.Equals(FindObjectOfType<PlayerInfo>().Name))
         {
             Debug.Log("Soy el jugador local y admin de la partida.");
-            FindObjectOfType<NetworkCommunications>().SendHostInfoPackage();
+            FindObjectOfType<NetworkCommunications>().SendPlayerInfoPackage("host");
         }
         else
         {
             Debug.Log("Soy el jugador local y usuario de la partida.");
-            FindObjectOfType<NetworkCommunications>().SendHostInfoPackage();
+            FindObjectOfType<NetworkCommunications>().SendPlayerInfoPackage("user");
         }
-        
-        Debug.Log("Hola");
-        
+
         if (PhotonNetwork.CurrentRoom.PlayerCount == MAX_PLAYERS_INROOM)
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala llena. Empezando partida...";
