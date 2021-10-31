@@ -80,8 +80,10 @@ public class NetworkCommunications : MonoBehaviourPun
                 
                 FindObjectOfType<GameManager>().WhosTurn = obj[1] as string;
                 FindObjectOfType<GameManager>().NumFilled = (int)obj[2];
-                FindObjectOfType<GameManager>().FilledPositions = (int[,])obj[3];
-                FindObjectOfType<GameManager>().MiniGameChosen = (int)obj[4];
+                FindObjectOfType<GameManager>().FilledPositions[
+                    (int)obj[2], (int)obj[3]
+                ] = (int)obj[4];
+                FindObjectOfType<GameManager>().MiniGameChosen = (int)obj[5];
 
                 FindObjectOfType<GameManager>().turnMoment = 0;
 

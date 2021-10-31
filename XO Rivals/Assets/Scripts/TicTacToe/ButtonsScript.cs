@@ -20,7 +20,7 @@ public class ButtonsScript : MonoBehaviour
     private GameObject actualChip;
 
     //Variables for victory
-    int col, row;
+    public int col, row;
 
     //Minigame chosen
     private int opponentMinigame;

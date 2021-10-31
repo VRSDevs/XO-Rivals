@@ -156,15 +156,20 @@ public class GameManager : MonoBehaviour
         switch (type)
         {
             case "OppWon":
-                object[] objOppWon = new object[5];
+                object[] objOppWon = new object[7];
                 
-                Debug.Log(WhosTurn);
+                Debug.Log(FindObjectOfType<ButtonsScript>().col + ", " + FindObjectOfType<ButtonsScript>().row);
 
                 objOppWon[0] = type;
                 objOppWon[1] = WhosTurn;
                 objOppWon[2] = NumFilled;
-                objOppWon[3] = FilledPositions;
-                objOppWon[4] = MiniGameChosen;
+                objOppWon[3] = FindObjectOfType<ButtonsScript>().col;
+                objOppWon[4] = FindObjectOfType<ButtonsScript>().row;
+                objOppWon[5] = FilledPositions[
+                    FindObjectOfType<ButtonsScript>().col,
+                    FindObjectOfType<ButtonsScript>().row
+                ];
+                objOppWon[6] = MiniGameChosen;
         
                 return objOppWon;
             case "OppLost":
