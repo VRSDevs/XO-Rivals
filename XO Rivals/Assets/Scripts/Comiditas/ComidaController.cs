@@ -65,9 +65,22 @@ public class ComidaController : MonoBehaviour
         if (time < 0)
         {
             // Aqui se manda a alberto la derrota
-            PlayerPrefs.SetInt("minigameWin", 0);
-            SceneManager.UnloadSceneAsync("MinijuegoComida");            
+            stopGenerador();
+            crono.SetText("Has perdido");
+            Invoke("EndSceneLost", 5f);         
         }
+    }
+
+    void EndSceneLost()
+    {
+        PlayerPrefs.SetInt("minigameWin", 0);
+        SceneManager.UnloadSceneAsync("MinijuegoComida");
+    }
+
+    void EndSceneWin()
+    {
+        PlayerPrefs.SetInt("minigameWin", 1);
+        SceneManager.UnloadSceneAsync("MinijuegoComida");
     }
 
 
@@ -96,11 +109,10 @@ public class ComidaController : MonoBehaviour
                 {
                     // Fin minijuego mandar bool a alberto
                     panArriba.SetActive(true);
-
+                    crono.SetText("Has ganado");
                     stopGenerador();
-                     // Aqui se manda a alberto la victoria
-                    PlayerPrefs.SetInt("minigameWin", 1);
-                    SceneManager.UnloadSceneAsync("Minijuego Comida");                   
+                    // Aqui se manda a alberto la victoria
+                    Invoke("EndSceneWin", 5f);                
 
                 } else
                 {
