@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     public GameObject leftButton;
     [SerializeField]
     public GameObject rightButton;
+    [SerializeField]
     public GameObject jumpButton;
 
     // Start is called before the first frame update
@@ -66,6 +67,13 @@ public class Player : MonoBehaviour
     {
         _gameManager = FindObjectOfType<GameManager>();
 
+        if (!_gameManager.IsWebGLMobile)
+        {
+            leftButton.SetActive(false);
+            rightButton.SetActive(false);
+            jumpButton.SetActive(false);
+
+        }
     }
 
     // Update is called once per frame
@@ -73,8 +81,7 @@ public class Player : MonoBehaviour
     {
 
         textElement.text = textValue;
-        
-        
+
         
         if (!isFacingRight && movementInput > 0f)
         {
