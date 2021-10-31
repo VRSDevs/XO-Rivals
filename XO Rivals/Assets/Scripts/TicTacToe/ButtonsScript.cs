@@ -126,7 +126,7 @@ public class ButtonsScript : MonoBehaviour
         if(gameState.FilledPositions[col,row] == 3){
             
             //Places a sprite or another depending on turn
-            if(gameState.PlayerInfoO == localPlayer){
+            if(gameState.PlayerInfoO.Name == localPlayer.Name){
                 
                 //Place chip
                 actualChip = Instantiate(circleGO, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.position, Quaternion.identity);
