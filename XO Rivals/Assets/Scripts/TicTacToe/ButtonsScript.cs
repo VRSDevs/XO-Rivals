@@ -52,7 +52,7 @@ public class ButtonsScript : MonoBehaviour
         crossGO.SetActive(false);
 
         gameState = FindObjectOfType<GameManager>();
-        localPlayer = FindObjectOfType<PlayerInfo>();
+        localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
 
         //If its a new match, there is no playerX
         if(gameState.PlayerInfoX == null){ 
@@ -92,11 +92,11 @@ public class ButtonsScript : MonoBehaviour
     /// </summary>
     public void UpdateTurn()
     {
-        Debug.Log(gameState.WhosTurn);
-        Debug.Log(localPlayer);
+        Debug.Log(gameState.WhosTurn.Name);
+        Debug.Log(localPlayer.Name);
 
         //If its your turn, play, if its not, only can see
-        if(gameState.WhosTurn == localPlayer){
+        if(gameState.WhosTurn.Name == localPlayer.Name){
 
             //Depending of turn moment, player will encounter a "different scene"
             //if(turnInstant == 0){
