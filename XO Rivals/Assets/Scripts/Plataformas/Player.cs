@@ -6,8 +6,13 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    
-        
+    //Manager local del sonido
+    private AudioSource managerSonido;
+
+    //Pistas de audio 
+    public AudioClip sonidoJump;
+    public AudioClip sonidoMuerte;
+
     public string textValue;
     public TextMeshProUGUI textElement;
     
@@ -66,7 +71,7 @@ public class Player : MonoBehaviour
     public void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
-
+        managerSonido = GetComponent<AudioSource>();
         if (!_gameManager.IsWebGLMobile)
         {
             leftButton.SetActive(false);
@@ -95,23 +100,26 @@ public class Player : MonoBehaviour
     public void Jump2(InputAction.CallbackContext context)
     {
 
+        managerSonido.PlayOneShot(sonidoJump);
 
         if (context.performed)
 
         {
-            body.velocity = new Vector2(body.velocity.x,jumpSpeed);
+            body.velocity = new Vector2(body.velocity.x,jumpSpeed);            
 
         }
 
         if (context.canceled && body.velocity.y > 0f)
         {
             body.velocity = new Vector2(body.velocity.x,body.velocity.y * 0.5f);
-
+            
         }
+        
     }
     public void Jump()
     {
         body.velocity = Vector2.up * jumpSpeed;
+        managerSonido.PlayOneShot(sonidoJump);
     }
 
     public void MoveLeft()
@@ -151,7 +159,8 @@ private void OnCollisionEnter2D(Collision2D collision)
   {
       if (collision.gameObject.CompareTag ("Respawn")) {
                    player.transform.position = new Vector2(respawn.position.x,respawn.position.y);
-      }
+                   managerSonido.PlayOneShot(sonidoMuerte);
+        }
 
       if (collision.gameObject.CompareTag("Ground")) {
                 grounded = true;

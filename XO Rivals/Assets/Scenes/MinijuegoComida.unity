@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9d30fbc956474f4cb441853494ddb16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 2000637811}
   leftButton: {fileID: 1732832436}
   rightButton: {fileID: 915791121}
   crono: {fileID: 104272338}
@@ -1938,6 +1939,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 8099fb2f-5dc2-4d1a-b155-11be52addcb0
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dc5e5ca4-a519-45b7-80c0-15a9ae83968e
+    m_ActionName: Player/Move Mobile[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

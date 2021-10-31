@@ -7,6 +7,9 @@ using TMPro;
 
 public class ComidaController : MonoBehaviour
 {
+    // Player
+    [SerializeField]
+    private Rigidbody2D player;
 
     // Gamemanager
     private GameManager _gameManager;
@@ -68,19 +71,26 @@ public class ComidaController : MonoBehaviour
             // Aqui se manda a alberto la derrota
             stopGenerador();
             crono.SetText("Has perdido");
+            panAbajo.SetActive(false);
+            queso.SetActive(false);
+            carne.SetActive(false);
+            lechuga.SetActive(false);
+            panArriba.SetActive(false);
+            orden = 1;
+            player.constraints = RigidbodyConstraints2D.FreezeAll;
             Invoke("EndSceneLost", 5f);         
         }
     }
 
     void EndSceneLost()
     {
-        PlayerPrefs.SetInt("minigameWin", 0);
+        PlayerPrefs.SetInt("minigameWin", 1);
         SceneManager.UnloadSceneAsync("MinijuegoComida");
     }
 
     void EndSceneWin()
     {
-        PlayerPrefs.SetInt("minigameWin", 1);
+        PlayerPrefs.SetInt("minigameWin", 0);
         SceneManager.UnloadSceneAsync("MinijuegoComida");
     }
 
@@ -113,6 +123,7 @@ public class ComidaController : MonoBehaviour
                     finished = true;
                     crono.SetText("Has ganado");
                     stopGenerador();
+                    player.constraints = RigidbodyConstraints2D.FreezeAll;
                     // Aqui se manda a alberto la victoria
                     Invoke("EndSceneWin", 5f);                
 
