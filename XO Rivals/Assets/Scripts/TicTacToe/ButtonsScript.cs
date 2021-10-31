@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using Random = UnityEngine.Random;
 
 public class ButtonsScript : MonoBehaviour
 {
@@ -10,8 +12,8 @@ public class ButtonsScript : MonoBehaviour
     //Circle and Cross
     [SerializeField] private Sprite circle;
     [SerializeField] private Sprite cross;
-    private GameObject circleGO;
-    private GameObject crossGO;
+    public GameObject circleGO;
+    public GameObject crossGO;
 
     //Screen manager
     private ScreenManager screenManager;
@@ -75,27 +77,26 @@ public class ButtonsScript : MonoBehaviour
     }
     
     public void Start(){
-        UpdateTurn();
+        //UpdateTurn();
     }
 
-    #endregion
-
-    #region MainMethods
-
+    public void Update()
+    {
+        UpdateTurn();
+    }
+    
     /// <summary>
     /// 
     /// </summary>
     public void UpdateTurn()
     {
-        Debug.Log(gameState.WhosTurn);
-        Debug.Log(localPlayer.Name);
-
         //If its your turn, play, if its not, only can see
         if(gameState.WhosTurn == localPlayer.Name){
 
             //Depending of turn moment, player will encounter a "different scene"
             if (gameState.turnMoment == 0)
             {
+                screenManager.UpdateBoard();
                 screenManager.EnableButtons();
             }
             else if(gameState.turnMoment == 1){
@@ -111,6 +112,10 @@ public class ButtonsScript : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region MainMethods
+    
     public void PlaceTile(int pos){
 
         //Get row and column
