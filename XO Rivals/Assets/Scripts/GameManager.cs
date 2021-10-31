@@ -139,7 +139,11 @@ public class GameManager : MonoBehaviour
             obj[2] = localPlayer.Name.Equals(PlayerInfoX.Name) ? PlayerInfoX.Name : PlayerInfoO.Name;
         }
 
-        obj[3] = WhosTurn.Name;
+        if (WhosTurn != null)
+        {
+            obj[3] = WhosTurn.Name;
+        }
+        
         obj[4] = NumFilled;
         obj[5] = FilledPositions;
         obj[6] = MiniGameChosen;

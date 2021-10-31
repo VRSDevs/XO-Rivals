@@ -38,15 +38,28 @@ public class NetworkCommunications : MonoBehaviourPun
         
         FindObjectOfType<GameManager>().MatchId = obj[0] as string;
         FindObjectOfType<GameManager>().OwnerId = obj[1] as string;
-        if (FindObjectOfType<PlayerInfo>().Name == FindObjectOfType<GameManager>().PlayerInfoO.Name)
+
+        if (FindObjectOfType<GameManager>().PlayerInfoO == null)
         {
+            FindObjectOfType<GameManager>().PlayerInfoO = gameObject.AddComponent<PlayerInfo>();
             FindObjectOfType<GameManager>().PlayerInfoO.Name = obj[2] as string;
         }
         else
         {
+            FindObjectOfType<GameManager>().PlayerInfoX = gameObject.AddComponent<PlayerInfo>();
             FindObjectOfType<GameManager>().PlayerInfoX.Name = obj[2] as string;
         }
-        FindObjectOfType<GameManager>().WhosTurn.Name = obj[3] as string;
+
+        if (FindObjectOfType<GameManager>().WhosTurn == null)
+        {
+            FindObjectOfType<GameManager>().WhosTurn = gameObject.AddComponent<PlayerInfo>();
+            FindObjectOfType<GameManager>().WhosTurn.Name = obj[3] as string;
+        }
+        else
+        {
+            FindObjectOfType<GameManager>().WhosTurn.Name = obj[3] as string;
+        }
+        
         FindObjectOfType<GameManager>().NumFilled = (int)obj[4];
         FindObjectOfType<GameManager>().FilledPositions = (int[,])obj[5];
         FindObjectOfType<GameManager>().MiniGameChosen = (int)obj[7];
