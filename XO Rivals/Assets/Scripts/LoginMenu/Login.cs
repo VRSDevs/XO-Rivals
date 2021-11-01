@@ -218,6 +218,15 @@ public class Login : MonoBehaviour
     /// <param name="mode">Código del modo</param>
     public void UpdateLoginMode(int mode)
     {
+
+        if (_gameManager.IsWebGLMobile)
+        {
+            UsernameInput.text = "dev001";
+            UsernameInput.ForceLabelUpdate();
+            PasswordInput.text = "123456";
+            PasswordInput.ForceLabelUpdate();
+        }
+
         switch (mode)
         {
             case 0:
@@ -266,19 +275,18 @@ public class Login : MonoBehaviour
 
     public void ShowKeyboard()
     {
-        if (_gameManager.IsWebGLMobile)
-        {
-            keyboard = TouchScreenKeyboard.Open("");
-            keyboard.active = true;
-        }
+        
+        
+        keyboard = TouchScreenKeyboard.Open("");
+        keyboard.active = true;
+        
     }
 
     public void HideKeyboard()
     {
-        if (_gameManager.IsWebGLMobile)
-        {
-            keyboard.active = false;
-        }
+
+        keyboard.active = false;
+        
     }
     
 
