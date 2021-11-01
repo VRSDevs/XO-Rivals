@@ -266,19 +266,18 @@ public class Login : MonoBehaviour
 
     public void ShowKeyboard()
     {
-        if (_gameManager.IsWebGLMobile)
-        {
-            keyboard = TouchScreenKeyboard.Open("");
-            keyboard.active = true;
-        }
+        
+        
+        keyboard = TouchScreenKeyboard.Open("");
+        keyboard.active = true;
+        
     }
 
     public void HideKeyboard()
     {
-        if (_gameManager.IsWebGLMobile)
-        {
-            keyboard.active = false;
-        }
+
+        keyboard.active = false;
+        
     }
     
 
