@@ -43,12 +43,12 @@ public class WebGLChecker : MonoBehaviour
         if (isMobile) //PLAYING ON MOBILE
         {
             _gameManager.IsWebGLMobile = true;
-            _gameManager.updateLog("MOBILE");
+            //_gameManager.updateLog("MOBILE");
         }
         else //PLAYING ON PC
         {
             _gameManager.IsWebGLMobile = false;
-            _gameManager.updateLog("PC");
+            //_gameManager.updateLog("PC");
         }
     }
     #endregion
