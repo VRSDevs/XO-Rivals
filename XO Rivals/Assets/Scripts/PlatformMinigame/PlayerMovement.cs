@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundLayer;
 
+    [SerializeField]
+    private Animator anim;
+
     private float horizontal;
     private float speed = 8f;
     private float jumpingPower = 8f;
