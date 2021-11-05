@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 1928096046}
   - component: {fileID: 1928096045}
   m_Layer: 0
-  m_Name: Player (1)
+  m_Name: Player Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -548,7 +548,7 @@ Animator:
   m_GameObject: {fileID: 1928096044}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8262daa59b0415d45a55be08f76bb98d, type: 2}
+  m_Controller: {fileID: 9100000, guid: adafcf32330ea7a43aad32c73161b852, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -634,15 +634,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3286163911610860551, guid: 6dd7f9c9955f8bd48aa8451c56da260a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c3c69da008a0be74b98c74fefc9308c1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.5739975, y: 1.174954}
+  m_Size: {x: 1.59, y: 1.19}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1928096051
@@ -653,7 +653,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1928096044}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.853, y: -1.91, z: 0}
+  m_LocalPosition: {x: -6.853, y: -3.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 970368950}
