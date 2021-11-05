@@ -10,12 +10,20 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundLayer;
 
+    // Animaciones
     [SerializeField]
     private Animator anim;
+    private string currentState;
+    const string IDLE = "Idle";
+    const string WALK = "Saminar";
+    const string JUMP = "Salto";
+    const string FALL = "Caida";
 
+    // Variables del movimiento
     private float horizontal;
-    private float speed = 8f;
+    private float speed = 5f;
     private float jumpingPower = 8f;
+    private bool isFalling = false;
 
     private void Awake()
     {
@@ -28,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         player.velocity = new Vector2(horizontal * speed, player.velocity.y);
+        AnimationController();
     }
 
     private bool IsGrounded()
@@ -40,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
         if (context.performed && IsGrounded())
         {
             player.velocity = new Vector2(player.velocity.x, jumpingPower);
+            ChangeAnimationState(JUMP);
         }
 
     }
@@ -49,4 +59,39 @@ public class PlayerMovement : MonoBehaviour
         if (context.ReadValue<Vector2>().x < 0) { return; }
         horizontal = context.ReadValue<Vector2>().x;
     }
+
+    public void ChangeAnimationState(string newState)
+    {
+        if (currentState == newState) return;
+        anim.Play(newState);
+        currentState = newState;
+    }
+
+    public void Falling()
+    {
+        if (player.velocity.y < 0)
+        {
+            isFalling = true;
+        } else
+        {
+            isFalling = false;
+        }
+    }
+
+    public void AnimationController()
+    {
+        if (isFalling == true)
+        {
+            ChangeAnimationState(FALL);
+        }
+
+        if (IsGrounded() && player.velocity.x > 0)
+        {
+            ChangeAnimationState(WALK);
+        } else if (IsGrounded() && player.velocity.x == 0)
+        {
+            ChangeAnimationState(IDLE);
+        }
+    }
+
 }

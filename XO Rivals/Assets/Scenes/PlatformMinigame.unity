@@ -537,7 +537,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  anim: {fileID: 0}
+  anim: {fileID: 1928096047}
 --- !u!95 &1928096047
 Animator:
   serializedVersion: 3
