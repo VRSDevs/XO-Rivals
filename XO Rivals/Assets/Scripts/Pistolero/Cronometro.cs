@@ -58,9 +58,18 @@ public class Cronometro : MonoBehaviour
         //SEPARAMOS SEGUNDOS Y DECIMAS DEL TIEMPO RESULTADO
         int segundos = (int)Math.Truncate(time);
         int decimas = (int)((time - segundos) * 100); //Sacamos dos decimas
+
         decimas = Math.Abs(decimas);//el signo negativo solo tiene que estar en los segundos
 
-        textoCrono.text = segundos + ":" + decimas;
+        if (time < 0 && time > -1) //el signo negativo lo ponemos nosotros debido a que en los segundos no está (en las decimas si)
+        {
+            textoCrono.text = "-"+segundos + ":" + decimas;
+        }
+        else
+        {
+            textoCrono.text = segundos + ":" + decimas;
+        }
+       
 
   //TiempoEnemigo
         int segundosEnemy = (int)Math.Truncate(timeEnemy);
