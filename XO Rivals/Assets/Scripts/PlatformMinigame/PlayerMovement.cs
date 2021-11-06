@@ -1,55 +1,81 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class PlayerMovement : MonoBehaviour
 {
 
     private Rigidbody2D player;
+    public Collider2D col;
     public Transform groundCheck;
+    public Transform jumpCheck;
+
     public LayerMask groundLayer;
+
+    // Vida
+    public bool isDead = false;
 
     // Animaciones
     [SerializeField]
     private Animator anim;
-    private string currentState;
-    const string IDLE = "Idle";
-    const string WALK = "Saminar";
-    const string JUMP = "Salto";
-    const string FALL = "Caida";
+    private bool deathAnimPlayed = false;
 
     // Variables del movimiento
     private float horizontal;
     private float speed = 5f;
     private float jumpingPower = 8f;
-    private bool isFalling = false;
 
     private void Awake()
     {
         player = GetComponent<Rigidbody2D>();
+
     }
-
-
 
     // Update is called once per frame
     void Update()
     {
-        player.velocity = new Vector2(horizontal * speed, player.velocity.y);
-        AnimationController();
+        if (!isDead) {
+            player.velocity = new Vector2(horizontal * speed, player.velocity.y);
+            anim.SetFloat("Speed", Mathf.Abs(horizontal));
+
+            if (IsJumping())
+            {
+                anim.SetBool("isJumping", false);
+            }
+        } else if(!deathAnimPlayed)
+        {
+            deathAnimPlayed = true;
+            Invoke("DeathAnimation",0.2f);
+        }
+    }
+
+    private void DeathAnimation()
+    {
+        col.enabled = false;
+        transform.DOMoveY(1,2).OnComplete(() => { 
+            transform.DOMoveY(-10,2);});
+        
+    }
+
+    private bool IsJumping()
+    {
+        return Physics2D.OverlapCircle(jumpCheck.position, 0.1f, groundLayer);
     }
 
     private bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        return Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed && IsGrounded())
+        if (context.performed && IsGrounded() && !isDead)
         {
             player.velocity = new Vector2(player.velocity.x, jumpingPower);
-            ChangeAnimationState(JUMP);
+            anim.SetBool("isJumping", true);
         }
 
     }
@@ -60,38 +86,12 @@ public class PlayerMovement : MonoBehaviour
         horizontal = context.ReadValue<Vector2>().x;
     }
 
-    public void ChangeAnimationState(string newState)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (currentState == newState) return;
-        anim.Play(newState);
-        currentState = newState;
-    }
-
-    public void Falling()
-    {
-        if (player.velocity.y < 0)
+        if (collision.gameObject.tag == "Enemy")
         {
-            isFalling = true;
-        } else
-        {
-            isFalling = false;
+            isDead = true;
+            anim.SetBool("isDead", true);
         }
     }
-
-    public void AnimationController()
-    {
-        if (isFalling == true)
-        {
-            ChangeAnimationState(FALL);
-        }
-
-        if (IsGrounded() && player.velocity.x > 0)
-        {
-            ChangeAnimationState(WALK);
-        } else if (IsGrounded() && player.velocity.x == 0)
-        {
-            ChangeAnimationState(IDLE);
-        }
-    }
-
 }

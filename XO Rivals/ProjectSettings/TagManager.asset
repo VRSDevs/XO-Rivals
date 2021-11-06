@@ -17,6 +17,7 @@ TagManager:
   - Checkpoint2
   - Log
   - Ground
+  - Enemy
   layers:
   - Default
   - TransparentFX
