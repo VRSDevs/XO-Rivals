@@ -8,6 +8,8 @@ using DG.Tweening;
 public class PlayerMovement : MonoBehaviour
 {
 
+    
+
     private Rigidbody2D player;
     public Collider2D col;
     public Transform groundCheck;
@@ -35,6 +37,11 @@ public class PlayerMovement : MonoBehaviour
     {
         player = GetComponent<Rigidbody2D>();
 
+        // Recoger la ficha del jugador
+        if (true)
+        {
+            // Destruir personaje
+        }
     }
 
     // Update is called once per frame
@@ -68,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
     {
         col.enabled = false;
         transform.DOMoveY(1,1).OnComplete(() => { 
-            transform.DOMoveY(-10,3);});
+            transform.DOMoveY(-10,4);});
         
     }
 
