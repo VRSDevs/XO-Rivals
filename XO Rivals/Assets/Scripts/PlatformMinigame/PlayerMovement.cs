@@ -18,6 +18,9 @@ public class PlayerMovement : MonoBehaviour
     // Vida
     public bool isDead = false;
 
+    // Victoria
+    private bool win = false;
+
     // Animaciones
     [SerializeField]
     private Animator anim;
@@ -37,7 +40,13 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isDead) {
+        if (win)
+        {
+            player.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+        }
+
+        if (!isDead && !win) 
+        {
             player.velocity = new Vector2(horizontal * speed, player.velocity.y);
             anim.SetFloat("Speed", Mathf.Abs(horizontal));
 
@@ -45,8 +54,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 anim.SetBool("isJumping", false);
             }
-        } else if(!deathAnimPlayed)
+
+        } 
+        else if(!deathAnimPlayed && isDead)
         {
+            
             deathAnimPlayed = true;
             Invoke("DeathAnimation",0.2f);
         }
@@ -55,8 +67,8 @@ public class PlayerMovement : MonoBehaviour
     private void DeathAnimation()
     {
         col.enabled = false;
-        transform.DOMoveY(1,2).OnComplete(() => { 
-            transform.DOMoveY(-10,2);});
+        transform.DOMoveY(1,1).OnComplete(() => { 
+            transform.DOMoveY(-10,3);});
         
     }
 
@@ -92,6 +104,11 @@ public class PlayerMovement : MonoBehaviour
         {
             isDead = true;
             anim.SetBool("isDead", true);
+        } 
+        if(collision.gameObject.tag == "FinishLine")
+        {
+            win = true;
+            anim.SetBool("Win", true);
         }
     }
 }
