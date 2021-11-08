@@ -25,6 +25,10 @@ public class ComidaController : MonoBehaviour
     private float time = 20;
     private bool finished = false;
 
+    // variables para animaciones
+    public bool win = false;
+    public bool lost = false;
+
     // Minijuegos
     Generador generador;
     [SerializeField]
@@ -78,7 +82,8 @@ public class ComidaController : MonoBehaviour
             panArriba.SetActive(false);
             orden = 1;
             player.constraints = RigidbodyConstraints2D.FreezeAll;
-            Invoke("EndSceneLost", 5f);         
+            Invoke("EndSceneLost", 5f);
+            lost = true;
         }
     }
 
@@ -121,6 +126,7 @@ public class ComidaController : MonoBehaviour
                     // Fin minijuego mandar bool a alberto
                     panArriba.SetActive(true);
                     finished = true;
+                    win = true;
                     crono.SetText("You won");
                     stopGenerador();
                     player.constraints = RigidbodyConstraints2D.FreezeAll;

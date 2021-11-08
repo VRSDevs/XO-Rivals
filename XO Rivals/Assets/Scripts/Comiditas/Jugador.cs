@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class Jugador : MonoBehaviour
 {
@@ -9,10 +10,16 @@ public class Jugador : MonoBehaviour
     ComidaController controlador;
 
     private Rigidbody2D player;
+    public Collider2D col;
 
     private float horizontal;
-    private float speed = 8f;
+    private float speed = 6f;
     private bool isFacingRight = true;
+
+    // Animaciones
+    [SerializeField]
+    private Animator anim;
+    private bool deathAnimPlayed = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -40,6 +47,18 @@ public class Jugador : MonoBehaviour
         {
             Flip();
         }
+
+        if (controlador.lost == true && !deathAnimPlayed)
+        {
+            deathAnimPlayed = true;
+            anim.SetBool("Dead", controlador.lost);
+            DeathAnimation();
+        }
+
+        anim.SetFloat("Speed", Mathf.Abs(horizontal));
+        
+        anim.SetBool("Win",controlador.win);
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -99,5 +118,14 @@ public class Jugador : MonoBehaviour
     public void Stop()
     {
         horizontal = 0;   
+    }
+
+    private void DeathAnimation()
+    {
+        col.enabled = false;
+        transform.DOMoveY(1, 1).OnComplete(() => {
+            transform.DOMoveY(-10, 4);
+        });
+
     }
 }
