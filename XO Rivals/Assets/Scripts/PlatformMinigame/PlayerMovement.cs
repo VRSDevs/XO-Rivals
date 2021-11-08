@@ -37,11 +37,6 @@ public class PlayerMovement : MonoBehaviour
     {
         player = GetComponent<Rigidbody2D>();
 
-        // Recoger la ficha del jugador
-        if (true)
-        {
-            // Destruir personaje
-        }
     }
 
     // Update is called once per frame
@@ -98,6 +93,15 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+    public void JumpPhone()
+    {
+        if (IsGrounded() && !isDead)
+        {
+            player.velocity = new Vector2(player.velocity.x, jumpingPower);
+            anim.SetBool("isJumping", true);
+        }
+
+    }
 
     public void Move(InputAction.CallbackContext context)
     {
@@ -117,5 +121,15 @@ public class PlayerMovement : MonoBehaviour
             win = true;
             anim.SetBool("Win", true);
         }
+    }
+
+    public void MoveRight()
+    {
+        horizontal = 1;
+    }
+
+    public void Stop()
+    {
+        horizontal = 0;
     }
 }
