@@ -10,7 +10,7 @@ public class Cronometro : MonoBehaviour
     // Start is called before the first frame update
 
     public float time = 8;
-    public int tiempoDesaparecido = 4;
+    public int tiempoDesaparecido = 7;
     public bool activo = false;
     public Text textoCrono;
     public Text textoExplicativo;
@@ -38,7 +38,8 @@ public class Cronometro : MonoBehaviour
             //LOS ULTIMOS TRES SEGUNDOS DESAPARECE EL TIEMPO
             if (segundos<tiempoDesaparecido )
             {
-                textoCrono.text = "-" + ":" + "--";
+                float auxAlfa = textoCrono.color.a -0.001f;
+                textoCrono.color = new Color(textoCrono.color.r, textoCrono.color.g, textoCrono.color.b, auxAlfa);
             }
 
         }
@@ -54,6 +55,7 @@ public class Cronometro : MonoBehaviour
     public void finCrono()
     {
         activo = false;
+        textoCrono.color = new Color(textoCrono.color.r, textoCrono.color.g, textoCrono.color.b, 1);
 
         //SEPARAMOS SEGUNDOS Y DECIMAS DEL TIEMPO RESULTADO
         int segundos = (int)Math.Truncate(time);
