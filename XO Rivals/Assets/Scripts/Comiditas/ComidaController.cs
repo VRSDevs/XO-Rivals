@@ -11,6 +11,12 @@ public class ComidaController : MonoBehaviour
     [SerializeField]
     private Rigidbody2D player;
 
+    // Tipo jugador
+    [SerializeField]
+    private GameObject playerO;
+    [SerializeField]
+    private GameObject playerX;
+
     // Gamemanager
     private GameManager _gameManager;
 
