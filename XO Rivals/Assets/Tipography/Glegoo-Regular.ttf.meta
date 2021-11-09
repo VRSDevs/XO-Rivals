@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: a9f16d9d63f6d4e46bd4ac0c2f6a84ea
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Glegoo
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: d4c26be0e5984d34eb53236cff97bfff, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
