@@ -21,6 +21,11 @@ public class Generador : MonoBehaviour
     public float spawnTime;
     public float spawnDelay;
 
+    // Control de spawn
+    private bool cheese = false;
+    private bool bread = false;
+    private bool lettuce = false;
+    private bool meat = false;
 
     // Posicion inicial
     Vector3 posini = new Vector3(0,10,0);
@@ -52,6 +57,34 @@ public class Generador : MonoBehaviour
     public void generadorGlobal()
     {
         int rand = Random.Range(0,4);
+        int probability = Random.Range(0,100);
+
+        // Mandar carne
+        if (!lettuce && !meat)
+        {
+            if (probability > 70)
+            {
+                rand = 0;
+            }
+        }
+
+        // Mandar queso
+        if (!cheese && !lettuce && !meat)
+        {
+            if (probability > 30)
+            {
+                rand = 3;
+            }  
+        }
+
+        // Mandar pan
+        if (!cheese && !bread && !lettuce && !meat)
+        {
+            if (probability > 10)
+            {
+                rand = 2;
+            }
+        }
 
         if (stopSpawning)
         {
@@ -90,24 +123,28 @@ public class Generador : MonoBehaviour
     public void generarQueso()
     {
         randPos();
+        cheese = true;
         Instantiate(queso, posini, quat);
     }
 
     public void generarLechuga()
     {
         randPos();
+        lettuce = true;
         Instantiate(lechuga, posini, quat);
     }
 
     public void generarPan()
     {
         randPos();
+        bread = true;
         Instantiate(pan, posini, quat);
     }
 
     public void generarCarne()
     {
         randPos();
+        meat = true;
         Instantiate(carne, posini, quat);
     }
 
