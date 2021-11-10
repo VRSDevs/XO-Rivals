@@ -11,6 +11,12 @@ public class ComidaController : MonoBehaviour
     [SerializeField]
     private Rigidbody2D player;
 
+    // Tipo jugador
+    [SerializeField]
+    private GameObject playerO;
+    [SerializeField]
+    private GameObject playerX;
+
     // Gamemanager
     private GameManager _gameManager;
 
@@ -24,6 +30,10 @@ public class ComidaController : MonoBehaviour
     public TextMeshProUGUI crono;
     private float time = 20;
     private bool finished = false;
+
+    // variables para animaciones
+    public bool win = false;
+    public bool lost = false;
 
     // Minijuegos
     Generador generador;
@@ -78,7 +88,8 @@ public class ComidaController : MonoBehaviour
             panArriba.SetActive(false);
             orden = 1;
             player.constraints = RigidbodyConstraints2D.FreezeAll;
-            Invoke("EndSceneLost", 5f);         
+            Invoke("EndSceneLost", 5f);
+            lost = true;
         }
     }
 
@@ -121,6 +132,7 @@ public class ComidaController : MonoBehaviour
                     // Fin minijuego mandar bool a alberto
                     panArriba.SetActive(true);
                     finished = true;
+                    win = true;
                     crono.SetText("You won");
                     stopGenerador();
                     player.constraints = RigidbodyConstraints2D.FreezeAll;

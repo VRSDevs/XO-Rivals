@@ -58,6 +58,12 @@ public class MainMenuController : MonoBehaviour
                 _gameManager._networkController.OnLeaveRoom();
 
                 break;
+            case 2:
+                JoinOrBackButton_Text.text = "Back";
+
+                CreateGameButton.interactable = true;
+                JoinGameButton.interactable = true;
+                break;
         }
     }
 

@@ -9,6 +9,9 @@ public class Cronometro : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    public bool win = false;
+    public bool lost = false;
+
     public float time = 8;
     public int tiempoDesaparecido = 7;
     public bool activo = false;
@@ -65,11 +68,11 @@ public class Cronometro : MonoBehaviour
 
 
 
-        if (time < 0 && time > -1) //el signo negativo lo ponemos nosotros debido a que en los segundos no está (en las decimas si)
+        if (time < 0 && time > -1) //el signo negativo lo ponemos nosotros debido a que en los segundos no estï¿½ (en las decimas si)
         {
 
 
-            if (decimas < 10) //si son mas pequeós que 10 no sale el 0 de antes
+            if (decimas < 10) //si son mas pequeï¿½s que 10 no sale el 0 de antes
             {
                 textoCrono.text = "-" + segundos + ":" + "0" +decimas;
             }
@@ -83,7 +86,7 @@ public class Cronometro : MonoBehaviour
         else
         {
 
-            if (decimas < 10) //si son mas pequeós que 10 no sale el 0 de antes
+            if (decimas < 10) //si son mas pequeï¿½s que 10 no sale el 0 de antes
             {
                 textoCrono.text = segundos + ":" + "0" + decimas;
             }
@@ -108,7 +111,9 @@ public class Cronometro : MonoBehaviour
             //StartCoroutine("EsperarV");
             cambioEscena.win = true;
 
-            if (decimasEnemy < 10) //si son mas pequeós que 10 no sale el 0 de antes
+            win = true;
+
+            if (decimasEnemy < 10) //si son mas pequeï¿½s que 10 no sale el 0 de antes
             {
                 textoExplicativo.text = "This is your result!\nVICTORY AGAINST " + segundosEnemy + ":" + "0"+ decimasEnemy;
             }
@@ -122,9 +127,11 @@ public class Cronometro : MonoBehaviour
         }//DERROTA
         else
         {
+            lost = true;
+
             cambioEscena.win = false;
             //StartCoroutine("EsperarD");
-            if (decimasEnemy < 10) //si son mas pequeós que 10 no sale el 0 de antes
+            if (decimasEnemy < 10) //si son mas pequeï¿½s que 10 no sale el 0 de antes
             {
                 textoExplicativo.text = "This is your result!\nLOST AGAINST " + segundosEnemy + ":" + "0"+decimasEnemy;
             }
