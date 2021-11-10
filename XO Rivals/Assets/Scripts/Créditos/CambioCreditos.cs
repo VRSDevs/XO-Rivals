@@ -19,8 +19,8 @@ public class CambioCreditos : MonoBehaviour
     public GameObject progMenu;
     public GameObject soundMenu;
 
-    public GameObject Exit;
-    public GameObject Back;
+ 
+
 
 
     Vector2 initialArt;
@@ -85,8 +85,8 @@ public class CambioCreditos : MonoBehaviour
 
 
         }
-
-
+        
+       
 
 
     }
@@ -94,8 +94,9 @@ public class CambioCreditos : MonoBehaviour
 
     public void ExplainButton(string department)
     {
-        Exit.SetActive(false);
-        Back.SetActive(true);
+        //initialArt = artButton.transform.position;
+        //initialProg = progButton.transform.position;
+        //initialSound = soundButton.transform.position;
 
         if (department == "Art")
         {
@@ -164,8 +165,7 @@ public class CambioCreditos : MonoBehaviour
         moveL = true;
 
 
-        Exit.SetActive(true);
-        Back.SetActive(false);
+
 
         actualMenu = 0;
 
