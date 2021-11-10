@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ControlBoton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
 
     public Cronometro controlCrono;
     public GameObject botonExit;
-
+    public Button bangButton;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,7 @@ public class ControlBoton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {     
         
         controlCrono.finCrono();
-       
+
         this.gameObject.SetActive(false);
         botonExit.SetActive(true);
        
@@ -35,4 +36,5 @@ public class ControlBoton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         
     }
+
 }
