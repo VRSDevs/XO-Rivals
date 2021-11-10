@@ -9,45 +9,79 @@ public class Match
     /// <summary>
     /// ID de la partida
     /// </summary>
-    private string _matchId;
+    public string MatchId { get; set; }
     /// <summary>
     /// ID del dueño de la partida
     /// </summary>
-    private string _ownerId;
+    public string OwnerId { get; set; }
     /// <summary>
     /// Nombre del jugador O
     /// </summary>
-    private string _playerO;
+    public string PlayerOName { get; set; }
     /// <summary>
     /// Nombre del jugador X
     /// </summary>
-    private string _playerX;
+    public string PlayerXName { get; set; }
     /// <summary>
     /// Nombre del jugador actual
     /// </summary>
-    private string _whosTurn;
+    public string WhosTurn { get; set; }
     /// <summary>
     /// Momento de la partida en la que se encuentra el jugador
     /// </summary>
-    private int _turnMoment;
+    public int TurnName { get; set; }
+    /// <summary>
+    /// ID del minijuego seleccionado
+    /// </summary>
+    public int MiniGameChosen { get; set; }
     /// <summary>
     /// Número de fichas colocadas en el tablero
     /// </summary>
-    private int _filledPositions;
+    public int[,] FilledPositions { get; set; }
     /// <summary>
     /// Array del tablero
     /// </summary>
-    private int _numFilled;
+    public int NumFilled { get; set; }
     /// <summary>
     /// Lista de las fichas
     /// </summary>
-    private List<GameObject> _chips;
+    public List<GameObject> Chips { get; set; }
 
     #endregion
 
-    #region Getters&Setters
+    #region Constructors
 
+    /// <summary>
+    /// Constructor vacío.
+    /// </summary>
+    public Match()
+    {
+        MatchId = "";
+        OwnerId = "";
+        PlayerOName = "";
+        PlayerXName = "";
+        WhosTurn = "";
+        TurnName = -1;
+        MiniGameChosen = -1;
+
+        FilledPositions = new int[3, 3];
+        for (int i = 0; i < FilledPositions.GetLength(0); i++)
+        {
+            for (int j = 0; j < FilledPositions.GetLength(1); j++)
+            {
+                FilledPositions[i, j] = 0;
+            }
+        }
+
+        NumFilled = 0;
+
+        Chips = new List<GameObject>();
+    }
     
+    #endregion
+
+    #region MyRegion
+
     
 
     #endregion

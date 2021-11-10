@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     public NetworkCommunications _NetworkCommunications;
     
     ////////////////// PARTIDA //////////////////
+    
+    
     /// <summary>
     /// ID de la partida
     /// </summary>
