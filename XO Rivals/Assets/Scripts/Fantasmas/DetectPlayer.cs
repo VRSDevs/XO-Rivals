@@ -11,6 +11,8 @@ public class DetectPlayer : MonoBehaviour
     public bool veoPlayer = false;
     public List<GameObject> obstaculos;
 
+    public GameObject bala;
+
     void Start()
     {
         //Debug.Log(Vector3.Distance(player.transform.position,this.transform.position));
@@ -28,7 +30,7 @@ public class DetectPlayer : MonoBehaviour
             veoPlayer = false;
         }
 
-
+        //INJSTANCIAR PREFAB
         
 
 
@@ -36,4 +38,13 @@ public class DetectPlayer : MonoBehaviour
         Debug.Log(veoPlayer);
 
     }
+
+
+    void playerDetected(bool detected)
+    {
+
+    }
+
+
+
 }
