@@ -57,4 +57,27 @@ public class MovePlayer : MonoBehaviour
         vertical = context.ReadValue<Vector2>().y;
     }
 
+    public void MoveLeft()
+    {
+        horizontal = -1;
+    }
+
+    public void MoveRight()
+    {
+        horizontal = 1;
+    }
+
+    public void Stop()
+    {
+        horizontal = 0;
+        vertical = 0;
+    }
+    public void MoveDown()
+    {
+        vertical = -1;
+    }
+    public void MoveUp()
+    {
+        vertical = 1;
+    }
 }

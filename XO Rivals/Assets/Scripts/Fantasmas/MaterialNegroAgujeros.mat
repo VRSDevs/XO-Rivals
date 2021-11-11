@@ -78,5 +78,5 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _PosPlayer: {r: 461.85266, g: 688.5324, b: 0, a: 0}
+    - _PosPlayer: {r: 754.9553, g: 258.7411, b: 0, a: 0}
   m_BuildTextureStacks: []
