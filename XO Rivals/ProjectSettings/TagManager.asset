@@ -18,6 +18,8 @@ TagManager:
   - Log
   - Ground
   - Enemy
+  - Enemy1
+  - carne
   layers:
   - Default
   - TransparentFX

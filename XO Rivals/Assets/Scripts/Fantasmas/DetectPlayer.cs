@@ -11,11 +11,13 @@ public class DetectPlayer : MonoBehaviour
     public bool veoPlayer = false;
     public List<GameObject> obstaculos;
 
+    public GameObject prefabBala;
     public GameObject bala;
 
     void Start()
     {
         //Debug.Log(Vector3.Distance(player.transform.position,this.transform.position));
+        StartCoroutine(creaBala());
     }
 
     // Update is called once per frame
@@ -30,8 +32,7 @@ public class DetectPlayer : MonoBehaviour
             veoPlayer = false;
         }
 
-        //INJSTANCIAR PREFAB
-        
+       
 
 
 
@@ -40,11 +41,20 @@ public class DetectPlayer : MonoBehaviour
     }
 
 
-    void playerDetected(bool detected)
+    public void playerDetected(bool detected)
     {
 
     }
 
+    IEnumerator creaBala()
+    {
+        yield return new WaitForSeconds(1);
 
+        //INSTANCIAR PREFAB
+        bala = Instantiate(prefabBala, this.transform.position, Quaternion.identity);
+
+        //CODE
+        StartCoroutine(creaBala());
+    }
 
 }

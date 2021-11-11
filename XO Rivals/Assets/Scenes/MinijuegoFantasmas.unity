@@ -1242,7 +1242,7 @@ GameObject:
   - component: {fileID: 1689567237}
   m_Layer: 0
   m_Name: Enemigo
-  m_TagString: Untagged
+  m_TagString: Enemy1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1331,6 +1331,7 @@ MonoBehaviour:
   - {fileID: 476649343}
   - {fileID: 1127326852}
   - {fileID: 2008300852}
+  prefabBala: {fileID: 3431209771459165765, guid: a5d06f078b1fc2c4096220bef96a46cf, type: 3}
   bala: {fileID: 0}
 --- !u!1 &1729087737
 GameObject:
@@ -1532,7 +1533,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852283670}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a21ea6b6cbc8e8847a918c656f8fadcc, type: 3}
   m_Name: 
@@ -1573,7 +1574,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  sombra: {fileID: 1689567234}
 --- !u!50 &1932259245
 Rigidbody2D:
   serializedVersion: 4
