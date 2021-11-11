@@ -7,7 +7,7 @@ public class MovePlayer : MonoBehaviour
 {
 
     //POSICION NEGRO = x:Plyaer +0.7    y:p�layer -0.87
-    [SerializeField] private float speed;
+    [SerializeField] private float speed = 8;
     private float horizontal;
     private float vertical;
     private Rigidbody2D player;
@@ -36,6 +36,8 @@ public class MovePlayer : MonoBehaviour
         {
             player.velocity = new Vector2(horizontal * speed, vertical * speed);
         }
+
+
     }
 
     private void FixedUpdate()
@@ -46,15 +48,12 @@ public class MovePlayer : MonoBehaviour
 
     public void MoveHorizontal(InputAction.CallbackContext context)
     {
-        if (context.ReadValue<Vector2>().x < 0){ return; }
 
         horizontal = context.ReadValue<Vector2>().x;
     }
 
     public void MoveVertical(InputAction.CallbackContext context)
     {
-        if (context.ReadValue<Vector2>().y < 0) { return; }
-
         vertical = context.ReadValue<Vector2>().y;
     }
 
