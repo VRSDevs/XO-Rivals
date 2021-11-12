@@ -11,6 +11,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
 {
     #region Variables
 
+    private MatchmakingController _matchmakingController;
+
     /// <summary>
     /// Jugadores mínimos en la sala
     /// </summary>
@@ -30,12 +32,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <returns>Valor del estado de la conexión</returns>
     public bool OnConnectToServer()
     {
-        if (PhotonNetwork.ConnectUsingSettings())
-        {
-            return true;
-        }
-
-        return false;
+        return PhotonNetwork.ConnectUsingSettings();
     }
 
     /// <summary>
@@ -49,32 +46,22 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <summary>
     /// Método para crear una sala de partida
     /// </summary>
+    /*
     public void OnCreateRoom()
     {
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Creando sala...";
-
-        if (PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions()
-        {
-            MaxPlayers = MAX_PLAYERS_INROOM
-        }))
-        {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala creada con éxito.";
-        }
-        else
-        {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
-        }
+        
     }
+    */
     
     /// <summary>
     /// Método para conectarse a una sala
     /// </summary>
     public void OnConnectToRandomRoom()
     {
-        if (!PhotonNetwork.JoinRandomRoom())
-        {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
-        }
+        if (!PhotonNetwork.JoinRandomRoom()) return;
+        Debug.Log("Fallaste");
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
+        PhotonNetwork.JoinRoom("Sala 1");
     }
 
     /// <summary>
@@ -84,19 +71,17 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LeaveRoom();
 
-        if (FindObjectOfType<GameManager>().IsPlaying)
-        {
-            FindObjectOfType<GameManager>().MatchId = "";
-            FindObjectOfType<GameManager>().OwnerId = "";
-            FindObjectOfType<GameManager>().PlayerInfoO = null;
-            FindObjectOfType<GameManager>().PlayerInfoX = null;
-            FindObjectOfType<GameManager>().WhosTurn = "";
-            FindObjectOfType<GameManager>().NumFilled = 0;
-            FindObjectOfType<GameManager>().FilledPositions = new int[3,3];
-            FindObjectOfType<GameManager>().turnMoment = 0;
-            FindObjectOfType<GameManager>().Chips = new List<GameObject>();
-            FindObjectOfType<GameManager>().MiniGameChosen = 0;
-        }
+        if (!FindObjectOfType<GameManager>().IsPlaying) return;
+        FindObjectOfType<GameManager>().MatchId = "";
+        FindObjectOfType<GameManager>().OwnerId = "";
+        FindObjectOfType<GameManager>().PlayerInfoO = null;
+        FindObjectOfType<GameManager>().PlayerInfoX = null;
+        FindObjectOfType<GameManager>().WhosTurn = "";
+        FindObjectOfType<GameManager>().NumFilled = 0;
+        FindObjectOfType<GameManager>().FilledPositions = new int[3,3];
+        FindObjectOfType<GameManager>().turnMoment = 0;
+        FindObjectOfType<GameManager>().Chips = new List<GameObject>();
+        FindObjectOfType<GameManager>().MiniGameChosen = 0;
     }
 
     #endregion
@@ -127,47 +112,29 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
         SceneManager.LoadScene("MainMenu");
     }
+
     
-    /// <summary>
-    /// Método ejecutado cuando se une a una sala
-    /// </summary>
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Unido a la sala: " + PhotonNetwork.CurrentRoom.Name;
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Buscando jugadores...";
-
-        if (FindObjectOfType<GameManager>().OwnerId.Equals(FindObjectOfType<PlayerInfo>().Name))
-        {
-            Debug.Log("Soy el jugador local y admin de la partida.");
-            FindObjectOfType<NetworkCommunications>().SendPlayerInfoPackage("host");
-        }
-        else
-        {
-            Debug.Log("Soy el jugador local y usuario de la partida.");
-            FindObjectOfType<NetworkCommunications>().SendPlayerInfoPackage("user");
-        }
-
-        if (PhotonNetwork.CurrentRoom.PlayerCount == MAX_PLAYERS_INROOM)
-        {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala llena. Empezando partida...";
-            
-            FindObjectOfType<GameManager>().IsPlaying = true;
-
-            SceneManager.LoadScene("TicTacToe_Server");
-        }
-    }    
+    }
 
     /// <summary>
-    /// Método ejecutado cuando falla el acceso a la sala
+    /// Método ejecutado cuando falla el acceso a la sala aleatoria
     /// </summary>
-    /// <param name="returnCode">Código de error</param>
-    /// <param name="message">Mensaje de error</param>
-    public override void OnJoinRoomFailed(short returnCode, string message)
+    /// <param name="returnCode"></param>
+    /// <param name="message"></param>
+    public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.LogError(returnCode + ": " + message);
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No existen salas. Creando...";
+        base.OnJoinRandomFailed(returnCode, message);
+        
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Creando sala...";
+
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = 
+            PhotonNetwork.CreateRoom("Sala 1", new Photon.Realtime.RoomOptions()
+        {
+            MaxPlayers = MAX_PLAYERS_INROOM,
+        }) ? "Sala creada con éxito." : "Fallo al crear la sala.";
     }
 
     /// <summary>
@@ -189,6 +156,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
             SceneManager.LoadScene("TicTacToe_Server");
         }
     }
+    
+    
 
     /// <summary>
     /// Método ejecutado cuando un jugador abandona la sala
@@ -220,13 +189,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
     #endregion
     
-    /*
     #region UnityCB
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        _matchmakingController = new MatchmakingController();
     }
 
     // Update is called once per frame
@@ -236,6 +203,4 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
     
     #endregion
-
-    */
 }
