@@ -30,12 +30,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <returns>Valor del estado de la conexión</returns>
     public bool OnConnectToServer()
     {
-        if (PhotonNetwork.ConnectUsingSettings())
-        {
-            return true;
-        }
-
-        return false;
+        return PhotonNetwork.ConnectUsingSettings();
     }
 
     /// <summary>
@@ -73,6 +68,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.JoinRandomRoom())
         {
+            Debug.Log("Fallaste");
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
         }
     }
@@ -84,19 +80,17 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LeaveRoom();
 
-        if (FindObjectOfType<GameManager>().IsPlaying)
-        {
-            FindObjectOfType<GameManager>().MatchId = "";
-            FindObjectOfType<GameManager>().OwnerId = "";
-            FindObjectOfType<GameManager>().PlayerInfoO = null;
-            FindObjectOfType<GameManager>().PlayerInfoX = null;
-            FindObjectOfType<GameManager>().WhosTurn = "";
-            FindObjectOfType<GameManager>().NumFilled = 0;
-            FindObjectOfType<GameManager>().FilledPositions = new int[3,3];
-            FindObjectOfType<GameManager>().turnMoment = 0;
-            FindObjectOfType<GameManager>().Chips = new List<GameObject>();
-            FindObjectOfType<GameManager>().MiniGameChosen = 0;
-        }
+        if (!FindObjectOfType<GameManager>().IsPlaying) return;
+        FindObjectOfType<GameManager>().MatchId = "";
+        FindObjectOfType<GameManager>().OwnerId = "";
+        FindObjectOfType<GameManager>().PlayerInfoO = null;
+        FindObjectOfType<GameManager>().PlayerInfoX = null;
+        FindObjectOfType<GameManager>().WhosTurn = "";
+        FindObjectOfType<GameManager>().NumFilled = 0;
+        FindObjectOfType<GameManager>().FilledPositions = new int[3,3];
+        FindObjectOfType<GameManager>().turnMoment = 0;
+        FindObjectOfType<GameManager>().Chips = new List<GameObject>();
+        FindObjectOfType<GameManager>().MiniGameChosen = 0;
     }
 
     #endregion
@@ -134,10 +128,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-
+/*
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Unido a la sala: " + PhotonNetwork.CurrentRoom.Name;
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Buscando jugadores...";
 
+        
         if (FindObjectOfType<GameManager>().OwnerId.Equals(FindObjectOfType<PlayerInfo>().Name))
         {
             Debug.Log("Soy el jugador local y admin de la partida.");
@@ -157,7 +152,15 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
             SceneManager.LoadScene("TicTacToe_Server");
         }
-    }    
+        */
+    }
+
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        base.OnJoinRandomFailed(returnCode, message);
+        
+        Debug.Log("Hola, estoy aquí");
+    }
 
     /// <summary>
     /// Método ejecutado cuando falla el acceso a la sala
