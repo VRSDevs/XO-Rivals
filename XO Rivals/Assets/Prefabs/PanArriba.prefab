@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1838569870276373903}
   m_Layer: 0
   m_Name: PanArriba
-  m_TagString: pan
+  m_TagString: panArriba
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
