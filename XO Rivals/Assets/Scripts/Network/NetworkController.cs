@@ -44,6 +44,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <summary>
     /// Método para crear una sala de partida
     /// </summary>
+    /*
     public void OnCreateRoom()
     {
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Creando sala...";
@@ -60,17 +61,16 @@ public class NetworkController : MonoBehaviourPunCallbacks
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
         }
     }
+    */
     
     /// <summary>
     /// Método para conectarse a una sala
     /// </summary>
     public void OnConnectToRandomRoom()
     {
-        if (!PhotonNetwork.JoinRandomRoom())
-        {
-            Debug.Log("Fallaste");
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
-        }
+        if (PhotonNetwork.JoinRandomRoom()) return;
+        Debug.Log("Fallaste");
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
     }
 
     /// <summary>
