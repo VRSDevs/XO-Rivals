@@ -68,7 +68,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// </summary>
     public void OnConnectToRandomRoom()
     {
-        if (PhotonNetwork.JoinRandomRoom()) return;
+        if (!PhotonNetwork.JoinRandomRoom()) return;
         Debug.Log("Fallaste");
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
     }
@@ -123,54 +123,15 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
     
     /// <summary>
-    /// Método ejecutado cuando se une a una sala
+    /// Método ejecutado cuando falla el acceso a la sala aleatoria
     /// </summary>
-    public override void OnJoinedRoom()
-    {
-        base.OnJoinedRoom();
-/*
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Unido a la sala: " + PhotonNetwork.CurrentRoom.Name;
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Buscando jugadores...";
-
-        
-        if (FindObjectOfType<GameManager>().OwnerId.Equals(FindObjectOfType<PlayerInfo>().Name))
-        {
-            Debug.Log("Soy el jugador local y admin de la partida.");
-            FindObjectOfType<NetworkCommunications>().SendPlayerInfoPackage("host");
-        }
-        else
-        {
-            Debug.Log("Soy el jugador local y usuario de la partida.");
-            FindObjectOfType<NetworkCommunications>().SendPlayerInfoPackage("user");
-        }
-
-        if (PhotonNetwork.CurrentRoom.PlayerCount == MAX_PLAYERS_INROOM)
-        {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala llena. Empezando partida...";
-            
-            FindObjectOfType<GameManager>().IsPlaying = true;
-
-            SceneManager.LoadScene("TicTacToe_Server");
-        }
-        */
-    }
-
+    /// <param name="returnCode"></param>
+    /// <param name="message"></param>
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         base.OnJoinRandomFailed(returnCode, message);
         
         Debug.Log("Hola, estoy aquí");
-    }
-
-    /// <summary>
-    /// Método ejecutado cuando falla el acceso a la sala
-    /// </summary>
-    /// <param name="returnCode">Código de error</param>
-    /// <param name="message">Mensaje de error</param>
-    public override void OnJoinRoomFailed(short returnCode, string message)
-    {
-        Debug.LogError(returnCode + ": " + message);
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No existen salas. Creando...";
     }
 
     /// <summary>
@@ -192,6 +153,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
             SceneManager.LoadScene("TicTacToe_Server");
         }
     }
+    
+    
 
     /// <summary>
     /// Método ejecutado cuando un jugador abandona la sala
