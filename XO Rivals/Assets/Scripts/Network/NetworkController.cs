@@ -11,8 +11,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
 {
     #region Variables
 
-
-
     /// <summary>
     /// Jugadores mínimos en la sala
     /// </summary>
