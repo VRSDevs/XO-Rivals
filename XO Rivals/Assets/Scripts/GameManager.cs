@@ -21,8 +21,8 @@ public class GameManager : MonoBehaviour
     public NetworkCommunications _NetworkCommunications;
     
     ////////////////// PARTIDA //////////////////
-    public Dictionary<string, Match> PlayerMatches { get; }
-
+    
+    
     /// <summary>
     /// ID de la partida
     /// </summary>
