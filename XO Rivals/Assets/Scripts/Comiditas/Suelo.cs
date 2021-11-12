@@ -37,5 +37,10 @@ public class Suelo : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
+
+        if (collision.gameObject.tag == "panArriba")
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }
