@@ -11,6 +11,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
 {
     #region Variables
 
+
+
     /// <summary>
     /// Jugadores mínimos en la sala
     /// </summary>
@@ -47,19 +49,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /*
     public void OnCreateRoom()
     {
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Creando sala...";
-
-        if (PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions()
-        {
-            MaxPlayers = MAX_PLAYERS_INROOM
-        }))
-        {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala creada con éxito.";
-        }
-        else
-        {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
-        }
+        
     }
     */
     
@@ -71,6 +61,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.JoinRandomRoom()) return;
         Debug.Log("Fallaste");
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
+        PhotonNetwork.JoinRoom("Sala 1");
     }
 
     /// <summary>
@@ -121,7 +112,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
         SceneManager.LoadScene("MainMenu");
     }
+
     
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+    }
+
     /// <summary>
     /// Método ejecutado cuando falla el acceso a la sala aleatoria
     /// </summary>
@@ -131,7 +128,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnJoinRandomFailed(returnCode, message);
         
-        Debug.Log("Hola, estoy aquí");
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Creando sala...";
+
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = 
+            PhotonNetwork.CreateRoom("Sala 1", new Photon.Realtime.RoomOptions()
+        {
+            MaxPlayers = MAX_PLAYERS_INROOM,
+        }) ? "Sala creada con éxito." : "Fallo al crear la sala.";
     }
 
     /// <summary>
