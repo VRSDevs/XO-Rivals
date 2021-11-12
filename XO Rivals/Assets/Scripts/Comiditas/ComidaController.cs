@@ -91,6 +91,15 @@ public class ComidaController : MonoBehaviour
             Invoke("EndSceneLost", 5f);
             lost = true;
         }
+
+        if (win)
+        {
+            panAbajo.SetActive(true);
+            queso.SetActive(true);
+            carne.SetActive(true);
+            lechuga.SetActive(true);
+            panArriba.SetActive(true);
+        }
     }
 
     void EndSceneLost()
