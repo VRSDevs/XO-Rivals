@@ -91,6 +91,15 @@ public class ComidaController : MonoBehaviour
             Invoke("EndSceneLost", 5f);
             lost = true;
         }
+
+        if (win)
+        {
+            panAbajo.SetActive(true);
+            queso.SetActive(true);
+            carne.SetActive(true);
+            lechuga.SetActive(true);
+            panArriba.SetActive(true);
+        }
     }
 
     void EndSceneLost()
@@ -120,26 +129,15 @@ public class ComidaController : MonoBehaviour
     {
         switch (tipo)
         {
-            // Recibimos un pan
+            // Recibimos un pan de abajo
             case 1:
                 if (orden == 1)
                 {
                     // Añadir al Hud
                     panAbajo.SetActive(true);
                     orden++;
-                } else if (orden == 5)
-                {
-                    // Fin minijuego mandar bool a alberto
-                    panArriba.SetActive(true);
-                    finished = true;
-                    win = true;
-                    crono.SetText("You won");
-                    stopGenerador();
-                    player.constraints = RigidbodyConstraints2D.FreezeAll;
-                    // Aqui se manda a alberto la victoria
-                    Invoke("EndSceneWin", 5f);                
-
-                } else
+                }           
+                 else
                 {
                     panAbajo.SetActive(false);
                     queso.SetActive(false);
@@ -194,6 +192,30 @@ public class ComidaController : MonoBehaviour
                     // Añadir al Hud
                     lechuga.SetActive(true);
                     orden++;
+                }
+                else
+                {
+                    panAbajo.SetActive(false);
+                    queso.SetActive(false);
+                    carne.SetActive(false);
+                    lechuga.SetActive(false);
+                    panArriba.SetActive(false);
+                    orden = 1;
+                }
+                break;
+            case 5:
+                if (orden == 5)
+                {
+                    // Fin minijuego mandar bool a alberto
+                    panArriba.SetActive(true);
+                    finished = true;
+                    win = true;
+                    crono.SetText("You won");
+                    stopGenerador();
+                    player.constraints = RigidbodyConstraints2D.FreezeAll;
+                    // Aqui se manda a alberto la victoria
+                    Invoke("EndSceneWin", 5f);
+
                 }
                 else
                 {

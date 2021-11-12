@@ -21,6 +21,8 @@ public class Jugador : MonoBehaviour
     private Animator anim;
     private bool deathAnimPlayed = false;
 
+    
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -89,6 +91,13 @@ public class Jugador : MonoBehaviour
             Destroy(collision.gameObject);
             controlador.recibirComida(1);
             
+        }
+
+        if (collision.gameObject.tag == "panArriba")
+        {
+            Destroy(collision.gameObject);
+            controlador.recibirComida(5);
+
         }
     }
 

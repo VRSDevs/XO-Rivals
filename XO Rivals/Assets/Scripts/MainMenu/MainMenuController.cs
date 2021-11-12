@@ -30,7 +30,7 @@ public class MainMenuController : MonoBehaviour
 
     public void OnCreateMatch()
     {
-        _gameManager._networkController.OnCreateRoom();
+        _gameManager._networkController.OnConnectToRandomRoom();
         _gameManager.OnCreateRoom(_localPlayer);
     }
 
