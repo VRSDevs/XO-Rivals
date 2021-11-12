@@ -11,6 +11,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
 {
     #region Variables
 
+    private MatchmakingController _matchmakingController;
+
     /// <summary>
     /// Jugadores mínimos en la sala
     /// </summary>
@@ -187,13 +189,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
     #endregion
     
-    /*
     #region UnityCB
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        _matchmakingController = new MatchmakingController();
     }
 
     // Update is called once per frame
@@ -203,6 +203,4 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
     
     #endregion
-
-    */
 }
