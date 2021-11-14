@@ -22,7 +22,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
     #endregion
     
-    #region ConnectMethods
+    #region ConnectionMethods
 
     /// <summary>
     /// Método para conectarse al servidor de Photon
@@ -46,9 +46,15 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// </summary>
     public void OnConnectToRandomRoom()
     {
-        if (PhotonNetwork.JoinRandomRoom())
+        Debug.Log("Salas: "+ PhotonNetwork.CountOfRooms);
+        bool status = PhotonNetwork.JoinRandomRoom();
+        Debug.Log(status);
+        Debug.Log("Salas: "+ PhotonNetwork.CountOfRooms);
+        
+        if (status)
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Te uniste.";
+            return;
         }
         Debug.Log("Fallaste");
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
@@ -75,6 +81,24 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
 
     #endregion
+
+    #region RoomsManagementMethods
+
+    /// <summary>
+    /// Método para crear una sala con un nombre en específico
+    /// </summary>
+    /// <param name="roomName">Nombre de la sala</param>
+    public void CreateMatchRoom(string roomName)
+    {
+        PhotonNetwork.CreateRoom(roomName, new Photon.Realtime.RoomOptions()
+        {
+            MaxPlayers = MAX_PLAYERS_INROOM,
+        });
+    }
+    
+
+    #endregion
+    
 
     #region PUN_CB
 
@@ -103,10 +127,33 @@ public class NetworkController : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("MainMenu");
     }
 
+    /// <summary>
+    /// CB de Photon para cuando se crea la sala con éxito.
+    /// </summary>
+    public override void OnCreatedRoom()
+    {
+        base.OnCreatedRoom();
+
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala creada con éxito.";
+    }
     
+    /// <summary>
+    /// CB de Photon para cuando no se pudo crear la sala con éxito.
+    /// </summary>
+    /// <param name="returnCode">Código de error</param>
+    /// <param name="message">Mensaje de error</param>
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        base.OnCreateRoomFailed(returnCode, message);
+        
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
+    }
+
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
+        
+        Debug.Log("Unido a partida");
     }
 
     /// <summary>
@@ -117,14 +164,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         base.OnJoinRandomFailed(returnCode, message);
-        
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Creando sala...";
-
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = 
-            PhotonNetwork.CreateRoom("Sala 1", new Photon.Realtime.RoomOptions()
-        {
-            MaxPlayers = MAX_PLAYERS_INROOM,
-        }) ? "Sala creada con éxito." : "Fallo al crear la sala.";
     }
 
     /// <summary>
