@@ -18,14 +18,9 @@ TagManager:
   - Log
   - Ground
   - Enemy
-  - SurrenderVictory
-  - EndingUI
-  - ground
-  - lechuga
-  - queso
+  - Enemy1
   - carne
-  - pan
-  - panArriba
+  - PlayerFantasma
   layers:
   - Default
   - TransparentFX
