@@ -18,6 +18,14 @@ TagManager:
   - Log
   - Ground
   - Enemy
+  - SurrenderVictory
+  - EndingUI
+  - ground
+  - lechuga
+  - queso
+  - carne
+  - pan
+  - panArriba
   layers:
   - Default
   - TransparentFX
