@@ -8,7 +8,8 @@ public class DetectPlayer : MonoBehaviour
 
     public GameObject player;
     public float distanciaVision = 4;
-    public bool veoPlayer = false;
+    public bool veoPlayerRadio = false;
+    public bool veoPlayerDistance = false;
     public List<GameObject> obstaculos;
 
     public GameObject prefabBala;
@@ -25,11 +26,11 @@ public class DetectPlayer : MonoBehaviour
     {
         if (Vector3.Distance(player.transform.position, this.transform.position) < distanciaVision)
         {
-            veoPlayer = true;
+            veoPlayerRadio = true;
         }
         else
         {
-            veoPlayer = false;
+            veoPlayerRadio = false;
         }
 
        
@@ -43,9 +44,9 @@ public class DetectPlayer : MonoBehaviour
     public void playerDetected(bool detected)
     {
 
-        veoPlayer = detected;
+        veoPlayerDistance = detected;
 
-        Debug.Log(veoPlayer);
+
 
     }
 

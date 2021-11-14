@@ -38,7 +38,6 @@ public class BalaDetectScript : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
 
-        Debug.Log("coli");
         GameObject other = collision.gameObject;
 
         if (other.CompareTag("Enemy1"))//NO COLISIONA CON EL ENEMIGO
@@ -48,7 +47,7 @@ public class BalaDetectScript : MonoBehaviour
         else
         {
 
-            Debug.Log("coliMenda");
+
 
             if (other.CompareTag("PlayerFantasma"))//COLISION CON PLAYER
             {
@@ -61,7 +60,7 @@ public class BalaDetectScript : MonoBehaviour
 
 
             Destroy(gameObject);
-            Debug.Log("DESTRUYO");
+    
 
         }
 
