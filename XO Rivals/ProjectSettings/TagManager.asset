@@ -20,6 +20,7 @@ TagManager:
   - Enemy
   - Enemy1
   - carne
+  - PlayerFantasma
   layers:
   - Default
   - TransparentFX

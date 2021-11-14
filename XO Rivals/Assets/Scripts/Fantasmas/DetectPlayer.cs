@@ -36,7 +36,6 @@ public class DetectPlayer : MonoBehaviour
 
 
 
-        Debug.Log(veoPlayer);
 
     }
 
@@ -44,11 +43,15 @@ public class DetectPlayer : MonoBehaviour
     public void playerDetected(bool detected)
     {
 
+        veoPlayer = detected;
+
+        Debug.Log(veoPlayer);
+
     }
 
     IEnumerator creaBala()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.7f);
 
         //INSTANCIAR PREFAB
         bala = Instantiate(prefabBala, this.transform.position, Quaternion.identity);
@@ -56,5 +59,17 @@ public class DetectPlayer : MonoBehaviour
         //CODE
         StartCoroutine(creaBala());
     }
+
+
+    //void OnCollisionEnter2D(Collision2D collision)
+    //{
+
+
+    //    Debug.Log("AAA");
+
+
+
+    //}
+
 
 }

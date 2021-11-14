@@ -1240,6 +1240,7 @@ GameObject:
   - component: {fileID: 1689567236}
   - component: {fileID: 1689567235}
   - component: {fileID: 1689567237}
+  - component: {fileID: 1689567238}
   m_Layer: 0
   m_Name: Enemigo
   m_TagString: Enemy1
@@ -1306,7 +1307,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1689567234}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.31, y: -3.22, z: 0}
+  m_LocalPosition: {x: -1.33, y: 0.72, z: 0}
   m_LocalScale: {x: 0.6562733, y: 0.6562733, z: 0.6562733}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1333,6 +1334,22 @@ MonoBehaviour:
   - {fileID: 2008300852}
   prefabBala: {fileID: 3431209771459165765, guid: a5d06f078b1fc2c4096220bef96a46cf, type: 3}
   bala: {fileID: 0}
+--- !u!70 &1689567238
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1689567234}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 2}
+  m_Direction: 0
 --- !u!1 &1729087737
 GameObject:
   m_ObjectHideFlags: 0
@@ -1556,7 +1573,7 @@ GameObject:
   - component: {fileID: 1932259250}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: PlayerFantasma
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
