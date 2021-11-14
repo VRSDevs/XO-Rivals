@@ -92,6 +92,8 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("isJumping", true);
         }
 
+        
+
     }
     public void JumpPhone()
     {
