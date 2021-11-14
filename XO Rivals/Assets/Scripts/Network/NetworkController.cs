@@ -11,8 +11,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
 {
     #region Variables
 
-    private MatchmakingController _matchmakingController;
-
     /// <summary>
     /// Jugadores mínimos en la sala
     /// </summary>
@@ -44,24 +42,16 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
-    /// Método para crear una sala de partida
-    /// </summary>
-    /*
-    public void OnCreateRoom()
-    {
-        
-    }
-    */
-    
-    /// <summary>
     /// Método para conectarse a una sala
     /// </summary>
     public void OnConnectToRandomRoom()
     {
-        if (!PhotonNetwork.JoinRandomRoom()) return;
+        if (PhotonNetwork.JoinRandomRoom())
+        {
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Te uniste.";
+        }
         Debug.Log("Fallaste");
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
-        PhotonNetwork.JoinRoom("Sala 1");
     }
 
     /// <summary>
@@ -151,9 +141,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala llena. Empezando partida...";
 
+            /*
             FindObjectOfType<GameManager>().IsPlaying = true;
 
             SceneManager.LoadScene("TicTacToe_Server");
+            */
         }
     }
     
@@ -193,7 +185,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
     void Awake()
     {
-        _matchmakingController = new MatchmakingController();
     }
 
     // Update is called once per frame
