@@ -119,6 +119,19 @@ public class GameManager : MonoBehaviour
         PlayerInfoX = player;
     }
 
+    #region UpdateMethods
+    
+    /// <summary>
+    /// Método para actualizar el nick del cliente en Photon
+    /// </summary>
+    /// <param name="nick">Nick del cliente</param>
+    public void UpdatePhotonNick(string nick)
+    {
+        _networkController.SetNickName(nick);
+    }
+
+    #endregion
+
     #region ConversionToObjectMethods
     
     public object[] PlayerInfoToObject(string type)
