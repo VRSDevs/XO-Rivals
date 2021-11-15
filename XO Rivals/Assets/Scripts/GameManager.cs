@@ -114,10 +114,9 @@ public class GameManager : MonoBehaviour
         WhosTurn = player.Name;
     }
 
-    public void OnConnectToRoom(PlayerInfo player)
+    public void OnConnectToRoom()
     {
-
-        PlayerInfoX = player;
+        _networkController.ConnectToRandomRoom();
     }
 
     /// <summary>
