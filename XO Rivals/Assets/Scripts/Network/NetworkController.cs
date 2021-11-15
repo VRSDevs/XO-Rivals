@@ -89,9 +89,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// Método para crear una sala con un nombre en específico
     /// </summary>
     /// <param name="roomName">Nombre de la sala</param>
-    public void CreateMatchRoom(string roomName)
+    private IEnumerator CreateMatchRoom(string roomName)
     {
-        PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions()
+        yield return new WaitForSeconds(1);
+        
+        PhotonNetwork.CreateRoom(roomName, new Photon.Realtime.RoomOptions()
         {
             MaxPlayers = MAX_PLAYERS_INROOM,
         });
@@ -154,6 +156,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
         
         Debug.Log("Unido a partida");
+        
+        Debug.Log("Nombre de la sala: " + PhotonNetwork.CurrentRoom.Name);
     }
 
     /// <summary>
@@ -168,7 +172,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
         switch (returnCode)
         {
             case 32760:
-                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No hay salas activas.";
+                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No hay salas activas. Creando una...";
+
+                StartCoroutine(CreateMatchRoom(GetHashValue("Sala 1")));
                 break;
             default:
                 Debug.Log("Error " + returnCode + ": " + message);
