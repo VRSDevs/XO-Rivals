@@ -106,13 +106,6 @@ public class GameManager : MonoBehaviour
     }
     
     #endregion
-    
-    public void OnCreateRoom(PlayerInfo player){
-        //Match ID y OwnerID for beta version
-        OwnerId = player.Name;
-        PlayerInfoO = player;
-        WhosTurn = player.Name;
-    }
 
     public void OnConnectToRoom()
     {
