@@ -50,7 +50,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         bool status = PhotonNetwork.JoinRandomRoom();
         Debug.Log(status);
         Debug.Log("Salas: "+ PhotonNetwork.CountOfRooms);
-        
+
         if (status)
         {
             //GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Te uniste.";
@@ -63,7 +63,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <summary>
     /// Método para abandonar la sala de la partida
     /// </summary>
-    public void LeaveRoom()
+    public void DisconnectFromRoom()
     {
         PhotonNetwork.LeaveRoom();
 

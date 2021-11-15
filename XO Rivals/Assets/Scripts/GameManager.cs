@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void OnLeaveRoom()
     {
-        _networkController.LeaveRoom();
+        _networkController.DisconnectFromRoom();
     }
 
     #region UpdateMethods
