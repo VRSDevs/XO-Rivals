@@ -1409,7 +1409,7 @@ GameObject:
   - component: {fileID: 520047682}
   - component: {fileID: 520047681}
   m_Layer: 0
-  m_Name: Square win (3)
+  m_Name: Victoria
   m_TagString: FinishLine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1423,7 +1423,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520047679}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 46.83288, y: -17.929104, z: 7.3791666}
+  m_LocalPosition: {x: 48.52, y: -17.581, z: 7.3791666}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 340069393}
@@ -1442,18 +1442,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.062122345, y: 0.24507427}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.25, y: 1.65}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.1242447, y: 2.1233807}
   m_EdgeRadius: 0
 --- !u!212 &520047682
 SpriteRenderer:
@@ -1495,8 +1495,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.17165397, g: 0.6792453, b: 0.1505874, a: 1}
+  m_Sprite: {fileID: 21300000, guid: edf68acfedc641644a007bc4ca1c7c31, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4294,11 +4294,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a045e613180dd7949869145476ec37c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 1628653802}
   jumpButton: {fileID: 1138734407}
   rightButton: {fileID: 969540279}
   playerX: {fileID: 1690281226}
   playerO: {fileID: 1928096044}
+  flag: {fileID: 520047679}
+  flagO: {fileID: 21300000, guid: 9c8b9c3fc15949a47b7d5e292806f3d1, type: 3}
 --- !u!4 &1245188515
 Transform:
   m_ObjectHideFlags: 0
@@ -6775,7 +6776,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1690281226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.1, y: -19.4, z: 0}
+  m_LocalPosition: {x: -1.976, y: -19.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1095365395}
@@ -7711,7 +7712,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1928096045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7957,7 +7958,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1928096044}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.853, y: -3.24, z: 0}
+  m_LocalPosition: {x: -1.99, y: -19.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 970368950}
@@ -8103,7 +8104,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2009747891}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.434, z: 0}
+  m_LocalPosition: {x: 0, y: -0.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1928096051}
