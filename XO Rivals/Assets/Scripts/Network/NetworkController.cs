@@ -50,6 +50,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
         StartCoroutine(JoinRoom());
     }
 
+    /// <summary>
+    /// Corutina para tratar de unirse a una sala
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator JoinRoom()
     {
         yield return new WaitForSeconds(1);
@@ -237,5 +241,22 @@ public class NetworkController : MonoBehaviourPunCallbacks
         
     }
     
+    #endregion
+
+    #region OtherMethods
+
+    /// <summary>
+    /// Método para transformar un dato en un valor hash
+    /// </summary>
+    /// <param name="data">Dato a transformar</param>
+    /// <returns>Valor hash del dato introducido</returns>
+    private string GetHashValue(string data)
+    {
+        var hash = new Hash128();
+        hash.Append(data);
+        
+        return hash.ToString();
+    }
+
     #endregion
 }
