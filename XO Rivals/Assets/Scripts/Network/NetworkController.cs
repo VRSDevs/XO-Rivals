@@ -98,6 +98,14 @@ public class NetworkController : MonoBehaviourPunCallbacks
             MaxPlayers = MAX_PLAYERS_INROOM,
         });
     }
+
+    private IEnumerator StartMatch()
+    {
+        yield return new WaitForSeconds(1);
+        
+        FindObjectOfType<GameManager>().IsPlaying = true;
+        SceneManager.LoadScene("TicTacToe_Server");
+    }
     
     #endregion
 
@@ -112,7 +120,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
         
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Conectado al servidor. Conectando al lobby...";
         OnConnectToLobby();
-        
     }
 
     /// <summary>
@@ -154,23 +161,30 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        
-        Debug.Log("Unido a partida");
-        
-        Debug.Log("Nombre de la sala: " + PhotonNetwork.CurrentRoom.Name);
+
+        if (PhotonNetwork.CurrentRoom.PlayerCount < 2)
+        {
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Buscando jugadores...";
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
+            StartCoroutine(StartMatch());
+        }
     }
 
     /// <summary>
     /// Método ejecutado cuando falla el acceso a la sala aleatoria
     /// </summary>
-    /// <param name="returnCode"></param>
-    /// <param name="message"></param>
+    /// <param name="returnCode">Código de error</param>
+    /// <param name="message">Mensaje de error</param>
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         base.OnJoinRandomFailed(returnCode, message);
 
         switch (returnCode)
         {
+            // Caso 32760 - Ninguna sala disponible
             case 32760:
                 GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No hay salas activas. Creando una...";
 
@@ -189,20 +203,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
+
+        if (PhotonNetwork.CurrentRoom.PlayerCount != MAX_PLAYERS_INROOM) return;
         
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Buscando jugadores...";
-        Debug.Log("Hola");
-
-        if (PhotonNetwork.CurrentRoom.PlayerCount == MAX_PLAYERS_INROOM)
-        {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala llena. Empezando partida...";
-
-            /*
-            FindObjectOfType<GameManager>().IsPlaying = true;
-
-            SceneManager.LoadScene("TicTacToe_Server");
-            */
-        }
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
+        StartCoroutine(StartMatch());
     }
 
     /// <summary>
