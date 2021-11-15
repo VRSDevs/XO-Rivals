@@ -46,18 +46,15 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// </summary>
     public void ConnectToRandomRoom()
     {
-        Debug.Log("Salas: "+ PhotonNetwork.CountOfRooms);
-        bool status = PhotonNetwork.JoinRandomRoom();
-        Debug.Log(status);
-        Debug.Log("Salas: "+ PhotonNetwork.CountOfRooms);
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Buscando salas...";
+        StartCoroutine(JoinRoom());
+    }
 
-        if (status)
-        {
-            //GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Te uniste.";
-            return;
-        }
-        Debug.Log("Fallaste");
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
+    private IEnumerator JoinRoom()
+    {
+        yield return new WaitForSeconds(1);
+        
+        PhotonNetwork.JoinRandomRoom();
     }
 
     /// <summary>
@@ -167,7 +164,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         switch (returnCode)
         {
             case 32760:
-                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No existen salas a las que unirse.";
+                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No hay salas activas.";
                 break;
             default:
                 Debug.Log("Error " + returnCode + ": " + message);
