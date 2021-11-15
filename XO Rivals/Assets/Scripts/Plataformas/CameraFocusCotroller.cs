@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CameraFocusCotroller : MonoBehaviour
 {
@@ -16,6 +17,14 @@ public class CameraFocusCotroller : MonoBehaviour
     public Transform cameraFollow;
     int goalPoint = 0;
     public float moveSpeed = 1;
+
+    // Cámara
+    private CinemachineVirtualCamera cam;
+
+    private void Start()
+    {
+
+    }
 
     void Update()
     {

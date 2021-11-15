@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isDead = false;
 
     // Victoria
-    private bool win = false;
+    public bool win = false;
 
     // Animaciones
     [SerializeField]
