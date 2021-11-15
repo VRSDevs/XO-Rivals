@@ -114,9 +114,18 @@ public class GameManager : MonoBehaviour
         WhosTurn = player.Name;
     }
 
-    public void OnConnectToRoom(PlayerInfo player){
+    public void OnConnectToRoom(PlayerInfo player)
+    {
 
         PlayerInfoX = player;
+    }
+
+    /// <summary>
+    /// Método para abandonar una sala en Photon
+    /// </summary>
+    public void OnLeaveRoom()
+    {
+        _networkController.LeaveRoom();
     }
 
     #region UpdateMethods
@@ -160,7 +169,6 @@ public class GameManager : MonoBehaviour
         return null;
     }
     
-
     /// <summary>
     /// 
     /// </summary>
