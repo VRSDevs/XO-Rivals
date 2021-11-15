@@ -89,7 +89,8 @@ public class GameManager : MonoBehaviour
     {
         _networkController = gameObject.AddComponent<NetworkController>();
         _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
-        
+
+        PlayerMatches = new Dictionary<string, Match>();
         IsPlaying = false;
         
         DontDestroyOnLoad(this);
