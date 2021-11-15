@@ -9,10 +9,6 @@ public class PlatformMinigameController : MonoBehaviour
     // Gamemanager
     private GameManager _gameManager;
 
-    // Camara para el movimiento horizontal
-    [SerializeField]
-    private Camera cam;
-
     // Controles de movil
     [SerializeField]
     public GameObject jumpButton;
@@ -25,9 +21,28 @@ public class PlatformMinigameController : MonoBehaviour
     [SerializeField]
     public GameObject playerO;
 
+    // Bandera
+    [SerializeField]
+    private GameObject flag;
+    [SerializeField]
+    private Sprite flagO;
+
+    bool jugadorX = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        if (jugadorX)
+        {
+            playerO.SetActive(false);
+
+        }
+        else
+        {
+            playerX.SetActive(false);
+            flag.gameObject.GetComponent<SpriteRenderer>().sprite = flagO;
+        }
         _gameManager = FindObjectOfType<GameManager>();
 
         if (!_gameManager.IsWebGLMobile)
@@ -35,6 +50,8 @@ public class PlatformMinigameController : MonoBehaviour
             jumpButton.SetActive(false);
             rightButton.SetActive(false);
         }
+
+        
     }
 
     // Update is called once per frame
