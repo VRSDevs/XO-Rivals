@@ -63,7 +63,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <summary>
     /// Método para abandonar la sala de la partida
     /// </summary>
-    public void OnLeaveRoom()
+    public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
 
