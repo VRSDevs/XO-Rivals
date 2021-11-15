@@ -13,22 +13,29 @@ public class CameraFocusCotroller : MonoBehaviour
     [SerializeField]
     private GameObject playerO;
 
+    private PlayerMovement playerOController;
+    private PlayerMovement playerXController;
+
     public List<Transform> points;
     public Transform cameraFollow;
     int goalPoint = 0;
     public float moveSpeed = 1;
 
-    // Cámara
-    private CinemachineVirtualCamera cam;
 
     private void Start()
     {
-
+        playerOController = playerO.GetComponent<PlayerMovement>();
+        playerXController = playerX.GetComponent<PlayerMovement>();
     }
 
     void Update()
     {
         MoveToNextPoint();
+
+        if (playerOController.win || playerXController.win || playerOController.isDead || playerXController.isDead)
+        {
+            cameraFollow.gameObject.SetActive(false);
+        }
     }
 
     void MoveToNextPoint()
@@ -39,6 +46,7 @@ public class CameraFocusCotroller : MonoBehaviour
             if (goalPoint == points.Count - 1)
             {
                 cameraFollow.position = points[goalPoint].position;
+                
             }
                 
             else

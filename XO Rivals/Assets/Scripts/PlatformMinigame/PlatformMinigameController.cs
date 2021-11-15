@@ -41,7 +41,7 @@ public class PlatformMinigameController : MonoBehaviour
 
     // Variables auxiliares a cambiarse
     bool jugadorX = false;
-    int level = 2;
+    int level = 1;
 
 
     // Start is called before the first frame update
