@@ -58,7 +58,7 @@ public class MainMenuController : MonoBehaviour
                 CreateGameButton.interactable = true;
                 JoinGameButton.interactable = true;
             
-                //_gameManager._networkController.OnLeaveRoom();
+                _gameManager.OnLeaveRoom();
 
                 break;
             case 2:
