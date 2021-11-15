@@ -94,7 +94,18 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    #region Photon
+    #region ConnectionMethods
+
+    /// <summary>
+    /// Método para conectarse al servidor de Photon
+    /// </summary>
+    /// <returns>Devuelve "true" si el cliente pudo establecer conexión con el servidor</returns>
+    public bool OnConnectToServer()
+    {
+        return _networkController.ConnectToServer();
+    }
+    
+    #endregion
     
     public void OnCreateRoom(PlayerInfo player){
         //Match ID y OwnerID for beta version
@@ -107,8 +118,6 @@ public class GameManager : MonoBehaviour
 
         PlayerInfoX = player;
     }
-    
-    #endregion
 
     #region ConversionToObjectMethods
     
