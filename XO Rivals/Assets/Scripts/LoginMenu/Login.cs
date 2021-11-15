@@ -142,10 +142,10 @@ public class Login : MonoBehaviour
 
             Log.text = "Conectando...";
             
-            if (_gameManager._networkController.OnConnectToServer())
+            if (/*_gameManager._networkController.OnConnectToServer()*/true)
             {
                 Log.text = "Conectado.";
-                _gameManager._networkController.SetNickName(username);
+                //_gameManager._networkController.SetNickName(username);
                 GameObject myPlayer = new GameObject();
                 PlayerInfo playerInfo = myPlayer.AddComponent<PlayerInfo>();
                 DontDestroyOnLoad(myPlayer);

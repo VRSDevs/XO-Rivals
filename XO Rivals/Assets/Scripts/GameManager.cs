@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Referencia a funciones del servidor
     /// </summary>
-    public NetworkController _networkController;
+    private NetworkController _networkController;
     /// <summary>
     /// 
     /// </summary>

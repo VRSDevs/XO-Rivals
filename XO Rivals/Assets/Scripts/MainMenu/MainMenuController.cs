@@ -36,7 +36,7 @@ public class MainMenuController : MonoBehaviour
 
     public void ConnectRandomMatch()
     {
-        _gameManager._networkController.CreateMatchRoom("");
+        //_gameManager._networkController.CreateMatchRoom("");
         _gameManager.OnConnectToRoom(_localPlayer);
     }
     
@@ -58,7 +58,7 @@ public class MainMenuController : MonoBehaviour
                 CreateGameButton.interactable = true;
                 JoinGameButton.interactable = true;
             
-                _gameManager._networkController.OnLeaveRoom();
+                //_gameManager._networkController.OnLeaveRoom();
 
                 break;
             case 2:
