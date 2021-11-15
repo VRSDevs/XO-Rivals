@@ -36,12 +36,10 @@ public class MainMenuController : MonoBehaviour
 
     public void ConnectRandomMatch()
     {
-        //_gameManager._networkController.CreateMatchRoom("");
-        _gameManager.OnConnectToRoom(_localPlayer);
+        _gameManager.OnConnectToRoom();
     }
     
     #endregion
-
     
     public void OnBackButtonClick()
     {
