@@ -18,11 +18,14 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public NetworkCommunications _NetworkCommunications;
+    public NetworkCommunications _networkCommunications;
     
     ////////////////// PARTIDA //////////////////
-    
-    
+    /// <summary>
+    /// Lista de partidas del jugador
+    /// </summary>
+    private Dictionary<string, Match> PlayerMatches;
+
     /// <summary>
     /// ID de la partida
     /// </summary>
@@ -85,7 +88,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _networkController = gameObject.AddComponent<NetworkController>();
-        _NetworkCommunications = gameObject.AddComponent<NetworkCommunications>();
+        _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
         
         IsPlaying = false;
         
@@ -133,7 +136,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    #region ConversionToObjectMethods
+    #region ConversiontMethods
     
     public object[] PlayerInfoToObject(string type)
     {
