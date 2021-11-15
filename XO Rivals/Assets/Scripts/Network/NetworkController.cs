@@ -28,7 +28,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// Método para conectarse al servidor de Photon
     /// </summary>
     /// <returns>Valor del estado de la conexión</returns>
-    public bool OnConnectToServer()
+    public bool ConnectToServer()
     {
         return PhotonNetwork.ConnectUsingSettings();
     }
