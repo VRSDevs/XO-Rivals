@@ -93,15 +93,6 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
-    
-    #region OtherMethods
-
-    public void updateLog(string s)
-    {
-        log.text = s;
-    }
-    
-    #endregion
 
     #region Photon
     
