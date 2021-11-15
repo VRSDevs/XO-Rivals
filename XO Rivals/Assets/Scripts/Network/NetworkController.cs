@@ -90,15 +90,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <param name="roomName">Nombre de la sala</param>
     public void CreateMatchRoom(string roomName)
     {
-        PhotonNetwork.CreateRoom(roomName, new Photon.Realtime.RoomOptions()
+        PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions()
         {
             MaxPlayers = MAX_PLAYERS_INROOM,
         });
     }
     
-
     #endregion
-    
 
     #region PUN_CB
 
@@ -146,6 +144,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnCreateRoomFailed(returnCode, message);
         
+        Debug.Log("Error " + returnCode + ": " + message);
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
     }
 
@@ -164,6 +163,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         base.OnJoinRandomFailed(returnCode, message);
+        
+        //CreateMatchRoom("a");
     }
 
     /// <summary>
