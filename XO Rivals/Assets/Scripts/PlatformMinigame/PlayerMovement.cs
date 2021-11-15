@@ -125,6 +125,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
     public void MoveRight()
     {
         horizontal = 1;
