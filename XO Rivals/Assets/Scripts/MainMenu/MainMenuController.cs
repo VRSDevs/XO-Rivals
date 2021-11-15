@@ -21,6 +21,8 @@ public class MainMenuController : MonoBehaviour
 
     private int Mode;
 
+    #region UnityCB
+
     private void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
@@ -28,18 +30,19 @@ public class MainMenuController : MonoBehaviour
         Mode = 0;
     }
 
-    public void OnCreateMatch()
-    {
-        _gameManager._networkController.OnConnectToRandomRoom();
-        _gameManager.OnCreateRoom(_localPlayer);
-    }
+    #endregion
 
-    public void OnConnectRandomMatch()
+    #region MatchMethods
+
+    public void ConnectRandomMatch()
     {
-        _gameManager._networkController.OnConnectToRandomRoom();
+        _gameManager._networkController.CreateMatchRoom("");
         _gameManager.OnConnectToRoom(_localPlayer);
     }
+    
+    #endregion
 
+    
     public void OnBackButtonClick()
     {
         switch (Mode)
