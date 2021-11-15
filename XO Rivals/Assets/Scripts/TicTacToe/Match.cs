@@ -6,10 +6,12 @@ public class Match
 {
     #region Vars
 
+    /*
     /// <summary>
     /// ID de la partida
     /// </summary>
     public string MatchId { get; set; }
+    */
     /// <summary>
     /// ID del dueño de la partida
     /// </summary>
@@ -56,7 +58,7 @@ public class Match
     /// </summary>
     public Match()
     {
-        MatchId = "";
+        //MatchId = "";
         OwnerId = "";
         PlayerOName = "";
         PlayerXName = "";
