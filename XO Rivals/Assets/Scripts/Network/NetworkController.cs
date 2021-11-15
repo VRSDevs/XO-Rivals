@@ -42,9 +42,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
-    /// Método para conectarse a una sala
+    /// Método para conectarse a una sala activa.
     /// </summary>
-    public void OnConnectToRandomRoom()
+    public void ConnectToRandomRoom()
     {
         Debug.Log("Salas: "+ PhotonNetwork.CountOfRooms);
         bool status = PhotonNetwork.JoinRandomRoom();
@@ -53,7 +53,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         
         if (status)
         {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Te uniste.";
+            //GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Te uniste.";
             return;
         }
         Debug.Log("Fallaste");
@@ -163,8 +163,16 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         base.OnJoinRandomFailed(returnCode, message);
-        
-        //CreateMatchRoom("a");
+
+        switch (returnCode)
+        {
+            case 32760:
+                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No existen salas a las que unirse.";
+                break;
+            default:
+                Debug.Log("Error " + returnCode + ": " + message);
+                break;
+        }
     }
 
     /// <summary>
@@ -176,6 +184,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnPlayerEnteredRoom(newPlayer);
         
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Buscando jugadores...";
+        Debug.Log("Hola");
 
         if (PhotonNetwork.CurrentRoom.PlayerCount == MAX_PLAYERS_INROOM)
         {
@@ -188,8 +197,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
             */
         }
     }
-    
-    
 
     /// <summary>
     /// Método ejecutado cuando un jugador abandona la sala
