@@ -180,6 +180,14 @@ public class GameManager : MonoBehaviour
     {
         _networkController.SetNickName(nick);
     }
+    
+    /// <summary>
+    /// Método para actualizar el estado del jugador para empezar la partida
+    /// </summary>
+    public void UpdateReadyStatus()
+    {
+        _networkController.UpdateReadyStatus();
+    }
 
     #endregion
 
