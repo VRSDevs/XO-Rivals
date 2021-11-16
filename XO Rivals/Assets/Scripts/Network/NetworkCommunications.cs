@@ -68,11 +68,15 @@ public class NetworkCommunications : MonoBehaviourPun
         switch ((char)obj[0])
         {
             case 'O':
+                Debug.Log("RPC del jugador O");
+                
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = obj[1] as string;
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = obj[2] as string;
                 
                 break;
             case 'X':
+                Debug.Log("RPC del jugador X");
+                
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = obj[1] as string;
                 
                 break;
