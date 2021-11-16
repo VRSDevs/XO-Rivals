@@ -71,6 +71,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public void DisconnectFromRoom()
     {
         PhotonNetwork.LeaveRoom();
+        
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Búsqueda cancelada.";
 
         if (!FindObjectOfType<GameManager>().IsPlaying) return;
         FindObjectOfType<GameManager>().MatchId = "";
