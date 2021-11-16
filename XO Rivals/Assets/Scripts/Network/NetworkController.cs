@@ -122,10 +122,12 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
-        
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Conectado al servidor. Conectando al lobby...";
 
-        if (PhotonNetwork.InLobby) return;
+        if (SceneManager.GetActiveScene().name.Equals("Login"))
+        {
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Conectado al servidor. Conectando al lobby...";
+        }
+
         ConnectToLobby();
     }
 
