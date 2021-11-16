@@ -93,15 +93,15 @@ public class MainMenuController : MonoBehaviour
         
         if (_gameManager.Matchmaking)
         {
-            CreateGameButton.onClick.AddListener(ConnectRandomMatch);
+            Debug.Log("c");
+            ConnectRandomMatch();
             CreateGameButton.GetComponent<Image>().sprite = CancelMatchmakingSprite;
-            CreateGameButton.onClick.RemoveListener(LeaveMatchmaking);
         }
         else
         {
-            CreateGameButton.onClick.AddListener(LeaveMatchmaking);
+            Debug.Log("l");
+            LeaveMatchmaking();
             CreateGameButton.GetComponent<Image>().sprite = CreateMatchSprite;
-            CreateGameButton.onClick.RemoveListener(ConnectRandomMatch);
         }
     }
 
