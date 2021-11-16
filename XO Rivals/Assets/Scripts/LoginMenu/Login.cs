@@ -217,14 +217,6 @@ public class Login : MonoBehaviour
     public void UpdateLoginMode(int mode)
     {
 
-        if (_gameManager.IsWebGLMobile)
-        {
-            UsernameInput.text = "dev001";
-            UsernameInput.ForceLabelUpdate();
-            PasswordInput.text = "123456";
-            PasswordInput.ForceLabelUpdate();
-        }
-
         switch (mode)
         {
             case 0:
