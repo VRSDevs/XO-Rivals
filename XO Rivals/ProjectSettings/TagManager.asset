@@ -25,6 +25,7 @@ TagManager:
   - queso
   - panArriba
   - pan
+  - CameraColider
   layers:
   - Default
   - TransparentFX
@@ -33,7 +34,7 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
+  - CameraCollider
   - 
   - 
   - 
