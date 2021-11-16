@@ -6,19 +6,35 @@ using Photon.Pun;
 
 public class NetworkCommunications : MonoBehaviourPun
 {
+    #region Vars
+
     private PhotonView _View;
+
+    #endregion
     
+    #region UnityCB
+
     private void Start()
     {
         _View = gameObject.AddComponent<PhotonView>();
         _View.ViewID = 1;
     }
 
-    public void SendPlayerInfoPackage(string type)
+    #endregion
+    
+    #region SendingMethods
+    
+    /// <summary>
+    /// Método para enviar información del jugador al oponente
+    /// </summary>
+    /// <param name="playerType">Tipo del jugador (en partida)</param>
+    public void SendPlayerInfoPackage(char playerType)
     {
-        object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject(type);
-        _View.RPC("RPCGetPlayerInfo", RpcTarget.OthersBuffered, (object)objToSend);
+        object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject(playerType);
+        _View.RPC("PlayerInfoRPC", RpcTarget.Others, (object)objToSend);
     }
+    
+    #endregion
 
     /// <summary>
     /// 
