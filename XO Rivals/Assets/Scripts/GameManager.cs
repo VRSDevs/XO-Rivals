@@ -81,6 +81,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [NonSerialized] public bool IsPlaying;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    [NonSerialized] public bool Matchmaking;
+    
     #endregion
 
     #region UnityCB
@@ -91,6 +96,7 @@ public class GameManager : MonoBehaviour
         _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
 
         PlayerMatches = new Dictionary<string, Match>();
+        Matchmaking = true;
         IsPlaying = false;
         
         DontDestroyOnLoad(this);
@@ -109,8 +115,9 @@ public class GameManager : MonoBehaviour
         return _networkController.ConnectToServer();
     }
     
-    #endregion
-
+    /// <summary>
+    /// Método para conectarse a una sala en Photon
+    /// </summary>
     public void OnConnectToRoom()
     {
         _networkController.ConnectToRandomRoom();
@@ -123,6 +130,19 @@ public class GameManager : MonoBehaviour
     {
         _networkController.DisconnectFromRoom();
     }
+    
+    #endregion
+
+    #region MatchMethods
+
+    public void SetupMatch()
+    {
+        Match match = new Match();
+        
+        
+    }
+
+    #endregion
 
     #region UpdateMethods
     
