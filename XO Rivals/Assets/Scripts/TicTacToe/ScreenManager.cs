@@ -49,11 +49,11 @@ public class ScreenManager : MonoBehaviour
 
         if (buttonsScript.miniWin)
         {
-            buttonsScript.gameState._NetworkCommunications.SendMatchInfo("OppWon");
+            buttonsScript.gameState._networkCommunications.SendMatchInfo("OppWon");
         }
         else
         {
-            buttonsScript.gameState._NetworkCommunications.SendMatchInfo("OppLost");
+            buttonsScript.gameState._networkCommunications.SendMatchInfo("OppLost");
         }
     }
     
