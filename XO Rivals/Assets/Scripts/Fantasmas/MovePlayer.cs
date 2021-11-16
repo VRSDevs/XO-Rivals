@@ -12,7 +12,7 @@ public class MovePlayer : MonoBehaviour
     private float vertical;
     private Rigidbody2D player;
 
-    public GameObject sombra;
+
 
     private bool vivo = true;
 
@@ -30,7 +30,7 @@ public class MovePlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        sombra.transform.position = new Vector3(this.transform.position.x+0.9f, this.transform.position.y-0.87f, this.transform.position.z);
+        
 
         if (vivo)
         {

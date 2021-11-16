@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isDead = false;
 
     // Victoria
-    private bool win = false;
+    public bool win = false;
 
     // Animaciones
     [SerializeField]
@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     // Variables del movimiento
     private float horizontal;
     private float speed = 5f;
-    private float jumpingPower = 8f;
+    private float jumpingPower = 5f;
 
     private void Awake()
     {
@@ -69,8 +69,8 @@ public class PlayerMovement : MonoBehaviour
     private void DeathAnimation()
     {
         col.enabled = false;
-        transform.DOMoveY(1,1).OnComplete(() => { 
-            transform.DOMoveY(-10,4);});
+        transform.DOLocalMoveY(4,1).OnComplete(() => { 
+            transform.DOLocalMoveY(-10,4);});
         
     }
 
@@ -124,6 +124,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("Win", true);
         }
     }
+
 
     public void MoveRight()
     {

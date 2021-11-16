@@ -18,23 +18,23 @@ TagManager:
   - Log
   - Ground
   - Enemy
-  - SurrenderVictory
-  - EndingUI
-  - ground
+  - Enemy1
+  - carne
+  - PlayerFantasma
   - lechuga
   - queso
-  - carne
-  - pan
   - panArriba
+  - pan
+  - CameraColider
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Wall
   - Water
   - UI
   - Ground
-  - 
+  - CameraCollider
   - 
   - 
   - 

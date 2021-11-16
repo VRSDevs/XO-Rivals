@@ -8,12 +8,17 @@ public class DetectPlayer : MonoBehaviour
 
     public GameObject player;
     public float distanciaVision = 4;
-    public bool veoPlayer = false;
+    public bool veoPlayerRadio = false;
+    public bool veoPlayerDistance = false;
     public List<GameObject> obstaculos;
+
+    public GameObject prefabBala;
+    public GameObject bala;
 
     void Start()
     {
         //Debug.Log(Vector3.Distance(player.transform.position,this.transform.position));
+        StartCoroutine(creaBala());
     }
 
     // Update is called once per frame
@@ -21,19 +26,51 @@ public class DetectPlayer : MonoBehaviour
     {
         if (Vector3.Distance(player.transform.position, this.transform.position) < distanciaVision)
         {
-            veoPlayer = true;
+            veoPlayerRadio = true;
         }
         else
         {
-            veoPlayer = false;
+            veoPlayerRadio = false;
         }
 
-
-        
-
+       
 
 
-        Debug.Log(veoPlayer);
+
 
     }
+
+
+    public void playerDetected(bool detected)
+    {
+
+        veoPlayerDistance = detected;
+
+
+
+    }
+
+    IEnumerator creaBala()
+    {
+        yield return new WaitForSeconds(0.7f);
+
+        //INSTANCIAR PREFAB
+        bala = Instantiate(prefabBala, this.transform.position, Quaternion.identity);
+
+        //CODE
+        StartCoroutine(creaBala());
+    }
+
+
+    //void OnCollisionEnter2D(Collision2D collision)
+    //{
+
+
+    //    Debug.Log("AAA");
+
+
+
+    //}
+
+
 }
