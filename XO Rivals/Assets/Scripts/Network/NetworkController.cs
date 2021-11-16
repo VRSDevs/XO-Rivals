@@ -40,7 +40,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <summary>
     /// Método de conexión a la lobby general
     /// </summary>
-    public void OnConnectToLobby()
+    public void ConnectToLobby()
     {
         PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
@@ -125,7 +125,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnConnectedToMaster();
         
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Conectado al servidor. Conectando al lobby...";
-        OnConnectToLobby();
+        ConnectToLobby();
     }
 
     /// <summary>
@@ -202,6 +202,16 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 Debug.Log("Error " + returnCode + ": " + message);
                 break;
         }
+    }
+
+    /// <summary>
+    /// CB de Photon para cuando se abandona la sala.
+    /// </summary>
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        
+        ConnectToLobby();
     }
 
     /// <summary>

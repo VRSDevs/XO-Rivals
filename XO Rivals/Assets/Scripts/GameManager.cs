@@ -124,6 +124,14 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Método para conectarse a la lobby general
+    /// </summary>
+    public void OnConnectToLobby()
+    {
+        _networkController.ConnectToLobby();
+    }
+
+    /// <summary>
     /// Método para abandonar una sala en Photon
     /// </summary>
     public void OnLeaveRoom()
