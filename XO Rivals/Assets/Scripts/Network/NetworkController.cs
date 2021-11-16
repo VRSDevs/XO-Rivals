@@ -18,7 +18,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <summary>
     /// Jugadores máximos en la sala
     /// </summary>
-    private const int MAX_PLAYERS_INROOM = 2;    
+    private const int MAX_PLAYERS_INROOM = 2;
+    /// <summary>
+    /// ¿La partida está lista para comenzar?
+    /// </summary>
+    private bool isReady = false;
 
     #endregion
     
@@ -101,7 +105,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
     private IEnumerator StartMatch()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitUntil(GetReadyStatus);
         
         FindObjectOfType<GameManager>().IsPlaying = true;
         SceneManager.LoadScene("TicTacToe_Server");
@@ -239,6 +243,14 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.NickName = nick;
     }
+    
+    /// <summary>
+    /// Método para actualizar de manera automática el estado de preparación de la partida
+    /// </summary>
+    public void UpdateReadyStatus()
+    {
+        isReady = !isReady;
+    }
 
     #endregion
     
@@ -257,6 +269,15 @@ public class NetworkController : MonoBehaviourPunCallbacks
     #endregion
 
     #region OtherMethods
+
+    /// <summary>
+    /// Método para obtener si la partida está lista para comenzar
+    /// </summary>
+    /// <returns>Estado de la partida</returns>
+    private bool GetReadyStatus()
+    {
+        return isReady;
+    }
 
     /// <summary>
     /// Método para transformar un dato en un valor hash

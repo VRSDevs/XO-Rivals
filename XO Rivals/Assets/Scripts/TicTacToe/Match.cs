@@ -11,11 +11,11 @@ public class Match
     /// ID de la partida
     /// </summary>
     public string MatchId { get; set; }
-    */
+    
     /// <summary>
     /// ID del dueño de la partida
     /// </summary>
-    public string OwnerId { get; set; }
+    public string OwnerId { get; set; }*/
     /// <summary>
     /// Nombre del jugador O
     /// </summary>
@@ -59,7 +59,7 @@ public class Match
     public Match()
     {
         //MatchId = "";
-        OwnerId = "";
+        //OwnerId = "";
         PlayerOName = "";
         PlayerXName = "";
         WhosTurn = "";
