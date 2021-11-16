@@ -31,7 +31,7 @@ public class NetworkCommunications : MonoBehaviourPun
     public void SendPlayerInfoPackage(char playerType)
     {
         object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject(playerType);
-        _View.RPC("RPCGetPlayerInfo", RpcTarget.OthersBuffered, (object)objToSend);
+        _View.RPC("PlayerInfoRPC", RpcTarget.OthersBuffered, (object)objToSend);
     }
     
     /// <summary>
@@ -58,34 +58,22 @@ public class NetworkCommunications : MonoBehaviourPun
 
     #region RPCMethods
     
+    /// <summary>
+    /// RPC recibido en el usuario con la información del jugador contrario
+    /// </summary>
+    /// <param name="obj">Objeto con la información</param>
     [PunRPC]
-    public void RPCGetPlayerInfo(object[] obj)
+    public void PlayerInfoRPC(object[] obj)
     {
-        switch (obj[0] as string)
+        switch ((char)obj[0])
         {
-            case "host":
-                FindObjectOfType<GameManager>().MatchId = obj[0] as string;
-                FindObjectOfType<GameManager>().OwnerId = obj[1] as string;
-
-                if (FindObjectOfType<GameManager>().PlayerInfoO == null)
-                {
-                    FindObjectOfType<GameManager>().PlayerInfoO = gameObject.AddComponent<PlayerInfo>();
-                    FindObjectOfType<GameManager>().PlayerInfoO.Name = obj[2] as string;
-                }
-
-                if (FindObjectOfType<GameManager>().WhosTurn == "")
-                {
-                    FindObjectOfType<GameManager>().WhosTurn = obj[3] as string;
-                }
+            case 'O':
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = obj[1] as string;
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = obj[2] as string;
                 
                 break;
-            case "user":
-
-                if (FindObjectOfType<GameManager>().PlayerInfoX == null)
-                {
-                    FindObjectOfType<GameManager>().PlayerInfoX = gameObject.AddComponent<PlayerInfo>();
-                    FindObjectOfType<GameManager>().PlayerInfoX.Name = obj[1] as string;
-                }
+            case 'X':
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = obj[1] as string;
                 
                 break;
         }
