@@ -49,6 +49,7 @@ public class MainMenuController : MonoBehaviour
     
     #endregion
     
+    /*
     public void OnBackButtonClick()
     {
         switch (Mode)
@@ -75,10 +76,18 @@ public class MainMenuController : MonoBehaviour
                 break;
         }
     }
+    */
 
+    #region ButtonsMethods
+
+    /// <summary>
+    /// Método para actualizar el comportamiento del botón de crear partida
+    /// </summary>
     public void OnCreateMatchClick()
     {
         _gameManager.Matchmaking = !_gameManager.Matchmaking;
+        
+        Debug.Log("¿Buscando partida? " + _gameManager.Matchmaking);
         
         CreateGameButton.onClick.RemoveAllListeners();
         
@@ -86,13 +95,17 @@ public class MainMenuController : MonoBehaviour
         {
             CreateGameButton.onClick.AddListener(ConnectRandomMatch);
             CreateGameButton.GetComponent<Image>().sprite = CancelMatchmakingSprite;
+            CreateGameButton.onClick.RemoveListener(LeaveMatchmaking);
         }
         else
         {
             CreateGameButton.onClick.AddListener(LeaveMatchmaking);
             CreateGameButton.GetComponent<Image>().sprite = CreateMatchSprite;
+            CreateGameButton.onClick.RemoveListener(ConnectRandomMatch);
         }
     }
+
+    #endregion
 
     public void ChangeMode(int n)
     {
