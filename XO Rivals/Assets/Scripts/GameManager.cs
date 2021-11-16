@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Lista de partidas del jugador
     /// </summary>
-    private Dictionary<string, Match> PlayerMatches;
+    public Dictionary<string, Match> PlayerMatches;
 
     /// <summary>
     /// ID de la partida
