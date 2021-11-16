@@ -596,7 +596,7 @@ MonoBehaviour:
   - {fileID: 1832768179}
   - {fileID: 982574272}
   cameraFollow: {fileID: 251806933}
-  moveSpeed: 3
+  moveSpeed: 2.25
 --- !u!4 &251806933
 Transform:
   m_ObjectHideFlags: 0
@@ -4595,7 +4595,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.34442863, g: 0.43060997, b: 0.5660378, a: 0}
+  m_BackGroundColor: {r: 0.15792987, g: 0.17371617, b: 0.1981132, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
