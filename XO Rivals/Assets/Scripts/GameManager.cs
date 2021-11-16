@@ -193,27 +193,30 @@ public class GameManager : MonoBehaviour
 
     #region ConversiontMethods
     
-    public object[] PlayerInfoToObject(string type)
+    /// <summary>
+    /// Método para convertir los datos del jugador en un objeto a enviar
+    /// </summary>
+    /// <param name="playerType">Tipo del jugador (ficha)</param>
+    /// <returns>Objeto de datos</returns>
+    public object[] PlayerInfoToObject(char playerType)
     {
-        switch (type)
+        switch (playerType)
         {
-            case "host":
-                object[] objHost = new object[5];
+            case 'O':
+                object[] objO = new object[3];
 
-                objHost[0] = type;
-                objHost[1] = MatchId;
-                objHost[2] = OwnerId;
-                objHost[3] = PlayerInfoO.Name;
-                objHost[4] = WhosTurn;
-        
-                return objHost;
-            case "user":
-                object[] objPlayer = new object[2];
-                
-                objPlayer[0] = type;
-                objPlayer[1] = PlayerInfoX.Name;
-                
-                return objPlayer;
+                objO[0] = playerType;
+                objO[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName;
+                objO[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
+
+                return objO;
+            case 'X':
+                object[] objX = new object[2];
+
+                objX[0] = playerType;
+                objX[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName;
+
+                return objX;
         }
 
         return null;
