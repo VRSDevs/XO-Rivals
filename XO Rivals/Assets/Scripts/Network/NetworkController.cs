@@ -181,6 +181,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         else
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
+            FindObjectOfType<GameManager>().SetupMatch('X');
             StartCoroutine(StartMatch());
         }
     }
