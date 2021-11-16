@@ -71,8 +71,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public void DisconnectFromRoom()
     {
         PhotonNetwork.LeaveRoom();
-        
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Búsqueda cancelada.";
 
         if (!FindObjectOfType<GameManager>().IsPlaying) return;
         FindObjectOfType<GameManager>().MatchId = "";
@@ -125,6 +123,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnConnectedToMaster();
         
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Conectado al servidor. Conectando al lobby...";
+
+        if (!PhotonNetwork.InLobby) return;
         ConnectToLobby();
     }
 
@@ -134,6 +134,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
+
+        if (!SceneManager.GetActiveScene().name.Equals("Login")) return;
         
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Conectado al lobby general.";
         Debug.Log("Hola, " + PhotonNetwork.NickName);
@@ -210,6 +212,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
+        
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Búsqueda cancelada.";
+        Debug.Log("Salí");
         
         ConnectToLobby();
     }
