@@ -70,8 +70,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// </summary>
     public void DisconnectFromRoom()
     {
-        PhotonNetwork.LeaveRoom();
-
+        PhotonNetwork.LeaveRoom(true);
+        
         if (!FindObjectOfType<GameManager>().IsPlaying) return;
         FindObjectOfType<GameManager>().MatchId = "";
         FindObjectOfType<GameManager>().OwnerId = "";
@@ -124,7 +124,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Conectado al servidor. Conectando al lobby...";
 
-        if (!PhotonNetwork.InLobby) return;
+        if (PhotonNetwork.InLobby) return;
         ConnectToLobby();
     }
 
