@@ -48,35 +48,6 @@ public class MainMenuController : MonoBehaviour
     }
     
     #endregion
-    
-    /*
-    public void OnBackButtonClick()
-    {
-        switch (Mode)
-        {
-            case 0:
-                MainMenuObject.SetActive(true);
-                PlayMenuObject.SetActive(false);
-                break;
-            case 1:
-                JoinOrBackButton_Text.text = "Back";
-                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Se canceló la búsqueda.";
-
-                CreateGameButton.interactable = true;
-                JoinGameButton.interactable = true;
-            
-                FindObjectOfType<GameManager>().OnLeaveRoom();
-
-                break;
-            case 2:
-                JoinOrBackButton_Text.text = "Back";
-
-                CreateGameButton.interactable = true;
-                JoinGameButton.interactable = true;
-                break;
-        }
-    }
-    */
 
     #region ButtonsMethods
 
@@ -87,21 +58,17 @@ public class MainMenuController : MonoBehaviour
     {
         _gameManager.Matchmaking = !_gameManager.Matchmaking;
         
-        Debug.Log("¿Buscando partida? " + _gameManager.Matchmaking);
-        
         CreateGameButton.onClick.RemoveAllListeners();
         
         if (_gameManager.Matchmaking)
         {
-            CreateGameButton.onClick.AddListener(ConnectRandomMatch);
+            ConnectRandomMatch();
             CreateGameButton.GetComponent<Image>().sprite = CancelMatchmakingSprite;
-            CreateGameButton.onClick.RemoveListener(LeaveMatchmaking);
         }
         else
         {
-            CreateGameButton.onClick.AddListener(LeaveMatchmaking);
+            LeaveMatchmaking();
             CreateGameButton.GetComponent<Image>().sprite = CreateMatchSprite;
-            CreateGameButton.onClick.RemoveListener(ConnectRandomMatch);
         }
     }
 

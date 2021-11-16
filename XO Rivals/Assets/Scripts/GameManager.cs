@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Lista de partidas del jugador
     /// </summary>
-    private Dictionary<string, Match> PlayerMatches;
+    public Dictionary<string, Match> PlayerMatches;
 
     /// <summary>
     /// ID de la partida
@@ -136,7 +136,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void OnLeaveRoom()
     {
-        Debug.Log("a");
         _networkController.DisconnectFromRoom();
     }
     
@@ -144,11 +143,28 @@ public class GameManager : MonoBehaviour
 
     #region MatchMethods
 
-    public void SetupMatch()
+    /// <summary>
+    /// Método para configurar partida y enviar los datos necesarios
+    /// </summary>
+    /// <param name="playerType">Tipo del jugador (ficha)</param>
+    public void SetupMatch(char playerType)
     {
-        Match match = new Match();
+        PlayerMatches.Add(PhotonNetwork.CurrentRoom.Name, new Match());
         
+        switch (playerType)
+        {
+            case 'O':
+                PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = FindObjectOfType<PlayerInfo>().Name;
+                PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = FindObjectOfType<PlayerInfo>().Name;
+
+                break;
+            case 'X':
+                PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = FindObjectOfType<PlayerInfo>().Name;
+
+                break;
+        }
         
+        _networkCommunications.SendPlayerInfoPackage(playerType);
     }
 
     #endregion
@@ -163,32 +179,43 @@ public class GameManager : MonoBehaviour
     {
         _networkController.SetNickName(nick);
     }
+    
+    /// <summary>
+    /// Método para actualizar el estado del jugador para empezar la partida
+    /// </summary>
+    public void UpdateReadyStatus()
+    {
+        _networkController.UpdateReadyStatus();
+    }
 
     #endregion
 
     #region ConversiontMethods
     
-    public object[] PlayerInfoToObject(string type)
+    /// <summary>
+    /// Método para convertir los datos del jugador en un objeto a enviar
+    /// </summary>
+    /// <param name="playerType">Tipo del jugador (ficha)</param>
+    /// <returns>Objeto de datos</returns>
+    public object[] PlayerInfoToObject(char playerType)
     {
-        switch (type)
+        switch (playerType)
         {
-            case "host":
-                object[] objHost = new object[5];
+            case 'O':
+                object[] objO = new object[3];
 
-                objHost[0] = type;
-                objHost[1] = MatchId;
-                objHost[2] = OwnerId;
-                objHost[3] = PlayerInfoO.Name;
-                objHost[4] = WhosTurn;
-        
-                return objHost;
-            case "user":
-                object[] objPlayer = new object[2];
-                
-                objPlayer[0] = type;
-                objPlayer[1] = PlayerInfoX.Name;
-                
-                return objPlayer;
+                objO[0] = playerType;
+                objO[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName;
+                objO[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
+
+                return objO;
+            case 'X':
+                object[] objX = new object[2];
+
+                objX[0] = playerType;
+                objX[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName;
+
+                return objX;
         }
 
         return null;
