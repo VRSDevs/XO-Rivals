@@ -179,6 +179,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         else
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
+            FindObjectOfType<GameManager>().SetupMatch('X');
             StartCoroutine(StartMatch());
         }
     }
@@ -197,7 +198,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
             // Caso 32760 - Ninguna sala disponible
             case 32760:
                 GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No hay salas activas. Creando una...";
-
+    
                 StartCoroutine(CreateMatchRoom(GetHashValue("Sala 1")));
                 break;
             default:
@@ -230,7 +231,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.PlayerCount != MAX_PLAYERS_INROOM) return;
 
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
-        FindObjectOfType<GameManager>().SetupMatch();
+        FindObjectOfType<GameManager>().SetupMatch('O');
         StartCoroutine(StartMatch());
     }
 
