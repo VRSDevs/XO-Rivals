@@ -19,7 +19,6 @@ public class EnemyStateMachine : MonoBehaviour{
     private const float BASESPEED = 2.5f;
     private const float RAGESPEED = 4f;
     bool characterNear = false;
-    bool isMoving = false;
 
     //Pathfinding route
     [SerializeField] Transform[] points;
@@ -37,6 +36,7 @@ public class EnemyStateMachine : MonoBehaviour{
         timePassed += Time.deltaTime;
         if(timePassed >= 1.0f){
             CheckCharacter();
+            timePassed = 0f;
         }
         FSMEnemyBehaviour(Time.deltaTime, characterNear);
     }
