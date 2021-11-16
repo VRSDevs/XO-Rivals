@@ -16,8 +16,11 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public Button JoinGameButton;
     [SerializeField] public TMP_Text JoinOrBackButton_Text;
 
+    [SerializeField] public Sprite CreateMatchSprite;
+    [SerializeField] public Sprite CancelMatchmakingSprite;
+
     private GameManager _gameManager;
-    public PlayerInfo _localPlayer;
+    private PlayerInfo _localPlayer;
 
     private int Mode;
 
@@ -82,10 +85,12 @@ public class MainMenuController : MonoBehaviour
         if (_gameManager.Matchmaking)
         {
             CreateGameButton.onClick.AddListener(ConnectRandomMatch);
+            CreateGameButton.GetComponent<Image>().sprite = CancelMatchmakingSprite;
         }
         else
         {
-            CreateGameButton.onClick.AddListener(ConnectRandomMatch);
+            CreateGameButton.onClick.AddListener(LeaveMatchmaking);
+            CreateGameButton.GetComponent<Image>().sprite = CreateMatchSprite;
         }
     }
 
