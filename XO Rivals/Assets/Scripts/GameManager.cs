@@ -144,11 +144,28 @@ public class GameManager : MonoBehaviour
 
     #region MatchMethods
 
-    public void SetupMatch()
+    /// <summary>
+    /// Método para configurar partida y enviar los datos necesarios
+    /// </summary>
+    /// <param name="playerType">Tipo del jugador (ficha)</param>
+    public void SetupMatch(char playerType)
     {
-        Match match = new Match();
+        PlayerMatches.Add(PhotonNetwork.CurrentRoom.Name, new Match());
         
+        switch (playerType)
+        {
+            case 'O':
+                PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = FindObjectOfType<PlayerInfo>().Name;
+                PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = FindObjectOfType<PlayerInfo>().Name;
+
+                break;
+            case 'X':
+                PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = FindObjectOfType<PlayerInfo>().Name;
+
+                break;
+        }
         
+        _networkCommunications.SendPlayerInfoPackage(playerType);
     }
 
     #endregion
