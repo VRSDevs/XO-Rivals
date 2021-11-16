@@ -55,6 +55,8 @@ public class DetectPlayer : MonoBehaviour
 
         //INSTANCIAR PREFAB
         bala = Instantiate(prefabBala, this.transform.position, Quaternion.identity);
+        bala.GetComponent<BalaDetectScript>().crear(this.gameObject);
+
 
         //CODE
         StartCoroutine(creaBala());

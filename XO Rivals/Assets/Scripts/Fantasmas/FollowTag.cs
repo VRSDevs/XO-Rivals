@@ -17,7 +17,7 @@ public class FollowTag : MonoBehaviour
     void Update()
     {
       
-        this.gameObject.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, this.gameObject.transform.position.z);
+        this.gameObject.transform.position = new Vector3(player.transform.position.x, this.gameObject.transform.position.y,  player.transform.position.z );
 
 
     }
