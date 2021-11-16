@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
         _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
 
         PlayerMatches = new Dictionary<string, Match>();
-        Matchmaking = true;
+        Matchmaking = false;
         IsPlaying = false;
         
         DontDestroyOnLoad(this);
