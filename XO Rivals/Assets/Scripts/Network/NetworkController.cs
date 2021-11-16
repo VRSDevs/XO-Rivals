@@ -62,7 +62,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(1);
         
-        Debug.Log("a");
         PhotonNetwork.JoinRandomRoom();
     }
 
