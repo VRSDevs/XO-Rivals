@@ -201,7 +201,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
             case 32760:
                 GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No hay salas activas. Creando una...";
     
-                StartCoroutine(CreateMatchRoom(GetHashValue("Sala 1")));
+                StartCoroutine(CreateMatchRoom(GetHashValue("Sala " + PhotonNetwork.CountOfRooms)));
                 break;
             default:
                 Debug.Log("Error " + returnCode + ": " + message);
