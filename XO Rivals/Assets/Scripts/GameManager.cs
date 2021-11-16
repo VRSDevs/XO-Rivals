@@ -136,6 +136,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void OnLeaveRoom()
     {
+        Debug.Log("a");
         _networkController.DisconnectFromRoom();
     }
     
