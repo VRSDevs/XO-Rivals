@@ -28,7 +28,7 @@ public class NetworkCommunications : MonoBehaviourPun
     /// Método para enviar información del jugador al oponente
     /// </summary>
     /// <param name="playerType">Tipo del jugador (en partida)</param>
-    public void SendPlayerInfoPackage(char playerType)
+    public void SendPlayerInfoPackage(string playerType)
     {
         object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject(playerType);
         _View.RPC("PlayerInfoRPC", RpcTarget.Others, (object)objToSend);
@@ -65,9 +65,9 @@ public class NetworkCommunications : MonoBehaviourPun
     [PunRPC]
     public void PlayerInfoRPC(object[] obj)
     {
-        switch ((char)obj[0])
+        switch (obj[0] as string)
         {
-            case 'O':
+            case "O":
                 Debug.Log("RPC del jugador O");
 
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = obj[1] as string;
@@ -76,7 +76,7 @@ public class NetworkCommunications : MonoBehaviourPun
                 FindObjectOfType<GameManager>().UpdateReadyStatus();
 
                 break;
-            case 'X':
+            case "X":
                 Debug.Log("RPC del jugador X");
 
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = obj[1] as string;

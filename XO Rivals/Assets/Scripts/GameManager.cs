@@ -147,18 +147,18 @@ public class GameManager : MonoBehaviour
     /// Método para configurar partida y enviar los datos necesarios
     /// </summary>
     /// <param name="playerType">Tipo del jugador (ficha)</param>
-    public void SetupMatch(char playerType)
+    public void SetupMatch(string playerType)
     {
         PlayerMatches.Add(PhotonNetwork.CurrentRoom.Name, new Match());
         
         switch (playerType)
         {
-            case 'O':
+            case "O":
                 PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = FindObjectOfType<PlayerInfo>().Name;
                 PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = FindObjectOfType<PlayerInfo>().Name;
 
                 break;
-            case 'X':
+            case "X":
                 PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = FindObjectOfType<PlayerInfo>().Name;
 
                 break;
@@ -197,11 +197,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="playerType">Tipo del jugador (ficha)</param>
     /// <returns>Objeto de datos</returns>
-    public object[] PlayerInfoToObject(char playerType)
+    public object[] PlayerInfoToObject(string playerType)
     {
         switch (playerType)
         {
-            case 'O':
+            case "O":
                 object[] objO = new object[3];
 
                 objO[0] = playerType;
@@ -209,7 +209,7 @@ public class GameManager : MonoBehaviour
                 objO[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
 
                 return objO;
-            case 'X':
+            case "X":
                 object[] objX = new object[2];
 
                 objX[0] = playerType;
