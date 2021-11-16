@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isDead = false;
 
     // Victoria
-    private bool win = false;
+    public bool win = false;
 
     // Animaciones
     [SerializeField]
@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
     private void DeathAnimation()
     {
         col.enabled = false;
-        transform.DOLocalMoveY(1,1).OnComplete(() => { 
+        transform.DOLocalMoveY(4,1).OnComplete(() => { 
             transform.DOLocalMoveY(-10,4);});
         
     }
