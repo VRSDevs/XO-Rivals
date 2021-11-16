@@ -233,7 +233,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.PlayerCount != MAX_PLAYERS_INROOM) return;
 
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
-        FindObjectOfType<GameManager>().SetupMatch();
+        FindObjectOfType<GameManager>().SetupMatch('O');
         StartCoroutine(StartMatch());
     }
 
