@@ -62,6 +62,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(1);
         
+        Debug.Log("a");
         PhotonNetwork.JoinRandomRoom();
     }
 
@@ -215,9 +216,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnLeftRoom();
         
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Búsqueda cancelada.";
-        Debug.Log("Salí");
-        
-        ConnectToLobby();
     }
 
     /// <summary>
