@@ -4,15 +4,15 @@ using UnityEngine;
 public class PlayerInfo : MonoBehaviour {
         
     #region Variables
-    
+
     /// <summary>
     /// Nombre de usuario
     /// </summary>
     public string Name = "";
     /// <summary>
-    /// ID del jugador
+    /// ID del jugador en partida
     /// </summary>
-    public string Id = "";
+    public int MatchId = -1;
     /// <summary>
     /// Elo del jugador
     /// </summary>
