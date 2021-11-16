@@ -61,6 +61,7 @@ Shader "Custom/ImageEffectAgujeroNegro"
 
 
 
+
     
 
             
@@ -74,7 +75,30 @@ Shader "Custom/ImageEffectAgujeroNegro"
                 col.rgb = 0;
             }
 
-            
+            ////VISION CONICA
+
+            //     //ELEGIMOS RECTA QUE VER
+            //float m = -1;
+            //float n = _PosPlayer.y + (_PosPlayer.x * -m);
+
+
+            //float Ar = m;
+            //float Br = -1;
+            //float Cr = n;
+
+
+
+
+            //float distR = abs(Ar * i.vertex.x + Br * i.vertex.y + Cr) / sqrt(Ar * Ar + Br * Br);
+
+            //if (distR < 10) {
+
+            //    col.rgb = 1;
+
+            //}
+            //if(i.vertex.y == m* i.vertex.x + n)
+            //    col.rgb = 0.4;
+
 
 
 

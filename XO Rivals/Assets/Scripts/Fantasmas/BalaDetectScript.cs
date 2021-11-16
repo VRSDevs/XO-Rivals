@@ -4,17 +4,29 @@ using UnityEngine;
 
 public class BalaDetectScript : MonoBehaviour
 {
-    public GameObject detectEnemy;
+
     DetectPlayer detectScript;
 
     public GameObject player;
+    public string enemigoSource;
+    public bool creado = false;
+
+
+
+    public void crear(GameObject enemy)
+    {
+
+        creado = true;
+        detectScript = enemy.GetComponent<DetectPlayer>();
+
+    }
+
 
     // Start is called before the first frame update
     void Start()
     {
 
-        detectEnemy = GameObject.FindWithTag("Enemy1");
-        detectScript = detectEnemy.GetComponent<DetectPlayer>();
+       
 
         player = GameObject.FindWithTag("PlayerFantasma");
 
@@ -31,38 +43,51 @@ public class BalaDetectScript : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        //MOVIMIENTO DE LA BALA HACIA EL JUGADOR 
-        transform.Translate(Vector3.Normalize(player.transform.position - transform.position) * 0.5f);
+        if (creado == true)
+        {
+            //MOVIMIENTO DE LA BALA HACIA EL JUGADOR 
+            transform.Translate(Vector3.Normalize(player.transform.position - transform.position) * 0.5f);
+        }
+       
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter(Collision collision)
     {
 
-        GameObject other = collision.gameObject;
-
-        if (other.CompareTag("Enemy1"))//NO COLISIONA CON EL ENEMIGO
-        {
-
-        }
-        else
+        if (creado == true)
         {
 
 
 
-            if (other.CompareTag("PlayerFantasma"))//COLISION CON PLAYER
+            GameObject other = collision.gameObject;
+
+            if (other.CompareTag("Enemy1"))//NO COLISIONA CON EL ENEMIGO
             {
-                detectScript.playerDetected(true);
+
             }
-            else//COLISION CON OBSTACULO
+            else
             {
-                detectScript.playerDetected(false);
-            }
 
 
-            Destroy(gameObject);
-    
+
+                if (other.CompareTag("PlayerFantasma"))//COLISION CON PLAYER
+                {
+                    detectScript.playerDetected(true);
+                }
+                else//COLISION CON OBSTACULO
+                {
+                    detectScript.playerDetected(false);
+                }
+
+
+                Destroy(gameObject);
+
+
+            }
+
 
         }
+
 
 
 

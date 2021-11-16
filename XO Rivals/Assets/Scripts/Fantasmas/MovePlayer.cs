@@ -10,7 +10,7 @@ public class MovePlayer : MonoBehaviour
     [SerializeField] private float speed = 8;
     private float horizontal;
     private float vertical;
-    private Rigidbody2D player;
+    private Rigidbody player;
 
 
 
@@ -18,7 +18,7 @@ public class MovePlayer : MonoBehaviour
 
     private void Awake()
     {
-        player = GetComponent<Rigidbody2D>();
+        player = GetComponent<Rigidbody>();
     }
 
     // Start is called before the first frame update
@@ -34,7 +34,7 @@ public class MovePlayer : MonoBehaviour
 
         if (vivo)
         {
-            player.velocity = new Vector2(horizontal * speed, vertical * speed);
+            player.velocity = new Vector3(horizontal * speed, 0, vertical * speed);
         }
 
 
