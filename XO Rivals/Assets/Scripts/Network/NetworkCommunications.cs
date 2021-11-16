@@ -31,7 +31,7 @@ public class NetworkCommunications : MonoBehaviourPun
     public void SendPlayerInfoPackage(char playerType)
     {
         object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject(playerType);
-        _View.RPC("PlayerInfoRPC", RpcTarget.OthersBuffered, (object)objToSend);
+        _View.RPC("PlayerInfoRPC", RpcTarget.Others, (object)objToSend);
     }
     
     /// <summary>
