@@ -15,8 +15,8 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public Button CreateGameButton;
     [SerializeField] public Button JoinGameButton;
     [SerializeField] public TMP_Text JoinOrBackButton_Text;
-    
-    public GameManager _gameManager;
+
+    private GameManager _gameManager;
     public PlayerInfo _localPlayer;
 
     private int Mode;
@@ -34,9 +34,14 @@ public class MainMenuController : MonoBehaviour
 
     #region MatchMethods
 
-    public void ConnectRandomMatch()
+    private void ConnectRandomMatch()
     {
         _gameManager.OnConnectToRoom();
+    }
+
+    private void LeaveMatchmaking()
+    {
+        _gameManager.OnLeaveRoom();
     }
     
     #endregion
@@ -56,7 +61,7 @@ public class MainMenuController : MonoBehaviour
                 CreateGameButton.interactable = true;
                 JoinGameButton.interactable = true;
             
-                _gameManager.OnLeaveRoom();
+                FindObjectOfType<GameManager>().OnLeaveRoom();
 
                 break;
             case 2:
@@ -65,6 +70,22 @@ public class MainMenuController : MonoBehaviour
                 CreateGameButton.interactable = true;
                 JoinGameButton.interactable = true;
                 break;
+        }
+    }
+
+    public void OnCreateMatchClick()
+    {
+        _gameManager.Matchmaking = !_gameManager.Matchmaking;
+        
+        CreateGameButton.onClick.RemoveAllListeners();
+        
+        if (_gameManager.Matchmaking)
+        {
+            CreateGameButton.onClick.AddListener(ConnectRandomMatch);
+        }
+        else
+        {
+            CreateGameButton.onClick.AddListener(ConnectRandomMatch);
         }
     }
 
