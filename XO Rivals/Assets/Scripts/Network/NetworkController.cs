@@ -162,6 +162,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
 
+        FindObjectOfType<PlayerInfo>().MatchId = PhotonNetwork.LocalPlayer.ActorNumber;
+
         if (PhotonNetwork.CurrentRoom.PlayerCount < 2)
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Buscando jugadores...";
@@ -205,7 +207,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnPlayerEnteredRoom(newPlayer);
 
         if (PhotonNetwork.CurrentRoom.PlayerCount != MAX_PLAYERS_INROOM) return;
-        
+
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
         StartCoroutine(StartMatch());
     }
