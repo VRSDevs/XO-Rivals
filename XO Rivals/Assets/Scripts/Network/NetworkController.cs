@@ -22,7 +22,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <summary>
     /// ¿La partida está lista para comenzar?
     /// </summary>
-    private bool isReady = false;
+    private bool _isReady = false;
 
     #endregion
     
@@ -213,6 +213,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.PlayerCount != MAX_PLAYERS_INROOM) return;
 
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
+        FindObjectOfType<GameManager>().SetupMatch();
         StartCoroutine(StartMatch());
     }
 
@@ -249,7 +250,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// </summary>
     public void UpdateReadyStatus()
     {
-        isReady = !isReady;
+        _isReady = !_isReady;
     }
 
     #endregion
@@ -276,7 +277,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <returns>Estado de la partida</returns>
     private bool GetReadyStatus()
     {
-        return isReady;
+        return _isReady;
     }
 
     /// <summary>
