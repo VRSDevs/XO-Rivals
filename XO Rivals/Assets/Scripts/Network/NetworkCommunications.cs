@@ -6,65 +6,82 @@ using Photon.Pun;
 
 public class NetworkCommunications : MonoBehaviourPun
 {
+    #region Vars
+
     private PhotonView _View;
-    
+
+    #endregion
+
+    #region UnityCB
+
     private void Start()
     {
         _View = gameObject.AddComponent<PhotonView>();
         _View.ViewID = 1;
     }
 
-    public void SendPlayerInfoPackage(string type)
-    {
-        object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject(type);
-        _View.RPC("RPCGetPlayerInfo", RpcTarget.OthersBuffered, (object)objToSend);
-    }
+    #endregion
+
+    #region SendingMethods
 
     /// <summary>
-    /// 
+    /// Método para enviar información del jugador al oponente
+    /// </summary>
+    /// <param name="playerType"></param>
+    public void SendPlayerInfoPackage(char playerType)
+    {
+        object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject(playerType);
+        _View.RPC("PlayerInfoRPC", RpcTarget.Others, (object)objToSend);
+    }
+    
+    /// <summary>
+    /// Método para enviar información del estado de la partida al oponente
     /// </summary>
     public void SendMatchInfo(string type)
     {
         object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.MatchInfoToObject(type);
         _View.RPC("RPCUpdateMatch", RpcTarget.All, (object)objToSend);
     }
-
+    
+    /// <summary>
+    /// Método para enviar información de la finalización de la partida
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="winner"></param>
     public void SendEndMatchInfo(string type, string winner)
     {
         object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.EndMatchInfoToObject(type, winner);
         _View.RPC("RPCEndMatch", RpcTarget.All, (object)objToSend);
     }
-    
+
+    #endregion
+
     #region RPCMethods
     
+    /// <summary>
+    /// RPC recibido en el usuario con la información del jugador contrario
+    /// </summary>
+    /// <param name="obj">Objeto con la información</param>
     [PunRPC]
-    public void RPCGetPlayerInfo(object[] obj)
+    public void PlayerInfoRPC(object[] obj)
     {
-        switch (obj[0] as string)
+        switch ((char)obj[0])
         {
-            case "host":
-                FindObjectOfType<GameManager>().MatchId = obj[0] as string;
-                FindObjectOfType<GameManager>().OwnerId = obj[1] as string;
-
-                if (FindObjectOfType<GameManager>().PlayerInfoO == null)
-                {
-                    FindObjectOfType<GameManager>().PlayerInfoO = gameObject.AddComponent<PlayerInfo>();
-                    FindObjectOfType<GameManager>().PlayerInfoO.Name = obj[2] as string;
-                }
-
-                if (FindObjectOfType<GameManager>().WhosTurn == "")
-                {
-                    FindObjectOfType<GameManager>().WhosTurn = obj[3] as string;
-                }
+            case 'O':
+                Debug.Log("RPC del jugador O");
+                
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = obj[1] as string;
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = obj[2] as string;
+                
+                FindObjectOfType<GameManager>().UpdateReadyStatus();
                 
                 break;
-            case "user":
-
-                if (FindObjectOfType<GameManager>().PlayerInfoX == null)
-                {
-                    FindObjectOfType<GameManager>().PlayerInfoX = gameObject.AddComponent<PlayerInfo>();
-                    FindObjectOfType<GameManager>().PlayerInfoX.Name = obj[1] as string;
-                }
+            case 'X':
+                Debug.Log("RPC del jugador X");
+                
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = obj[1] as string;
+                
+                FindObjectOfType<GameManager>().UpdateReadyStatus();
                 
                 break;
         }
