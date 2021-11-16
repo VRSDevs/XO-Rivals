@@ -72,6 +72,14 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Método de evento ejecutado cuando se pulsa el botón de salir
+    /// </summary>
+    public void OnExitClick()
+    {
+        Application.ExternalEval("document.location.reload(true)");
+    }
+
     #endregion
 
     public void ChangeMode(int n)
