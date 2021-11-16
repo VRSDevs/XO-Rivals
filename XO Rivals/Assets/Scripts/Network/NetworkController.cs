@@ -217,9 +217,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnLeftRoom();
         
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Búsqueda cancelada.";
-        Debug.Log("Salí");
-        
-        ConnectToLobby();
     }
 
     /// <summary>
