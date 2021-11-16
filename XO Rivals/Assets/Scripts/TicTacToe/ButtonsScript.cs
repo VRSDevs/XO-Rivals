@@ -186,7 +186,7 @@ public class ButtonsScript : MonoBehaviour
             if(gameState.NumFilled == 9){
                 Debug.Log("Draw");
                 
-                gameState._NetworkCommunications.SendEndMatchInfo("draw", "");
+                gameState._networkCommunications.SendEndMatchInfo("draw", "");
             }
         }else{
             Debug.Log("Tile not empty");
@@ -296,11 +296,11 @@ public class ButtonsScript : MonoBehaviour
                     
                     if (localPlayer.Name == gameState.PlayerInfoO.Name)
                     {
-                        gameState._NetworkCommunications.SendEndMatchInfo("win", gameState.PlayerInfoO.Name);
+                        gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerInfoO.Name);
                     }
                     else
                     {
-                        gameState._NetworkCommunications.SendEndMatchInfo("defeat", gameState.PlayerInfoX.Name);
+                        gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerInfoX.Name);
                     }
                 }
                 else
@@ -309,11 +309,11 @@ public class ButtonsScript : MonoBehaviour
 
                     if (localPlayer.Name == gameState.PlayerInfoX.Name)
                     {
-                        gameState._NetworkCommunications.SendEndMatchInfo("win", gameState.PlayerInfoX.Name);
+                        gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerInfoX.Name);
                     }
                     else
                     {
-                        gameState._NetworkCommunications.SendEndMatchInfo("defeat", gameState.PlayerInfoO.Name);
+                        gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerInfoO.Name);
                     }
                 }
                 break;

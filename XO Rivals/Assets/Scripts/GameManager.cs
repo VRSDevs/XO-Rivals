@@ -14,14 +14,17 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Referencia a funciones del servidor
     /// </summary>
-    public NetworkController _networkController;
+    private NetworkController _networkController;
     /// <summary>
     /// 
     /// </summary>
-    public NetworkCommunications _NetworkCommunications;
+    public NetworkCommunications _networkCommunications;
     
     ////////////////// PARTIDA //////////////////
-    public Dictionary<string, Match> PlayerMatches { get; }
+    /// <summary>
+    /// Lista de partidas del jugador
+    /// </summary>
+    public Dictionary<string, Match> PlayerMatches;
 
     /// <summary>
     /// ID de la partida
@@ -78,6 +81,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [NonSerialized] public bool IsPlaying;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    [NonSerialized] public bool Matchmaking;
+    
     #endregion
 
     #region UnityCB
@@ -85,69 +93,134 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _networkController = gameObject.AddComponent<NetworkController>();
-        _NetworkCommunications = gameObject.AddComponent<NetworkCommunications>();
-        
+        _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
+
+        PlayerMatches = new Dictionary<string, Match>();
+        Matchmaking = false;
         IsPlaying = false;
         
         DontDestroyOnLoad(this);
     }
 
     #endregion
-    
-    #region OtherMethods
 
-    public void updateLog(string s)
+    #region ConnectionMethods
+
+    /// <summary>
+    /// Método para conectarse al servidor de Photon
+    /// </summary>
+    /// <returns>Devuelve "true" si el cliente pudo establecer conexión con el servidor</returns>
+    public bool OnConnectToServer()
     {
-        log.text = s;
+        return _networkController.ConnectToServer();
+    }
+    
+    /// <summary>
+    /// Método para conectarse a una sala en Photon
+    /// </summary>
+    public void OnConnectToRoom()
+    {
+        _networkController.ConnectToRandomRoom();
+    }
+
+    /// <summary>
+    /// Método para conectarse a la lobby general
+    /// </summary>
+    public void OnConnectToLobby()
+    {
+        _networkController.ConnectToLobby();
+    }
+
+    /// <summary>
+    /// Método para abandonar una sala en Photon
+    /// </summary>
+    public void OnLeaveRoom()
+    {
+        _networkController.DisconnectFromRoom();
     }
     
     #endregion
 
-    #region Photon
-    
-    public void OnCreateRoom(PlayerInfo player){
-        //Match ID y OwnerID for beta version
-        OwnerId = player.Name;
-        PlayerInfoO = player;
-        WhosTurn = player.Name;
-    }
+    #region MatchMethods
 
-    public void OnConnectToRoom(PlayerInfo player){
-
-        PlayerInfoX = player;
-    }
-    
-    #endregion
-
-    #region ConversionToObjectMethods
-    
-    public object[] PlayerInfoToObject(string type)
+    /// <summary>
+    /// Método para configurar partida y enviar los datos necesarios
+    /// </summary>
+    /// <param name="playerType">Tipo del jugador (ficha)</param>
+    public void SetupMatch(char playerType)
     {
-        switch (type)
-        {
-            case "host":
-                object[] objHost = new object[5];
-
-                objHost[0] = type;
-                objHost[1] = MatchId;
-                objHost[2] = OwnerId;
-                objHost[3] = PlayerInfoO.Name;
-                objHost[4] = WhosTurn;
+        PlayerMatches.Add(PhotonNetwork.CurrentRoom.Name, new Match());
         
-                return objHost;
-            case "user":
-                object[] objPlayer = new object[2];
-                
-                objPlayer[0] = type;
-                objPlayer[1] = PlayerInfoX.Name;
-                
-                return objPlayer;
+        switch (playerType)
+        {
+            case 'O':
+                PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = FindObjectOfType<PlayerInfo>().Name;
+                PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = FindObjectOfType<PlayerInfo>().Name;
+
+                break;
+            case 'X':
+                PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = FindObjectOfType<PlayerInfo>().Name;
+
+                break;
+        }
+        
+        _networkCommunications.SendPlayerInfoPackage(playerType);
+    }
+
+    #endregion
+
+    #region UpdateMethods
+    
+    /// <summary>
+    /// Método para actualizar el nick del cliente en Photon
+    /// </summary>
+    /// <param name="nick">Nick del cliente</param>
+    public void UpdatePhotonNick(string nick)
+    {
+        _networkController.SetNickName(nick);
+    }
+    
+    /// <summary>
+    /// Método para actualizar el estado del jugador para empezar la partida
+    /// </summary>
+    public void UpdateReadyStatus()
+    {
+        _networkController.UpdateReadyStatus();
+    }
+
+    #endregion
+
+    #region ConversiontMethods
+    
+    /// <summary>
+    /// Método para convertir los datos del jugador en un objeto a enviar
+    /// </summary>
+    /// <param name="playerType">Tipo del jugador (ficha)</param>
+    /// <returns>Objeto de datos</returns>
+    public object[] PlayerInfoToObject(char playerType)
+    {
+        switch (playerType)
+        {
+            case 'O':
+                object[] objO = new object[3];
+
+                objO[0] = playerType;
+                objO[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName;
+                objO[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
+
+                return objO;
+            case 'X':
+                object[] objX = new object[2];
+
+                objX[0] = playerType;
+                objX[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName;
+
+                return objX;
         }
 
         return null;
     }
     
-
     /// <summary>
     /// 
     /// </summary>

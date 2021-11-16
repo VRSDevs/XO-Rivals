@@ -6,14 +6,16 @@ public class Match
 {
     #region Vars
 
+    /*
     /// <summary>
     /// ID de la partida
     /// </summary>
     public string MatchId { get; set; }
+    
     /// <summary>
     /// ID del dueño de la partida
     /// </summary>
-    public string OwnerId { get; set; }
+    public string OwnerId { get; set; }*/
     /// <summary>
     /// Nombre del jugador O
     /// </summary>
@@ -29,7 +31,7 @@ public class Match
     /// <summary>
     /// Momento de la partida en la que se encuentra el jugador
     /// </summary>
-    public int TurnName { get; set; }
+    public int TurnMoment { get; set; }
     /// <summary>
     /// ID del minijuego seleccionado
     /// </summary>
@@ -56,12 +58,12 @@ public class Match
     /// </summary>
     public Match()
     {
-        MatchId = "";
-        OwnerId = "";
+        //MatchId = "";
+        //OwnerId = "";
         PlayerOName = "";
         PlayerXName = "";
         WhosTurn = "";
-        TurnName = -1;
+        TurnMoment = -1;
         MiniGameChosen = -1;
 
         FilledPositions = new int[3, 3];
