@@ -121,12 +121,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
+        
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Conectado al servidor. Conectando al lobby...";
 
-        if (SceneManager.GetActiveScene().name.Equals("Login"))
-        {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Conectado al servidor. Conectando al lobby...";
-        }
-
+        if (PhotonNetwork.InLobby) return;
         ConnectToLobby();
     }
 
@@ -181,7 +179,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
         else
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
-            FindObjectOfType<GameManager>().SetupMatch('X');
             StartCoroutine(StartMatch());
         }
     }
@@ -200,7 +197,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
             // Caso 32760 - Ninguna sala disponible
             case 32760:
                 GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No hay salas activas. Creando una...";
-    
+
                 StartCoroutine(CreateMatchRoom(GetHashValue("Sala 1")));
                 break;
             default:
@@ -217,6 +214,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnLeftRoom();
         
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Búsqueda cancelada.";
+        Debug.Log("Salí");
+        
+        ConnectToLobby();
     }
 
     /// <summary>
@@ -230,7 +230,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.PlayerCount != MAX_PLAYERS_INROOM) return;
 
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
-        FindObjectOfType<GameManager>().SetupMatch('O');
+        FindObjectOfType<GameManager>().SetupMatch();
         StartCoroutine(StartMatch());
     }
 
