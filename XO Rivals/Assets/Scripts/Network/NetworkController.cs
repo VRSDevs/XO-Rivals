@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
+using Scene = UnityEditor.SearchService.Scene;
 
 public class NetworkController : MonoBehaviourPunCallbacks
 {
@@ -181,7 +182,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         else
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
-            FindObjectOfType<GameManager>().SetupMatch('X');
+            FindObjectOfType<GameManager>().SetupMatch("X");
             StartCoroutine(StartMatch());
         }
     }
@@ -215,8 +216,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
-        
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Búsqueda cancelada.";
+
+        if (SceneManager.GetActiveScene().name.Equals("MainMenu"))
+        {
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Búsqueda cancelada.";
+        }
     }
 
     /// <summary>
@@ -230,7 +234,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.PlayerCount != MAX_PLAYERS_INROOM) return;
 
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
-        FindObjectOfType<GameManager>().SetupMatch('O');
+        FindObjectOfType<GameManager>().SetupMatch("O");
         StartCoroutine(StartMatch());
     }
 
