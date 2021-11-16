@@ -58,35 +58,31 @@ public class NetworkCommunications : MonoBehaviourPun
 
     #region RPCMethods
     
+    /// <summary>
+    /// RPC recibido en el usuario con la información del jugador contrario
+    /// </summary>
+    /// <param name="obj">Objeto con la información</param>
     [PunRPC]
-    public void RPCGetPlayerInfo(object[] obj)
+    public void PlayerInfoRPC(object[] obj)
     {
-        switch (obj[0] as string)
+        switch ((char)obj[0])
         {
-            case "host":
-                FindObjectOfType<GameManager>().MatchId = obj[0] as string;
-                FindObjectOfType<GameManager>().OwnerId = obj[1] as string;
+            case 'O':
+                Debug.Log("RPC del jugador O");
 
-                if (FindObjectOfType<GameManager>().PlayerInfoO == null)
-                {
-                    FindObjectOfType<GameManager>().PlayerInfoO = gameObject.AddComponent<PlayerInfo>();
-                    FindObjectOfType<GameManager>().PlayerInfoO.Name = obj[2] as string;
-                }
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = obj[1] as string;
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = obj[2] as string;
 
-                if (FindObjectOfType<GameManager>().WhosTurn == "")
-                {
-                    FindObjectOfType<GameManager>().WhosTurn = obj[3] as string;
-                }
-                
+                FindObjectOfType<GameManager>().UpdateReadyStatus();
+
                 break;
-            case "user":
+            case 'X':
+                Debug.Log("RPC del jugador X");
 
-                if (FindObjectOfType<GameManager>().PlayerInfoX == null)
-                {
-                    FindObjectOfType<GameManager>().PlayerInfoX = gameObject.AddComponent<PlayerInfo>();
-                    FindObjectOfType<GameManager>().PlayerInfoX.Name = obj[1] as string;
-                }
-                
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = obj[1] as string;
+
+                FindObjectOfType<GameManager>().UpdateReadyStatus();
+
                 break;
         }
     }
