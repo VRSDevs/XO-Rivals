@@ -6,7 +6,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
-using Scene = UnityEditor.SearchService.Scene;
 
 public class NetworkController : MonoBehaviourPunCallbacks
 {
