@@ -21,11 +21,15 @@ TagManager:
   - Enemy1
   - carne
   - PlayerFantasma
+  - lechuga
+  - queso
+  - panArriba
+  - pan
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Wall
   - Water
   - UI
   - Ground
