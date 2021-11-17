@@ -7,7 +7,9 @@ public class EnemyNavMesh : MonoBehaviour
 {
 
     public NavMeshAgent navMeshAgent;
-    public Transform movePositionTransform;
+    public List<Transform> movePositionTransform;
+    public Transform target;
+    
 
 
     // Start is called before the first frame update
@@ -15,14 +17,39 @@ public class EnemyNavMesh : MonoBehaviour
     {
 
         navMeshAgent = GetComponent<NavMeshAgent>();
-
+        int random = Random.Range(0, movePositionTransform.Count - 1);
+        target = movePositionTransform[random];
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        navMeshAgent.destination = movePositionTransform.position;
+        
+        navMeshAgent.destination = target.position;
         
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+       
+
+        if (other.gameObject.name == target.name)
+        {
+            int random = Random.Range(0, movePositionTransform.Count - 1);
+            target = movePositionTransform[random];
+        }
+
+       
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+      
+
+
+        Debug.Log(collision.gameObject.name);
+    }
+
+
+
 }

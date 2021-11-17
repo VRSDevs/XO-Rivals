@@ -54,7 +54,7 @@ public class DetectPlayer : MonoBehaviour
         yield return new WaitForSeconds(0.7f);
 
         //INSTANCIAR PREFAB
-        bala = Instantiate(prefabBala, this.transform.position, Quaternion.identity);
+        bala = Instantiate(prefabBala, new Vector3(this.transform.position.x, this.transform.position.y+1, this.transform.position.z), Quaternion.identity);
         bala.GetComponent<BalaDetectScript>().crear(this.gameObject);
 
 
