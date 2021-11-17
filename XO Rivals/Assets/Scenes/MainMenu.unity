@@ -5630,7 +5630,7 @@ MonoBehaviour:
   JoinGameButton: {fileID: 120065344}
   CreateMatchSprite: {fileID: 21300000, guid: 9aedde015cd6782439055b3b4ee557a2, type: 3}
   CancelMatchmakingSprite: {fileID: 21300000, guid: 314db1b3b7cf4c54ea38fbec3cb3116d, type: 3}
-  MatchPrefab: {fileID: 1537594496}
+  MatchPrefab: {fileID: 3640725798317930245}
   ViewContent: {fileID: 1022907219}
 --- !u!4 &1544971430
 Transform:
@@ -7694,6 +7694,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8db32d939abd8044e85ac089eabf610d, type: 3}
+--- !u!1 &3640725798317930245 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3640725796868514683, guid: 8db32d939abd8044e85ac089eabf610d, type: 3}
+  m_PrefabInstance: {fileID: 3640725798317930244}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6248065804132547143
 PrefabInstance:
   m_ObjectHideFlags: 0

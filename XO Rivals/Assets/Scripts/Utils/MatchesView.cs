@@ -10,7 +10,7 @@ public class MatchesView
 
     public MatchesView(Transform rootView)
     {
-        NameText = rootView.Find("MatchPrefab/MatchName").GetComponent<TextMeshPro>();
-        NameText = rootView.Find("MatchPrefab/MatchStatus").GetComponent<TextMeshPro>();
+        NameText = rootView.Find("MatchName").GetComponent<TextMeshPro>();
+        NameText = rootView.Find("MatchStatus").GetComponent<TextMeshPro>();
     }
 }

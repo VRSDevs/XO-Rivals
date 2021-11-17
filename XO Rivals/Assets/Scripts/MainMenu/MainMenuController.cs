@@ -18,7 +18,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public Sprite CreateMatchSprite;
     [SerializeField] public Sprite CancelMatchmakingSprite;
 
-    public RectTransform MatchPrefab;
+    public GameObject MatchPrefab;
     public RectTransform ViewContent;
 
     private List<MatchesView> views;
@@ -39,13 +39,15 @@ public class MainMenuController : MonoBehaviour
 
         views = new List<MatchesView>();
         Mode = 0;
+
+        UpdateMatchesList();
     }
 
     #endregion
 
     #region UpdateMethods
 
-    public void UpdateMatches()
+    public void UpdateMatchesList()
     {
         FetchPlayerMatches(5, matchesList =>
         {
@@ -128,7 +130,7 @@ public class MainMenuController : MonoBehaviour
 
         foreach (var matchModel in list)
         {
-            var instance = GameObject.Instantiate(MatchPrefab.gameObject, ViewContent, false);
+            var instance = Instantiate(MatchPrefab, ViewContent, false);
             var view = IntializeMatchView(instance, matchModel);
             views.Add(view);
         }
