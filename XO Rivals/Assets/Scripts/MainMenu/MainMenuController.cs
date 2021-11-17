@@ -71,6 +71,14 @@ public class MainMenuController : MonoBehaviour
             CreateGameButton.GetComponent<Image>().sprite = CreateMatchSprite;
         }
     }
+    
+    /// <summary>
+    /// Método de evento ejecutado cuando se pulsa el botón de salir
+    /// </summary>
+    public void OnExitClick()
+    {
+        Application.ExternalEval("document.location.reload(true)");
+    }
 
     #endregion
 
