@@ -112,6 +112,23 @@ public class MainMenuController : MonoBehaviour
 
     #endregion
 
+    #region OtherMethods
+
+    private void OnRecievedMatches(MatchModel[] list)
+    {
+        foreach (Transform child in ViewContent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (var matchModel in list)
+        {
+            var instance = GameObject.Instantiate(MatchPrefab.gameObject, ViewContent, false);
+        }
+    }
+
+    #endregion
+
     public void ChangeMode(int n)
     {
         Mode = n;
