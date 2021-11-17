@@ -123,11 +123,14 @@ public class MainMenuController : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        
+        views.Clear();
 
         foreach (var matchModel in list)
         {
             var instance = GameObject.Instantiate(MatchPrefab.gameObject, ViewContent, false);
             var view = IntializeMatchView(instance, matchModel);
+            views.Add(view);
         }
     }
 
