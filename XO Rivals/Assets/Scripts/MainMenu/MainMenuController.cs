@@ -18,6 +18,9 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public Sprite CreateMatchSprite;
     [SerializeField] public Sprite CancelMatchmakingSprite;
 
+    public RectTransform MatchPrefab;
+    public Text CountText;
+
     private GameManager _gameManager;
     private PlayerInfo _localPlayer;
 
@@ -47,6 +50,11 @@ public class MainMenuController : MonoBehaviour
     private void LeaveMatchmaking()
     {
         _gameManager.OnLeaveRoom();
+    }
+
+    private void FetchPlayerMatches(int count, Action onDone)
+    {
+        
     }
     
     #endregion
