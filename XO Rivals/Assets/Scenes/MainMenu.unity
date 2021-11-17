@@ -5630,8 +5630,8 @@ MonoBehaviour:
   JoinGameButton: {fileID: 120065344}
   CreateMatchSprite: {fileID: 21300000, guid: 9aedde015cd6782439055b3b4ee557a2, type: 3}
   CancelMatchmakingSprite: {fileID: 21300000, guid: 314db1b3b7cf4c54ea38fbec3cb3116d, type: 3}
-  MatchPrefab: {fileID: 0}
-  ViewContent: {fileID: 0}
+  MatchPrefab: {fileID: 1537594496}
+  ViewContent: {fileID: 1022907219}
 --- !u!4 &1544971430
 Transform:
   m_ObjectHideFlags: 0
