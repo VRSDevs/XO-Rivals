@@ -9,7 +9,9 @@ public class EnemyNavMesh : MonoBehaviour
     public NavMeshAgent navMeshAgent;
     public List<Transform> movePositionTransform;
     public Transform target;
-    
+    public Transform player;
+    public bool persiguiendo = false;
+    int random = 0;
 
 
     // Start is called before the first frame update
@@ -32,22 +34,42 @@ public class EnemyNavMesh : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-       
-
-        if (other.gameObject.name == target.name)
+        if (persiguiendo == false)
         {
-            int random = Random.Range(0, movePositionTransform.Count - 1);
+
+            if (other.gameObject.name == target.name)
+            {
+                random = Random.Range(0, movePositionTransform.Count - 1);
+                target = movePositionTransform[random];
+            }
+
+
+
+        }
+
+
+
+    }
+
+  public void playerDetectedLinternaNav(bool detected)
+    {
+        persiguiendo = detected;
+
+
+        if (detected)
+        {
+            target = player;
+        }
+        else
+        {
+            
             target = movePositionTransform[random];
         }
 
-       
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-      
 
 
-        Debug.Log(collision.gameObject.name);
+
+
     }
 
 

@@ -915,6 +915,109 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &69722905
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 69722906}
+  - component: {fileID: 69722909}
+  - component: {fileID: 69722908}
+  - component: {fileID: 69722907}
+  - component: {fileID: 69722910}
+  - component: {fileID: 69722911}
+  m_Layer: 0
+  m_Name: LinternaColision
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &69722906
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69722905}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.01, y: 0, z: 6.09}
+  m_LocalScale: {x: 2.8224, y: 1, z: 10.092008}
+  m_Children: []
+  m_Father: {fileID: 961382807}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &69722907
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69722905}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.012766, y: 1, z: 0.70722806}
+  m_Center: {x: -0.6371185, y: 0, z: 0.14638601}
+--- !u!65 &69722908
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69722905}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.915876, y: 1, z: 0.7081987}
+  m_Center: {x: 0.7673834, y: 0, z: 0.14590058}
+--- !u!65 &69722909
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69722905}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9999999, y: 1, z: 0.88766676}
+  m_Center: {x: 0, y: 0, z: 0.056166574}
+--- !u!114 &69722910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69722905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1cabb4590618a47b033c9ef1c805a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyScript: {fileID: 405383477}
+--- !u!54 &69722911
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69722905}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &73592575
 GameObject:
   m_ObjectHideFlags: 0
@@ -4828,7 +4931,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1515909411}
-  distanciaVision: 4
+  distanciaVision: 10
   veoPlayerRadio: 0
   veoPlayerDistance: 0
   prefabBala: {fileID: 3431209771459165765, guid: a5d06f078b1fc2c4096220bef96a46cf, type: 3}
@@ -10995,7 +11098,8 @@ MonoBehaviour:
   - {fileID: 988848147}
   - {fileID: 106837116}
   - {fileID: 1603574501}
-  target: {fileID: 0}
+  target: {fileID: 1515909418}
+  player: {fileID: 0}
 --- !u!195 &961382803
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -11028,10 +11132,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.6585617
-  m_Height: 1.4549866
+  m_Radius: 1.35
+  m_Height: 2.5728016
   m_Direction: 1
-  m_Center: {x: 0.07286835, y: -0.2725067, z: -0.040640354}
+  m_Center: {x: 0, y: 0.06, z: 0}
 --- !u!23 &961382805
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11095,6 +11199,7 @@ Transform:
   - {fileID: 405383480}
   - {fileID: 623913572}
   - {fileID: 1165085880}
+  - {fileID: 69722906}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

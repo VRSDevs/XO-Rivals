@@ -7,12 +7,13 @@ public class DetectPlayer : MonoBehaviour
     // Start is called before the first frame update
 
     public GameObject player;
-    public float distanciaVision = 4;
+    public float distanciaVision = 7;
     public bool veoPlayerRadio = false;
     public bool veoPlayerDistance = false;
 
     public GameObject prefabBala;
     public GameObject bala;
+    
 
     void Start()
     {
@@ -40,7 +41,7 @@ public class DetectPlayer : MonoBehaviour
     }
 
 
-    public void playerDetected(bool detected)
+    public void playerDetectedBala(bool detected)
     {
 
         veoPlayerDistance = detected;
@@ -51,10 +52,10 @@ public class DetectPlayer : MonoBehaviour
 
     IEnumerator creaBala()
     {
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.2f);
 
         //INSTANCIAR PREFAB
-        bala = Instantiate(prefabBala, new Vector3(this.transform.position.x, this.transform.position.y+1, this.transform.position.z), Quaternion.identity);
+        bala = Instantiate(prefabBala, new Vector3(this.transform.position.x, this.transform.position.y+1.7f, this.transform.position.z+1), Quaternion.identity);
         bala.GetComponent<BalaDetectScript>().crear(this.gameObject);
 
 
@@ -63,15 +64,47 @@ public class DetectPlayer : MonoBehaviour
     }
 
 
-    //void OnCollisionEnter2D(Collision2D collision)
-    //{
+    public void playerDetectedLinterna()//CUANDO ÑLA LINTERNA DETECTA AL JUGADOR
+    {
+
+        if (veoPlayerDistance && veoPlayerRadio)
+        {
+            GetComponentInParent<EnemyNavMesh>().playerDetectedLinternaNav(true);
+
+            StartCoroutine(repetirDetectedLinterna());
+        }
+        else
+        {
+
+            GetComponentInParent<EnemyNavMesh>().playerDetectedLinternaNav(false);
+            
+        }
 
 
-    //    Debug.Log("AAA");
+    }
+
+    IEnumerator repetirDetectedLinterna()
+    {
+
+        yield return new WaitForSeconds(2);
+
+
+        if (veoPlayerRadio)//SE OLVIDA DE TI SI SALES DEL RADIO
+        {
+            GetComponentInParent<EnemyNavMesh>().playerDetectedLinternaNav(true);
+
+            StartCoroutine(repetirDetectedLinterna());
+        }
+        else
+        {
+
+            GetComponentInParent<EnemyNavMesh>().playerDetectedLinternaNav(false);
+
+        }
+
+
+    }
 
 
 
-    //}
-
-
-}
+    }

@@ -72,11 +72,11 @@ public class BalaDetectScript : MonoBehaviour
 
                 if (other.CompareTag("PlayerFantasma"))//COLISION CON PLAYER
                 {
-                    detectScript.playerDetected(true);
+                    detectScript.playerDetectedBala(true);
                 }
                 else//COLISION CON OBSTACULO
                 {
-                    detectScript.playerDetected(false);
+                    detectScript.playerDetectedBala(false);
                 }
 
 
