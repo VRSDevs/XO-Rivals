@@ -21,6 +21,8 @@ public class MainMenuController : MonoBehaviour
     public RectTransform MatchPrefab;
     public RectTransform ViewContent;
 
+    private List<MatchesView> views;
+
     private GameManager _gameManager;
     private PlayerInfo _localPlayer;
 
@@ -34,7 +36,8 @@ public class MainMenuController : MonoBehaviour
         _localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
 
         JoinGameButton.interactable = false;
-        
+
+        views = new List<MatchesView>();
         Mode = 0;
     }
 
