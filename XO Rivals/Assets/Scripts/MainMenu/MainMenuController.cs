@@ -40,6 +40,18 @@ public class MainMenuController : MonoBehaviour
 
     #endregion
 
+    #region UpdateMethods
+
+    public void UpdateMatches()
+    {
+        FetchPlayerMatches(5, matchesList =>
+        {
+            OnRecievedMatches(matchesList);
+        });
+    }
+
+    #endregion
+
     #region MatchMethods
 
     private void ConnectRandomMatch()
