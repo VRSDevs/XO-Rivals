@@ -124,7 +124,25 @@ public class MainMenuController : MonoBehaviour
         foreach (var matchModel in list)
         {
             var instance = GameObject.Instantiate(MatchPrefab.gameObject, ViewContent, false);
+            var view = IntializeMatchView(instance, matchModel);
         }
+    }
+
+    private MatchesView IntializeMatchView(GameObject viewGO, MatchModel model)
+    {
+        MatchesView view = new MatchesView(viewGO.transform)
+        {
+            NameText =
+            {
+                text = model.MatchName
+            },
+            StatusText =
+            {
+                text = model.MatchStatus
+            }
+        };
+
+        return view;
     }
 
     #endregion
