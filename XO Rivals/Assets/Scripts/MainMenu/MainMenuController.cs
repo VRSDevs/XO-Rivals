@@ -52,9 +52,17 @@ public class MainMenuController : MonoBehaviour
         _gameManager.OnLeaveRoom();
     }
 
-    private void FetchPlayerMatches(int count, Action onDone)
+    private void FetchPlayerMatches(int count, Action<MatchModel[]> onDone)
     {
-        
+        var matchesList = new MatchModel[count];
+        for (int i = 0; i < matchesList.Length; i++)
+        {
+            matchesList[i] = new MatchModel();
+            matchesList[i].MatchName = "Sala " + i;
+            matchesList[i].MatchStatus = "Turno de X";
+        }
+
+        onDone(matchesList);
     }
     
     #endregion
