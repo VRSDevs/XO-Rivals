@@ -31,7 +31,7 @@ public class Match
     /// <summary>
     /// Momento de la partida en la que se encuentra el jugador
     /// </summary>
-    public int TurnName { get; set; }
+    public int TurnMoment { get; set; }
     /// <summary>
     /// ID del minijuego seleccionado
     /// </summary>
@@ -63,7 +63,7 @@ public class Match
         PlayerOName = "";
         PlayerXName = "";
         WhosTurn = "";
-        TurnName = -1;
+        TurnMoment = -1;
         MiniGameChosen = -1;
 
         FilledPositions = new int[3, 3];

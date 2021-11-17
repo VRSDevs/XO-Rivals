@@ -10,7 +10,6 @@ public class DetectPlayer : MonoBehaviour
     public float distanciaVision = 4;
     public bool veoPlayerRadio = false;
     public bool veoPlayerDistance = false;
-    public List<GameObject> obstaculos;
 
     public GameObject prefabBala;
     public GameObject bala;
@@ -56,6 +55,8 @@ public class DetectPlayer : MonoBehaviour
 
         //INSTANCIAR PREFAB
         bala = Instantiate(prefabBala, this.transform.position, Quaternion.identity);
+        bala.GetComponent<BalaDetectScript>().crear(this.gameObject);
+
 
         //CODE
         StartCoroutine(creaBala());
