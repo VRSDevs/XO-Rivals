@@ -19,7 +19,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public Sprite CancelMatchmakingSprite;
 
     public RectTransform MatchPrefab;
-    public Text CountText;
+    public RectTransform ViewContent;
 
     private GameManager _gameManager;
     private PlayerInfo _localPlayer;
