@@ -38,8 +38,6 @@ public class MainMenuController : MonoBehaviour
 
         views = new List<MatchesView>();
         Mode = 0;
-
-        UpdateMatchesList();
     }
 
     #endregion
