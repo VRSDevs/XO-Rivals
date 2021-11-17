@@ -14,6 +14,9 @@ public class BetaShop : MonoBehaviour
     {
         switch (offer)
         {
+            case 0:
+                shopText.text = "You bought 3 minigames";
+                break;
             case 1:
                 shopText.text = "You bought " + offer + " lives";
                 break;
