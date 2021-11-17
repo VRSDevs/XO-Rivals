@@ -25,13 +25,13 @@ public class MatchScrollerController : MonoBehaviour
             Destroy(child.gameObject);
         }
         
-        views.Clear();
+        //views.Clear();
 
         foreach (var matchModel in list)
         {
             var instance = Instantiate(MatchPrefab, ViewContent, false);
-            var view = IntializeMatchView(instance, matchModel);
-            views.Add(view);
+            //var view = IntializeMatchView(instance, matchModel);
+            //views.Add(view);
         }
     }    
     
