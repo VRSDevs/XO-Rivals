@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public Dictionary<string, Match> PlayerMatches;
 
+    /*
     /// <summary>
     /// ID de la partida
     /// </summary>
@@ -70,7 +71,7 @@ public class GameManager : MonoBehaviour
     /// Minijuego elegido
     /// </summary>
     public int MiniGameChosen;
-    
+    */
     ////////////////// USUARIO //////////////////
     /// <summary>
     /// ¿En qué versión de WebGL está?
@@ -234,27 +235,33 @@ public class GameManager : MonoBehaviour
                 object[] objOppWon = new object[8];
 
                 objOppWon[0] = type;
-                objOppWon[1] = WhosTurn;
-                objOppWon[2] = NumFilled;
+                objOppWon[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
+                objOppWon[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].NumFilled;
                 objOppWon[3] = FindObjectOfType<ButtonsScript>().col;
                 objOppWon[4] = FindObjectOfType<ButtonsScript>().row;
-                objOppWon[5] = FilledPositions[
+                objOppWon[5] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions[
                     FindObjectOfType<ButtonsScript>().col,
                     FindObjectOfType<ButtonsScript>().row
                 ];
                 objOppWon[6] = FindObjectOfType<ButtonsScript>().SelectedTile;
-                objOppWon[7] = MiniGameChosen;
-        
+                objOppWon[7] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen;
+
+                for(int i = 0; i < objOppWon.Length; i++){
+                    Debug.Log("Envio turno ganar " + i + ": " + objOppWon[i]);
+                }
                 return objOppWon;
             case "OppLost":
                 object[] objOppLost = new object[3];
                 
-                Debug.Log(WhosTurn);
+                Debug.Log(PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn);
                 
                 objOppLost[0] = type;
-                objOppLost[1] = WhosTurn;
-                objOppLost[2] = MiniGameChosen;
+                objOppLost[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
+                objOppLost[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen;
                 
+                for(int i = 0; i < objOppLost.Length; i++){
+                    Debug.Log("Envio turno perder " + i + ": " + objOppLost[i]);
+                }
                 return objOppLost;
         }
 

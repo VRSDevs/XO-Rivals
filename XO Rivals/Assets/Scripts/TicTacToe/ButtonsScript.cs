@@ -31,8 +31,11 @@ public class ButtonsScript : MonoBehaviour
     //Minigame won
     public bool miniWin;
 
-    //Match controller
+    //Gamemanager controller
     public GameManager gameState;
+
+    //Match information
+    public Match thisMatch;
 
     //Local player
     public PlayerInfo localPlayer;
@@ -55,29 +58,30 @@ public class ButtonsScript : MonoBehaviour
         crossGO.SetActive(false);
 
         gameState = FindObjectOfType<GameManager>();
+        thisMatch = gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name];
         localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
-
-        //Fill array
-        gameState.FilledPositions = new int[3,3];
-        for(int i = 0; i < gameState.FilledPositions.GetLength(0); i++){
-            for(int j = 0; j < gameState.FilledPositions.GetLength(1); j++){
-                gameState.FilledPositions[i,j] = 3;
-            }
-        }
-            
-        //Start variables
-        gameState.NumFilled = 0;
-        gameState.Chips = new List<GameObject>(); 
             
         //El minijuego es elegido automaticamente
-        gameState.MiniGameChosen = Random.Range(0,2);
-        gameState.turnMoment = 0;
+        thisMatch.MiniGameChosen = Random.Range(0,2);
 
         //Initialize ScreenManager
         screenManager = FindObjectOfType<ScreenManager>();
     }
     
     public void Start(){
+        
+        Debug.Log("Player O name: " + thisMatch.PlayerOName);
+        Debug.Log("Player X name: " + thisMatch.PlayerXName);
+        Debug.Log("Turn: " + thisMatch.WhosTurn);
+        Debug.Log("Turn moment: " + thisMatch.TurnMoment);
+        Debug.Log("Numfilled: " + thisMatch.NumFilled);
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                Debug.Log("FilledPositions [" + i + "," + j + ": " + thisMatch.FilledPositions[i,j]);
+            }
+        }
+        Debug.Log("Minigame chosen: " + thisMatch.MiniGameChosen);
+
         UpdateTurn();
     }
 
@@ -87,17 +91,17 @@ public class ButtonsScript : MonoBehaviour
     public void UpdateTurn()
     {
         //If its your turn, play, if its not, only can see
-        if(gameState.WhosTurn == localPlayer.Name){
+        if(thisMatch.WhosTurn == localPlayer.Name){
 
             //Depending of turn moment, player will encounter a "different scene"
-            if (gameState.turnMoment == 0)
+            if (thisMatch.TurnMoment == 0)
             {
                 screenManager.EnableButtons();
             }
-            else if(gameState.turnMoment == 1){
+            else if(thisMatch.TurnMoment == 1){
                 //Go directly to minigame
                 PlayMinigame();
-            }else if(gameState.turnMoment == 2){
+            }else if(thisMatch.TurnMoment == 2){
                 //Go to choose minigame
                 screenManager.MinigameSelectionActivation();
             }
@@ -118,10 +122,10 @@ public class ButtonsScript : MonoBehaviour
         row = pos / 3;
         
         //Check if position is already filled
-        if(gameState.FilledPositions[col,row] == 3){
+        if(thisMatch.FilledPositions[col,row] == 3){
             
             //Places a sprite or another depending on turn
-            if(gameState.PlayerInfoO.Name == localPlayer.Name)
+            if(thisMatch.PlayerOName == localPlayer.Name)
             {
                 GameObject tile = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
                 SelectedTile = tile.name;
@@ -130,21 +134,20 @@ public class ButtonsScript : MonoBehaviour
                 actualChip = Instantiate(circleGO, tile.transform.position, Quaternion.identity);
                 actualChip.SetActive(true);
                 actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
-                gameState.turnMoment = 1;
+                thisMatch.TurnMoment = 1;
 
                 //Go to minigame
                 PlayMinigame();
 
                 //Add chip to list to hide
-                gameState.Chips.Add(actualChip);
-                for(int i = 0; i < gameState.Chips.Count; i++)
-                    gameState.Chips[i].SetActive(false);
+                for(int i = 0; i < thisMatch.Chips.Count; i++)
+                    thisMatch.Chips[i].SetActive(false);
 
                 //Go to selectMinigame for opponent
                 screenManager.MinigameSelectionActivation();
 
                 //Save pos
-                gameState.FilledPositions[col,row] = 0;
+                thisMatch.FilledPositions[col,row] = 0;
 
                 //Disable input because its not your turn
                 screenManager.DisableButtons();
@@ -162,28 +165,27 @@ public class ButtonsScript : MonoBehaviour
                 PlayMinigame();
 
                 //Add chip to list to hide
-                gameState.Chips.Add(actualChip);
-                for(int i = 0; i < gameState.Chips.Count; i++)
-                    gameState.Chips[i].SetActive(false);
+                for(int i = 0; i < thisMatch.Chips.Count; i++)
+                    thisMatch.Chips[i].SetActive(false);
 
                 //Go to selectMinigame for opponent
                 screenManager.MinigameSelectionActivation();
 
                 //Save pos
-                gameState.FilledPositions[col,row] = 1;
+                thisMatch.FilledPositions[col,row] = 1;
 
                 //Disable input because its not your turn
                 screenManager.DisableButtons();
             }
 
             //Add one to count
-            gameState.NumFilled++;
+            thisMatch.NumFilled++;
         
             //Check victory
             CheckVictory();
 
             //Table full (draw)
-            if(gameState.NumFilled == 9){
+            if(thisMatch.NumFilled == 9){
                 Debug.Log("Draw");
                 
                 gameState._networkCommunications.SendEndMatchInfo("draw", "");
@@ -196,7 +198,7 @@ public class ButtonsScript : MonoBehaviour
     private void PlayMinigame(){
 
         miniWin = false;
-        switch(gameState.MiniGameChosen){
+        switch(thisMatch.MiniGameChosen){
             case 0:
                 SceneManager.LoadScene("Pistolero", LoadSceneMode.Additive);
             break;
@@ -214,14 +216,16 @@ public class ButtonsScript : MonoBehaviour
         miniWin = (PlayerPrefs.GetInt("minigameWin") == 1);
         if(miniWin == true){
             //Save position
-            gameState.FilledPositions[col,row] = (gameState.WhosTurn == gameState.PlayerInfoO.Name ? 0: 1);
+            thisMatch.FilledPositions[col,row] = (thisMatch.WhosTurn == thisMatch.PlayerOName ? 0: 1);
             //Paint tile completely
             actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
+            //Add chip to list
+            thisMatch.Chips.Add(actualChip);
         }else{
             Destroy(actualChip);
             StartCoroutine(screenManager.txtTimer("¡Turno perdido!"));
         }
-        gameState.turnMoment = 2;
+        thisMatch.TurnMoment = 2;
     }
     
     public void CheckVictory(){
@@ -290,30 +294,30 @@ public class ButtonsScript : MonoBehaviour
                 gameState.IsPlaying = false;
                 
                 //Call endgame
-                if (gameState.FilledPositions[col, row] == 0)
+                if (thisMatch.FilledPositions[col, row] == 0)
                 {
                     Debug.Log("CIRCLE WIN");
                     
-                    if (localPlayer.Name == gameState.PlayerInfoO.Name)
+                    if (localPlayer.Name == thisMatch.PlayerOName)
                     {
-                        gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerInfoO.Name);
+                        gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                     }
                     else
                     {
-                        gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerInfoX.Name);
+                        gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                     }
                 }
                 else
                 {
                     Debug.Log("CROSS WINS");
 
-                    if (localPlayer.Name == gameState.PlayerInfoX.Name)
+                    if (localPlayer.Name == thisMatch.PlayerXName)
                     {
-                        gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerInfoX.Name);
+                        gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                     }
                     else
                     {
-                        gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerInfoO.Name);
+                        gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                     }
                 }
                 break;
@@ -332,8 +336,8 @@ public class ButtonsScript : MonoBehaviour
         int j = 0;
 
         //Pick first tile in column if its not empty
-        if(gameState.FilledPositions[col,j] != 3){
-            type = gameState.FilledPositions[col,j];
+        if(thisMatch.FilledPositions[col,j] != 3){
+            type = thisMatch.FilledPositions[col,j];
             j++;
         }else{
             return false;
@@ -341,7 +345,7 @@ public class ButtonsScript : MonoBehaviour
 
         //Check if all other tiles are the same
         do{
-            if(gameState.FilledPositions[col,j] != type){
+            if(thisMatch.FilledPositions[col,j] != type){
                 return false;
             }
             j++;
@@ -355,8 +359,8 @@ public class ButtonsScript : MonoBehaviour
         int j = 0;
 
         //Pick first tile in column if its not empty
-        if(gameState.FilledPositions[j,row] != 3){
-            type = gameState.FilledPositions[j,row];
+        if(thisMatch.FilledPositions[j,row] != 3){
+            type = thisMatch.FilledPositions[j,row];
             j++;
         }else{
             return false;
@@ -364,7 +368,7 @@ public class ButtonsScript : MonoBehaviour
 
         //Check if all other tiles are the same
         do{
-            if(gameState.FilledPositions[j,row] != type){
+            if(thisMatch.FilledPositions[j,row] != type){
                 return false;
             }
             j++;
@@ -380,8 +384,8 @@ public class ButtonsScript : MonoBehaviour
         //First diagonal
         if(diag == 0){
             //Pick first tile in column if its not empty
-            if(gameState.FilledPositions[diag,j] != 3){
-                type = gameState.FilledPositions[diag,j];
+            if(thisMatch.FilledPositions[diag,j] != 3){
+                type = thisMatch.FilledPositions[diag,j];
                 j++;
                 diag++;
             }else{
@@ -390,7 +394,7 @@ public class ButtonsScript : MonoBehaviour
 
             //Check if all other tiles are the same
             do{
-                if(gameState.FilledPositions[diag,j] != type){
+                if(thisMatch.FilledPositions[diag,j] != type){
                     return false;
                 }
                 diag++;
@@ -403,8 +407,8 @@ public class ButtonsScript : MonoBehaviour
         }else{
             diag++;
             //Pick first tile in column if its not empty
-            if(gameState.FilledPositions[diag,j] != 3){
-                type = gameState.FilledPositions[diag,j];
+            if(thisMatch.FilledPositions[diag,j] != 3){
+                type = thisMatch.FilledPositions[diag,j];
                 j++;
                 diag--;
             }else{
@@ -413,7 +417,7 @@ public class ButtonsScript : MonoBehaviour
 
             //Check if all other tiles are the same
             do{
-                if(gameState.FilledPositions[diag,j] != type){
+                if(thisMatch.FilledPositions[diag,j] != type){
                     return false;
                 }
                 diag--;
