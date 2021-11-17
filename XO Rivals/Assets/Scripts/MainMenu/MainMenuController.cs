@@ -18,8 +18,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public Sprite CreateMatchSprite;
     [SerializeField] public Sprite CancelMatchmakingSprite;
 
-    public GameObject MatchPrefab;
-    public RectTransform ViewContent;
+    
 
     private List<MatchesView> views;
 
@@ -45,18 +44,6 @@ public class MainMenuController : MonoBehaviour
 
     #endregion
 
-    #region UpdateMethods
-
-    public void UpdateMatchesList()
-    {
-        FetchPlayerMatches(5, matchesList =>
-        {
-            OnRecievedMatches(matchesList);
-        });
-    }
-
-    #endregion
-
     #region MatchMethods
 
     private void ConnectRandomMatch()
@@ -69,19 +56,6 @@ public class MainMenuController : MonoBehaviour
         _gameManager.OnLeaveRoom();
     }
 
-    private void FetchPlayerMatches(int count, Action<MatchModel[]> onDone)
-    {
-        var matchesList = new MatchModel[count];
-        for (int i = 0; i < matchesList.Length; i++)
-        {
-            matchesList[i] = new MatchModel();
-            matchesList[i].MatchName = "Sala " + i;
-            matchesList[i].MatchStatus = "Turno de X";
-        }
-
-        onDone(matchesList);
-    }
-    
     #endregion
 
     #region ButtonsMethods
@@ -118,23 +92,6 @@ public class MainMenuController : MonoBehaviour
     #endregion
 
     #region OtherMethods
-
-    private void OnRecievedMatches(MatchModel[] list)
-    {
-        foreach (Transform child in ViewContent)
-        {
-            Destroy(child.gameObject);
-        }
-        
-        views.Clear();
-
-        foreach (var matchModel in list)
-        {
-            var instance = Instantiate(MatchPrefab, ViewContent, false);
-            var view = IntializeMatchView(instance, matchModel);
-            views.Add(view);
-        }
-    }
 
     private MatchesView IntializeMatchView(GameObject viewGO, MatchModel model)
     {
