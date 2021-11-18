@@ -10077,6 +10077,18 @@ PrefabInstance:
       value: MatchModel
       objectReference: {fileID: 0}
     - target: {fileID: 108080179857384826, guid: e6509463747b4964cb198e7fc4c54e98, type: 3}
+      propertyPath: m_Colors.m_PressedColor.b
+      value: 0.6415094
+      objectReference: {fileID: 0}
+    - target: {fileID: 108080179857384826, guid: e6509463747b4964cb198e7fc4c54e98, type: 3}
+      propertyPath: m_Colors.m_PressedColor.g
+      value: 0.6415094
+      objectReference: {fileID: 0}
+    - target: {fileID: 108080179857384826, guid: e6509463747b4964cb198e7fc4c54e98, type: 3}
+      propertyPath: m_Colors.m_PressedColor.r
+      value: 0.6415094
+      objectReference: {fileID: 0}
+    - target: {fileID: 108080179857384826, guid: e6509463747b4964cb198e7fc4c54e98, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1544971429}
