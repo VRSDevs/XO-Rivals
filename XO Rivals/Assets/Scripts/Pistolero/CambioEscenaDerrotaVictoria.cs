@@ -5,8 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class CambioEscenaDerrotaVictoria : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    [SerializeField]
+    private GameObject victory;
+    [SerializeField]
+    private GameObject defeat;
+
     public bool win;
+
+
     void Start()
     {
         
@@ -23,20 +30,39 @@ public class CambioEscenaDerrotaVictoria : MonoBehaviour
     {
 
         if (win)
-
         {
-            PlayerPrefs.SetInt("minigameWin", 1);
-            SceneManager.LoadScene("TicTacToe_Server");
+            Invoke("VictoryCanvas", 3f);
         }
         else
         {
-            PlayerPrefs.SetInt("minigameWin", 0);
-            SceneManager.LoadScene("TicTacToe_Server");
+            Invoke("DefeatCanvas", 3f);
         }
 
 
     }
 
+    public void DefeatCanvas()
+    {
+        defeat.SetActive(true);
+        Invoke("Defeat", 3f);
+    }
 
+    public void VictoryCanvas()
+    {
+        victory.SetActive(true);
+        Invoke("Victory", 3f);
+    }
+
+    public void Defeat()
+    {
+        PlayerPrefs.SetInt("minigameWin", 0);
+        SceneManager.LoadScene("TicTacToe_Server");
+    }
+
+    public void Victory()
+    {
+        PlayerPrefs.SetInt("minigameWin", 1);
+        SceneManager.LoadScene("TicTacToe_Server");
+    }
 
 }
