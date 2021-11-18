@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MatchesView
 {
-    public TextMeshPro NameText;
-    public TextMeshPro StatusText;
+    public TextMeshProUGUI NameText;
+    public TextMeshProUGUI StatusText;
 
     public MatchesView(Transform rootView)
     {
-        NameText = rootView.Find("MatchName").GetComponent<TextMeshPro>();
-        NameText = rootView.Find("MatchStatus").GetComponent<TextMeshPro>();
+        NameText = rootView.Find("MatchName").GetComponent<TextMeshProUGUI>();
+        StatusText = rootView.Find("MatchStatus").GetComponent<TextMeshProUGUI>();
     }
 }
