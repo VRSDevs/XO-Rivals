@@ -31,68 +31,68 @@ public class SFXManager : MonoBehaviour
     {
         
     }
-    public void playselectBottonSound1()
+    public void playSound1()
     {
         managerBoton.PlayOneShot(selectBotton1, 2.0f);
     }
 
-    public void playselectBottonSound2()
+    public void playSound2()
     {
         managerBoton.PlayOneShot(selectBotton2, 2.0f);
     }
 
-    public void playselectBottonSound3()
+    public void playSound3()
     {
         managerBoton.PlayOneShot(selectBotton3);
     }
 
-    public void playselectBottonSound4()
+    public void playSound4()
     {
         managerBoton.PlayOneShot(selectBotton4);
     }
     
     public void playWalkSound()
     {
-        managerBoton.PlayOneShot();
+        managerBoton.PlayOneShot(WalkSound);
     }
     
     public void playDeathSound()
     {
-        managerBoton.PlayOneShot();
+        managerBoton.PlayOneShot(DeathSound);
     }
     
     public void playVictorySound()
     {
-        managerBoton.PlayOneShot();
+        managerBoton.PlayOneShot(VictorySound);
     }
     
     public void playShotSound()
     {
-        managerBoton.PlayOneShot(sonidoBoton4);
+        managerBoton.PlayOneShot(ShotSound);
     }
     
     public void playJumpSound()
     {
-        managerBoton.PlayOneShot(sonidoBoton4);
+        managerBoton.PlayOneShot(JumpSound);
     }
     
     public void playRealoadSound()
     {
-        managerBoton.PlayOneShot(sonidoBoton4);
+        managerBoton.PlayOneShot(RealoadSound);
     }
     
     public void playChipSound()
     {
-        managerBoton.PlayOneShot(sonidoBoton4);
+        managerBoton.PlayOneShot(ChipSound);
     }
     public void playCookingSound()
     {
-        managerBoton.PlayOneShot(sonidoBoton4);
+        managerBoton.PlayOneShot(CookingSound);
     }
     
     public void playDefeatSound()
     {
-        managerBoton.PlayOneShot(sonidoBoton4);
+        managerBoton.PlayOneShot(DefeatSound);
     }
     
 
