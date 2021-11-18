@@ -5,6 +5,11 @@ using UnityEngine;
 public class SFXManager : MonoBehaviour
 {
     private AudioSource managerBoton;
+    public AudioSource CookingMusic;
+    public AudioSource unmanMusic;
+    public AudioSource PlatformMusic;
+    public AudioSource Tic_Tac_ToeMusic;
+    public AudioSource ShopMusic;
 
     public AudioClip selectBotton1;
     public AudioClip selectBotton2;

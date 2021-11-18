@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class WebGLChecker : MonoBehaviour
 {
-
+    private AudioSource managerBoton;
     #region Variables
 
     /// <summary>
