@@ -22,7 +22,7 @@ public enum LoginMode
 
 public class Login : MonoBehaviour
 {
-     #region Variables
+    #region Vars
     
     ////////////////// REFERENCIAS A CLASES //////////////////
     /// <summary>
@@ -72,7 +72,7 @@ public class Login : MonoBehaviour
 
     #endregion
 
-    #region UnityCallbacks
+    #region UnityCB
 
     private void Start()
     {
@@ -142,10 +142,10 @@ public class Login : MonoBehaviour
 
             Log.text = "Conectando...";
             
-            if (_gameManager._networkController.OnConnectToServer())
+            if (_gameManager.OnConnectToServer())
             {
                 Log.text = "Conectado.";
-                _gameManager._networkController.SetNickName(username);
+                _gameManager.UpdatePhotonNick(username);
                 GameObject myPlayer = new GameObject();
                 PlayerInfo playerInfo = myPlayer.AddComponent<PlayerInfo>();
                 DontDestroyOnLoad(myPlayer);
@@ -183,8 +183,6 @@ public class Login : MonoBehaviour
         }
     }
 
-
-
     #endregion
 
     #region CheckMethods
@@ -218,14 +216,6 @@ public class Login : MonoBehaviour
     /// <param name="mode">Código del modo</param>
     public void UpdateLoginMode(int mode)
     {
-
-        if (_gameManager.IsWebGLMobile)
-        {
-            UsernameInput.text = "dev001";
-            UsernameInput.ForceLabelUpdate();
-            PasswordInput.text = "123456";
-            PasswordInput.ForceLabelUpdate();
-        }
 
         switch (mode)
         {

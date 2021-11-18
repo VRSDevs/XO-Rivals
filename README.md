@@ -1,5 +1,5 @@
 # XO-Rivals
-![Logo XO Rivals](https://github.com/VRSDevs/XO-Rivals/blob/main/GameArt/Logo_Juego/banner.png)
+![Logo XO Rivals](https://github.com/VRSDevs/XO-Rivals/blob/main/GameArt/Logo_Juego/banner.jpg)
 
 ## Descripción
 El videojuego propone un multijugador desatendido donde sus partidas están basadas en el juego Tres en raya. 
@@ -43,4 +43,5 @@ Felipe Bermejo | Diseñador de audio | [Haz click aquí](https://linktr.ee/Felip
 - [Cuenta YouTube](https://www.youtube.com/channel/UC74hDE58Ns8Cb2Q5ln7Kz9Q/featured)
 - [Itch.io](https://vrsdevs.itch.io/)
 - [Porfolio](https://vrsdevs.github.io/)
+- [Tik Tok](https://vm.tiktok.com/ZM89CY3eT)
 
