@@ -149,14 +149,14 @@ public class Cronometro : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         PlayerPrefs.SetInt("minigameWin", 1);
-        SceneManager.UnloadSceneAsync("Pistolero");
+        SceneManager.LoadScene("TicTacToe_Server");
         //SceneManager.LoadScene("PistoleroVictoria", LoadSceneMode.Additive);
     }
     IEnumerator EsperarD()
     {
         yield return new WaitForSeconds(3);
-        PlayerPrefs.SetInt("minigameWin", 1);
-        SceneManager.UnloadSceneAsync("Pistolero");
+        PlayerPrefs.SetInt("minigameWin", 0);
+        SceneManager.LoadScene("TicTacToe_Server");
         //SceneManager.LoadScene("Pistolero Derrota", LoadSceneMode.Additive);
     }
 

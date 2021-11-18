@@ -35,7 +35,7 @@ public class Timer : MonoBehaviour
                 ScriptPlayer.OnDisable();
                 PlayerPrefs.SetInt("minigameWin", 0);
 
-                SceneManager.UnloadSceneAsync("2D Platform");
+                SceneManager.LoadScene("TicTacToe_Server");
             }
 
         }

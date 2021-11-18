@@ -23,7 +23,7 @@ public class ScreenManager : MonoBehaviour
 
     void Start(){
 
-        if(buttonsScript.gameState.WhosTurn == buttonsScript.gameState.PlayerInfoO.Name){
+        if(buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn == buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName){
             StartCoroutine(txtTimer("Turno de O"));
         }else{
             StartCoroutine(txtTimer("Turno de X"));
@@ -31,17 +31,18 @@ public class ScreenManager : MonoBehaviour
     }
 
     public void UpdateTurn(){
-        Debug.Log("X: " + buttonsScript.gameState.PlayerInfoX.Name);
-        Debug.Log("O: " + buttonsScript.gameState.PlayerInfoO.Name);
         
-        if(buttonsScript.gameState.PlayerInfoO.Name == buttonsScript.gameState.WhosTurn)
-            buttonsScript.gameState.WhosTurn = buttonsScript.gameState.PlayerInfoX.Name;
+        Debug.Log("X: " + buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+        Debug.Log("O: " + buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+        
+        if(buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName == buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn)
+            buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName;
         else
-            buttonsScript.gameState.WhosTurn = buttonsScript.gameState.PlayerInfoO.Name;
+            buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName;
         
-        buttonsScript.gameState.turnMoment = 0;
+        buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
         //Display turn in screen
-        if(buttonsScript.gameState.WhosTurn == buttonsScript.gameState.PlayerInfoO.Name){            
+        if(buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn == buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName){            
             StartCoroutine(txtTimer("Turno de O"));
         }else{
             StartCoroutine(txtTimer("Turno de X"));
@@ -62,30 +63,31 @@ public class ScreenManager : MonoBehaviour
         screenTxt.text = txt;
         yield return new WaitForSeconds(totalTime);
         screenTxt.enabled = false;
-
+        buttonsScript.thisMatch.TurnMoment = 4;
+        MinigameSelectionActivation();
     }
 
     public void MinigameSelectionActivation(){
         ticTacScreen.SetActive(false);
+        //Hide chips
+        for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
+            buttonsScript.thisMatch.Chips[i].SetActive(false);
+        }
         miniGameChoosing.SetActive(true);
     }    
 
     public void MinigameSelection(int n){
-        buttonsScript.gameState.MiniGameChosen = n;
+        buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = n;
         miniGameChoosing.SetActive(false);
         ticTacScreen.SetActive(true);
-
-        //Unihide chips
-        for (int i = 0; i < buttonsScript.gameState.Chips.Count; i++)
-        {
-            if(buttonsScript.gameState.Chips[i] == null)
-                continue;
-            
-            buttonsScript.gameState.Chips[i].SetActive(true);
-        }
         
+        //Update turn data and send it to opponent
         UpdateTurn();
 
+        //Unhide chips
+        for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
+            buttonsScript.thisMatch.Chips[i].SetActive(false);
+        }
         //Disable interaction with tictac
         DisableButtons();
     }
@@ -95,7 +97,7 @@ public class ScreenManager : MonoBehaviour
         
         GameObject tile = GameObject.Find(tileName);
         
-        switch (buttonsScript.gameState.FilledPositions[col, row])
+        switch (buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions[col, row])
         {
             case 0:
                 buttonsScript.actualChip = Instantiate(buttonsScript.circleGO, tile.transform.position, Quaternion.identity);
@@ -111,7 +113,7 @@ public class ScreenManager : MonoBehaviour
                 break;
         }
         
-        buttonsScript.gameState.Chips.Add(buttonsScript.actualChip);
+        buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].Chips.Add(buttonsScript.actualChip);
     }
     
     public void EnableButtons()

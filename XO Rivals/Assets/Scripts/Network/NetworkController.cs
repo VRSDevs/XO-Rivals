@@ -73,16 +73,16 @@ public class NetworkController : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom(true);
         
         if (!FindObjectOfType<GameManager>().IsPlaying) return;
-        FindObjectOfType<GameManager>().MatchId = "";
-        FindObjectOfType<GameManager>().OwnerId = "";
-        FindObjectOfType<GameManager>().PlayerInfoO = null;
-        FindObjectOfType<GameManager>().PlayerInfoX = null;
-        FindObjectOfType<GameManager>().WhosTurn = "";
-        FindObjectOfType<GameManager>().NumFilled = 0;
-        FindObjectOfType<GameManager>().FilledPositions = new int[3,3];
-        FindObjectOfType<GameManager>().turnMoment = 0;
-        FindObjectOfType<GameManager>().Chips = new List<GameObject>();
-        FindObjectOfType<GameManager>().MiniGameChosen = 0;
+        //FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].MatchId = "";
+        //FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].OwnerId = "";
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = null;
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = null;
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = "";
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].NumFilled = 0;
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions = new int[3,3];
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].Chips = new List<GameObject>();
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = 0;
     }
 
     #endregion

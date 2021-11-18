@@ -100,9 +100,9 @@ public class NetworkCommunications : MonoBehaviourPun
                 
                 Debug.Log("RPC oponente ganó");
                 
-                FindObjectOfType<GameManager>().WhosTurn = obj[1] as string;
-                FindObjectOfType<GameManager>().NumFilled = (int)obj[2];
-                FindObjectOfType<GameManager>().FilledPositions[
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = obj[1] as string;
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].NumFilled = (int)obj[2];
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions[
                     (int)obj[3], (int)obj[4]
                 ] = (int)obj[5];
                 
@@ -113,9 +113,9 @@ public class NetworkCommunications : MonoBehaviourPun
                     (string)obj[6]
                 );
                 
-                FindObjectOfType<GameManager>().MiniGameChosen = (int)obj[7];
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = (int)obj[7];
 
-                FindObjectOfType<GameManager>().turnMoment = 0;
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
 
                 FindObjectOfType<ButtonsScript>().UpdateTurn();
                 
@@ -124,10 +124,10 @@ public class NetworkCommunications : MonoBehaviourPun
                 
                 Debug.Log("RPC oponente perdió");
                 
-                FindObjectOfType<GameManager>().WhosTurn = obj[1] as string;
-                FindObjectOfType<GameManager>().MiniGameChosen = (int)obj[2];
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = obj[1] as string;
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = (int)obj[2];
                 
-                FindObjectOfType<GameManager>().turnMoment = 0;
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
 
                 FindObjectOfType<ButtonsScript>().UpdateTurn();
                 

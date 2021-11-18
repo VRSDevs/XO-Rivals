@@ -63,7 +63,7 @@ public class Match
         PlayerOName = "";
         PlayerXName = "";
         WhosTurn = "";
-        TurnMoment = -1;
+        TurnMoment = 0;
         MiniGameChosen = -1;
 
         FilledPositions = new int[3, 3];
