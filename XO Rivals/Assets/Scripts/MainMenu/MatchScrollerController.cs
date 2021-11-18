@@ -10,12 +10,11 @@ public class MatchScrollerController : MonoBehaviour
     [SerializeField] public ScrollRect ScrollView;
     [SerializeField] public RectTransform ViewContent;
     
+    private List<MatchesView> views = new List<MatchesView>();
+    
     public void UpdateMatchesList()
     {
-        FetchPlayerMatches(5, matchesList =>
-        {
-            OnRecievedMatches(matchesList);
-        });
+        FetchPlayerMatches(5, OnRecievedMatches);
     }
     
     private void OnRecievedMatches(MatchModel[] list)
@@ -25,15 +24,32 @@ public class MatchScrollerController : MonoBehaviour
             Destroy(child.gameObject);
         }
         
-        //views.Clear();
+        views.Clear();
 
         foreach (var matchModel in list)
         {
-            var instance = Instantiate(MatchPrefab, ViewContent, false);
-            //var view = IntializeMatchView(instance, matchModel);
-            //views.Add(view);
+            var instance = Instantiate(MatchPrefab.gameObject, ViewContent, false);
+            var view = IntializeMatchView(instance, matchModel);
+            views.Add(view);
         }
-    }    
+    }
+    
+    private MatchesView IntializeMatchView(GameObject viewGO, MatchModel model)
+    {
+        MatchesView view = new MatchesView(viewGO.transform)
+        {
+            NameText =
+            {
+                text = model.MatchName
+            },
+            StatusText =
+            {
+                text = model.MatchStatus
+            }
+        };
+
+        return view;
+    }
     
     private void FetchPlayerMatches(int count, Action<MatchModel[]> onDone)
     {
