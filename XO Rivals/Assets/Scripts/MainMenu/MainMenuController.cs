@@ -78,6 +78,14 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
+    public void OnJoinMatchClick()
+    {
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Uniéndote a " + MatchName + " (BETA)";
+        CreateGameButton.interactable = false;
+        JoinGameButton.interactable = false;
+        StartCoroutine(ResetInteractions());
+    }
+
     public void OnMatchModelClick()
     {
         GameObject selectedButton = EventSystem.current.currentSelectedGameObject;
@@ -123,8 +131,18 @@ public class MainMenuController : MonoBehaviour
 
     #endregion
 
-    public void ChangeMode(int n)
+    private IEnumerator ResetInteractions()
     {
-        Mode = n;
+        yield return new WaitForSeconds(2);
+        
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Te hubieses unido a la sala";
+        CreateGameButton.interactable = true;
+
+        for (int i = 0; i < ViewContent.transform.childCount; i++)
+        {
+            GameObject child = ViewContent.transform.GetChild(i).gameObject;
+
+            child.GetComponent<Button>().interactable = true;
+        }
     }
 }
