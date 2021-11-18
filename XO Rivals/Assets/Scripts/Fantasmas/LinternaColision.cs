@@ -6,7 +6,7 @@ public class LinternaColision : MonoBehaviour
 {
 
 
-    public DetectPlayer enemyScript;
+    public List<DetectPlayer> enemigos;
 
     // Start is called before the first frame update
     void Start()
@@ -24,22 +24,40 @@ public class LinternaColision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name);
+
         if (other.gameObject.name == "LinternaColision")
         {
 
-            enemyScript.playerDetectedLinterna();
+            enemigos[0].playerDetectedLinterna();
+        }else if (other.gameObject.name == "LinternaColision2")
+        {
+            enemigos[1].playerDetectedLinterna();
         }
+        if (other.gameObject.name == "LinternaColision3")
+        {
+            enemigos[2].playerDetectedLinterna();
+        }
+
+
+
+
     }
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log(other.gameObject.name);
+
         if (other.gameObject.name == "LinternaColision")
         {
 
-            enemyScript.playerDetectedLinterna();
+            enemigos[0].playerDetectedLinterna();
         }
-
+        else if (other.gameObject.name == "LinternaColision2")
+        {
+            enemigos[1].playerDetectedLinterna();
+        }
+        if (other.gameObject.name == "LinternaColision3")
+        {
+            enemigos[2].playerDetectedLinterna();
+        }
     }
 
 
