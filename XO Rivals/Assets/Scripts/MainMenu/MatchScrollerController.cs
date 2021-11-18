@@ -12,7 +12,12 @@ public class MatchScrollerController : MonoBehaviour
     
     private List<MatchesView> views = new List<MatchesView>();
 
-    public void UpdateMatchesList()
+    private void Update()
+    {
+        UpdateMatchesList();
+    }
+
+    private void UpdateMatchesList()
     {
         FetchPlayerMatches(5, OnRecievedMatches);
     }
