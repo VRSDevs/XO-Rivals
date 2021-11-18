@@ -24,6 +24,8 @@ public class MainMenuController : MonoBehaviour
     private GameManager _gameManager;
     private PlayerInfo _localPlayer;
 
+    private string MatchName;
+
     private int Mode;
 
     #region UnityCB
@@ -81,36 +83,34 @@ public class MainMenuController : MonoBehaviour
         GameObject selectedButton = EventSystem.current.currentSelectedGameObject;
         
         Dictionary<string, GameObject> selectedChildren = new Dictionary<string, GameObject>();
+        Dictionary<string, GameObject> grandChildren = new Dictionary<string, GameObject>();
 
         for (int i = 0; i < selectedButton.transform.childCount; i++)
         {
             selectedChildren.Add(selectedButton.transform.GetChild(i).gameObject.name, selectedButton.transform.GetChild(i).gameObject);
         }
-
+        
         for (int i = 0; i < ViewContent.transform.childCount; i++)
         {
             GameObject child = ViewContent.transform.GetChild(i).gameObject;
 
-            Dictionary<string, GameObject> grandChildren = new Dictionary<string, GameObject>();
-
+            grandChildren.Clear();
+            
             for (int j = 0; j < child.transform.childCount; j++)
             {
-                Debug.Log(child.transform.GetChild(j).gameObject.name);
                 grandChildren.Add(child.transform.GetChild(j).gameObject.name, child.transform.GetChild(j).gameObject);
             }
 
             if (grandChildren["MatchName"].GetComponent<TextMeshProUGUI>().text.Equals(selectedChildren["MatchName"].GetComponent<TextMeshProUGUI>().text))
             {
-                Debug.Log("Igual");
                 child.GetComponent<Button>().interactable = false;
                 JoinGameButton.interactable = true;
-                break;
+                MatchName = selectedChildren["MatchName"].GetComponent<TextMeshProUGUI>().text;
+                continue;
             }
             
             child.GetComponent<Button>().interactable = true;
         }
-        
-        Debug.Log("Pulsado: " + selectedButton.name);
     }
     
     /// <summary>
