@@ -28,7 +28,6 @@ public class MatchScrollerController : MonoBehaviour
 
         foreach (var matchModel in list)
         {
-            Debug.Log(matchModel.MatchName);
             var instance = Instantiate(MatchPrefab.gameObject, ViewContent, false);
             var view = IntializeMatchView(instance, matchModel);
             views.Add(view);
