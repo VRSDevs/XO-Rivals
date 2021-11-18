@@ -12,7 +12,7 @@ Una vez colocadas las fichas de manera correcta, los resultados se enviarán a a
 Al empezar una partida, el jugador deberá pulsar el botón de inicio de partida donde seleccionará si unirse a una partida o crear una nueva, posteriormente, se le enviará al propio juego. En esta pantalla, antes de que la ficha termine de ser colocada, el jugador tendrá que seleccionar uno de los minijuegos que aparecen en la pantalla para que sea el propio juego el que decida si puede colocar ficha. Al acabar el minijuego, se habrá acabado su turno y tendrá que esperar hasta que el jugador rival termine su turno para poder continuar con la partida. Para ganar la partida, el jugador tiene que plantar 3 fichas en línea, ya sea de manera horizontal, vertical o diagonal.
 
 ## Instalación y Uso
--
+El juego no requiere instalación, para poder jugarlo será necesario acceder a la pagina de Itch.io donde se encuentra [XO Rivals](https://vrsdevs.itch.io/xo-rivals).
 
 ## Créditos y Contacto
 ![Logo Virtual Ravens Games](https://github.com/VRSDevs/XO-Rivals/blob/main/GameArt/Logo/logoVRS.png)
