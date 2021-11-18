@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -71,6 +72,12 @@ public class MainMenuController : MonoBehaviour
             LeaveMatchmaking();
             CreateGameButton.GetComponent<Image>().sprite = CreateMatchSprite;
         }
+    }
+
+    public void OnMatchModelClick()
+    {
+        GameObject selectedButton = EventSystem.current.currentSelectedGameObject;
+        Debug.Log("Pulsado: " + selectedButton.name);
     }
     
     /// <summary>
