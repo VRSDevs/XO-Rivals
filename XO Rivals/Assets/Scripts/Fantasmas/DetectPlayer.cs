@@ -67,7 +67,7 @@ public class DetectPlayer : MonoBehaviour
     public void playerDetectedLinterna()//CUANDO ÑLA LINTERNA DETECTA AL JUGADOR
     {
 
-        if (veoPlayerDistance && veoPlayerRadio)
+        if (veoPlayerDistance)
         {
             GetComponentInParent<EnemyNavMesh>().playerDetectedLinternaNav(true);
 
@@ -83,7 +83,7 @@ public class DetectPlayer : MonoBehaviour
 
     }
 
-    IEnumerator repetirDetectedLinterna()
+    IEnumerator repetirDetectedLinterna() //Solo tiene en cuenta si esta en el radio
     {
 
         yield return new WaitForSeconds(2);
