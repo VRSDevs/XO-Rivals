@@ -18,10 +18,6 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public Sprite CreateMatchSprite;
     [SerializeField] public Sprite CancelMatchmakingSprite;
 
-    
-
-    private List<MatchesView> views;
-
     private GameManager _gameManager;
     private PlayerInfo _localPlayer;
 
@@ -35,8 +31,6 @@ public class MainMenuController : MonoBehaviour
         _localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
 
         JoinGameButton.interactable = false;
-
-        views = new List<MatchesView>();
         Mode = 0;
     }
 
@@ -85,27 +79,6 @@ public class MainMenuController : MonoBehaviour
     public void OnExitClick()
     {
         Application.ExternalEval("document.location.reload(true)");
-    }
-
-    #endregion
-
-    #region OtherMethods
-
-    private MatchesView IntializeMatchView(GameObject viewGO, MatchModel model)
-    {
-        MatchesView view = new MatchesView(viewGO.transform)
-        {
-            NameText =
-            {
-                text = model.MatchName
-            },
-            StatusText =
-            {
-                text = model.MatchStatus
-            }
-        };
-
-        return view;
     }
 
     #endregion
