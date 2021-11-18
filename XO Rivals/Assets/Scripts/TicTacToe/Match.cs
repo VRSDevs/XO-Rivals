@@ -71,7 +71,7 @@ public class Match
         {
             for (int j = 0; j < FilledPositions.GetLength(1); j++)
             {
-                FilledPositions[i, j] = 0;
+                FilledPositions[i, j] = 3;
             }
         }
 

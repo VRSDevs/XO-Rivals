@@ -14,7 +14,6 @@ public class MainMenuController : MonoBehaviour
     
     [SerializeField] public Button CreateGameButton;
     [SerializeField] public Button JoinGameButton;
-    [SerializeField] public TMP_Text JoinOrBackButton_Text;
 
     [SerializeField] public Sprite CreateMatchSprite;
     [SerializeField] public Sprite CancelMatchmakingSprite;
@@ -30,6 +29,8 @@ public class MainMenuController : MonoBehaviour
     {
         _gameManager = FindObjectOfType<GameManager>();
         _localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
+
+        JoinGameButton.interactable = false;
         Mode = 0;
     }
 
@@ -46,7 +47,7 @@ public class MainMenuController : MonoBehaviour
     {
         _gameManager.OnLeaveRoom();
     }
-    
+
     #endregion
 
     #region ButtonsMethods
