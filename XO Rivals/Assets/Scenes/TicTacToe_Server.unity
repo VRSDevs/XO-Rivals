@@ -154,12 +154,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1961071661}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -313.1391, y: 160.67545}
-  m_SizeDelta: {x: 71.8169, y: 36.4525}
+  m_AnchoredPosition: {x: -427.4745, y: 160.67}
+  m_SizeDelta: {x: 131.4721, y: 36.454}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &175324818
 MonoBehaviour:
@@ -593,7 +593,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: Gastronomy is a field highly appreciated by the inhabitants of Tricius
+    and this test will be the one to verify which city is up to the task by completing
+    the recipe in the shortest time.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c1b2e0f63ad574a8c37ea7e400f080, type: 2}
   m_sharedMaterial: {fileID: -4185127859423837220, guid: 49c1b2e0f63ad574a8c37ea7e400f080, type: 2}
@@ -620,8 +622,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -764,7 +766,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &367591098
 Transform:
   m_ObjectHideFlags: 0
@@ -2181,7 +2183,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: The mental agility of the inhabitants of Tricius is well known, but how
+    fast are they pulling the trigger? Show your speed and become the best Tricius
+    gunman.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c1b2e0f63ad574a8c37ea7e400f080, type: 2}
   m_sharedMaterial: {fileID: -4185127859423837220, guid: 49c1b2e0f63ad574a8c37ea7e400f080, type: 2}
@@ -2208,8 +2212,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3511,7 +3515,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: The Tricius asteroid belt is an inhospitable and dangerous place, perfect
+    for the jump test. Can you reach the goal without getting lost in space?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c1b2e0f63ad574a8c37ea7e400f080, type: 2}
   m_sharedMaterial: {fileID: -4185127859423837220, guid: 49c1b2e0f63ad574a8c37ea7e400f080, type: 2}
@@ -3538,8 +3543,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3852,7 +3857,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: The forest of Tricius hides many secrets, spirits and secrets paths within
+    it. Can you avoid them and show your skill?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c1b2e0f63ad574a8c37ea7e400f080, type: 2}
   m_sharedMaterial: {fileID: -4185127859423837220, guid: 49c1b2e0f63ad574a8c37ea7e400f080, type: 2}
@@ -3879,8 +3885,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5025,7 +5031,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1961071661}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5293,7 +5299,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 191884339262791833, guid: 0099cd63aa22ee8459b8247a87ad3a33, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 191884339262791833, guid: 0099cd63aa22ee8459b8247a87ad3a33, type: 3}
       propertyPath: m_AnchorMax.x
@@ -5481,9 +5487,9 @@ RectTransform:
   m_Children:
   - {fileID: 1109285214}
   - {fileID: 1186476297}
+  - {fileID: 1952936076}
   - {fileID: 1809179393}
   - {fileID: 175324817}
-  - {fileID: 1952936076}
   - {fileID: 1191838246}
   - {fileID: 439642463}
   - {fileID: 932491110}
