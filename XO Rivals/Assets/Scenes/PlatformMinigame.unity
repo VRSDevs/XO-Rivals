@@ -5381,6 +5381,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8cc2fed98842b042b613bedf33043b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  victory: {fileID: 592486211}
+  defeat: {fileID: 1380016169}
   col: {fileID: 1690281231}
   groundCheck: {fileID: 1095365395}
   jumpCheck: {fileID: 583474356}
@@ -6128,6 +6130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8cc2fed98842b042b613bedf33043b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  victory: {fileID: 592486211}
+  defeat: {fileID: 1380016169}
   col: {fileID: 1928096049}
   groundCheck: {fileID: 970368950}
   jumpCheck: {fileID: 2009747892}
