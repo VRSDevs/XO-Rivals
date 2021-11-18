@@ -14,58 +14,74 @@ public class MainMenuController : MonoBehaviour
     
     [SerializeField] public Button CreateGameButton;
     [SerializeField] public Button JoinGameButton;
-    [SerializeField] public TMP_Text JoinOrBackButton_Text;
-    
-    public GameManager _gameManager;
-    public PlayerInfo _localPlayer;
+
+    [SerializeField] public Sprite CreateMatchSprite;
+    [SerializeField] public Sprite CancelMatchmakingSprite;
+
+    private GameManager _gameManager;
+    private PlayerInfo _localPlayer;
 
     private int Mode;
+
+    #region UnityCB
 
     private void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
         _localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
+
+        JoinGameButton.interactable = false;
         Mode = 0;
     }
 
-    public void OnCreateMatch()
+    #endregion
+
+    #region MatchMethods
+
+    private void ConnectRandomMatch()
     {
-        _gameManager._networkController.OnCreateRoom();
-        _gameManager.OnCreateRoom(_localPlayer);
+        _gameManager.OnConnectToRoom();
     }
 
-    public void OnConnectRandomMatch()
+    private void LeaveMatchmaking()
     {
-        _gameManager._networkController.OnConnectToRandomRoom();
-        _gameManager.OnConnectToRoom(_localPlayer);
+        _gameManager.OnLeaveRoom();
     }
 
-    public void OnBackButtonClick()
+    #endregion
+
+    #region ButtonsMethods
+
+    /// <summary>
+    /// Método para actualizar el comportamiento del botón de crear partida
+    /// </summary>
+    public void OnCreateMatchClick()
     {
-        switch (Mode)
+        _gameManager.Matchmaking = !_gameManager.Matchmaking;
+        
+        CreateGameButton.onClick.RemoveAllListeners();
+        
+        if (_gameManager.Matchmaking)
         {
-            case 0:
-                MainMenuObject.SetActive(true);
-                PlayMenuObject.SetActive(false);
-                break;
-            case 1:
-                JoinOrBackButton_Text.text = "Back";
-                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Se canceló la búsqueda.";
-
-                CreateGameButton.interactable = true;
-                JoinGameButton.interactable = true;
-            
-                _gameManager._networkController.OnLeaveRoom();
-
-                break;
-            case 2:
-                JoinOrBackButton_Text.text = "Back";
-
-                CreateGameButton.interactable = true;
-                JoinGameButton.interactable = true;
-                break;
+            ConnectRandomMatch();
+            CreateGameButton.GetComponent<Image>().sprite = CancelMatchmakingSprite;
+        }
+        else
+        {
+            LeaveMatchmaking();
+            CreateGameButton.GetComponent<Image>().sprite = CreateMatchSprite;
         }
     }
+    
+    /// <summary>
+    /// Método de evento ejecutado cuando se pulsa el botón de salir
+    /// </summary>
+    public void OnExitClick()
+    {
+        Application.ExternalEval("document.location.reload(true)");
+    }
+
+    #endregion
 
     public void ChangeMode(int n)
     {

@@ -23,16 +23,15 @@ public class CambioEscenaDerrotaVictoria : MonoBehaviour
     {
 
         if (win)
-        {
-            SceneManager.UnloadSceneAsync("Pistolero");
-            PlayerPrefs.SetInt("minigameWin", 1);
 
+        {
+            PlayerPrefs.SetInt("minigameWin", 1);
+            SceneManager.LoadScene("TicTacToe_Server");
         }
         else
         {
-            SceneManager.UnloadSceneAsync("Pistolero");
             PlayerPrefs.SetInt("minigameWin", 0);
-
+            SceneManager.LoadScene("TicTacToe_Server");
         }
 
 
