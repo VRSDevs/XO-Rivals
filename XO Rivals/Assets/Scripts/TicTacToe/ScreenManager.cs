@@ -63,11 +63,16 @@ public class ScreenManager : MonoBehaviour
         screenTxt.text = txt;
         yield return new WaitForSeconds(totalTime);
         screenTxt.enabled = false;
-
+        buttonsScript.thisMatch.TurnMoment = 4;
+        MinigameSelectionActivation();
     }
 
     public void MinigameSelectionActivation(){
         ticTacScreen.SetActive(false);
+        //Hide chips
+        for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
+            buttonsScript.thisMatch.Chips[i].SetActive(false);
+        }
         miniGameChoosing.SetActive(true);
     }    
 
@@ -75,18 +80,14 @@ public class ScreenManager : MonoBehaviour
         buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = n;
         miniGameChoosing.SetActive(false);
         ticTacScreen.SetActive(true);
-
-        //Unihide chips
-        for (int i = 0; i < buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].Chips.Count; i++)
-        {
-            if(buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].Chips[i] == null)
-                continue;
-            
-            buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].Chips[i].SetActive(true);
-        }
         
+        //Update turn data and send it to opponent
         UpdateTurn();
 
+        //Unhide chips
+        for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
+            buttonsScript.thisMatch.Chips[i].SetActive(false);
+        }
         //Disable interaction with tictac
         DisableButtons();
     }

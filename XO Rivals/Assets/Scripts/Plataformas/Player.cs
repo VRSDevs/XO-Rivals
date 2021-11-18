@@ -151,8 +151,7 @@ private void OnTriggerEnter2D(Collider2D other)
             OnDisable();
 
             PlayerPrefs.SetInt("minigameWin", 1);
-            SceneManager.UnloadSceneAsync("2D Platform");
-
+            SceneManager.LoadScene("TicTacToe_Server");
         }
     }
 private void OnCollisionEnter2D(Collision2D collision)
