@@ -11,7 +11,7 @@ public class MatchScrollerController : MonoBehaviour
     [SerializeField] public RectTransform ViewContent;
     
     private List<MatchesView> views = new List<MatchesView>();
-    
+
     public void UpdateMatchesList()
     {
         FetchPlayerMatches(5, OnRecievedMatches);
