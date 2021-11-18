@@ -4119,9 +4119,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sonidoBoton1: {fileID: 8300000, guid: 741a341588e1cdc40b7628dae9afe70d, type: 3}
-  sonidoBoton2: {fileID: 8300000, guid: aa70432815b4ee148a2623d6e4824457, type: 3}
-  sonidoBoton3: {fileID: 8300000, guid: a454cc63a473b184f85e82d2e2c22839, type: 3}
-  sonidoBoton4: {fileID: 8300000, guid: e6622537f95b70648b8fcd2138315731, type: 3}
+  sonidoBoton2: {fileID: 8300000, guid: 2e1b1d2d32b62d54a9627d6ce7c2cda5, type: 3}
+  sonidoBoton3: {fileID: 8300000, guid: 5f6f4866f7c02d445be17da41eee934a, type: 3}
+  sonidoBoton4: {fileID: 8300000, guid: 1efc4a7079371e340bd78e3eae244946, type: 3}
 --- !u!82 &692649459
 AudioSource:
   m_ObjectHideFlags: 0
