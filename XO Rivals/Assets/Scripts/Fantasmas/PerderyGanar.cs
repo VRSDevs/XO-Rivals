@@ -6,6 +6,12 @@ using UnityEngine.UI;
 
 public class PerderyGanar : MonoBehaviour
 {
+
+    [SerializeField]
+    private GameObject victory;
+    [SerializeField]
+    private GameObject defeat;
+
     public int seconds =3;
     public Text textoSegundos;
     public Text textoCuentaAtras;
@@ -29,9 +35,7 @@ public class PerderyGanar : MonoBehaviour
         if (collision.gameObject.name == "Enemy3D")
         {
 
-            Debug.Log("Perdido!");
-            PlayerPrefs.SetInt("minigameWin", 0);
-            SceneManager.UnloadSceneAsync("Fantasmas3D");
+            Invoke("DefeatCanvas", 3f);
 
 
         }
@@ -45,11 +49,8 @@ public class PerderyGanar : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         if (seconds == 20)//SI AGUANTAS 20 SEGUNDOS GANAS
-        {
-            textoSegundos.color = Color.green;
-            textoCuentaAtras.text = "WIN";
-            StartCoroutine(victoria());
-
+        {          
+            Invoke("VictoryCanvas", 2f);
         }
         else
         {
@@ -95,5 +96,29 @@ public class PerderyGanar : MonoBehaviour
         SceneManager.UnloadSceneAsync("Fantasmas3D");
     }
 
-
+    public void DefeatCanvas()
+    {
+        defeat.SetActive(true);
+        Invoke("Defeat", 3f);
     }
+
+    public void VictoryCanvas()
+    {
+        victory.SetActive(true);
+        Invoke("Victory", 3f);
+    }
+
+    public void Defeat()
+    {
+        PlayerPrefs.SetInt("minigameWin", 0);
+        SceneManager.LoadScene("TicTacToe_Server");
+    }
+
+    public void Victory()
+    {
+        PlayerPrefs.SetInt("minigameWin", 1);
+        SceneManager.LoadScene("TicTacToe_Server");
+    }
+
+
+}
