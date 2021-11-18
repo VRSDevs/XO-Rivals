@@ -4100,7 +4100,7 @@ GameObject:
   - component: {fileID: 692649459}
   - component: {fileID: 692649458}
   m_Layer: 0
-  m_Name: SFXManager
+  m_Name: '@SFXManager'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4118,7 +4118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9530a090b7e5f864e85030cfc4c9f744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sonidoBoton1: {fileID: 8300000, guid: 4dae572f5d124c24d9dfd4368cb5aca4, type: 3}
+  sonidoBoton1: {fileID: 8300000, guid: 741a341588e1cdc40b7628dae9afe70d, type: 3}
   sonidoBoton2: {fileID: 8300000, guid: aa70432815b4ee148a2623d6e4824457, type: 3}
   sonidoBoton3: {fileID: 8300000, guid: a454cc63a473b184f85e82d2e2c22839, type: 3}
   sonidoBoton4: {fileID: 8300000, guid: e6622537f95b70648b8fcd2138315731, type: 3}
@@ -4133,14 +4133,14 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 106
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
