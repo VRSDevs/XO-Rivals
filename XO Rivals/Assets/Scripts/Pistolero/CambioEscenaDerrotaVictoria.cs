@@ -23,6 +23,7 @@ public class CambioEscenaDerrotaVictoria : MonoBehaviour
     {
 
         if (win)
+
         {
             PlayerPrefs.SetInt("minigameWin", 1);
             SceneManager.LoadScene("TicTacToe_Server");
