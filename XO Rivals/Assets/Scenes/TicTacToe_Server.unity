@@ -2282,8 +2282,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_text
-      value: "Mant\xE9n el bot\xF3n pulsado con los controles indicados abajo y su\xE9ltalo
-        en el momento m\xE1s cercano a cero para derrotar a tu enemigo."
+      value: Keep the button pressed with the controls indicated below and release
+        it at the moment closest to zero to defeat your enemy.
       objectReference: {fileID: 0}
     - target: {fileID: 6299495709169872984, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_Sprite
@@ -3066,8 +3066,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_text
-      value: "Mu\xE9vete con los controles indicados y recolecta los ingredientes
-        siguiendo la receta indicada para completar la hamburguesa."
+      value: Move through the maze with the controls displayed on the screen and
+        avoid the field of vision of the ghosts for the indicated time.
       objectReference: {fileID: 0}
     - target: {fileID: 6299495709463213680, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_RootOrder
@@ -5271,9 +5271,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_text
-      value: "Mu\xE9vete por las plataformas con estos controles y esquiva a los
-        enemigos hasta la bandera y para alcanzar la victoria. Pero cuidado no puedes
-        dar marcha atr\xE1s."
+      value: Move around the platforms with these controls and dodge the enemies
+        to the flag and to achieve victory. But be careful, you can't go back.
       objectReference: {fileID: 0}
     - target: {fileID: 6299495709463213680, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_RootOrder
@@ -6605,7 +6604,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1961071658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7042,6 +7041,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1961071661}
     m_Modifications:
+    - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+      propertyPath: m_text
+      value: Move through the maze with the controls displayed on the screen and
+        avoid the field of vision of the ghosts for the indicated time.
+      objectReference: {fileID: 0}
     - target: {fileID: 6299495708482457880, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_IsActive
       value: 1
