@@ -116,6 +116,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (context.ReadValue<Vector2>().x < 0) { return; }
         horizontal = context.ReadValue<Vector2>().x;
+        sounds.playWalkSound();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -125,8 +126,7 @@ public class PlayerMovement : MonoBehaviour
             isDead = true;
             anim.SetBool("isDead", true);
             Invoke("DefeatCanvas", 3f);
-            sounds.pla();
-
+            sounds.playDeathSound();
         } 
         if(collision.gameObject.tag == "FinishLine")
         {
