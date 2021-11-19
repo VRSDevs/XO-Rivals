@@ -150,6 +150,20 @@ public class MainMenuController : MonoBehaviour
         CreateGameButton.interactable = true;
     }
 
+    /// <summary>
+    /// Método para cambiar la interacción con las partidas de la lista de partidas del jugador
+    /// </summary>
+    /// <param name="interactable"></param>
+    private void ChangeMatchListInteractions(bool interactable)
+    {
+        for (int i = 0; i < ViewContent.transform.childCount; i++)
+        {
+            GameObject child = ViewContent.transform.GetChild(i).gameObject;
+
+            child.GetComponent<Button>().interactable = interactable;
+        }
+    }
+
     #endregion
 
     /// <summary>
