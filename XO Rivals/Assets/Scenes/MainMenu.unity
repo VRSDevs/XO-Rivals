@@ -7696,7 +7696,7 @@ MonoBehaviour:
   CreateGameButton: {fileID: 1899014464}
   JoinGameButton: {fileID: 1945171675}
   CreateMatchSprite: {fileID: 21300000, guid: 9aedde015cd6782439055b3b4ee557a2, type: 3}
-  CancelMatchmakingSprite: {fileID: 21300000, guid: 314db1b3b7cf4c54ea38fbec3cb3116d, type: 3}
+  CancelMatchmakingSprite: {fileID: 21300000, guid: 16fa84d7dadece1418ae26d682cb4212, type: 3}
   ViewContent: {fileID: 183733149}
 --- !u!4 &1544971430
 Transform:
