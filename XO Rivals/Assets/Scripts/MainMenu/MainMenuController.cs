@@ -78,6 +78,9 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Método de evento ejecutado al pulsar el botón de unirse a partida
+    /// </summary>
     public void OnJoinMatchClick()
     {
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Uniéndote a " + MatchName + " (BETA)";
@@ -86,13 +89,16 @@ public class MainMenuController : MonoBehaviour
         StartCoroutine(ResetInteractions());
     }
 
+    /// <summary>
+    /// Método de evento ejecutado cuando se pulsa una partida de la lista de partidas
+    /// </summary>
     public void OnMatchModelClick()
     {
         GameObject selectedButton = EventSystem.current.currentSelectedGameObject;
         
         Dictionary<string, GameObject> selectedChildren = new Dictionary<string, GameObject>();
         Dictionary<string, GameObject> grandChildren = new Dictionary<string, GameObject>();
-
+        
         for (int i = 0; i < selectedButton.transform.childCount; i++)
         {
             selectedChildren.Add(selectedButton.transform.GetChild(i).gameObject.name, selectedButton.transform.GetChild(i).gameObject);
@@ -131,11 +137,16 @@ public class MainMenuController : MonoBehaviour
 
     #endregion
 
+    /// <summary>
+    /// Método de corutina ejecutado para resetear los botones del menú de jugar
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator ResetInteractions()
     {
         yield return new WaitForSeconds(2);
         
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Te hubieses unido a la sala";
+        
         CreateGameButton.interactable = true;
 
         for (int i = 0; i < ViewContent.transform.childCount; i++)
