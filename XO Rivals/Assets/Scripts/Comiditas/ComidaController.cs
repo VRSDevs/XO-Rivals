@@ -7,6 +7,12 @@ using TMPro;
 
 public class ComidaController : MonoBehaviour
 {
+    // Canvas final
+    [SerializeField]
+    private GameObject victory;
+    [SerializeField]
+    private GameObject defeat;
+
     // Player
     [SerializeField]
     private Rigidbody2D player;
@@ -88,7 +94,7 @@ public class ComidaController : MonoBehaviour
             panArriba.SetActive(false);
             orden = 1;
             player.constraints = RigidbodyConstraints2D.FreezeAll;
-            Invoke("EndSceneLost", 5f);
+            Invoke("DefeatCanvas", 3f);
             lost = true;
         }
 
@@ -102,14 +108,26 @@ public class ComidaController : MonoBehaviour
         }
     }
 
-    void EndSceneLost()
+    public void DefeatCanvas()
+    {
+        defeat.SetActive(true);
+        Invoke("Defeat", 3f);
+    }
+
+    public void VictoryCanvas()
+    {
+        victory.SetActive(true);
+        Invoke("Victory", 3f);
+    }
+
+    public void Defeat()
     {
         PlayerPrefs.SetInt("minigameWin", 0);
         FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
         SceneManager.LoadScene("TicTacToe_Server");
     }
 
-    void EndSceneWin()
+    public void Victory()
     {
         PlayerPrefs.SetInt("minigameWin", 1);
         FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
@@ -216,7 +234,7 @@ public class ComidaController : MonoBehaviour
                     stopGenerador();
                     player.constraints = RigidbodyConstraints2D.FreezeAll;
                     // Aqui se manda a alberto la victoria
-                    Invoke("EndSceneWin", 5f);
+                    Invoke("VictoryCanvas", 3f);
 
                 }
                 else

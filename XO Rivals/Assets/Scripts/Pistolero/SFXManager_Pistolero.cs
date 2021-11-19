@@ -24,12 +24,12 @@ public class SFXManager_Pistolero : MonoBehaviour
 
     public void playDisparo()
     {
-        managerPistolero.PlayOneShot(sonidoDisparo, 2.0f);
+        managerPistolero.PlayOneShot(sonidoDisparo);
     }
 
     public void playRecarga()
     {
-        managerPistolero.PlayOneShot(sonidoRecarga, 2.0f);
+        managerPistolero.PlayOneShot(sonidoRecarga);
     }
 
 }

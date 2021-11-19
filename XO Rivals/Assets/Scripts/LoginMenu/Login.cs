@@ -145,7 +145,7 @@ public class Login : MonoBehaviour
             if (_gameManager.OnConnectToServer())
             {
                 Log.text = "Conectado.";
-                _gameManager.UpdatePhotonNick(username);
+                _gameManager.SetPhotonNick(username);
                 GameObject myPlayer = new GameObject();
                 PlayerInfo playerInfo = myPlayer.AddComponent<PlayerInfo>();
                 DontDestroyOnLoad(myPlayer);

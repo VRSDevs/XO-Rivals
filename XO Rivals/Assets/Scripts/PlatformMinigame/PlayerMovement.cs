@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
-
+using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
 
-    
+    [SerializeField]
+    private GameObject victory;
+    [SerializeField]
+    private GameObject defeat;
 
     private Rigidbody2D player;
     public Collider2D col;
@@ -117,11 +120,13 @@ public class PlayerMovement : MonoBehaviour
         {
             isDead = true;
             anim.SetBool("isDead", true);
+            Invoke("DefeatCanvas", 3f);
         } 
         if(collision.gameObject.tag == "FinishLine")
         {
             win = true;
             anim.SetBool("Win", true);
+            Invoke("VictoryCanvas", 3f);
         }
     }
 
@@ -134,5 +139,29 @@ public class PlayerMovement : MonoBehaviour
     public void Stop()
     {
         horizontal = 0;
+    }
+
+    public void DefeatCanvas()
+    {
+        defeat.SetActive(true);
+        Invoke("Defeat", 3f);
+    }
+
+    public void VictoryCanvas()
+    {
+        victory.SetActive(true);
+        Invoke("Victory", 3f);
+    }
+
+    public void Defeat()
+    {
+        PlayerPrefs.SetInt("minigameWin", 0);
+        SceneManager.LoadScene("TicTacToe_Server");
+    }
+
+    public void Victory()
+    {
+        PlayerPrefs.SetInt("minigameWin", 1);
+        SceneManager.LoadScene("TicTacToe_Server");
     }
 }

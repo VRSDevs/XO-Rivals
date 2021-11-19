@@ -73,7 +73,7 @@ public class NetworkCommunications : MonoBehaviourPun
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = obj[1] as string;
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = obj[2] as string;
 
-                FindObjectOfType<GameManager>().UpdateReadyStatus();
+                FindObjectOfType<GameManager>().SetReadyStatus();
 
                 break;
             case "X":
@@ -81,7 +81,7 @@ public class NetworkCommunications : MonoBehaviourPun
 
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = obj[1] as string;
 
-                FindObjectOfType<GameManager>().UpdateReadyStatus();
+                FindObjectOfType<GameManager>().SetReadyStatus();
 
                 break;
         }
