@@ -105,12 +105,14 @@ public class ComidaController : MonoBehaviour
     void EndSceneLost()
     {
         PlayerPrefs.SetInt("minigameWin", 0);
-       SceneManager.LoadScene("TicTacToe_Server");
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        SceneManager.LoadScene("TicTacToe_Server");
     }
 
     void EndSceneWin()
     {
         PlayerPrefs.SetInt("minigameWin", 1);
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
         SceneManager.LoadScene("TicTacToe_Server");
     }
 

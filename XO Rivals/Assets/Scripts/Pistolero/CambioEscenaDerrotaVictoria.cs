@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,11 +22,13 @@ public class CambioEscenaDerrotaVictoria : MonoBehaviour
 
         if (win)
         {
+            FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
             PlayerPrefs.SetInt("minigameWin", 1);
             SceneManager.LoadScene("TicTacToe_Server");
         }
         else
-        {
+        {            
+            FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
             PlayerPrefs.SetInt("minigameWin", 0);
             SceneManager.LoadScene("TicTacToe_Server");
         }
