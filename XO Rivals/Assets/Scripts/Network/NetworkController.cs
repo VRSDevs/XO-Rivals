@@ -23,6 +23,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// ¿La partida está lista para comenzar?
     /// </summary>
     private bool _isReady = false;
+    /// <summary>
+    /// ¿Se está creando una partida?
+    /// </summary>
+    private bool _creatingRoom = false;
 
     #endregion
     
@@ -273,6 +277,14 @@ public class NetworkController : MonoBehaviourPunCallbacks
         _isReady = !_isReady;
     }
 
+    /// <summary>
+    /// Método para actualizar de manera automática la variable de control de si está creando una partida o no
+    /// </summary>
+    public void UpdatedCreatingStatus()
+    {
+        _creatingRoom = !_creatingRoom;
+    }
+
     #endregion
     
     #region UnityCB
@@ -298,6 +310,15 @@ public class NetworkController : MonoBehaviourPunCallbacks
     private bool GetReadyStatus()
     {
         return _isReady;
+    }
+
+    /// <summary>
+    /// Método para obtener si se está creando la partida o no
+    /// </summary>
+    /// <returns></returns>
+    public bool GetCreatingRom()
+    {
+        return _creatingRoom;
     }
 
     /// <summary>
