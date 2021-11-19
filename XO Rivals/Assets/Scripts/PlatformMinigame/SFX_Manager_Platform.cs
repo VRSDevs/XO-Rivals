@@ -11,6 +11,7 @@ public class SFX_Manager_Platform : MonoBehaviour
 
     public AudioClip VictorySound;
     public AudioClip DefeatSound;
+    public AudioClip DeathSound;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,11 @@ public class SFX_Manager_Platform : MonoBehaviour
     public void playJumpSound()
     {
         managerPlatform.PlayOneShot(JumpSound);
+    }
+    
+    public void playDeathSound()
+    {
+        managerPlatform.PlayOneShot(DeathSound);
     }
     public void playWalkSound()
     {
