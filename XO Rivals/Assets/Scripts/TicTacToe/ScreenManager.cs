@@ -64,7 +64,6 @@ public class ScreenManager : MonoBehaviour
         yield return new WaitForSeconds(totalTime);
         screenTxt.enabled = false;
         buttonsScript.thisMatch.TurnMoment = 4;
-        MinigameSelectionActivation();
     }
 
     public void MinigameSelectionActivation(){
