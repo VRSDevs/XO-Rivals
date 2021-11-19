@@ -2493,7 +2493,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 692649458}
         m_TargetAssemblyTypeName: SFXManager, Assembly-CSharp
-        m_MethodName: playSound1
+        m_MethodName: playSelectionButton2Sound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3182,7 +3182,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 692649458}
         m_TargetAssemblyTypeName: SFXManager, Assembly-CSharp
-        m_MethodName: playSound2
+        m_MethodName: playSelectionButton1Sound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4157,6 +4157,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 692649458}
+        m_TargetAssemblyTypeName: SFXManager, Assembly-CSharp
+        m_MethodName: playSelectionButton2Sound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &657236874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4264,10 +4276,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9530a090b7e5f864e85030cfc4c9f744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sonidoBoton1: {fileID: 0}
-  sonidoBoton2: {fileID: 0}
-  sonidoBoton3: {fileID: 0}
-  sonidoBoton4: {fileID: 0}
+  CookingMusic: {fileID: 0}
+  GunmanMusic: {fileID: 0}
+  PlatformMusic: {fileID: 0}
+  Tic_Tac_ToeMusic: {fileID: 0}
+  ShopMusic: {fileID: 0}
+  SelectionButton1: {fileID: 8300000, guid: ccf69dce062307f4db4bdb77b53d5712, type: 3}
+  SelectionButton2: {fileID: 8300000, guid: ef01abf2e4e9ea84e82c6a7db1f36498, type: 3}
+  SelectionButton3: {fileID: 8300000, guid: d8ec08f9a9982634a838457357da9cbc, type: 3}
+  SelectionButton4: {fileID: 8300000, guid: dca47d91d4f53344b89287053e079741, type: 3}
+  DeathSound: {fileID: 8300000, guid: 0cbcb6ea91b040640a4145684908e254, type: 3}
+  VictorySound: {fileID: 8300000, guid: d1010f461011d3b45ab0b83bad59cdc1, type: 3}
+  DefeatSound: {fileID: 8300000, guid: b50203cbfccbd7549a05e0a71838a2cd, type: 3}
+  WalkSound: {fileID: 8300000, guid: 7a9f6f7cf1f70ca469f90eb6784ea1cc, type: 3}
+  ReloadSound: {fileID: 8300000, guid: 3d43712bfeffc0b45a7aea93816ef9e0, type: 3}
+  ShotSound: {fileID: 8300000, guid: 367d6fa65b89a904c87372d44173fda4, type: 3}
+  ChipSound: {fileID: 8300000, guid: 47a1d08c4f302684984468a58ca19441, type: 3}
+  CookingSound: {fileID: 0}
 --- !u!82 &692649459
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4466,7 +4491,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &791235486
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5043,7 +5068,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 692649458}
         m_TargetAssemblyTypeName: SFXManager, Assembly-CSharp
-        m_MethodName: playSound1
+        m_MethodName: playSelectionButton1Sound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5478,7 +5503,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 692649458}
         m_TargetAssemblyTypeName: SFXManager, Assembly-CSharp
-        m_MethodName: playSound1
+        m_MethodName: playSelectionButton2Sound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5779,7 +5804,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 692649458}
         m_TargetAssemblyTypeName: SFXManager, Assembly-CSharp
-        m_MethodName: playSound4
+        m_MethodName: playSelectionButton2Sound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5870,7 +5895,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1170877624
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6196,7 +6221,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 692649458}
         m_TargetAssemblyTypeName: SFXManager, Assembly-CSharp
-        m_MethodName: playSound3
+        m_MethodName: playSelectionButton1Sound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6930,7 +6955,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 692649458}
         m_TargetAssemblyTypeName: SFXManager, Assembly-CSharp
-        m_MethodName: playSound4
+        m_MethodName: playSelectionButton1Sound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9246,6 +9271,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 692649458}
+        m_TargetAssemblyTypeName: SFXManager, Assembly-CSharp
+        m_MethodName: playSelectionButton3Sound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1899014465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9579,6 +9616,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1544971429}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
         m_MethodName: OnJoinMatchClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 692649458}
+        m_TargetAssemblyTypeName: SFXManager, Assembly-CSharp
+        m_MethodName: playSelectionButton3Sound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
