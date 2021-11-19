@@ -8013,7 +8013,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d78b6a8a25de94e82c714f1a3984fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1000
+  speed: 4000
   artButton: {fileID: 402989024}
   progButton: {fileID: 1619516733}
   soundButton: {fileID: 1298027374}
