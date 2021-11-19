@@ -1465,8 +1465,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ddaa342acbb0a0499537bf2bde6ff79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sonidoDisparo: {fileID: 8300000, guid: cc59e4709f92e6b4096e9e50fb51f00f, type: 3}
-  sonidoRecarga: {fileID: 8300000, guid: a7a84ff8ab8435b47980247b50442798, type: 3}
+  sonidoDisparo: {fileID: 8300000, guid: c531d57dddb126f4381abec330c2871e, type: 3}
+  sonidoRecarga: {fileID: 8300000, guid: 6217880113dcc434fb41467e75ef00cd, type: 3}
 --- !u!1 &1649746582
 GameObject:
   m_ObjectHideFlags: 0

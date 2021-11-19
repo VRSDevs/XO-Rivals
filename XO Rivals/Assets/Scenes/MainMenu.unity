@@ -4118,10 +4118,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9530a090b7e5f864e85030cfc4c9f744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sonidoBoton1: {fileID: 8300000, guid: 4dae572f5d124c24d9dfd4368cb5aca4, type: 3}
-  sonidoBoton2: {fileID: 8300000, guid: aa70432815b4ee148a2623d6e4824457, type: 3}
-  sonidoBoton3: {fileID: 8300000, guid: a454cc63a473b184f85e82d2e2c22839, type: 3}
-  sonidoBoton4: {fileID: 8300000, guid: e6622537f95b70648b8fcd2138315731, type: 3}
+  sonidoBoton1: {fileID: 8300000, guid: ccf69dce062307f4db4bdb77b53d5712, type: 3}
+  sonidoBoton2: {fileID: 8300000, guid: 0c14f1b57f0b0744ab642c8c7792c351, type: 3}
+  sonidoBoton3: {fileID: 8300000, guid: d8ec08f9a9982634a838457357da9cbc, type: 3}
+  sonidoBoton4: {fileID: 8300000, guid: dca47d91d4f53344b89287053e079741, type: 3}
 --- !u!82 &692649459
 AudioSource:
   m_ObjectHideFlags: 0
