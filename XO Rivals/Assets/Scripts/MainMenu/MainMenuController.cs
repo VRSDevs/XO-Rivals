@@ -65,6 +65,12 @@ public class MainMenuController : MonoBehaviour
         _gameManager.Matchmaking = !_gameManager.Matchmaking;
         
         CreateGameButton.onClick.RemoveAllListeners();
+
+        CreateGameButton.interactable = false;
+        JoinGameButton.interactable = false;
+        ChangeMatchListInteractions(false);
+
+        StartCoroutine(ChangeInteractionAfterCm());
         
         if (_gameManager.Matchmaking)
         {
@@ -86,7 +92,7 @@ public class MainMenuController : MonoBehaviour
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Uniéndote a " + MatchName + " (BETA)";
         CreateGameButton.interactable = false;
         JoinGameButton.interactable = false;
-        StartCoroutine(ResetInteractions());
+        StartCoroutine(ChangeInteractionAfterJm());
     }
 
     /// <summary>
@@ -149,6 +155,21 @@ public class MainMenuController : MonoBehaviour
 
         CreateGameButton.interactable = true;
     }
+    
+    /// <summary>
+    /// Método de corutina ejecutado para resetear los botones del menú de jugar
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator ChangeInteractionAfterJm()
+    {
+        yield return new WaitForSeconds(2);
+        
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Te hubieses unido a la sala";
+        
+        CreateGameButton.interactable = false;
+
+        ChangeMatchListInteractions(true);
+    }
 
     /// <summary>
     /// Método para cambiar la interacción con las partidas de la lista de partidas del jugador
@@ -166,25 +187,7 @@ public class MainMenuController : MonoBehaviour
 
     #endregion
 
-    /// <summary>
-    /// Método de corutina ejecutado para resetear los botones del menú de jugar
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator ResetInteractions()
-    {
-        yield return new WaitForSeconds(2);
-        
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Te hubieses unido a la sala";
-        
-        CreateGameButton.interactable = false;
-
-        for (int i = 0; i < ViewContent.transform.childCount; i++)
-        {
-            GameObject child = ViewContent.transform.GetChild(i).gameObject;
-
-            child.GetComponent<Button>().interactable = true;
-        }
-    }
+    
 
     
 }
