@@ -15,6 +15,7 @@ public class MainMenuController : MonoBehaviour
     
     [SerializeField] public Button CreateGameButton;
     [SerializeField] public Button JoinGameButton;
+    [SerializeField] public Button BackButton;
 
     [SerializeField] public Sprite CreateMatchSprite;
     [SerializeField] public Sprite CancelMatchmakingSprite;
@@ -80,6 +81,7 @@ public class MainMenuController : MonoBehaviour
         CreateGameButton.interactable = false;
         JoinGameButton.interactable = false;
         ChangeMatchListInteractions(false);
+        BackButton.interactable = false;
 
         if (_gameManager.Matchmaking)
         {
@@ -170,6 +172,7 @@ public class MainMenuController : MonoBehaviour
         {
             JoinGameButton.interactable = true;
             ChangeMatchListInteractions(true);
+            BackButton.interactable = true;
         }
         
         _gameManager.SetCreatingRoomStatus();
