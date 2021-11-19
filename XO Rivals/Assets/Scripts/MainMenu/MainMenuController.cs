@@ -15,9 +15,12 @@ public class MainMenuController : MonoBehaviour
     
     [SerializeField] public Button CreateGameButton;
     [SerializeField] public Button JoinGameButton;
+    [SerializeField] public Button BackButton;
 
     [SerializeField] public Sprite CreateMatchSprite;
     [SerializeField] public Sprite CancelMatchmakingSprite;
+
+    [SerializeField] public Image CreateMatchImage;
 
     [SerializeField] public GameObject ViewContent;
 
@@ -58,6 +61,15 @@ public class MainMenuController : MonoBehaviour
     #region ButtonsMethods
 
     /// <summary>
+    /// Método para mostrar el menú de jugar
+    /// </summary>
+    public void OnPlayMenuClick()
+    {
+        MainMenuObject.SetActive(false);
+        PlayMenuObject.SetActive(true);
+    }
+
+    /// <summary>
     /// Método para actualizar el comportamiento del botón de crear partida
     /// </summary>
     public void OnCreateMatchClick()
@@ -69,18 +81,19 @@ public class MainMenuController : MonoBehaviour
         CreateGameButton.interactable = false;
         JoinGameButton.interactable = false;
         ChangeMatchListInteractions(false);
+        BackButton.interactable = false;
 
         if (_gameManager.Matchmaking)
         {
             StartCoroutine(ChangeInteractionAfterCm("connect"));
             ConnectRandomMatch();
-            CreateGameButton.GetComponent<Image>().sprite = CancelMatchmakingSprite;
+            CreateMatchImage.sprite = CancelMatchmakingSprite;
         }
         else
         {
             StartCoroutine(ChangeInteractionAfterCm("cancel"));
             LeaveMatchmaking();
-            CreateGameButton.GetComponent<Image>().sprite = CreateMatchSprite;
+            CreateMatchImage.sprite = CreateMatchSprite;
         }
     }
 
@@ -159,6 +172,7 @@ public class MainMenuController : MonoBehaviour
         {
             JoinGameButton.interactable = true;
             ChangeMatchListInteractions(true);
+            BackButton.interactable = true;
         }
         
         _gameManager.SetCreatingRoomStatus();
@@ -174,7 +188,7 @@ public class MainMenuController : MonoBehaviour
         
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Te hubieses unido a la sala";
         
-        CreateGameButton.interactable = false;
+        CreateGameButton.interactable = true;
 
         ChangeMatchListInteractions(true);
     }
@@ -194,8 +208,4 @@ public class MainMenuController : MonoBehaviour
     }
 
     #endregion
-
-    
-
-    
 }

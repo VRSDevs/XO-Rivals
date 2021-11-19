@@ -20,7 +20,6 @@ public class ButtonsScript : MonoBehaviour
 
     //Array of positions
     public string SelectedTile;
-    public GameObject actualChip;
 
     //Variables for victory
     public int col, row;
@@ -132,12 +131,12 @@ public class ButtonsScript : MonoBehaviour
             
             //Set chip to player type
             if(thisMatch.PlayerOName == localPlayer.Name)
-                actualChip = Instantiate(circleGO, tile.transform.position, Quaternion.identity);
+                thisMatch.ActualChip = Instantiate(circleGO, tile.transform.position, Quaternion.identity);
             else
-                actualChip = Instantiate(crossGO, tile.transform.position, Quaternion.identity);
+                thisMatch.ActualChip = Instantiate(crossGO, tile.transform.position, Quaternion.identity);
 
-            actualChip.SetActive(true);
-            actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+            thisMatch.ActualChip.SetActive(true);
+            thisMatch.ActualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
             thisMatch.TurnMoment = 1;
 
             //Go to minigame
@@ -176,9 +175,9 @@ public class ButtonsScript : MonoBehaviour
                 //Save position
                 thisMatch.FilledPositions[col,row] = (thisMatch.WhosTurn == thisMatch.PlayerOName ? 0: 1);
                 //Paint tile completely
-                actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
+                thisMatch.ActualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
                 //Add chip to list
-                thisMatch.Chips.Add(actualChip);
+                thisMatch.Chips.Add(thisMatch.ActualChip);
 
                 //Add one to filled count
                 thisMatch.NumFilled++;
@@ -192,7 +191,7 @@ public class ButtonsScript : MonoBehaviour
             }else{
 
                 //No need to checkVictory because no tile has been set
-                Destroy(actualChip);
+                Destroy(thisMatch.ActualChip);
                 StartCoroutine(screenManager.txtTimer("¡Turno perdido!"));
                 screenManager.MinigameSelectionActivation();
             }
