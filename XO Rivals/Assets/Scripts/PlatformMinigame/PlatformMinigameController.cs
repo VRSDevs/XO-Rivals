@@ -14,7 +14,7 @@ public class PlatformMinigameController : MonoBehaviour
     public GameObject jumpButton;
     [SerializeField]
     public GameObject rightButton;
-
+    
     // Jugadores
     [SerializeField]
     public GameObject playerX;

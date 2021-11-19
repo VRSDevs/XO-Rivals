@@ -6,8 +6,11 @@ public class SFXManager_Pistolero : MonoBehaviour
 {
     private AudioSource managerPistolero;
 
-    public AudioClip sonidoDisparo;
-    public AudioClip sonidoRecarga;
+    public AudioClip ReloadSound;
+    public AudioClip ShotSound;
+
+    public AudioClip VictorySound;
+    public AudioClip DefeatSound;
 
     // Start is called before the first frame update
     void Start()
@@ -22,14 +25,24 @@ public class SFXManager_Pistolero : MonoBehaviour
     }
 
 
-    public void playDisparo()
+    public void playReloadSound()
     {
-        managerPistolero.PlayOneShot(sonidoDisparo);
+        managerPistolero.PlayOneShot(ReloadSound);
     }
-
-    public void playRecarga()
+    public void playShotSound()
     {
-        managerPistolero.PlayOneShot(sonidoRecarga);
+        managerPistolero.PlayOneShot(ShotSound);
     }
-
+    
+    public void playVictorySound()
+    {
+        managerPistolero.PlayOneShot(VictorySound);
+    }
+    public void playDefeatSound()
+    {
+        managerPistolero.PlayOneShot(DefeatSound);
+    }
+    
+    
+    
 }

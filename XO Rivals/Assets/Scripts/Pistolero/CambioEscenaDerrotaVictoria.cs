@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class CambioEscenaDerrotaVictoria : MonoBehaviour
 {
 
+    public SFXManager_Pistolero sounds;
     [SerializeField]
     private GameObject victory;
     [SerializeField]
@@ -43,12 +44,16 @@ public class CambioEscenaDerrotaVictoria : MonoBehaviour
     {
         defeat.SetActive(true);
         Invoke("Defeat", 3f);
+        sounds.playDefeatSound();
+
     }
 
     public void VictoryCanvas()
     {
         victory.SetActive(true);
         Invoke("Victory", 3f);
+        sounds.playVictorySound();
+
     }
 
     public void Defeat()

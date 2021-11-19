@@ -18,8 +18,10 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public Transform jumpCheck;
 
+    public SFX_Manager_Platform sounds;
+    
     public LayerMask groundLayer;
-
+    
     // Vida
     public bool isDead = false;
 
@@ -48,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         if (win)
         {
             player.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+
         }
 
         if (!isDead && !win) 
@@ -66,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
             
             deathAnimPlayed = true;
             Invoke("DeathAnimation",0.2f);
+
         }
     }
 
@@ -74,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
         col.enabled = false;
         transform.DOLocalMoveY(4,1).OnComplete(() => { 
             transform.DOLocalMoveY(-10,4);});
-        
+
     }
 
     private bool IsJumping()
@@ -93,6 +97,7 @@ public class PlayerMovement : MonoBehaviour
         {
             player.velocity = new Vector2(player.velocity.x, jumpingPower);
             anim.SetBool("isJumping", true);
+            sounds.playJumpSound();
         }
 
         
@@ -112,6 +117,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (context.ReadValue<Vector2>().x < 0) { return; }
         horizontal = context.ReadValue<Vector2>().x;
+        sounds.playWalkSound();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -121,6 +127,7 @@ public class PlayerMovement : MonoBehaviour
             isDead = true;
             anim.SetBool("isDead", true);
             Invoke("DefeatCanvas", 3f);
+            sounds.playDeathSound();
         } 
         if(collision.gameObject.tag == "FinishLine")
         {
@@ -145,12 +152,14 @@ public class PlayerMovement : MonoBehaviour
     {
         defeat.SetActive(true);
         Invoke("Defeat", 3f);
+        sounds.playDefeatSound();
     }
 
     public void VictoryCanvas()
     {
         victory.SetActive(true);
         Invoke("Victory", 3f);
+        sounds.playVictorySound();
     }
 
     public void Defeat()
