@@ -155,13 +155,17 @@ public class PlayerMovement : MonoBehaviour
 
     public void Defeat()
     {
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
         PlayerPrefs.SetInt("minigameWin", 0);
+        //SceneManager.UnloadSceneAsync("PlatformMinigame");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 
     public void Victory()
     {
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
         PlayerPrefs.SetInt("minigameWin", 1);
+        //SceneManager.UnloadSceneAsync("PlatformMinigame");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 }

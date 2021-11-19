@@ -86,7 +86,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions = new int[3,3];
         FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
         FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].Chips = new List<GameObject>();
-        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = 0;
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = 1;
     }
 
     #endregion
