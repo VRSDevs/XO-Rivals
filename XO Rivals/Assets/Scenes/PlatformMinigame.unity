@@ -394,6 +394,7 @@ MonoBehaviour:
   WalkSound: {fileID: 8300000, guid: 7a9f6f7cf1f70ca469f90eb6784ea1cc, type: 3}
   VictorySound: {fileID: 8300000, guid: d1010f461011d3b45ab0b83bad59cdc1, type: 3}
   DefeatSound: {fileID: 8300000, guid: b50203cbfccbd7549a05e0a71838a2cd, type: 3}
+  DeathSound: {fileID: 8300000, guid: 0cbcb6ea91b040640a4145684908e254, type: 3}
 --- !u!4 &44270560
 Transform:
   m_ObjectHideFlags: 0
@@ -2830,7 +2831,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 44270559}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: SFX_Manager_Platform, Assembly-CSharp
           m_MethodName: playWalkSound
           m_Mode: 1
