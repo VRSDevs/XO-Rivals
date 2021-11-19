@@ -27,7 +27,7 @@ public class ControlBoton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         controlCrono.finCrono();
 
         this.gameObject.SetActive(false);
-        botonExit.SetActive(true);
+        //botonExit.SetActive(true);
        
     }
    

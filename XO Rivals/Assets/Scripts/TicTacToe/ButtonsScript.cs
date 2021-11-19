@@ -71,13 +71,9 @@ public class ButtonsScript : MonoBehaviour
         Debug.Log("Turn: " + thisMatch.WhosTurn);
         Debug.Log("Turn moment: " + thisMatch.TurnMoment);
         Debug.Log("Numfilled: " + thisMatch.NumFilled);
-        Debug.Log("Board: ");
-        for(int i = 0; i < 3; i++){
-            Debug.Log("[" + i);
-            for(int j = 0; j < 3; j++){
-                Debug.Log(j + "] = " + thisMatch.FilledPositions[i,j]);
-            }
-        }
+        Debug.Log(thisMatch.FilledPositions[0,0] + " " + thisMatch.FilledPositions[0,1] + " " + thisMatch.FilledPositions[0,2] + "\n" 
+        + thisMatch.FilledPositions[1,0] + " " + thisMatch.FilledPositions[1,1] + " " + thisMatch.FilledPositions[1,2] + "\n" 
+        + thisMatch.FilledPositions[2,0] + " " + thisMatch.FilledPositions[2,1] + " " + thisMatch.FilledPositions[2,2]);
         Debug.Log("Minigame chosen: " + thisMatch.MiniGameChosen);
 
         UpdateTurn();
@@ -155,14 +151,17 @@ public class ButtonsScript : MonoBehaviour
             switch(thisMatch.MiniGameChosen){
                 case 0:
                     SceneManager.LoadScene("Pistolero");
+                    //SceneManager.LoadScene("Pistolero", LoadSceneMode.Additive);
                 break;
 
                 case 1:
                     SceneManager.LoadScene("MinijuegoComida");
+                    //SceneManager.LoadScene("MinijuegoComida", LoadSceneMode.Additive);
                 break;
 
                 case 2:
-                    SceneManager.LoadScene("2D Platform");
+                    SceneManager.LoadScene("PlatformMinigame");
+                    //SceneManager.LoadScene("PlatformMinigame", LoadSceneMode.Additive);
                 break;
             }
             
