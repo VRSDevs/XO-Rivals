@@ -6,19 +6,10 @@ public class SFXManager : MonoBehaviour
 {
     private AudioSource managerBoton;
 
-    public AudioClip selectBotton1;
-    public AudioClip selectBotton2;
-    public AudioClip selectBotton3;
-    public AudioClip selectBotton4;
-    public AudioClip WalkSound;
-    public AudioClip DeathSound;
-    public AudioClip VictorySound;
-    public AudioClip ShotSound;
-    public AudioClip ChipSound;
-    public AudioClip DefeatSound;
-    public AudioClip CookingSound;
-    public AudioClip RealoadSound;
-    public AudioClip JumpSound;
+    public AudioClip sonidoBoton1;
+    public AudioClip sonidoBoton2;
+    public AudioClip sonidoBoton3;
+    public AudioClip sonidoBoton4; 
 
     // Start is called before the first frame update
     void Start()
@@ -31,69 +22,25 @@ public class SFXManager : MonoBehaviour
     {
         
     }
+
+
     public void playSound1()
     {
-        managerBoton.PlayOneShot(selectBotton1, 2.0f);
+        managerBoton.PlayOneShot(sonidoBoton1);
     }
 
     public void playSound2()
     {
-        managerBoton.PlayOneShot(selectBotton2, 2.0f);
+        managerBoton.PlayOneShot(sonidoBoton2);
     }
 
     public void playSound3()
     {
-        managerBoton.PlayOneShot(selectBotton3);
+        managerBoton.PlayOneShot(sonidoBoton3);
     }
 
     public void playSound4()
     {
-        managerBoton.PlayOneShot(selectBotton4);
+        managerBoton.PlayOneShot(sonidoBoton4);
     }
-    
-    public void playWalkSound()
-    {
-        managerBoton.PlayOneShot(WalkSound);
-    }
-    
-    public void playDeathSound()
-    {
-        managerBoton.PlayOneShot(DeathSound);
-    }
-    
-    public void playVictorySound()
-    {
-        managerBoton.PlayOneShot(VictorySound);
-    }
-    
-    public void playShotSound()
-    {
-        managerBoton.PlayOneShot(ShotSound);
-    }
-    
-    public void playJumpSound()
-    {
-        managerBoton.PlayOneShot(JumpSound);
-    }
-    
-    public void playRealoadSound()
-    {
-        managerBoton.PlayOneShot(RealoadSound);
-    }
-    
-    public void playChipSound()
-    {
-        managerBoton.PlayOneShot(ChipSound);
-    }
-    public void playCookingSound()
-    {
-        managerBoton.PlayOneShot(CookingSound);
-    }
-    
-    public void playDefeatSound()
-    {
-        managerBoton.PlayOneShot(DefeatSound);
-    }
-    
-
 }
