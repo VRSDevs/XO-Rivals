@@ -280,7 +280,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <summary>
     /// Método para actualizar de manera automática la variable de control de si está creando una partida o no
     /// </summary>
-    public void UpdatedCreatingStatus()
+    public void UpdateCreatingStatus()
     {
         _creatingRoom = !_creatingRoom;
     }
