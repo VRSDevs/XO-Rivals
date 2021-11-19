@@ -70,15 +70,15 @@ public class MainMenuController : MonoBehaviour
         JoinGameButton.interactable = false;
         ChangeMatchListInteractions(false);
 
-        StartCoroutine(ChangeInteractionAfterCm());
-        
         if (_gameManager.Matchmaking)
         {
+            StartCoroutine(ChangeInteractionAfterCm("connect"));
             ConnectRandomMatch();
             CreateGameButton.GetComponent<Image>().sprite = CancelMatchmakingSprite;
         }
         else
         {
+            StartCoroutine(ChangeInteractionAfterCm("cancel"));
             LeaveMatchmaking();
             CreateGameButton.GetComponent<Image>().sprite = CreateMatchSprite;
         }
@@ -149,11 +149,19 @@ public class MainMenuController : MonoBehaviour
     /// Corutina ejecutada tras crear una partida o buscarla
     /// </summary>
     /// <returns></returns>
-    private IEnumerator ChangeInteractionAfterCm()
+    private IEnumerator ChangeInteractionAfterCm(string mode)
     {
         yield return new WaitUntil(_gameManager.GetIsCreatingMatch);
 
         CreateGameButton.interactable = true;
+
+        if (mode.Equals("cancel"))
+        {
+            JoinGameButton.interactable = true;
+            ChangeMatchListInteractions(true);
+        }
+        
+        _gameManager.SetCreatingRoomStatus();
     }
     
     /// <summary>
