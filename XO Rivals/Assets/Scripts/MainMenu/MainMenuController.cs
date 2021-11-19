@@ -65,14 +65,20 @@ public class MainMenuController : MonoBehaviour
         _gameManager.Matchmaking = !_gameManager.Matchmaking;
         
         CreateGameButton.onClick.RemoveAllListeners();
-        
+
+        CreateGameButton.interactable = false;
+        JoinGameButton.interactable = false;
+        ChangeMatchListInteractions(false);
+
         if (_gameManager.Matchmaking)
         {
+            StartCoroutine(ChangeInteractionAfterCm("connect"));
             ConnectRandomMatch();
             CreateGameButton.GetComponent<Image>().sprite = CancelMatchmakingSprite;
         }
         else
         {
+            StartCoroutine(ChangeInteractionAfterCm("cancel"));
             LeaveMatchmaking();
             CreateGameButton.GetComponent<Image>().sprite = CreateMatchSprite;
         }
@@ -86,7 +92,7 @@ public class MainMenuController : MonoBehaviour
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Uniéndote a " + MatchName + " (BETA)";
         CreateGameButton.interactable = false;
         JoinGameButton.interactable = false;
-        StartCoroutine(ResetInteractions());
+        StartCoroutine(ChangeInteractionAfterJm());
     }
 
     /// <summary>
@@ -137,23 +143,59 @@ public class MainMenuController : MonoBehaviour
 
     #endregion
 
+    #region ButtonInteractionsMethods
+
+    /// <summary>
+    /// Corutina ejecutada tras crear una partida o buscarla
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator ChangeInteractionAfterCm(string mode)
+    {
+        yield return new WaitUntil(_gameManager.GetIsCreatingMatch);
+
+        CreateGameButton.interactable = true;
+
+        if (mode.Equals("cancel"))
+        {
+            JoinGameButton.interactable = true;
+            ChangeMatchListInteractions(true);
+        }
+        
+        _gameManager.SetCreatingRoomStatus();
+    }
+    
     /// <summary>
     /// Método de corutina ejecutado para resetear los botones del menú de jugar
     /// </summary>
     /// <returns></returns>
-    private IEnumerator ResetInteractions()
+    private IEnumerator ChangeInteractionAfterJm()
     {
         yield return new WaitForSeconds(2);
         
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Te hubieses unido a la sala";
         
-        CreateGameButton.interactable = true;
+        CreateGameButton.interactable = false;
 
+        ChangeMatchListInteractions(true);
+    }
+
+    /// <summary>
+    /// Método para cambiar la interacción con las partidas de la lista de partidas del jugador
+    /// </summary>
+    /// <param name="interactable"></param>
+    private void ChangeMatchListInteractions(bool interactable)
+    {
         for (int i = 0; i < ViewContent.transform.childCount; i++)
         {
             GameObject child = ViewContent.transform.GetChild(i).gameObject;
 
-            child.GetComponent<Button>().interactable = true;
+            child.GetComponent<Button>().interactable = interactable;
         }
     }
+
+    #endregion
+
+    
+
+    
 }
