@@ -41,7 +41,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3431209771459165765}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -97,8 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bdb811129b056e4ab0615f6ca2ea5e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectEnemy: {fileID: 0}
   player: {fileID: 0}
+  enemigoSource: 
+  creado: 0
 --- !u!65 &-3337316037134811101
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -110,8 +111,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 0.71478724}
+  m_Center: {x: 0, y: 0, z: -0.034441475}
 --- !u!54 &6999334955538490698
 Rigidbody:
   m_ObjectHideFlags: 0

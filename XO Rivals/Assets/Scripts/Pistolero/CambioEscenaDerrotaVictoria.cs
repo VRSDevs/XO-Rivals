@@ -21,6 +21,7 @@ public class CambioEscenaDerrotaVictoria : MonoBehaviour
     {
 
         if (win)
+
         {
             FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
             PlayerPrefs.SetInt("minigameWin", 1);
