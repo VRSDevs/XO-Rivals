@@ -99,20 +99,20 @@ public class ScreenManager : MonoBehaviour
         switch (buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions[col, row])
         {
             case 0:
-                buttonsScript.actualChip = Instantiate(buttonsScript.circleGO, tile.transform.position, Quaternion.identity);
-                buttonsScript.actualChip.SetActive(true);
-                buttonsScript.actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+                buttonsScript.thisMatch.ActualChip = Instantiate(buttonsScript.circleGO, tile.transform.position, Quaternion.identity);
+                buttonsScript.thisMatch.ActualChip.SetActive(true);
+                buttonsScript.thisMatch.ActualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
                         
                 break;
             case 1:
-                buttonsScript.actualChip = Instantiate(buttonsScript.crossGO, tile.transform.position, Quaternion.identity);
-                buttonsScript.actualChip.SetActive(true);
-                buttonsScript.actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+                buttonsScript.thisMatch.ActualChip = Instantiate(buttonsScript.crossGO, tile.transform.position, Quaternion.identity);
+                buttonsScript.thisMatch.ActualChip.SetActive(true);
+                buttonsScript.thisMatch.ActualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
                         
                 break;
         }
         
-        buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].Chips.Add(buttonsScript.actualChip);
+        buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].Chips.Add(buttonsScript.thisMatch.ActualChip);
     }
     
     public void EnableButtons()
