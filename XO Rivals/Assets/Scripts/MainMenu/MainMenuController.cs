@@ -174,7 +174,7 @@ public class MainMenuController : MonoBehaviour
         
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Te hubieses unido a la sala";
         
-        CreateGameButton.interactable = false;
+        CreateGameButton.interactable = true;
 
         ChangeMatchListInteractions(true);
     }
