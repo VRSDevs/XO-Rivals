@@ -265,16 +265,12 @@ public class Login : MonoBehaviour
 
     public void ShowKeyboard()
     {
-        
-        
         keyboard = TouchScreenKeyboard.Open("");
         keyboard.active = true;
-        
     }
 
     public void HideKeyboard()
     {
-
         keyboard.active = false;
         
     }
