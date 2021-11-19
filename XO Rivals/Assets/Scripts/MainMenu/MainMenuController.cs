@@ -60,6 +60,15 @@ public class MainMenuController : MonoBehaviour
     #region ButtonsMethods
 
     /// <summary>
+    /// Método para mostrar el menú de jugar
+    /// </summary>
+    public void OnPlayMenuClick()
+    {
+        MainMenuObject.SetActive(false);
+        PlayMenuObject.SetActive(true);
+    }
+
+    /// <summary>
     /// Método para actualizar el comportamiento del botón de crear partida
     /// </summary>
     public void OnCreateMatchClick()
