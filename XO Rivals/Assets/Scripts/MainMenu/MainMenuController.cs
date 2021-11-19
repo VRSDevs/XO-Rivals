@@ -19,6 +19,8 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public Sprite CreateMatchSprite;
     [SerializeField] public Sprite CancelMatchmakingSprite;
 
+    [SerializeField] public Image CreateMatchImage;
+
     [SerializeField] public GameObject ViewContent;
 
     private GameManager _gameManager;
@@ -74,13 +76,13 @@ public class MainMenuController : MonoBehaviour
         {
             StartCoroutine(ChangeInteractionAfterCm("connect"));
             ConnectRandomMatch();
-            CreateGameButton.GetComponent<Image>().sprite = CancelMatchmakingSprite;
+            CreateMatchImage.sprite = CancelMatchmakingSprite;
         }
         else
         {
             StartCoroutine(ChangeInteractionAfterCm("cancel"));
             LeaveMatchmaking();
-            CreateGameButton.GetComponent<Image>().sprite = CreateMatchSprite;
+            CreateMatchImage.sprite = CreateMatchSprite;
         }
     }
 
