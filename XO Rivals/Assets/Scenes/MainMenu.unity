@@ -4264,6 +4264,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9530a090b7e5f864e85030cfc4c9f744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CookingMusic: {fileID: 0}
+  unmanMusic: {fileID: 0}
+  PlatformMusic: {fileID: 0}
+  Tic_Tac_ToeMusic: {fileID: 0}
+  ShopMusic: {fileID: 0}
   sonidoBoton1: {fileID: 0}
   sonidoBoton2: {fileID: 0}
   sonidoBoton3: {fileID: 0}
@@ -8018,7 +8023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d78b6a8a25de94e82c714f1a3984fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1100
+  speed: 1000
   artButton: {fileID: 402989024}
   progButton: {fileID: 1619516733}
   soundButton: {fileID: 1298027374}
