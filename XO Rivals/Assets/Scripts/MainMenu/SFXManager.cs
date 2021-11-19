@@ -12,10 +12,10 @@ public class SFXManager : MonoBehaviour
     public AudioClip Tic_Tac_ToeMusic;
     public AudioClip ShopMusic;
 
-    public AudioClip sonidoBoton1;
-    public AudioClip sonidoBoton2;
-    public AudioClip sonidoBoton3;
-    public AudioClip sonidoBoton4;
+    public AudioClip SelectionButton1;
+    public AudioClip SelectionButton2;
+    public AudioClip SelectionButton3;
+    public AudioClip SelectionButton4;
     
     public AudioClip DeathSound;
     public AudioClip VictorySound;
@@ -40,24 +40,24 @@ public class SFXManager : MonoBehaviour
     }
 
 
-    public void playSound1()
+    public void playSelectionButton1Sound()
     {
-        managerBoton.PlayOneShot(sonidoBoton1);
+        managerBoton.PlayOneShot(SelectionButton1);
     }
 
-    public void playSound2()
+    public void playSelectionButton2Sound()
     {
-        managerBoton.PlayOneShot(sonidoBoton2);
+        managerBoton.PlayOneShot(SelectionButton2);
     }
 
-    public void playSound3()
+    public void playSelectionButton3Sound()
     {
-        managerBoton.PlayOneShot(sonidoBoton3);
+        managerBoton.PlayOneShot(SelectionButton3);
     }
 
-    public void playSound4()
+    public void playSelectionButton4Sound()
     {
-        managerBoton.PlayOneShot(sonidoBoton4);
+        managerBoton.PlayOneShot(SelectionButton4);
     }
     
     
