@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class MatchScrollerController : MonoBehaviour
 {
-    [SerializeField] public RectTransform MatchPrefab;
+    [SerializeField] public GameObject MatchPrefab;
     [SerializeField] public ScrollRect ScrollView;
     [SerializeField] public RectTransform ViewContent;
     
     private List<MatchesView> views = new List<MatchesView>();
 
-    private void Update()
+    private void Start()
     {
         UpdateMatchesList();
     }
@@ -33,10 +33,11 @@ public class MatchScrollerController : MonoBehaviour
 
         foreach (var matchModel in list)
         {
-            var instance = Instantiate(MatchPrefab.gameObject, ViewContent, false);
+            var instance = Instantiate(MatchPrefab, ViewContent, false);
             var view = IntializeMatchView(instance, matchModel);
             views.Add(view);
         }
+    
     }
     
     private MatchesView IntializeMatchView(GameObject viewGO, MatchModel model)
