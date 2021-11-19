@@ -26,12 +26,12 @@ public class SFXManager : MonoBehaviour
 
     public void playSound1()
     {
-        managerBoton.PlayOneShot(sonidoBoton1, 2.0f);
+        managerBoton.PlayOneShot(sonidoBoton1);
     }
 
     public void playSound2()
     {
-        managerBoton.PlayOneShot(sonidoBoton2, 2.0f);
+        managerBoton.PlayOneShot(sonidoBoton2);
     }
 
     public void playSound3()
