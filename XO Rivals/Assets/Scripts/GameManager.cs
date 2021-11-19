@@ -145,6 +145,15 @@ public class GameManager : MonoBehaviour
     #region MatchMethods
 
     /// <summary>
+    /// Método para obtener si se está creando una partida
+    /// </summary>
+    /// <returns>¿Se está creando la partida?</returns>
+    public bool GetIsCreatingMatch()
+    {
+        return _networkController.GetCreatingRom();
+    }
+
+    /// <summary>
     /// Método para configurar partida y enviar los datos necesarios
     /// </summary>
     /// <param name="playerType">Tipo del jugador (ficha)</param>

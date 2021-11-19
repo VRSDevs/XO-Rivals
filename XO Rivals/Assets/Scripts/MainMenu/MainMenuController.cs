@@ -137,6 +137,21 @@ public class MainMenuController : MonoBehaviour
 
     #endregion
 
+    #region ButtonInteractionsMethods
+
+    /// <summary>
+    /// Corutina ejecutada tras crear una partida o buscarla
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator ChangeInteractionAfterCm()
+    {
+        yield return new WaitUntil(_gameManager.GetIsCreatingMatch);
+
+        CreateGameButton.interactable = true;
+    }
+
+    #endregion
+
     /// <summary>
     /// Método de corutina ejecutado para resetear los botones del menú de jugar
     /// </summary>
@@ -147,7 +162,7 @@ public class MainMenuController : MonoBehaviour
         
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Te hubieses unido a la sala";
         
-        CreateGameButton.interactable = true;
+        CreateGameButton.interactable = false;
 
         for (int i = 0; i < ViewContent.transform.childCount; i++)
         {
@@ -156,4 +171,6 @@ public class MainMenuController : MonoBehaviour
             child.GetComponent<Button>().interactable = true;
         }
     }
+
+    
 }
