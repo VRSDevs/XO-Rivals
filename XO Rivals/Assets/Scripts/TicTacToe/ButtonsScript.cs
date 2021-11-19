@@ -166,33 +166,36 @@ public class ButtonsScript : MonoBehaviour
                     SceneManager.LoadScene("2D Platform");
                 break;
             }
-        }
+            
+        }else if(thisMatch.TurnMoment == 2){
 
-        //Check minigame win
-        miniWin = (PlayerPrefs.GetInt("minigameWin") == 1);
-        if(miniWin == true){
+            //Check minigame win
+            miniWin = (PlayerPrefs.GetInt("minigameWin") == 1);
+            if(miniWin == true){
 
-            //Save position
-            thisMatch.FilledPositions[col,row] = (thisMatch.WhosTurn == thisMatch.PlayerOName ? 0: 1);
-            //Paint tile completely
-            actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
-            //Add chip to list
-            thisMatch.Chips.Add(actualChip);
+                //Save position
+                thisMatch.FilledPositions[col,row] = (thisMatch.WhosTurn == thisMatch.PlayerOName ? 0: 1);
+                //Paint tile completely
+                actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
+                //Add chip to list
+                thisMatch.Chips.Add(actualChip);
 
-            //Add one to filled count
-            thisMatch.NumFilled++;
+                //Add one to filled count
+                thisMatch.NumFilled++;
 
-            //Disable input because its not your turn
-            screenManager.DisableButtons();
+                //Disable input because its not your turn
+                screenManager.DisableButtons();
 
-            //If someone won or draw, go to next scene. Else, choose minigame for opponent
-            thisMatch.TurnMoment = 3;
-            CheckVictory();
-        }else{
+                //If someone won or draw, go to next scene. Else, choose minigame for opponent
+                thisMatch.TurnMoment = 3;
+                CheckVictory();
+            }else{
 
-            //No need to checkVictory because no tile has been set
-            Destroy(actualChip);
-            StartCoroutine(screenManager.txtTimer("¡Turno perdido!"));
+                //No need to checkVictory because no tile has been set
+                Destroy(actualChip);
+                StartCoroutine(screenManager.txtTimer("¡Turno perdido!"));
+                screenManager.MinigameSelectionActivation();
+            }
         }
     }
     
