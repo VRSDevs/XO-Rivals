@@ -5,6 +5,7 @@ using UnityEngine;
 public class SFXManager : MonoBehaviour
 {
     private AudioSource managerBoton;
+    
     public AudioSource CookingMusic;
     public AudioSource unmanMusic;
     public AudioSource PlatformMusic;
