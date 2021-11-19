@@ -18,10 +18,10 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public Transform jumpCheck;
 
-    public SFXManager Sonidos;
+    public SFX_Manager_Platform sounds;
     
     public LayerMask groundLayer;
-
+    
     // Vida
     public bool isDead = false;
 
@@ -123,14 +123,12 @@ public class PlayerMovement : MonoBehaviour
             isDead = true;
             anim.SetBool("isDead", true);
             Invoke("DefeatCanvas", 3f);
-            Sonidos.playDeathSound();
         } 
         if(collision.gameObject.tag == "FinishLine")
         {
             win = true;
             anim.SetBool("Win", true);
             Invoke("VictoryCanvas", 3f);
-            Sonidos.playVictorySound();
         }
     }
 
