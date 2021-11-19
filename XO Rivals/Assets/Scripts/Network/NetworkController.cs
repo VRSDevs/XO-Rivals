@@ -177,6 +177,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
 
         FindObjectOfType<PlayerInfo>().MatchId = PhotonNetwork.LocalPlayer.ActorNumber;
+        
+        UpdateCreatingStatus();
 
         if (PhotonNetwork.CurrentRoom.PlayerCount < 2)
         {
@@ -223,6 +225,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         if (SceneManager.GetActiveScene().name.Equals("MainMenu"))
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Búsqueda cancelada.";
+            UpdateCreatingStatus();
         }
     }
 
