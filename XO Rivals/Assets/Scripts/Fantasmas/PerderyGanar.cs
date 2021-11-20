@@ -7,6 +7,10 @@ using UnityEngine.UI;
 public class PerderyGanar : MonoBehaviour
 {
 
+    // Sounds
+    public SFXManagerFantasma sounds;
+
+    
     [SerializeField]
     private GameObject victory;
     [SerializeField]
@@ -36,7 +40,6 @@ public class PerderyGanar : MonoBehaviour
         {
 
             Invoke("DefeatCanvas", 3f);
-
 
         }
 
@@ -100,12 +103,15 @@ public class PerderyGanar : MonoBehaviour
     {
         defeat.SetActive(true);
         Invoke("Defeat", 3f);
+        sounds.playDefeatSound();
     }
 
     public void VictoryCanvas()
     {
         victory.SetActive(true);
         Invoke("Victory", 3f);
+        sounds.playVictorySound();
+
     }
 
     public void Defeat()
