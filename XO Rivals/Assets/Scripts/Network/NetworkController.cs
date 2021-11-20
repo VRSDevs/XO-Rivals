@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
+using PlayFab;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
@@ -47,6 +48,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <returns></returns>
     public void DisconnectFromServer()
     {
+        PlayFabClientAPI.ForgetAllCredentials();
         PhotonNetwork.Disconnect();
     }
 
