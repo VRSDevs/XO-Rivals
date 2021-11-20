@@ -42,6 +42,15 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
+    /// Método para desconectarse del servidor de Photon
+    /// </summary>
+    /// <returns></returns>
+    public void DisconnectFromServer()
+    {
+        PhotonNetwork.Disconnect();
+    }
+
+    /// <summary>
     /// Método de conexión a la lobby general
     /// </summary>
     public void ConnectToLobby()
@@ -107,6 +116,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
         });
     }
 
+    /// <summary>
+    /// Corutina para empezar la partida que es ejecutada tras la preparación del jugador
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator StartMatch()
     {
         yield return new WaitUntil(GetReadyStatus);
@@ -120,7 +133,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     #region PUN_CB
 
     /// <summary>
-    /// Método ejecutado cuando se conecta al servidor
+    /// CB cuando el usuario se conecta al servidor
     /// </summary>
     public override void OnConnectedToMaster()
     {
@@ -132,6 +145,17 @@ public class NetworkController : MonoBehaviourPunCallbacks
         }
         
         ConnectToLobby();
+    }
+
+    /// <summary>
+    /// CB cuando el usuario se desconecta del servidor
+    /// </summary>
+    /// <param name="cause"></param>
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        base.OnDisconnected(cause);
+        
+        Debug.Log("Desconexión del servidor: " + cause);
     }
 
     /// <summary>
