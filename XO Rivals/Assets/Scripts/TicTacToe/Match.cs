@@ -46,13 +46,13 @@ public class Match
     /// </summary>
     public int NumFilled { get; set; }
     /// <summary>
-    /// Lista de las fichas
+    /// Array del tablero
+    /// </summary>
+    public int ChosenPosition { get; set; }
+    /// <summary>
+    /// Lista de fichas
     /// </summary>
     public List<GameObject> Chips { get; set; }
-    // <summary>
-    /// Ficha actual
-    /// </summary>
-    public GameObject ActualChip { get; set; }
 
     #endregion
 
@@ -83,7 +83,6 @@ public class Match
         NumFilled = 0;
 
         Chips = new List<GameObject>();
-
     }
     
     #endregion
