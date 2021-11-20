@@ -14,9 +14,17 @@ public class PlayerInfo : MonoBehaviour {
     /// </summary>
     public int MatchId = -1;
     /// <summary>
-    /// Elo del jugador
+    /// Nivel del jugador
     /// </summary>
-    public string Elo = "";
+    public float Level;
+    /// <summary>
+    /// Vidas del jugador
+    /// </summary>
+    public int Lifes;
+    /// <summary>
+    /// Instante de ultima vida perdida
+    /// </summary>
+    public DateTime LostLifeTime;
 
     #endregion
     
