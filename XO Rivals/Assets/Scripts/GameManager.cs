@@ -323,4 +323,21 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+    #region OtherMethods
+
+    /// <summary>
+    /// Método para resetear las variables del objeto
+    /// </summary>
+    public void ResetObject()
+    {
+        _networkController = gameObject.AddComponent<NetworkController>();
+        _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
+        
+        PlayerMatches.Clear();
+        Matchmaking = false;
+        IsPlaying = false;
+    }
+
+    #endregion
 }
