@@ -14,11 +14,18 @@ public class MatchScrollerController : MonoBehaviour
 
     private void Start()
     {
-        UpdateMatchesList();
+        GetMatchesList();
+        StartCoroutine(UpdateMatchesList());
+    }
+    
+    private void GetMatchesList()
+    {
+        FetchPlayerMatches(5, OnRecievedMatches);
     }
 
-    private void UpdateMatchesList()
+    private IEnumerator UpdateMatchesList()
     {
+        yield return new WaitForSeconds(5);
         FetchPlayerMatches(5, OnRecievedMatches);
     }
     
