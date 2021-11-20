@@ -152,11 +152,12 @@ public class Login : MonoBehaviour
                 DontDestroyOnLoad(myPlayer);
                 playerInfo.name = "PlayerObject";
                 playerInfo.Name = username;
+                playerInfo.ID = Authenticator.playFabPlayerIdCache;
 
                  
                 //Get client data from PlayFab
                 PlayFabClientAPI.GetUserData(new PlayFab.ClientModels.GetUserDataRequest() {
-                    PlayFabId = Authenticator.playFabPlayerIdCache,
+                    PlayFabId = playerInfo.ID,
                     Keys = null
                 }, result => {
                     Debug.Log("Got user data:");
@@ -192,7 +193,13 @@ public class Login : MonoBehaviour
                             error => {
                                 Debug.Log("Got error setting user level");
                             });
-                        }                        
+                        }
+
+                        //Get moment of life lost(if exists)
+                        if(result.Data.ContainsKey("Life Lost")){
+                            playerInfo.LostLifeTime = DateTime.ParseExact(result.Data["Life Lost"].Value, "dd.MM.yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                            Debug.Log("Successfully got player life lost moment");
+                        }                 
                     }else{
                         //Setup all information
                         PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
