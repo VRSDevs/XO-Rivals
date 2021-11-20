@@ -36,7 +36,7 @@ public class PerderyGanar : MonoBehaviour
         {
             if (seconds != 21)
             {
-                Invoke("DefeatCanvas", 1f);
+                Invoke("DefeatCanvas", 0.2f);
             }
             
 
