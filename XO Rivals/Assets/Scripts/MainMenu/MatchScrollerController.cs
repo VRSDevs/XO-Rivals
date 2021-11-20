@@ -6,13 +6,34 @@ using UnityEngine.UI;
 
 public class MatchScrollerController : MonoBehaviour
 {
+    #region Vars
+
+    /// <summary>
+    /// Referencia al prefab de la partida
+    /// </summary>
     [SerializeField] public GameObject MatchPrefab;
+    /// <summary>
+    /// Referencia a la vista de scroll
+    /// </summary>
     [SerializeField] public ScrollRect ScrollView;
+    /// <summary>
+    /// Referencia a la vista del contenido
+    /// </summary>
     [SerializeField] public RectTransform ViewContent;
     
+    /// <summary>
+    /// Lista de las vistas a insertar en el scroll
+    /// </summary>
     private List<MatchesView> views = new List<MatchesView>();
 
+    /// <summary>
+    /// Número total de partidas
+    /// </summary>
     private int _totalMatches;
+
+    #endregion
+
+    #region UnityCB
 
     private void Start()
     {
@@ -21,7 +42,14 @@ public class MatchScrollerController : MonoBehaviour
         GetMatchesList();
         StartCoroutine(UpdateMatchesList());
     }
-    
+
+    #endregion
+
+    #region Algorithm
+
+    /// <summary>
+    /// Método para obtener la lista de partidas en un comienzo
+    /// </summary>
     private void GetMatchesList()
     {
         _totalMatches = FindObjectOfType<GameManager>().PlayerMatches.Count;
@@ -29,6 +57,10 @@ public class MatchScrollerController : MonoBehaviour
         FetchPlayerMatches(OnRecievedMatches);
     }
 
+    /// <summary>
+    /// Método para obtener la lista de partidas de manera periódica
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator UpdateMatchesList()
     {
         yield return new WaitForSeconds(5);
@@ -39,6 +71,10 @@ public class MatchScrollerController : MonoBehaviour
         StartCoroutine(UpdateMatchesList());
     }
     
+    /// <summary>
+    /// Método ejecutado al recibir
+    /// </summary>
+    /// <param name="list"></param>
     private void OnRecievedMatches(MatchModel[] list)
     {
         foreach (Transform child in ViewContent)
@@ -104,4 +140,6 @@ public class MatchScrollerController : MonoBehaviour
         
         onDone(matchesList);
     }
+
+    #endregion
 }
