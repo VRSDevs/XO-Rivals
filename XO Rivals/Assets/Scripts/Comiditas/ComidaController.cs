@@ -7,6 +7,10 @@ using TMPro;
 
 public class ComidaController : MonoBehaviour
 {
+    
+    // Sounds
+    public SFXManagerComida sounds;
+    
     // Canvas final
     [SerializeField]
     private GameObject victory;
@@ -112,12 +116,14 @@ public class ComidaController : MonoBehaviour
     {
         defeat.SetActive(true);
         Invoke("Defeat", 3f);
+        sounds.playDefeatSound();
     }
 
     public void VictoryCanvas()
     {
         victory.SetActive(true);
         Invoke("Victory", 3f);
+        sounds.playVictorySound();
     }
 
     public void Defeat()
