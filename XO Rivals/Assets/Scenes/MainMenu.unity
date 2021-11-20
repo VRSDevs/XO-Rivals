@@ -4324,7 +4324,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9530a090b7e5f864e85030cfc4c9f744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  managerBoton: {fileID: 0}
   CookingMusic: {fileID: 0}
   GunmanMusic: {fileID: 0}
   PlatformMusic: {fileID: 0}
@@ -7786,6 +7785,11 @@ MonoBehaviour:
   CancelMatchmakingSprite: {fileID: 21300000, guid: 16fa84d7dadece1418ae26d682cb4212, type: 3}
   CreateMatchImage: {fileID: 1899014466}
   ViewContent: {fileID: 183733149}
+  nameTxt: {fileID: 553947641}
+  level: {fileID: 523620166}
+  lifesTxt: {fileID: 2367371}
+  lifesTime: {fileID: 276693855}
+  lvlSlider: {fileID: 1711821105}
 --- !u!4 &1544971430
 Transform:
   m_ObjectHideFlags: 0

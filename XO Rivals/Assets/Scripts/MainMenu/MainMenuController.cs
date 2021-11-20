@@ -24,8 +24,18 @@ public class MainMenuController : MonoBehaviour
 
     [SerializeField] public GameObject ViewContent;
 
+    [SerializeField] public TextMeshProUGUI nameTxt;
+    [SerializeField] public TextMeshProUGUI level;
+    [SerializeField] public TextMeshProUGUI lifesTxt;
+    [SerializeField] public TextMeshProUGUI lifesTime;
+    [SerializeField] public Slider lvlSlider;
+
+    private DateTime recoverLifeTime;
+    private TimeSpan recoverRemainingTime;
+
     private GameManager _gameManager;
     private PlayerInfo _localPlayer;
+    private float timePassed = 0f;
 
     private string MatchName;
 
@@ -40,6 +50,29 @@ public class MainMenuController : MonoBehaviour
 
         JoinGameButton.interactable = false;
         Mode = 0;
+
+        nameTxt.text = _localPlayer.Name;
+        level.text = "Level: " + Math.Truncate(_localPlayer.Level);
+        lvlSlider.value = _localPlayer.Level % 1;
+        lifesTxt.text = "Lifes: " + _localPlayer.Lifes;
+        //if(_localPlayer.Lifes != 5){
+            _localPlayer.LostLifeTime = System.DateTime.Now;
+            recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
+            recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
+            lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;
+        //}else{
+        //    lifesTime.text = "-:--";
+        //}
+    }
+
+    private void Update(){
+        //if(_localPlayer.Lifes != 5){
+            timePassed += Time.deltaTime;
+            if(timePassed >= 1.0f){
+                recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
+                lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;
+            }
+        //}
     }
 
     #endregion
