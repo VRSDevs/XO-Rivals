@@ -14,12 +14,23 @@ public class MatchScrollerController : MonoBehaviour
 
     private void Start()
     {
-        UpdateMatchesList();
+        GetMatchesList();
+        StartCoroutine(UpdateMatchesList());
+    }
+    
+    private void GetMatchesList()
+    {
+        FetchPlayerMatches(
+            FindObjectOfType<GameManager>().PlayerMatches.Count, 
+            OnRecievedMatches);
     }
 
-    private void UpdateMatchesList()
+    private IEnumerator UpdateMatchesList()
     {
-        FetchPlayerMatches(5, OnRecievedMatches);
+        yield return new WaitForSeconds(5);
+        FetchPlayerMatches(
+            FindObjectOfType<GameManager>().PlayerMatches.Count, 
+            OnRecievedMatches);
     }
     
     private void OnRecievedMatches(MatchModel[] list)
