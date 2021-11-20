@@ -70,16 +70,30 @@ public class MatchScrollerController : MonoBehaviour
     
     private void FetchPlayerMatches(int count, Action<MatchModel[]> onDone)
     {
-        var matchesList = new MatchModel[count];
-        for (int i = 0; i < matchesList.Length; i++)
+        var matchesList = count < 1 ? new MatchModel[1] : new MatchModel[count];
+
+        if (count < 1)
         {
-            matchesList[i] = new MatchModel
+            matchesList[count] = new MatchModel
             {
-                MatchName = "Sala " + i,
-                MatchStatus = "Turno de X"
+                MatchName = "No tienes partidas activas",
+                MatchStatus = ""
             };
         }
-
+        else
+        {
+            int i = 0;
+            foreach (Match match in FindObjectOfType<GameManager>().PlayerMatches.Values)
+            {
+                matchesList[i] = new MatchModel
+                {
+                    MatchName = match.MatchId,
+                    MatchStatus = match.WhosTurn
+                };
+                i++;
+            }
+        }
+        
         onDone(matchesList);
     }
 }
