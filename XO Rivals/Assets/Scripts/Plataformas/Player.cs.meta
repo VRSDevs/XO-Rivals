@@ -3,7 +3,15 @@ guid: b8c9b0526e8048d40bee053d1741cf8e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - sonidoJump: {fileID: 8300000, guid: 9dbd6873ec606f443933f82d91a9d744, type: 3}
+  - sonidoMuerte: {fileID: 8300000, guid: 626112c2b0e73c446982c5ca78401e7e, type: 3}
+  - textElement: {instanceID: 0}
+  - respawn: {instanceID: 0}
+  - player: {instanceID: 0}
+  - leftButton: {instanceID: 0}
+  - rightButton: {instanceID: 0}
+  - jumpButton: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

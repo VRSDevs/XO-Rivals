@@ -10,15 +10,15 @@ public class MovePlayer : MonoBehaviour
     [SerializeField] private float speed = 8;
     private float horizontal;
     private float vertical;
-    private Rigidbody2D player;
+    private Rigidbody player;
 
-    public GameObject sombra;
+
 
     private bool vivo = true;
 
     private void Awake()
     {
-        player = GetComponent<Rigidbody2D>();
+        player = GetComponent<Rigidbody>();
     }
 
     // Start is called before the first frame update
@@ -30,11 +30,11 @@ public class MovePlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        sombra.transform.position = new Vector3(this.transform.position.x+0.9f, this.transform.position.y-0.87f, this.transform.position.z);
+        
 
         if (vivo)
         {
-            player.velocity = new Vector2(horizontal * speed, vertical * speed);
+            player.velocity = new Vector3(horizontal * speed, 0, vertical * speed);
         }
 
 

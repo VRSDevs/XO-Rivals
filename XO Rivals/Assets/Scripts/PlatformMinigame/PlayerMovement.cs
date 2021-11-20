@@ -4,24 +4,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
-
+using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
 
-    
+    [SerializeField]
+    private GameObject victory;
+    [SerializeField]
+    private GameObject defeat;
 
     private Rigidbody2D player;
     public Collider2D col;
     public Transform groundCheck;
     public Transform jumpCheck;
 
+    public SFX_Manager_Platform sounds;
+    
     public LayerMask groundLayer;
-
+    
     // Vida
     public bool isDead = false;
 
     // Victoria
-    private bool win = false;
+    public bool win = false;
 
     // Animaciones
     [SerializeField]
@@ -31,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     // Variables del movimiento
     private float horizontal;
     private float speed = 5f;
-    private float jumpingPower = 8f;
+    private float jumpingPower = 6f;
 
     private void Awake()
     {
@@ -45,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         if (win)
         {
             player.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+
         }
 
         if (!isDead && !win) 
@@ -63,15 +69,16 @@ public class PlayerMovement : MonoBehaviour
             
             deathAnimPlayed = true;
             Invoke("DeathAnimation",0.2f);
+
         }
     }
 
     private void DeathAnimation()
     {
         col.enabled = false;
-        transform.DOMoveY(1,1).OnComplete(() => { 
-            transform.DOMoveY(-10,4);});
-        
+        transform.DOLocalMoveY(4,1).OnComplete(() => { 
+            transform.DOLocalMoveY(-10,4);});
+
     }
 
     private bool IsJumping()
@@ -90,7 +97,10 @@ public class PlayerMovement : MonoBehaviour
         {
             player.velocity = new Vector2(player.velocity.x, jumpingPower);
             anim.SetBool("isJumping", true);
+            sounds.playJumpSound();
         }
+
+        
 
     }
     public void JumpPhone()
@@ -107,6 +117,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (context.ReadValue<Vector2>().x < 0) { return; }
         horizontal = context.ReadValue<Vector2>().x;
+        //sounds.playWalkSound();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -115,13 +126,17 @@ public class PlayerMovement : MonoBehaviour
         {
             isDead = true;
             anim.SetBool("isDead", true);
+            Invoke("DefeatCanvas", 3f);
+            sounds.playDeathSound();
         } 
         if(collision.gameObject.tag == "FinishLine")
         {
             win = true;
             anim.SetBool("Win", true);
+            Invoke("VictoryCanvas", 3f);
         }
     }
+
 
     public void MoveRight()
     {
@@ -131,5 +146,35 @@ public class PlayerMovement : MonoBehaviour
     public void Stop()
     {
         horizontal = 0;
+    }
+
+    public void DefeatCanvas()
+    {
+        defeat.SetActive(true);
+        Invoke("Defeat", 3f);
+        sounds.playDefeatSound();
+    }
+
+    public void VictoryCanvas()
+    {
+        victory.SetActive(true);
+        Invoke("Victory", 3f);
+        sounds.playVictorySound();
+    }
+
+    public void Defeat()
+    {
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        PlayerPrefs.SetInt("minigameWin", 0);
+        //SceneManager.UnloadSceneAsync("PlatformMinigame");
+        SceneManager.LoadScene("TicTacToe_Server");
+    }
+
+    public void Victory()
+    {
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        PlayerPrefs.SetInt("minigameWin", 1);
+        //SceneManager.UnloadSceneAsync("PlatformMinigame");
+        SceneManager.LoadScene("TicTacToe_Server");
     }
 }

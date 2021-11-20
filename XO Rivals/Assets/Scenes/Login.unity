@@ -300,17 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   log: {fileID: 0}
-  _networkController: {fileID: 0}
-  _NetworkCommunications: {fileID: 0}
-  MatchId: 
-  OwnerId: 
-  PlayerInfoO: {fileID: 0}
-  PlayerInfoX: {fileID: 0}
-  WhosTurn: 
-  turnMoment: 0
-  NumFilled: 0
-  Chips: []
-  MiniGameChosen: 0
+  _networkCommunications: {fileID: 0}
 --- !u!114 &60405593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -536,6 +526,7 @@ GameObject:
   - component: {fileID: 133569157}
   - component: {fileID: 133569156}
   - component: {fileID: 133569159}
+  - component: {fileID: 133569160}
   m_Layer: 5
   m_Name: PasswordInput
   m_TagString: Untagged
@@ -630,19 +621,7 @@ MonoBehaviour:
       m_Calls: []
   m_OnSelect:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 890295296}
-        m_TargetAssemblyTypeName: Login, Assembly-CSharp
-        m_MethodName: ShowKeyboard
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnDeselect:
     m_PersistentCalls:
       m_Calls: []
@@ -727,19 +706,20 @@ MonoBehaviour:
   - eventID: 2
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 890295296}
-          m_TargetAssemblyTypeName: Login, Assembly-CSharp
-          m_MethodName: ShowKeyboard
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
+--- !u!114 &133569160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133569154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc33a39070010f94fb1c2dd721c1286d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showHtmlElement: 0
 --- !u!1 &158971482
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,6 +807,7 @@ GameObject:
   - component: {fileID: 159621186}
   - component: {fileID: 159621185}
   - component: {fileID: 159621188}
+  - component: {fileID: 159621189}
   m_Layer: 5
   m_Name: UserInput
   m_TagString: Untagged
@@ -921,19 +902,7 @@ MonoBehaviour:
       m_Calls: []
   m_OnSelect:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 890295296}
-        m_TargetAssemblyTypeName: Login, Assembly-CSharp
-        m_MethodName: ShowKeyboard
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnDeselect:
     m_PersistentCalls:
       m_Calls: []
@@ -1018,19 +987,20 @@ MonoBehaviour:
   - eventID: 2
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 890295296}
-          m_TargetAssemblyTypeName: Login, Assembly-CSharp
-          m_MethodName: ShowKeyboard
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
+--- !u!114 &159621189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159621183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc33a39070010f94fb1c2dd721c1286d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showHtmlElement: 0
 --- !u!1001 &167877121
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1469,6 +1439,7 @@ GameObject:
   - component: {fileID: 438324530}
   - component: {fileID: 438324529}
   - component: {fileID: 438324528}
+  - component: {fileID: 438324531}
   m_Layer: 5
   m_Name: VisPasswordButton
   m_TagString: Untagged
@@ -1538,19 +1509,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 438324529}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 890295296}
-        m_TargetAssemblyTypeName: Login, Assembly-CSharp
-        m_MethodName: ShowPasswordField
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &438324529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1589,6 +1548,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438324526}
   m_CullTransparentMesh: 1
+--- !u!114 &438324531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438324526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 890295296}
+          m_TargetAssemblyTypeName: Login, Assembly-CSharp
+          m_MethodName: ShowPasswordField
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 890295296}
+          m_TargetAssemblyTypeName: Login, Assembly-CSharp
+          m_MethodName: ShowPasswordField
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &659934699
 GameObject:
   m_ObjectHideFlags: 0
@@ -1772,7 +1776,7 @@ PrefabInstance:
     - target: {fileID: 191884339262791831, guid: 0099cd63aa22ee8459b8247a87ad3a33, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d7021918eeeb3de47bfa29040f1732ae, type: 3}
+      objectReference: {fileID: 21300000, guid: 290ee520f94024242b35cdf15d5ec85e, type: 3}
     - target: {fileID: 191884339262791833, guid: 0099cd63aa22ee8459b8247a87ad3a33, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

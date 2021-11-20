@@ -149,14 +149,18 @@ public class Cronometro : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         PlayerPrefs.SetInt("minigameWin", 1);
-        SceneManager.UnloadSceneAsync("Pistolero");
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        //SceneManager.UnloadSceneAsync("Pistolero");
+        SceneManager.LoadScene("TicTacToe_Server");
         //SceneManager.LoadScene("PistoleroVictoria", LoadSceneMode.Additive);
     }
     IEnumerator EsperarD()
     {
         yield return new WaitForSeconds(3);
-        PlayerPrefs.SetInt("minigameWin", 1);
-        SceneManager.UnloadSceneAsync("Pistolero");
+        PlayerPrefs.SetInt("minigameWin", 0);
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        //SceneManager.UnloadSceneAsync("Pistolero");
+        SceneManager.LoadScene("TicTacToe_Server");
         //SceneManager.LoadScene("Pistolero Derrota", LoadSceneMode.Additive);
     }
 
