@@ -12,25 +12,30 @@ public class MatchScrollerController : MonoBehaviour
     
     private List<MatchesView> views = new List<MatchesView>();
 
+    private int _totalMatches;
+
     private void Start()
     {
+        _totalMatches = 0;
+        
         GetMatchesList();
         StartCoroutine(UpdateMatchesList());
     }
     
     private void GetMatchesList()
     {
-        FetchPlayerMatches(
-            FindObjectOfType<GameManager>().PlayerMatches.Count, 
-            OnRecievedMatches);
+        _totalMatches = FindObjectOfType<GameManager>().PlayerMatches.Count;
+        
+        FetchPlayerMatches(OnRecievedMatches);
     }
 
     private IEnumerator UpdateMatchesList()
     {
         yield return new WaitForSeconds(5);
-        FetchPlayerMatches(
-            FindObjectOfType<GameManager>().PlayerMatches.Count, 
-            OnRecievedMatches);
+        
+        _totalMatches = FindObjectOfType<GameManager>().PlayerMatches.Count;
+            
+        FetchPlayerMatches(OnRecievedMatches);
     }
     
     private void OnRecievedMatches(MatchModel[] list)
@@ -45,6 +50,8 @@ public class MatchScrollerController : MonoBehaviour
         foreach (var matchModel in list)
         {
             var instance = Instantiate(MatchPrefab, ViewContent, false);
+            if (_totalMatches < 1) instance.GetComponent<Button>().interactable = false;
+            
             var view = IntializeMatchView(instance, matchModel);
             views.Add(view);
         }
@@ -68,13 +75,13 @@ public class MatchScrollerController : MonoBehaviour
         return view;
     }
     
-    private void FetchPlayerMatches(int count, Action<MatchModel[]> onDone)
+    private void FetchPlayerMatches(Action<MatchModel[]> onDone)
     {
-        var matchesList = count < 1 ? new MatchModel[1] : new MatchModel[count];
+        var matchesList = _totalMatches < 1 ? new MatchModel[1] : new MatchModel[_totalMatches];
 
-        if (count < 1)
+        if (_totalMatches < 1)
         {
-            matchesList[count] = new MatchModel
+            matchesList[_totalMatches] = new MatchModel
             {
                 MatchName = "No tienes partidas activas",
                 MatchStatus = ""
