@@ -7,7 +7,11 @@ using TMPro;
 
 public class ComidaController : MonoBehaviour
 {
-    
+
+    // Boolean de prueba de cambio personaje
+    public bool playerColor = true;
+
+
     // Sounds
     public SFXManagerComida sounds;
     
@@ -70,6 +74,17 @@ public class ComidaController : MonoBehaviour
         generador = FindObjectOfType<Generador>();
 
         StartCoroutine(DefeatNumerator());
+
+        // Valor a cambiar segun el color de ficha del jugador
+        if (playerColor)
+        {
+            playerO.SetActive(false);
+            playerX.SetActive(true);
+        } else
+        {
+            playerO.SetActive(true);
+            playerX.SetActive(false);
+        }
 
         if (!_gameManager.IsWebGLMobile)
         {
