@@ -93,7 +93,7 @@ public class ScreenManager : MonoBehaviour
 
     public void UpdateBoard(int col, int row, string tileName)
     {
-        
+        /*
         GameObject tile = GameObject.Find(tileName);
         
         switch (buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions[col, row])
@@ -113,6 +113,8 @@ public class ScreenManager : MonoBehaviour
         }
         
         buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].Chips.Add(buttonsScript.thisMatch.ActualChip);
+
+        */
     }
     
     public void EnableButtons()

@@ -76,13 +76,43 @@ public class ButtonsScript : MonoBehaviour
         + thisMatch.FilledPositions[2,0] + " " + thisMatch.FilledPositions[2,1] + " " + thisMatch.FilledPositions[2,2]);
         Debug.Log("Minigame chosen: " + thisMatch.MiniGameChosen);
 
-        UpdateTurn();
+        startGame();
+
+
+        //SI VIENES DE UN MINIJUEGO SE HACE START Y SE ELIGE MINIJUEGO
+        if (thisMatch.TurnMoment == 2)
+        {
+            miniWin = (PlayerPrefs.GetInt("minigameWin") == 1);
+            Debug.Log(miniWin);
+
+            //Save position
+            thisMatch.FilledPositions[col, row] = (thisMatch.WhosTurn == thisMatch.PlayerOName ? 0 : 1);
+            //Paint tile completely
+            GameObject tile = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+            SelectedTile = tile.name;
+            GameObject actual = Instantiate(crossGO, tile.transform.position, Quaternion.identity);
+            actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+            //Add chip to list
+            thisMatch.Chips.Add(actual);
+            //Add one to filled count
+            thisMatch.NumFilled++;
+
+
+
+           // screenManager.MinigameSelectionActivation();
+
+        }
+       
+
+
+
+
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public void UpdateTurn()
+    public void startGame()
     {
         //If its your turn, play, if its not, only can see
         if(thisMatch.WhosTurn == localPlayer.Name){
@@ -94,13 +124,13 @@ public class ButtonsScript : MonoBehaviour
             }
             else if(thisMatch.TurnMoment == 1 || thisMatch.TurnMoment == 2){
                 //Go directly to minigame
-                PlayMinigame();
+                //PlayMinigame();
             }else if(thisMatch.TurnMoment == 3){
                 //Go to check victory
                 CheckVictory();
             }else if(thisMatch.TurnMoment == 4){
                 //Go to choose minigame
-                screenManager.MinigameSelectionActivation();
+                //screenManager.MinigameSelectionActivation();
             }
         }else{
             //Disable interaction with tictac cause its not your turn
@@ -127,12 +157,20 @@ public class ButtonsScript : MonoBehaviour
             
             //Set chip to player type
             if(thisMatch.PlayerOName == localPlayer.Name)
-                thisMatch.ActualChip = Instantiate(circleGO, tile.transform.position, Quaternion.identity);
-            else
-                thisMatch.ActualChip = Instantiate(crossGO, tile.transform.position, Quaternion.identity);
+            {
+                thisMatch.ActualChip = pos;
+                thisMatch.ActualChipTeam = "circle";
+            }
 
-            thisMatch.ActualChip.SetActive(true);
-            thisMatch.ActualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+            else
+            {
+                thisMatch.ActualChip = pos;
+                thisMatch.ActualChipTeam = "cross";
+            }
+                
+
+            //thisMatch.ActualChip.SetActive(true);
+            //thisMatch.ActualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
             thisMatch.TurnMoment = 1;
 
             //Go to minigame
@@ -164,8 +202,18 @@ public class ButtonsScript : MonoBehaviour
                     //SceneManager.LoadScene("PlatformMinigame", LoadSceneMode.Additive);
                 break;
             }
-            
-        }else if(thisMatch.TurnMoment == 2){
+
+
+           
+
+
+
+        }
+
+        /*
+        else if(thisMatch.TurnMoment == 2){
+
+            Debug.Log("NOJUEGO");
 
             //Check minigame win
             miniWin = (PlayerPrefs.GetInt("minigameWin") == 1);
@@ -195,6 +243,10 @@ public class ButtonsScript : MonoBehaviour
                 screenManager.MinigameSelectionActivation();
             }
         }
+        */
+
+
+
     }
     
     public void CheckVictory(){
@@ -302,7 +354,7 @@ public class ButtonsScript : MonoBehaviour
 
         thisMatch.TurnMoment = 4;
         //Go to selectMinigame for opponent
-        screenManager.MinigameSelectionActivation();
+        //screenManager.MinigameSelectionActivation();
     }
 
     #endregion

@@ -51,7 +51,8 @@ public class Match
     // <summary>
     /// Ficha actual
     /// </summary>
-    public GameObject ActualChip { get; set; }
+    public int ActualChip { get; set; }
+    public string ActualChipTeam { get; set; }
 
     #endregion
 

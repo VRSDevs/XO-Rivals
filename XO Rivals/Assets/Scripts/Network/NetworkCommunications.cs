@@ -117,7 +117,7 @@ public class NetworkCommunications : MonoBehaviourPun
 
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
 
-                FindObjectOfType<ButtonsScript>().UpdateTurn();
+                FindObjectOfType<ButtonsScript>().startGame();
                 
                 break;
             case "OppLost":
@@ -129,7 +129,7 @@ public class NetworkCommunications : MonoBehaviourPun
                 
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
 
-                FindObjectOfType<ButtonsScript>().UpdateTurn();
+                FindObjectOfType<ButtonsScript>().startGame();
                 
                 break;
         }
