@@ -38,8 +38,11 @@ public class PerderyGanar : MonoBehaviour
     {
         if (collision.gameObject.name == "Enemy3D")
         {
-
-            Invoke("DefeatCanvas", 3f);
+            if (seconds != 21)
+            {
+                Invoke("DefeatCanvas", 0.2f);
+            }
+            
 
         }
 
@@ -52,8 +55,9 @@ public class PerderyGanar : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         if (seconds == 20)//SI AGUANTAS 20 SEGUNDOS GANAS
-        {          
-            Invoke("VictoryCanvas", 2f);
+        {
+            seconds++;
+            Invoke("VictoryCanvas", 1f);
         }
         else
         {
