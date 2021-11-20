@@ -151,7 +151,12 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void OnExitClick()
     {
-        Application.ExternalEval("document.location.reload(true)");
+        _gameManager.OnDisconnectToServer();
+
+        _gameManager.ResetObject();
+        Destroy(GameObject.Find("PlayerObject"));
+
+        SceneManager.LoadScene("Login");
     }
 
     #endregion
