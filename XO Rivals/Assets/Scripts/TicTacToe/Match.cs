@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class Match
 {
     #region Vars
 
-    /*
+    
     /// <summary>
     /// ID de la partida
     /// </summary>
     public string MatchId { get; set; }
-    
+    /*
     /// <summary>
     /// ID del dueño de la partida
     /// </summary>
@@ -62,7 +63,7 @@ public class Match
     /// </summary>
     public Match()
     {
-        //MatchId = "";
+        MatchId = PhotonNetwork.CurrentRoom.Name;
         //OwnerId = "";
         PlayerOName = "";
         PlayerXName = "";
