@@ -19,7 +19,7 @@ public class ScreenManager : MonoBehaviour
     public static int minigame = -1;
 
     //Reference to all butons
-    [SerializeField] private Button[] buttonsReference;
+    [SerializeField] public Button[] buttonsReference;
 
     void Start(){
 
@@ -63,7 +63,6 @@ public class ScreenManager : MonoBehaviour
         screenTxt.text = txt;
         yield return new WaitForSeconds(totalTime);
         screenTxt.enabled = false;
-        buttonsScript.thisMatch.TurnMoment = 4;
     }
 
     public void MinigameSelectionActivation(){
@@ -85,7 +84,7 @@ public class ScreenManager : MonoBehaviour
 
         //Unhide chips
         for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
-            buttonsScript.thisMatch.Chips[i].SetActive(false);
+            buttonsScript.thisMatch.Chips[i].SetActive(true);
         }
         //Disable interaction with tictac
         DisableButtons();
@@ -99,20 +98,20 @@ public class ScreenManager : MonoBehaviour
         switch (buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions[col, row])
         {
             case 0:
-                buttonsScript.thisMatch.ActualChip = Instantiate(buttonsScript.circleGO, tile.transform.position, Quaternion.identity);
-                buttonsScript.thisMatch.ActualChip.SetActive(true);
-                buttonsScript.thisMatch.ActualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+                buttonsScript.actualChip = Instantiate(buttonsScript.circleGO, tile.transform.position, Quaternion.identity);
+                buttonsScript.actualChip.SetActive(true);
+                buttonsScript.actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
                         
                 break;
             case 1:
-                buttonsScript.thisMatch.ActualChip = Instantiate(buttonsScript.crossGO, tile.transform.position, Quaternion.identity);
-                buttonsScript.thisMatch.ActualChip.SetActive(true);
-                buttonsScript.thisMatch.ActualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+                buttonsScript.actualChip = Instantiate(buttonsScript.crossGO, tile.transform.position, Quaternion.identity);
+                buttonsScript.actualChip.SetActive(true);
+                buttonsScript.actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
                         
                 break;
         }
         
-        buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].Chips.Add(buttonsScript.thisMatch.ActualChip);
+        buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].Chips.Add(buttonsScript.actualChip);
     }
     
     public void EnableButtons()
