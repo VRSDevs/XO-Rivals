@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,14 +33,13 @@ public class SFXManager : MonoBehaviour
     {
         managerBoton = GetComponent<AudioSource>();
     }
-
+    
     // Update is called once per frame
     void Update()
     {
         
     }
-
-
+    
     public void playSelectionButton1Sound()
     {
         managerBoton.PlayOneShot(SelectionButton1);
