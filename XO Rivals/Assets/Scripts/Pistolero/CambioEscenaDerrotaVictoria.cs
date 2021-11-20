@@ -1,12 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using Photon.Pun;
+using Photon.Realtime;
 public class CambioEscenaDerrotaVictoria : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    public SFXManager_Pistolero sounds;
+    [SerializeField]
+    private GameObject victory;
+    [SerializeField]
+    private GameObject defeat;
+
     public bool win;
+
+
     void Start()
     {
         
@@ -24,20 +31,46 @@ public class CambioEscenaDerrotaVictoria : MonoBehaviour
 
         if (win)
         {
-            SceneManager.UnloadSceneAsync("Pistolero");
-            PlayerPrefs.SetInt("minigameWin", 1);
-
+            Invoke("VictoryCanvas", 3f);
         }
         else
         {
-            SceneManager.UnloadSceneAsync("Pistolero");
-            PlayerPrefs.SetInt("minigameWin", 0);
-
+            Invoke("DefeatCanvas", 3f);
         }
 
 
     }
 
+    public void DefeatCanvas()
+    {
+        defeat.SetActive(true);
+        Invoke("Defeat", 3f);
+        sounds.playDefeatSound();
 
+    }
+
+    public void VictoryCanvas()
+    {
+        victory.SetActive(true);
+        Invoke("Victory", 3f);
+        sounds.playVictorySound();
+
+    }
+
+    public void Defeat()
+    {
+        PlayerPrefs.SetInt("minigameWin", 0);
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        //SceneManager.UnloadSceneAsync("Pistolero");
+        SceneManager.LoadScene("TicTacToe_Server");
+    }
+
+    public void Victory()
+    {
+        PlayerPrefs.SetInt("minigameWin", 1);
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        //SceneManager.UnloadSceneAsync("Pistolero");
+        SceneManager.LoadScene("TicTacToe_Server");
+    }
 
 }

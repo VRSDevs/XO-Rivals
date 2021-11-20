@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using System;
+using UnityEngine;
 
 public class WebGLChecker : MonoBehaviour
 {
-
+    private AudioSource managerBoton;
     #region Variables
 
     /// <summary>
@@ -52,6 +55,4 @@ public class WebGLChecker : MonoBehaviour
         }
     }
     #endregion
-
-
 }

@@ -150,9 +150,10 @@ private void OnTriggerEnter2D(Collider2D other)
             Victory = true;
             OnDisable();
 
+            FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
             PlayerPrefs.SetInt("minigameWin", 1);
-            SceneManager.UnloadSceneAsync("2D Platform");
-
+            //SceneManager.UnloadSceneAsync("PlatformMinigame");
+            SceneManager.LoadScene("TicTacToe_Server");
         }
     }
 private void OnCollisionEnter2D(Collision2D collision)

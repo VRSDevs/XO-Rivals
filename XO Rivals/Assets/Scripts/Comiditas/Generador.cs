@@ -14,6 +14,8 @@ public class Generador : MonoBehaviour
     GameObject pan;
     [SerializeField]
     GameObject queso;
+    [SerializeField]
+    GameObject panArriba;
 
     // Variables
     public bool startedSpawning = false;
@@ -21,6 +23,12 @@ public class Generador : MonoBehaviour
     public float spawnTime;
     public float spawnDelay;
 
+    // Control de spawn
+    private bool cheese = false;
+    private bool bread = false;
+    private bool lettuce = false;
+    private bool meat = false;
+    private bool breadUp = false;
 
     // Posicion inicial
     Vector3 posini = new Vector3(0,10,0);
@@ -51,7 +59,54 @@ public class Generador : MonoBehaviour
 
     public void generadorGlobal()
     {
-        int rand = Random.Range(0,4);
+        int rand = Random.Range(0,5);
+        int probability = Random.Range(0,100);
+
+        // Mandar panArriba
+        if (!breadUp)
+        {
+            if (probability > 80)
+            {
+                rand = 4;
+            }
+        }
+
+        // Mandar lechuga
+        if (!lettuce && !breadUp)
+        {
+            if (probability > 60)
+            {
+                rand = 1;
+            }
+        }
+
+
+        // Mandar carne
+        if (!lettuce && !meat && !breadUp)
+        {
+            if (probability > 40)
+            {
+                rand = 0;
+            }
+        }
+
+        // Mandar queso
+        if (!cheese && !lettuce && !meat && !breadUp)
+        {
+            if (probability > 25)
+            {
+                rand = 3;
+            }  
+        }
+
+        // Mandar pan abajo
+        if (!cheese && !bread && !lettuce && !meat && !breadUp)
+        {
+            if (probability > 10)
+            {
+                rand = 2;
+            }
+        }
 
         if (stopSpawning)
         {
@@ -75,8 +130,10 @@ public class Generador : MonoBehaviour
             case 3:
                 generarQueso();
                 break;
+            case 4:
+                generarPanArriba();
+                break;
         }
-
     }
 
 
@@ -90,24 +147,35 @@ public class Generador : MonoBehaviour
     public void generarQueso()
     {
         randPos();
+        cheese = true;
         Instantiate(queso, posini, quat);
     }
 
     public void generarLechuga()
     {
         randPos();
+        lettuce = true;
         Instantiate(lechuga, posini, quat);
     }
 
     public void generarPan()
     {
         randPos();
+        bread = true;
         Instantiate(pan, posini, quat);
+    }
+
+    public void generarPanArriba()
+    {
+        randPos();
+        breadUp = true;
+        Instantiate(panArriba, posini, quat);
     }
 
     public void generarCarne()
     {
         randPos();
+        meat = true;
         Instantiate(carne, posini, quat);
     }
 

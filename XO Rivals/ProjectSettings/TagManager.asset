@@ -17,15 +17,24 @@ TagManager:
   - Checkpoint2
   - Log
   - Ground
+  - Enemy
+  - Enemy1
+  - carne
+  - PlayerFantasma
+  - lechuga
+  - queso
+  - panArriba
+  - pan
+  - CameraColider
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Wall
   - Water
   - UI
   - Ground
-  - 
+  - CameraCollider
   - 
   - 
   - 

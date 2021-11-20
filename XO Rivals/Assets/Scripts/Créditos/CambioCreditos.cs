@@ -8,7 +8,7 @@ public class CambioCreditos : MonoBehaviour
 
     
 
-    public float speed = 1100;
+    public float speed = 3000;
     // Start is called before the first frame update
 
     public GameObject artButton;
@@ -19,8 +19,8 @@ public class CambioCreditos : MonoBehaviour
     public GameObject progMenu;
     public GameObject soundMenu;
 
-    public GameObject Exit;
-    public GameObject Back;
+ 
+
 
 
     Vector2 initialArt;
@@ -62,10 +62,15 @@ public class CambioCreditos : MonoBehaviour
             float step = speed * Time.deltaTime;
             Vector2 aux = Vector2.MoveTowards(objectToMove.transform.position, target, step);
             objectToMove.transform.position = aux;
-            
+
+
+            //CONTINUAMOS MOVIENDOLOS A PESAR DE QUE ESTE MOVER A TRUE
+
+
         }
         if (moveL == true)
         {
+            /*
             if (objectToMove == artButton )
             {
                 target = initialArt;
@@ -78,15 +83,26 @@ public class CambioCreditos : MonoBehaviour
             {
                 target = initialSound;
             }
-
+            */
             float step = speed * Time.deltaTime;
-            Vector2 aux = Vector2.MoveTowards(objectToMove.transform.position, target, step);
-            objectToMove.transform.position = aux;
+            Vector2 aux = Vector2.MoveTowards(artButton.transform.position, initialArt, step);
+            artButton.transform.position = aux;
+
+            float step2 = speed * Time.deltaTime;
+            Vector2 aux2= Vector2.MoveTowards(progButton.transform.position, initialProg, step);
+            progButton.transform.position = aux2;
+
+            float step3 = speed * Time.deltaTime;
+            Vector2 aux3 = Vector2.MoveTowards(soundButton.transform.position, initialSound, step);
+            soundButton.transform.position = aux3;
+
+
+
 
 
         }
-
-
+        
+       
 
 
     }
@@ -94,8 +110,9 @@ public class CambioCreditos : MonoBehaviour
 
     public void ExplainButton(string department)
     {
-        Exit.SetActive(false);
-        Back.SetActive(true);
+        //initialArt = artButton.transform.position;
+        //initialProg = progButton.transform.position;
+        //initialSound = soundButton.transform.position;
 
         if (department == "Art")
         {
@@ -164,8 +181,7 @@ public class CambioCreditos : MonoBehaviour
         moveL = true;
 
 
-        Exit.SetActive(true);
-        Back.SetActive(false);
+
 
         actualMenu = 0;
 
