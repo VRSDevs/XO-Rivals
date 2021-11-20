@@ -7787,6 +7787,8 @@ MonoBehaviour:
   ViewContent: {fileID: 183733149}
   nameTxt: {fileID: 553947641}
   level: {fileID: 523620166}
+  lifesTxt: {fileID: 2367371}
+  lifesTime: {fileID: 276693855}
   lvlSlider: {fileID: 1711821105}
 --- !u!4 &1544971430
 Transform:

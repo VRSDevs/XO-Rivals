@@ -6,6 +6,10 @@ public class PlayerInfo : MonoBehaviour {
     #region Variables
 
     /// <summary>
+    /// Id de usuario
+    /// </summary>
+    public string ID = "";
+    /// <summary>
     /// Nombre de usuario
     /// </summary>
     public string Name = "";
