@@ -36,6 +36,7 @@ public class MatchScrollerController : MonoBehaviour
         _totalMatches = FindObjectOfType<GameManager>().PlayerMatches.Count;
             
         FetchPlayerMatches(OnRecievedMatches);
+        StartCoroutine(UpdateMatchesList());
     }
     
     private void OnRecievedMatches(MatchModel[] list)
