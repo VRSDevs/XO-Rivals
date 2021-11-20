@@ -69,6 +69,7 @@ public class ComidaController : MonoBehaviour
 
         generador = FindObjectOfType<Generador>();
 
+        StartCoroutine(DefeatNumerator());
 
         if (!_gameManager.IsWebGLMobile)
         {
@@ -80,6 +81,7 @@ public class ComidaController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (time >= 0 && !finished)
         {
             time -= Time.deltaTime;
@@ -98,8 +100,8 @@ public class ComidaController : MonoBehaviour
             panArriba.SetActive(false);
             orden = 1;
             player.constraints = RigidbodyConstraints2D.FreezeAll;
-            Invoke("DefeatCanvas", 3f);
-            lost = true;
+            lost = true;           
+            
         }
 
         if (win)
@@ -260,5 +262,17 @@ public class ComidaController : MonoBehaviour
 
 
 
+    }
+
+    IEnumerator DefeatNumerator()
+    {
+        yield return new WaitUntil(ReturnLost);
+
+        DefeatCanvas();
+    } 
+
+    public bool ReturnLost()
+    {
+        return lost;
     }
 }
