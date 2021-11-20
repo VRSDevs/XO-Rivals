@@ -248,7 +248,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnLeftRoom();
 
-        if (SceneManager.GetActiveScene().name.Equals("MainMenu"))
+        if (SceneManager.GetActiveScene().name.Equals("MainMenu") && _creatingRoom)
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Búsqueda cancelada.";
             UpdateCreatingStatus();
