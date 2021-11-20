@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     // Variables del movimiento
     private float horizontal;
     private float speed = 5f;
-    private float jumpingPower = 7f;
+    private float jumpingPower = 6f;
 
     private void Awake()
     {
@@ -117,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (context.ReadValue<Vector2>().x < 0) { return; }
         horizontal = context.ReadValue<Vector2>().x;
-        sounds.playWalkSound();
+        //sounds.playWalkSound();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

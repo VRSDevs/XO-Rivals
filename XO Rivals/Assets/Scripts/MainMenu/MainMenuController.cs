@@ -24,6 +24,12 @@ public class MainMenuController : MonoBehaviour
 
     [SerializeField] public GameObject ViewContent;
 
+    [SerializeField] public TextMeshProUGUI nameTxt;
+    [SerializeField] public TextMeshProUGUI level;
+    [SerializeField] public TextMeshProUGUI lifesTxt;
+    [SerializeField] public TextMeshProUGUI lifesTime;
+    [SerializeField] public Slider lvlSlider;
+
     private GameManager _gameManager;
     private PlayerInfo _localPlayer;
 
@@ -40,6 +46,22 @@ public class MainMenuController : MonoBehaviour
 
         JoinGameButton.interactable = false;
         Mode = 0;
+
+        nameTxt.text = _localPlayer.Name;
+        level.text = "Level: " + Math.Truncate(_localPlayer.Level);
+        lvlSlider.value = _localPlayer.Level % 1;
+        lifesTxt.text = "Lifes: " + _localPlayer.Lifes;
+        if(_localPlayer.Lifes != 5){
+            
+        }else{
+            lifesTime.text = "-:--";
+        }
+    }
+
+    private void Update(){
+        if(_localPlayer.Lifes != 5){
+            lifesTime.text = "";
+        }
     }
 
     #endregion

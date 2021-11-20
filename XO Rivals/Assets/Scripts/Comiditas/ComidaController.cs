@@ -7,6 +7,10 @@ using TMPro;
 
 public class ComidaController : MonoBehaviour
 {
+    
+    // Sounds
+    public SFXManagerComida sounds;
+    
     // Canvas final
     [SerializeField]
     private GameObject victory;
@@ -65,6 +69,7 @@ public class ComidaController : MonoBehaviour
 
         generador = FindObjectOfType<Generador>();
 
+        StartCoroutine(DefeatNumerator());
 
         if (!_gameManager.IsWebGLMobile)
         {
@@ -76,6 +81,7 @@ public class ComidaController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (time >= 0 && !finished)
         {
             time -= Time.deltaTime;
@@ -94,8 +100,8 @@ public class ComidaController : MonoBehaviour
             panArriba.SetActive(false);
             orden = 1;
             player.constraints = RigidbodyConstraints2D.FreezeAll;
-            Invoke("DefeatCanvas", 3f);
-            lost = true;
+            lost = true;           
+            
         }
 
         if (win)
@@ -112,12 +118,14 @@ public class ComidaController : MonoBehaviour
     {
         defeat.SetActive(true);
         Invoke("Defeat", 3f);
+        //sounds.playDefeatSound();
     }
 
     public void VictoryCanvas()
     {
         victory.SetActive(true);
         Invoke("Victory", 3f);
+        sounds.playVictorySound();
     }
 
     public void Defeat()
@@ -159,7 +167,7 @@ public class ComidaController : MonoBehaviour
                     panAbajo.SetActive(true);
                     orden++;
                 }           
-                 else
+                     else
                 {
                     panAbajo.SetActive(false);
                     queso.SetActive(false);
@@ -254,5 +262,17 @@ public class ComidaController : MonoBehaviour
 
 
 
+    }
+
+    IEnumerator DefeatNumerator()
+    {
+        yield return new WaitUntil(ReturnLost);
+
+        DefeatCanvas();
+    } 
+
+    public bool ReturnLost()
+    {
+        return lost;
     }
 }

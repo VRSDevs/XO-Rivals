@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SFXManager : MonoBehaviour
 {
-    public AudioSource managerBoton;
+    private AudioSource managerBoton;
     
     public AudioClip CookingMusic;
     public AudioClip GunmanMusic;
