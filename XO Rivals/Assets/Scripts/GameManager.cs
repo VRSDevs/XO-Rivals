@@ -157,6 +157,14 @@ public class GameManager : MonoBehaviour
     {
         return _networkController.ConnectToServer();
     }
+
+    /// <summary>
+    /// Método para desconectarse del servidor
+    /// </summary>
+    public void OnDisconnectToServer()
+    {
+        _networkController.DisconnectFromServer();
+    }
     
     /// <summary>
     /// Método para conectarse a una sala en Photon
