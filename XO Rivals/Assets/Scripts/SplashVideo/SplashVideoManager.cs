@@ -22,7 +22,7 @@ public class SplashVideoManager : MonoBehaviour
     public void PlayVideo()
     {
         videoPlayer.Play();
-        Invoke("GoToNextScene", 4.5f);
+        Invoke("GoToNextScene", 6f);
     }
 
     void GoToNextScene()
