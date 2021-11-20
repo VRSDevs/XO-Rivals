@@ -116,7 +116,7 @@ public class ComidaController : MonoBehaviour
     {
         defeat.SetActive(true);
         Invoke("Defeat", 3f);
-        sounds.playDefeatSound();
+        //sounds.playDefeatSound();
     }
 
     public void VictoryCanvas()
@@ -163,7 +163,7 @@ public class ComidaController : MonoBehaviour
                     panAbajo.SetActive(true);
                     orden++;
                 }           
-                 else
+                     else
                 {
                     panAbajo.SetActive(false);
                     queso.SetActive(false);
