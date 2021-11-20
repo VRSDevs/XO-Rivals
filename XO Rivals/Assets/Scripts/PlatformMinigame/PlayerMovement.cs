@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     // Variables del movimiento
     private float horizontal;
     private float speed = 5f;
-    private float jumpingPower = 7f;
+    private float jumpingPower = 6f;
 
     private void Awake()
     {
