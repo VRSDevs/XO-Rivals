@@ -4,23 +4,10 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - CookingMusic: {instanceID: 0}
-  - GunmanMusic: {instanceID: 0}
-  - PlatformMusic: {instanceID: 0}
-  - Tic_Tac_ToeMusic: {instanceID: 0}
-  - ShopMusic: {instanceID: 0}
-  - SelectionButton1: {instanceID: 0}
-  - SelectionButton2: {instanceID: 0}
-  - SelectionButton3: {instanceID: 0}
-  - SelectionButton4: {instanceID: 0}
-  - DeathSound: {instanceID: 0}
-  - VictorySound: {instanceID: 0}
-  - DefeatSound: {instanceID: 0}
-  - WalkSound: {instanceID: 0}
-  - ReloadSound: {instanceID: 0}
-  - ShotSound: {instanceID: 0}
-  - ChipSound: {instanceID: 0}
-  - CookingSound: {instanceID: 0}
+  - sonidoBoton1: {fileID: 8300000, guid: 0e7ec5f2a22a527498c079631a05a5e2, type: 3}
+  - sonidoBoton2: {fileID: 8300000, guid: 3a6b7618f718e9b47bd2544f621031a7, type: 3}
+  - sonidoBoton3: {fileID: 8300000, guid: a454cc63a473b184f85e82d2e2c22839, type: 3}
+  - sonidoBoton4: {fileID: 8300000, guid: e6622537f95b70648b8fcd2138315731, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

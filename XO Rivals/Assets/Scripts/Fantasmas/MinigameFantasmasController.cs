@@ -18,8 +18,6 @@ public class MinigameFantasmasController : MonoBehaviour
     // Gamemanager
     private GameManager _gameManager;
 
-    //Musica
-    public AudioClip MusicaBosque;
 
 
     // Start is called before the first frame update
@@ -34,9 +32,6 @@ public class MinigameFantasmasController : MonoBehaviour
             upButton.SetActive(false);
             downButton.SetActive(false);
         }
-        
-        FindObjectOfType<AudioManager>().ChangeMusic(MusicaBosque,"Tic-Tac-Toe");
-
     }
 
     // Update is called once per frame

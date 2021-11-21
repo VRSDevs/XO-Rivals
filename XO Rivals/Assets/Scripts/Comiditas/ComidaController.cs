@@ -4,22 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-using Photon.Pun;
-
 
 public class ComidaController : MonoBehaviour
 {
-
-    // Boolean de prueba de cambio personaje
-    public bool playerColor = true;
-
-    public Match thisMatch;
-
-    public PlayerInfo localPlayer;
-
+    
     // Sounds
     public SFXManagerComida sounds;
-    public AudioClip ComiditasMusic;
     
     // Canvas final
     [SerializeField]
@@ -30,8 +20,6 @@ public class ComidaController : MonoBehaviour
     // Player
     [SerializeField]
     private Rigidbody2D player;
-    [SerializeField]
-    private Rigidbody2D playerORB;
 
     // Tipo jugador
     [SerializeField]
@@ -72,48 +60,22 @@ public class ComidaController : MonoBehaviour
     [SerializeField]
     GameObject lechuga;
 
-    private void Awake()
-    {
-        _gameManager = FindObjectOfType<GameManager>();
-        thisMatch = _gameManager.PlayerMatches[PhotonNetwork.CurrentRoom.Name];
-        localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
-
-    }
-
-
+    // Start is called before the first frame update
     void Start()
     {
         crono.text = " " + time;
 
-        
+        _gameManager = FindObjectOfType<GameManager>();
 
         generador = FindObjectOfType<Generador>();
 
         StartCoroutine(DefeatNumerator());
-
-        // Valor a cambiar segun el color de ficha del jugador
-        if (thisMatch.PlayerOName == localPlayer.Name)
-        {
-            playerO.SetActive(true);
-            playerX.SetActive(false);
-            
-        } else
-        {
-            playerO.SetActive(false);
-            playerX.SetActive(true);
-        }
 
         if (!_gameManager.IsWebGLMobile)
         {
             leftButton.SetActive(false);
             rightButton.SetActive(false);
         }
-
-        FindObjectOfType<AudioManager>().StopAllSongs();
-
-        
-        FindObjectOfType<AudioManager>().ChangeMusic(ComiditasMusic,"Tic-Tac-Toe");
-
     }
 
     // Update is called once per frame
@@ -138,7 +100,6 @@ public class ComidaController : MonoBehaviour
             panArriba.SetActive(false);
             orden = 1;
             player.constraints = RigidbodyConstraints2D.FreezeAll;
-            playerORB.constraints = RigidbodyConstraints2D.FreezeAll;
             lost = true;           
             
         }
@@ -171,6 +132,7 @@ public class ComidaController : MonoBehaviour
     {
         PlayerPrefs.SetInt("minigameWin", 0);
         FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        //SceneManager.UnloadSceneAsync("MinijuegoComida");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 
@@ -178,6 +140,7 @@ public class ComidaController : MonoBehaviour
     {
         PlayerPrefs.SetInt("minigameWin", 1);
         FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        //SceneManager.UnloadSceneAsync("MinijuegoComida");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 
@@ -279,7 +242,6 @@ public class ComidaController : MonoBehaviour
                     win = true;
                     crono.SetText("You won");
                     stopGenerador();
-                    playerORB.constraints = RigidbodyConstraints2D.FreezeAll;
                     player.constraints = RigidbodyConstraints2D.FreezeAll;
                     // Aqui se manda a alberto la victoria
                     Invoke("VictoryCanvas", 3f);

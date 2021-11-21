@@ -5,7 +5,6 @@ using PlayFab;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
-using Photon.Pun;
 
 /// <summary>
 /// Modo de inicio de sesión activo
@@ -83,9 +82,6 @@ public class Login : MonoBehaviour
 
         // Limpieza del log
         Log.text = "";
-        
-        FindObjectOfType<AudioManager>().Play("Main_menu");
-
     }
 
     #endregion
@@ -116,7 +112,7 @@ public class Login : MonoBehaviour
     private void OnAuthentication(string username, string password)
     {
         Debug.Log("Modo: " + Mode);
-        Log.text = "Validating...";
+        Log.text = "Validando credenciales...";
         Authenticator.AuthWithPlayfab(username, password, Mode);
     }
 
@@ -144,89 +140,23 @@ public class Login : MonoBehaviour
             
             Authenticator.Reset();
 
-            Log.text = "Connecting...";
+            Log.text = "Conectando...";
             
             if (_gameManager.OnConnectToServer())
             {
-                Log.text = "Connected.";
-                
+                Log.text = "Conectado.";
                 _gameManager.SetPhotonNick(username);
-                
                 GameObject myPlayer = new GameObject();
                 PlayerInfo playerInfo = myPlayer.AddComponent<PlayerInfo>();
                 DontDestroyOnLoad(myPlayer);
                 playerInfo.name = "PlayerObject";
                 playerInfo.Name = username;
-                playerInfo.ID = Authenticator.playFabPlayerIdCache;
-                
-                //Get client data from PlayFab
-                PlayFabClientAPI.GetUserData(new PlayFab.ClientModels.GetUserDataRequest() {
-                    PlayFabId = playerInfo.ID,
-                    Keys = null
-                }, result => {
-                    Debug.Log("Got user data:");
-                    if (result.Data != null){
-                        //Get lifes
-                        if(result.Data.ContainsKey("Lifes")){
-                            playerInfo.Lifes = int.Parse(result.Data["Lifes"].Value);
-                            playerInfo.Lifes = 3;
-                            Debug.Log("Successfully got player lifes");
-                        }else{
-                            PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                                Data = new Dictionary<string, string>() {
-                                    {"Lifes", "5"}
-                                }
-                            },
-                            result => Debug.Log("Successfully updated user lifes"),
-                            error => {
-                                Debug.Log("Got error setting user lifes");
-                            });
-                        }
-
-                        //Get level
-                        if(result.Data.ContainsKey("Level")){
-                            playerInfo.Level = float.Parse(result.Data["Level"].Value);
-                            playerInfo.Level += 3.43f;
-                            Debug.Log("Successfully got player level");
-                        }else{
-                            PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                                Data = new Dictionary<string, string>() {
-                                    {"Level", "0.0"}
-                                }
-                            },
-                            result => Debug.Log("Successfully updated user level"),
-                            error => {
-                                Debug.Log("Got error setting user level");
-                            });
-                        }
-
-                        //Get moment of life lost(if exists)
-                        if(result.Data.ContainsKey("Life Lost") && result.Data["Life Lost"].Value != "" && result.Data["Life Lost"].Value != null){
-                            playerInfo.LostLifeTime = DateTime.ParseExact(result.Data["Life Lost"].Value, "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                            Debug.Log("Successfully got player life lost moment");
-                        }  
-                        playerInfo.LostLifeTime = System.DateTime.Now;               
-                    }else{
-                        //Setup all information
-                        PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                            Data = new Dictionary<string, string>() {
-                                {"Lifes", "5"},
-                                {"Level", "0"}
-                            }
-                        },
-                        result => Debug.Log("Successfully updated user information"),
-                        error => {
-                            Debug.Log("Got error setting user information");
-                        });
-                    }
-                }, (error) => {
-                    Debug.Log("Got error retrieving user data:");
-                });
-                
+                //myPlayer.Id = get ID from server //innecesario
+                //myPlayer.Elo = get ELO from server
             }
             else
             {
-                Log.text = "Oops! Something went wrong.";
+                Log.text = "Error al conectar.";
                 IsConnecting = false;
             }
         }
@@ -235,13 +165,13 @@ public class Login : MonoBehaviour
             switch (e.ErrorCode)
             {
                 case PlayFabErrorCode.UsernameNotAvailable:
-                    Log.text = "Username not available.";
+                    Log.text = "Nombre de usuario no disponible.";
                     break;
                 case PlayFabErrorCode.AccountNotFound:
-                    Log.text = "Account not found.";
+                    Log.text = "Cuenta no encontrada.";
                     break;
                 case PlayFabErrorCode.InvalidUsernameOrPassword:
-                    Log.text = "Invalid username or password.";
+                    Log.text = "Nombre de usuario o contraseña inválido.";
                     break;
             }
 
@@ -269,7 +199,7 @@ public class Login : MonoBehaviour
                 
         if (UsernameInput.text.Length < MIN_CHARS || PasswordInput.text.Length < MIN_CHARS)
         {
-            Log.text = "Incorrect length. Minimum " + MIN_CHARS + " chars.";
+            Log.text = "Longitud no correcta, mínimo " + MIN_CHARS;
             return false;
         }
 
@@ -286,7 +216,6 @@ public class Login : MonoBehaviour
     /// <param name="mode">Código del modo</param>
     public void UpdateLoginMode(int mode)
     {
-        FindObjectOfType<AudioManager>().Play("SelecctionButton");
 
         switch (mode)
         {

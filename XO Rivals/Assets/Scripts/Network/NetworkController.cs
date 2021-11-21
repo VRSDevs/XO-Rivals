@@ -65,7 +65,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// </summary>
     public void ConnectToRandomRoom()
     {
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Searching games...";
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Buscando salas...";
         StartCoroutine(JoinRoom());
     }
 
@@ -85,16 +85,19 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// </summary>
     public void DisconnectFromRoom()
     {
-        if (FindObjectOfType<GameManager>().IsPlaying)
-        {
-            if (FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SurrenderStatus() ||
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded())
-            {
-                FindObjectOfType<GameManager>().PlayerMatches.Remove(PhotonNetwork.CurrentRoom.Name);
-            }
-        }
-        
         PhotonNetwork.LeaveRoom(true);
+        
+        if (!FindObjectOfType<GameManager>().IsPlaying) return;
+        //FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].MatchId = "";
+        //FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].OwnerId = "";
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = null;
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = null;
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = "";
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].NumFilled = 0;
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions = new int[3,3];
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].Chips = new List<GameObject>();
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = 1;
     }
 
     #endregion
@@ -140,7 +143,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         
         if (SceneManager.GetActiveScene().name.Equals("Login"))
         {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Connected to server. Connecting to lobby...";
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Conectado al servidor. Conectando al lobby...";
         }
         
         ConnectToLobby();
@@ -153,20 +156,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
-
-        switch (cause)
-        {
-            // Caso ClientTimeout -> El cliente deja de recibir respuestas por parte del servidor
-            case DisconnectCause.ClientTimeout:
-                FindObjectOfType<GameManager>().ResetObject();
-                Destroy(GameObject.Find("PlayerObject"));
-
-                SceneManager.LoadScene("Login");
-                break;
-            default:
-                Debug.Log("Desconexión del servidor: " + cause);
-                break;
-        }
+        
+        Debug.Log("Desconexión del servidor: " + cause);
     }
 
     /// <summary>
@@ -178,7 +169,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
         if (!SceneManager.GetActiveScene().name.Equals("Login")) return;
         
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Connected to the lobby.";
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Conectado al lobby general.";
         Debug.Log("Hola, " + PhotonNetwork.NickName);
 
         SceneManager.LoadScene("MainMenu");
@@ -191,7 +182,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnCreatedRoom();
 
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Match created successfully.";
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala creada con éxito.";
     }
     
     /// <summary>
@@ -204,7 +195,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnCreateRoomFailed(returnCode, message);
         
         Debug.Log("Error " + returnCode + ": " + message);
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Couldn´t create the match.";
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
     }
 
     public override void OnJoinedRoom()
@@ -215,15 +206,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
         
         UpdateCreatingStatus();
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount < MAX_PLAYERS_INROOM)
+        if (PhotonNetwork.CurrentRoom.PlayerCount < 2)
         {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Waiting for players (" + 
-                PhotonNetwork.CurrentRoom.Players.Count + "/" + MAX_PLAYERS_INROOM + ")...";
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Buscando jugadores...";
         }
         else
         {
-            FindObjectOfType<GameManager>().Matchmaking = false;
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Player found! Starting match...";
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
             FindObjectOfType<GameManager>().SetupMatch("X");
             StartCoroutine(StartMatch());
         }
@@ -242,7 +231,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         {
             // Caso 32760 - Ninguna sala disponible
             case 32760:
-                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Couldn´t find any matches. Creating one...";
+                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No hay salas activas. Creando una...";
 
                 StartCoroutine(CreateMatchRoom(GetHashValue("Sala " + PhotonNetwork.CountOfRooms)));
                 break;
@@ -259,13 +248,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnLeftRoom();
 
-        if (SceneManager.GetActiveScene().name.Equals("MainMenu") && !FindObjectOfType<GameManager>().IsPlaying)
+        if (SceneManager.GetActiveScene().name.Equals("MainMenu"))
         {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Matchmaking stopped.";
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Búsqueda cancelada.";
             UpdateCreatingStatus();
         }
-        
-        FindObjectOfType<GameManager>().IsPlaying = false;
     }
 
     /// <summary>
@@ -278,8 +265,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
    
         if (PhotonNetwork.CurrentRoom.PlayerCount != MAX_PLAYERS_INROOM) return;
 
-        FindObjectOfType<GameManager>().Matchmaking = false;
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Player found! Starting match...";
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
         FindObjectOfType<GameManager>().SetupMatch("O");
         StartCoroutine(StartMatch());
     }
@@ -291,11 +277,12 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
-        
-        /*
+
         if (FindObjectOfType<GameManager>().IsPlaying)
-            StartCoroutine(LeaveInMatch());
-        */
+        {
+            FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
+            FindObjectOfType<GameManager>().IsPlaying = false;
+        }
     }
 
     #endregion
@@ -358,7 +345,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// Método para obtener si se está creando la partida o no
     /// </summary>
     /// <returns></returns>
-    public bool GetCreatingRoom()
+    public bool GetCreatingRom()
     {
         return _creatingRoom;
     }

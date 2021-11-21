@@ -25,7 +25,53 @@ public class GameManager : MonoBehaviour
     /// Lista de partidas del jugador
     /// </summary>
     public Dictionary<string, Match> PlayerMatches;
-    
+
+    /*
+    /// <summary>
+    /// ID de la partida
+    /// </summary>
+    public string MatchId;
+    /// <summary>
+    /// ID del dueño de la partida
+    /// </summary>
+    public string OwnerId;
+    /// <summary>
+    /// Información del jugador O
+    /// </summary>
+    public PlayerInfo PlayerInfoO;
+    /// <summary>
+    /// Información del jugador X
+    /// </summary>
+    public PlayerInfo PlayerInfoX;
+    /// <summary>
+    /// Información del jugador del turno
+    /// </summary>
+    public string WhosTurn;
+
+    /// <summary>
+    /// Información del momento del turno en el que esta el jugador
+    /// turnMoment = 0 -> Toca colocar ficha
+    /// turnMoment = 1 -> Toca jugar el minijuego
+    /// turnMoment = 2 -> Toca elegir minijuego
+    /// </summary>
+    public int turnMoment;      
+    /// <summary>
+    /// Numero de fichas colocadas
+    /// </summary>
+    public int NumFilled;
+    /// <summary>
+    /// Posicion de fichas colocadas
+    /// </summary>
+    public int[,] FilledPositions;    
+    /// <summary>
+    /// Array de fichas colocadas
+    /// </summary>
+    public List<GameObject> Chips;
+    /// <summary>
+    /// Minijuego elegido
+    /// </summary>
+    public int MiniGameChosen;
+    */
     ////////////////// USUARIO //////////////////
     /// <summary>
     /// ¿En qué versión de WebGL está?
@@ -35,11 +81,12 @@ public class GameManager : MonoBehaviour
     /// ¿Está jugando?
     /// </summary>
     [NonSerialized] public bool IsPlaying;
+
     /// <summary>
-    /// ¿Está buscando partida?
+    /// 
     /// </summary>
     [NonSerialized] public bool Matchmaking;
-
+    
     #endregion
 
     #region UnityCB
@@ -52,7 +99,7 @@ public class GameManager : MonoBehaviour
         PlayerMatches = new Dictionary<string, Match>();
         Matchmaking = false;
         IsPlaying = false;
-
+        
         DontDestroyOnLoad(this);
     }
 
@@ -66,7 +113,7 @@ public class GameManager : MonoBehaviour
     /// <returns>¿Se está creando la partida?</returns>
     public bool GetIsCreatingMatch()
     {
-        return _networkController.GetCreatingRoom();
+        return _networkController.GetCreatingRom();
     }
 
     #endregion
@@ -252,34 +299,21 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
-    /// <summary>
-    /// Método para convertir los datos del final de la partida en un objeto a enviar
-    /// </summary>
-    /// <param name="type">Tipo de final</param>
-    /// <param name="winner">Ganador de la partida</param>
-    /// <returns>Objeto a enviar</returns>
     public object[] EndMatchInfoToObject(string type, string winner)
     {
         object[] obj;
         
         switch (type)
         {
-            case "WN":
-            case "DF":
+            case "win":
+            case "defeat":
                 obj = new object[2];
 
                 obj[0] = type;
                 obj[1] = winner;
 
                 return obj;
-            case "DW":
-                obj = new object[1];
-                
-                obj[0] = type;
-                
-                return obj;
-            
-            case "SR":
+            case "draw":
                 obj = new object[1];
                 
                 obj[0] = type;

@@ -38,9 +38,6 @@ public class PlatformMinigameController : MonoBehaviour
     private GameObject flag3;
     [SerializeField]
     private Sprite flagSpriteO;
-    
-    //Sounds
-    public AudioClip PlatformMusic;
 
     // Variables auxiliares a cambiarse
     bool jugadorX = false;
@@ -89,12 +86,7 @@ public class PlatformMinigameController : MonoBehaviour
             rightButton.SetActive(false);
         }
 
-
-        FindObjectOfType<AudioManager>().StopAllSongs();
-
-
-        FindObjectOfType<AudioManager>().ChangeMusic(PlatformMusic,"Tic-Tac-Toe");
-
+        
     }
 
     // Update is called once per frame

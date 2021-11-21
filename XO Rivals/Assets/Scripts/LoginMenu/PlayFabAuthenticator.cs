@@ -49,7 +49,7 @@ public class PlayFabAuthenticator : MonoBehaviour
     /// <summary>
     /// ID del usuario en el proceso de autentificación
     /// </summary>
-    public string playFabPlayerIdCache = "";
+    private string _playFabPlayerIdCache = "";
     /// <summary>
     /// 
     /// </summary>
@@ -112,7 +112,7 @@ public class PlayFabAuthenticator : MonoBehaviour
 
     private void RequestToken(LoginResult result)
     {
-        playFabPlayerIdCache = result.PlayFabId;
+        _playFabPlayerIdCache = result.PlayFabId;
 
         GetPhotonAuthenticationTokenRequest request = new GetPhotonAuthenticationTokenRequest();
         request.PhotonApplicationId = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime;
@@ -131,7 +131,7 @@ public class PlayFabAuthenticator : MonoBehaviour
             AuthType = Photon.Realtime.CustomAuthenticationType.Custom
         };
         
-        customAuth.AddAuthParameter("username", playFabPlayerIdCache);
+        customAuth.AddAuthParameter("username", _playFabPlayerIdCache);
         customAuth.AddAuthParameter("token", obj.PhotonCustomAuthenticationToken);
 
         PhotonNetwork.AuthValues = customAuth;
@@ -157,7 +157,7 @@ public class PlayFabAuthenticator : MonoBehaviour
 
     public void Reset()
     {
-        playFabPlayerIdCache = "";
+        _playFabPlayerIdCache = "";
         Authenticated = false;
         Obj = new AuthObject(false, PlayFabErrorCode.Unknown, "");
     }

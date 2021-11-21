@@ -6,60 +6,33 @@ using UnityEngine.UI;
 
 public class MatchScrollerController : MonoBehaviour
 {
-    #region Vars
-
-    /// <summary>
-    /// Referencia al prefab de la partida
-    /// </summary>
     [SerializeField] public GameObject MatchPrefab;
-    /// <summary>
-    /// Referencia a la vista de scroll
-    /// </summary>
     [SerializeField] public ScrollRect ScrollView;
-    /// <summary>
-    /// Referencia a la vista del contenido
-    /// </summary>
     [SerializeField] public RectTransform ViewContent;
     
-    /// <summary>
-    /// Lista de las vistas a insertar en el scroll
-    /// </summary>
     private List<MatchesView> views = new List<MatchesView>();
-
-    /// <summary>
-    /// Número total de partidas
-    /// </summary>
-    private int _totalMatches;
-
-    #endregion
-
-    #region UnityCB
 
     private void Start()
     {
-        _totalMatches = 0;
-        
         GetMatchesList();
+        StartCoroutine(UpdateMatchesList());
     }
-
-    #endregion
-
-    #region Algorithm
-
-    /// <summary>
-    /// Método para obtener la lista de partidas en un comienzo
-    /// </summary>
+    
     private void GetMatchesList()
     {
-        _totalMatches = FindObjectOfType<GameManager>().PlayerMatches.Count;
-        
-        FetchPlayerMatches(OnRecievedMatches);
+        FetchPlayerMatches(
+            FindObjectOfType<GameManager>().PlayerMatches.Count, 
+            OnRecievedMatches);
     }
 
-    /// <summary>
-    /// Método ejecutado al recibir la lista de partidas del diccionario
-    /// </summary>
-    /// <param name="list">Lista de partidas</param>
+    private IEnumerator UpdateMatchesList()
+    {
+        yield return new WaitForSeconds(5);
+        FetchPlayerMatches(
+            FindObjectOfType<GameManager>().PlayerMatches.Count, 
+            OnRecievedMatches);
+    }
+    
     private void OnRecievedMatches(MatchModel[] list)
     {
         foreach (Transform child in ViewContent)
@@ -72,20 +45,12 @@ public class MatchScrollerController : MonoBehaviour
         foreach (var matchModel in list)
         {
             var instance = Instantiate(MatchPrefab, ViewContent, false);
-            if (_totalMatches < 1) instance.GetComponent<Button>().interactable = false;
-            
             var view = IntializeMatchView(instance, matchModel);
             views.Add(view);
         }
     
     }
     
-    /// <summary>
-    /// Método para inicializar cada prefab a introducir a la vista
-    /// </summary>
-    /// <param name="viewGO"></param>
-    /// <param name="model"></param>
-    /// <returns></returns>
     private MatchesView IntializeMatchView(GameObject viewGO, MatchModel model)
     {
         MatchesView view = new MatchesView(viewGO.transform)
@@ -103,38 +68,18 @@ public class MatchScrollerController : MonoBehaviour
         return view;
     }
     
-    /// <summary>
-    /// Método para obtener la lista de partidas del diccionario
-    /// </summary>
-    /// <param name="onDone"></param>
-    private void FetchPlayerMatches(Action<MatchModel[]> onDone)
+    private void FetchPlayerMatches(int count, Action<MatchModel[]> onDone)
     {
-        var matchesList = _totalMatches < 1 ? new MatchModel[1] : new MatchModel[_totalMatches];
-
-        if (_totalMatches < 1)
+        var matchesList = new MatchModel[count];
+        for (int i = 0; i < matchesList.Length; i++)
         {
-            matchesList[_totalMatches] = new MatchModel
+            matchesList[i] = new MatchModel
             {
-                MatchName = "No tienes partidas activas",
-                MatchStatus = ""
+                MatchName = "Sala " + i,
+                MatchStatus = "Turno de X"
             };
         }
-        else
-        {
-            int i = 0;
-            foreach (Match match in FindObjectOfType<GameManager>().PlayerMatches.Values)
-            {
-                matchesList[i] = new MatchModel
-                {
-                    MatchName = match.MatchId,
-                    MatchStatus = match.WhosTurn
-                };
-                i++;
-            }
-        }
-        
+
         onDone(matchesList);
     }
-
-    #endregion
 }

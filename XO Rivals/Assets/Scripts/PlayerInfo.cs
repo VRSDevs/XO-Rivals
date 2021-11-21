@@ -6,10 +6,6 @@ public class PlayerInfo : MonoBehaviour {
     #region Variables
 
     /// <summary>
-    /// Id de usuario
-    /// </summary>
-    public string ID = "";
-    /// <summary>
     /// Nombre de usuario
     /// </summary>
     public string Name = "";
@@ -18,17 +14,9 @@ public class PlayerInfo : MonoBehaviour {
     /// </summary>
     public int MatchId = -1;
     /// <summary>
-    /// Nivel del jugador
+    /// Elo del jugador
     /// </summary>
-    public float Level;
-    /// <summary>
-    /// Vidas del jugador
-    /// </summary>
-    public int Lifes;
-    /// <summary>
-    /// Instante de ultima vida perdida
-    /// </summary>
-    public DateTime LostLifeTime;
+    public string Elo = "";
 
     #endregion
     
