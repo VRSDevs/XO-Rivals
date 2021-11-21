@@ -3306,3 +3306,82 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1958832530}
   m_CullTransparentMesh: 1
+--- !u!1 &2051557943
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2051557945}
+  - component: {fileID: 2051557944}
+  m_Layer: 0
+  m_Name: '@SoundManager'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2051557944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051557943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c781a82b4e95354eb8c4b15cced38d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - clip: {fileID: 8300000, guid: ec2c9f08edc32e846a79038a42a48c36, type: 3}
+    source: {fileID: 0}
+    name: Tic-Tac-Toe
+    type: 0
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: 52776ac4e18d7764fb63dd94f9486ae7, type: 3}
+    source: {fileID: 0}
+    name: Cocinitas
+    type: 0
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: 16861b6d4ced9b14780f9296e5142c15, type: 3}
+    source: {fileID: 0}
+    name: Pistolero
+    type: 0
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: 699e65c7af8d2984f9dc9c120bbb6b3f, type: 3}
+    source: {fileID: 0}
+    name: Plataformas
+    type: 0
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: 0b00eb9a3af602847b21be56fc5e2907, type: 3}
+    source: {fileID: 0}
+    name: Shop
+    type: 0
+    volume: 1
+    pitch: 1
+    loop: 0
+--- !u!4 &2051557945
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051557943}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 996.4677, y: 3.2808685, z: -1.0917044}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
