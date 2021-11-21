@@ -15,6 +15,8 @@ public class ButtonsScript : MonoBehaviour
     public GameObject circleGO;
     public GameObject crossGO;
 
+    public List<Transform> botonesCuadricula;
+
     //Screen manager
     private ScreenManager screenManager;
 
@@ -79,27 +81,91 @@ public class ButtonsScript : MonoBehaviour
         startGame();
 
 
+
+        //SE COLOCAN LAS FICHAS EXISTENTES
+        for (int i = 0; i<9; i++)
+        {
+
+            if (thisMatch.FilledPositions[i%3,i/3] == 0)//Circle
+            {
+                GameObject actual;
+                actual = Instantiate(circleGO, botonesCuadricula[i].position, Quaternion.identity);
+                actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+                actual.SetActive(true);
+            }
+
+        if (thisMatch.FilledPositions[i % 3, i / 3] == 1)//Cross
+            {
+            GameObject actual;
+            actual = Instantiate(crossGO, botonesCuadricula[i].position, Quaternion.identity);
+            actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+            actual.SetActive(true);
+        }
+
+    }
+
+
+
+
         //SI VIENES DE UN MINIJUEGO SE HACE START Y SE ELIGE MINIJUEGO
         if (thisMatch.TurnMoment == 2)
         {
+
+
             miniWin = (PlayerPrefs.GetInt("minigameWin") == 1);
             Debug.Log(miniWin);
 
-            //Save position
-            thisMatch.FilledPositions[col, row] = (thisMatch.WhosTurn == thisMatch.PlayerOName ? 0 : 1);
-            //Paint tile completely
-            GameObject tile = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-            SelectedTile = tile.name;
-            GameObject actual = Instantiate(crossGO, tile.transform.position, Quaternion.identity);
-            actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
-            //Add chip to list
-            thisMatch.Chips.Add(actual);
-            //Add one to filled count
-            thisMatch.NumFilled++;
+            if (miniWin)
+            {
 
+
+                GameObject actual;
+                if (thisMatch.ActualChipTeam == "cross")
+                {
+                    //Save position
+                    thisMatch.FilledPositions[thisMatch.ActualChip % 3, thisMatch.ActualChip / 3] = 1;
+                    //Paint tile completely
+
+                    actual = Instantiate(crossGO, botonesCuadricula[thisMatch.ActualChip].position, Quaternion.identity);
+                    actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+                    actual.SetActive(true);
+
+                    //Add chip to list
+                    thisMatch.Chips.Add(actual);
+                    //Add one to filled count
+                    thisMatch.NumFilled++;
+                }
+                else if (thisMatch.ActualChipTeam == "circle")
+                {
+                    //Save position
+                    thisMatch.FilledPositions[thisMatch.ActualChip % 3, thisMatch.ActualChip / 3] = 0;
+                    //Paint tile completely
+
+                    actual = Instantiate(circleGO, botonesCuadricula[thisMatch.ActualChip].position, Quaternion.identity);
+                    actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+                    actual.SetActive(true);
+
+                    //Add chip to list
+                    thisMatch.Chips.Add(actual);
+                    //Add one to filled count
+                    thisMatch.NumFilled++;
+                }
+
+
+
+
+            }//Fin win
 
 
            // screenManager.MinigameSelectionActivation();
+
+
+
+
+
+
+
+            // screenManager.MinigameSelectionActivation();
 
         }
        

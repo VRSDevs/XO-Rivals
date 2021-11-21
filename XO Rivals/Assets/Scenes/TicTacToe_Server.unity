@@ -7285,7 +7285,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!114 &8973622830577669340
 MonoBehaviour:
@@ -7389,8 +7389,17 @@ MonoBehaviour:
   cross: {fileID: 21300000, guid: 64086e9c27835ba41832875641ae00ee, type: 3}
   circleGO: {fileID: 0}
   crossGO: {fileID: 0}
+  botonesCuadricula:
+  - {fileID: 8973622832333863754}
+  - {fileID: 8973622831659900296}
+  - {fileID: 8973622832271774251}
+  - {fileID: 8973622830539711082}
+  - {fileID: 8973622832415988400}
+  - {fileID: 8973622831788748485}
+  - {fileID: 8973622831829132108}
+  - {fileID: 8973622831828787379}
+  - {fileID: 8973622831403405502}
   SelectedTile: 
-  actualChip: {fileID: 0}
   col: 0
   row: 0
   miniWin: 0
