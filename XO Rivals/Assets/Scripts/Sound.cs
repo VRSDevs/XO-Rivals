@@ -6,7 +6,9 @@ public enum soundTypes {
     M,
     S
 }
-public class Sound : MonoBehaviour
+[System.Serializable]   // Permite mostrar esta clase propia en el inspector
+
+public class Sound
 {
     
     public AudioClip clip;

@@ -32,6 +32,8 @@ public class SFXManager : MonoBehaviour
     void Start()
     {
         managerBoton = GetComponent<AudioSource>();
+        FindObjectOfType<SoundsManager>().Play(Tic_Tac_ToeMusic.name);
+
     }
     
     // Update is called once per frame

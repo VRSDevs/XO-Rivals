@@ -146,7 +146,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Conectado al lobby general.";
         Debug.Log("Hola, " + PhotonNetwork.NickName);
 
-        SceneManager.LoadScene("Pistolero");
+        SceneManager.LoadScene("MainMenu");
     }
 
     /// <summary>
