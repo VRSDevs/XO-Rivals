@@ -362,7 +362,7 @@ public class ButtonsScript : MonoBehaviour
             win = true;
         }
 
-        win = true;
+        //win = true;
 
         if (win)
         {
