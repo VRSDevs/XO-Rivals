@@ -68,12 +68,12 @@ public class ScreenManager : MonoBehaviour
 
         if (buttonsScript.miniWin)
         {
-            Debug.Log("poshemosganao");
+         
             buttonsScript.gameState._networkCommunications.SendMatchInfo("OppWon");
         }
         else
         {
-            Debug.Log("poshemosperdido");
+           
             buttonsScript.gameState._networkCommunications.SendMatchInfo("OppLost");
         }
     }
@@ -248,6 +248,7 @@ public class ScreenManager : MonoBehaviour
 
 
     }
+    
     public void goInstrtext()
     {
         int i = buttonsScript.thisMatch.MiniGameChosen;
