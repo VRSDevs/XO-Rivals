@@ -36,10 +36,21 @@ public class TicTacToeController : MonoBehaviour
     }
 
     /// <summary>
+    /// Método para acabar la partida (tras condición de victoria/derrota)
+    /// </summary>
+    public void EndMatch()
+    {
+        _gameManager.IsPlaying = false;
+        _gameManager.OnLeaveRoom();
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    /// <summary>
     /// Método para abandonar la partida
     /// </summary>
     public void Surrender()
     {
+        _gameManager.IsPlaying = false;
         _gameManager.Surrendered = true;
         _gameManager.OnLeaveRoom();
         SceneManager.LoadScene("MainMenu");
