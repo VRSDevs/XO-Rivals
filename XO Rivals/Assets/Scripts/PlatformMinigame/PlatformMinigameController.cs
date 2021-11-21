@@ -89,7 +89,9 @@ public class PlatformMinigameController : MonoBehaviour
             rightButton.SetActive(false);
         }
 
+
         FindObjectOfType<AudioManager>().StopAllSongs();
+
 
         FindObjectOfType<AudioManager>().ChangeMusic(PlatformMusic,"Tic-Tac-Toe");
 

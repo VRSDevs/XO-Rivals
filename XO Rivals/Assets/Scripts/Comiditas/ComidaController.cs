@@ -92,7 +92,9 @@ public class ComidaController : MonoBehaviour
             leftButton.SetActive(false);
             rightButton.SetActive(false);
         }
+
         FindObjectOfType<AudioManager>().StopAllSongs();
+
         
         FindObjectOfType<AudioManager>().ChangeMusic(ComiditasMusic,"Tic-Tac-Toe");
 
