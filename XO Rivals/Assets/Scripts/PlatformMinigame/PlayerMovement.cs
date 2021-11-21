@@ -47,6 +47,17 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyDown("d"))
+        {
+            horizontal = 1;
+        }
+
+        if (Input.GetKeyDown("space"))
+        {
+            JumpPhone();
+        }
+
         if (win)
         {
             player.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
