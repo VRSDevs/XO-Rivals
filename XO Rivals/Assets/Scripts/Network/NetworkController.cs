@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 ///     RANDOM_ROON - Sala aleatoria
 ///     SPECIFIC_ROOM - Sala específica
 /// </summary>
-public enum JoiningRoom
+public enum JoinType
 {
     RANDOM_ROON,
     SPECIFIC_ROOM
@@ -43,6 +43,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// Nombre de la sala específica
     /// </summary>
     private string _nameRoom = "";
+    /// <summary>
+    /// Tipo de unión a sala
+    /// </summary>
+    private JoinType _joinType;
 
     #endregion
     
