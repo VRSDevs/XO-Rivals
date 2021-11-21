@@ -157,29 +157,30 @@ public class NetworkCommunications : MonoBehaviourPun
     [PunRPC]
     public void RPCEndMatch(object[] obj)
     {
-        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
-        
+
+
         switch (obj[0] as string)
         {
             case "WN":
             case "DF":
-                if (obj[1].Equals(GameObject.Find("PlayerObject").GetComponent<PlayerInfo>().Name))
+                if (obj[1].Equals(GameObject.Find("PlayerObject").GetComponent<PlayerInfo>().Name))//RECIBE QUIEN GANA
                 {
                     FindObjectOfType<EndGameScript>().ShowMatchVictory();
                 }
                 else
                 {
-                    FindObjectOfType<EndGameScript>().ShowMatchDefeat();
+                     FindObjectOfType<EndGameScript>().ShowMatchDefeat();
                 }
 
                 break;
             case "DW":
-                FindObjectOfType<EndGameScript>().ShowMatchDraw();
-                
+                    FindObjectOfType<EndGameScript>().ShowMatchDraw();
+
                 break;
             case "SR":
-                FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
+                    FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
                 break;
+
         }
     }
 

@@ -27827,6 +27827,83 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &2083505963
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1399310660195000072, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: upButton
+      value: 
+      objectReference: {fileID: 953662423}
+    - target: {fileID: 1399310660195000072, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: downButton
+      value: 
+      objectReference: {fileID: 1404583225}
+    - target: {fileID: 1399310660195000072, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: leftButton
+      value: 
+      objectReference: {fileID: 2236097}
+    - target: {fileID: 1399310660195000072, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: rightButton
+      value: 
+      objectReference: {fileID: 210236396}
+    - target: {fileID: 1399310660195000072, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: MusicaBosque
+      value: 
+      objectReference: {fileID: 8300000, guid: 96c8795bac58a87419b06f87c4c2d479, type: 3}
+    - target: {fileID: 1399310660195000073, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: m_Name
+      value: Minigame Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399310660195000075, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399310660195000075, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 609.189
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399310660195000075, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 326.06113
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399310660195000075, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -145.98874
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399310660195000075, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399310660195000075, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399310660195000075, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399310660195000075, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399310660195000075, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399310660195000075, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399310660195000075, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
 --- !u!1 &2094688211
 GameObject:
   m_ObjectHideFlags: 0

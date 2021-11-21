@@ -45,7 +45,6 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public TextMeshProUGUI lifesTxt;
     [SerializeField] public TextMeshProUGUI lifesTxtShop;
     [SerializeField] public TextMeshProUGUI lifesTime;
-    [SerializeField] public TextMeshProUGUI lvlPrcntg;
     [SerializeField] public Slider lvlSlider;
     
     ////////////////// CLASES //////////////////
@@ -73,9 +72,8 @@ public class MainMenuController : MonoBehaviour
         JoinGameButton.interactable = false;
 
         nameTxt.text = _localPlayer.Name;
-        level.text = "Levesl: " + Math.Truncate(_localPlayer.Level);
+        level.text = "Level: " + Math.Truncate(_localPlayer.Level);
         lvlSlider.value = _localPlayer.Level % 1;
-        lvlPrcntg.text = (int)((_localPlayer.Level % 1) * 100) + "/100";
         lifesTxt.text = "Lives: " + _localPlayer.Lives;
         
         _matchToJoin = new MatchInfo();
@@ -92,7 +90,7 @@ public class MainMenuController : MonoBehaviour
         if(_localPlayer.Lives < 5){
             timePassed += Time.deltaTime;
             if(timePassed >= 1.0f){ 
-                CheckLivesTime();
+                CheckLifesTime();
                 timePassed = 0f;
             }
         }
@@ -102,7 +100,8 @@ public class MainMenuController : MonoBehaviour
 
     #region UpdateMethods
 
-    private void IncreaseLives(){
+    private void IncreaseLifes(){
+
         _localPlayer.Lives++;
         lifesTxt.text = "Lives: " + _localPlayer.Lives;
         lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
@@ -120,8 +119,8 @@ public class MainMenuController : MonoBehaviour
                 }
             );
             //Restart timer
-            recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
-            //recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(10);
+            //recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
+            recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(10);
             recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
             lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;            
         }else{
@@ -142,7 +141,7 @@ public class MainMenuController : MonoBehaviour
     }
 
     public void ReduceLives(){
-
+    
         //Reduce only if it doesnt have infinite (999) lifes
         if(_localPlayer.Lives != 999){
 
@@ -183,7 +182,6 @@ public class MainMenuController : MonoBehaviour
                 lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;
             }
         }
-        
     }
 
     #endregion
@@ -232,13 +230,6 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void OnCreateMatchClick()
     {
-        if (_localPlayer.Lives == 0)
-        {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Can´t do matchmaking. You don´t" +
-                " have enough lives!";
-            return;
-        }
-        
         _gameManager.Matchmaking = !_gameManager.Matchmaking;
         
         CreateGameButton.onClick.RemoveAllListeners();
@@ -385,13 +376,31 @@ public class MainMenuController : MonoBehaviour
 
     #region OtherMethods
 
-    private void CheckLivesTime(){
+    public void SelectButton1()
+    { 
+        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
+    }
+    public void SelectButton2()
+    { 
+        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
+    }
+    public void SelectButton3()
+    { 
+        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
+    }
+    public void SelectButton4()
+    { 
+        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
+    }
+    
+    
+    private void CheckLifesTime(){
 
         recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
         //Check remainingTime
         if(recoverRemainingTime < TimeSpan.Zero){
             //Recover one life
-            IncreaseLives();
+            IncreaseLifes();
         }else{
             lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;  
         }
