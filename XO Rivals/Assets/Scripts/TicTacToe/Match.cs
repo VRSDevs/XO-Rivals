@@ -58,9 +58,9 @@ public class Match
     /// </summary>
     private bool _ended;
     /// <summary>
-    /// Razón por la cual acabó la partida
+    /// ¿Te rendiste?
     /// </summary>
-    public int EndReason;
+    private bool _youSurrended;
 
     #endregion
 
@@ -93,7 +93,7 @@ public class Match
         Chips = new List<GameObject>();
 
         _ended = false;
-        EndReason = -1;
+        _youSurrended = false;
     }
     
     #endregion
@@ -109,6 +109,15 @@ public class Match
         return _ended;
     }
 
+    /// <summary>
+    /// Método para obtener si el jugador local se rindió o no
+    /// </summary>
+    /// <returns></returns>
+    public bool SurrenderStatus()
+    {
+        return _youSurrended;
+    }
+
     #endregion
 
     #region Setters
@@ -119,6 +128,14 @@ public class Match
     public void SetIsEnded()
     {
         _ended = !_ended;
+    }
+
+    /// <summary>
+    /// Método para establecer el valor de si el jugador local se ha rendido o no
+    /// </summary>
+    public void SetSurrenderStatus()
+    {
+        _youSurrended = !_youSurrended;
     }
     
     #endregion
