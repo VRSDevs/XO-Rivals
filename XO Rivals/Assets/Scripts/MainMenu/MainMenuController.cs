@@ -87,8 +87,9 @@ public class MainMenuController : MonoBehaviour
 
     #region UpdateMethods
 
-    private void UpdateLifes(){
+    private void IncreaseLifes(){
 
+        _localPlayer.Lifes++;
         lifesTxt.text = "Lives: " + _localPlayer.Lifes;
         lifesTxtShop.text = "Lives: " + _localPlayer.Lifes;
         if (_localPlayer.Lifes < 5){
@@ -123,6 +124,46 @@ public class MainMenuController : MonoBehaviour
             );
             
             lifesTime.text = "-:--";
+        }
+    }
+
+    private void ReduceLifes(){
+
+        _localPlayer.Lifes--;
+        lifesTxt.text = "Lives: " + _localPlayer.Lifes;
+        lifesTxtShop.text = "Lives: " + _localPlayer.Lifes;
+        //If it has 4 lifes, update timer
+        if(_localPlayer.Lifes == 4){
+            _localPlayer.LostLifeTime = System.DateTime.Now;
+            //Upload lifes to server
+            PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
+                    Data = new Dictionary<string, string>() {
+                        {"Lifes", _localPlayer.Lifes.ToString()},
+                        {"Life Lost", _localPlayer.LostLifeTime.ToString()}}
+                },
+                result => Debug.Log("Successfully reduced user lifes"),
+                error => {
+                    Debug.Log("Got error reducing user lifes");
+                }
+            );
+            //Restart timer
+            //recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
+            recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(10);
+            recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
+            lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;            
+        }else{
+            //Upload lifes to server
+            PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
+                    Data = new Dictionary<string, string>() {
+                        {"Lifes", _localPlayer.Lifes.ToString()}}
+                },
+                result => Debug.Log("Successfully reduced user lifes"),
+                error => {
+                    Debug.Log("Got error reducing user lifes");
+                }
+            );
+            
+            lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;
         }
     }
 
@@ -171,8 +212,7 @@ public class MainMenuController : MonoBehaviour
         {
             StartCoroutine(ChangeInteractionAfterCm("connect"));
             //Lose life and update server
-            _localPlayer.Lifes--;
-            UpdateLifes();
+            ReduceLifes();
             ConnectRandomMatch();
             CreateMatchImage.sprite = CancelMatchmakingSprite;
         }
@@ -309,8 +349,7 @@ public class MainMenuController : MonoBehaviour
         //Check remainingTime
         if(recoverRemainingTime < TimeSpan.Zero){
             //Recover one life
-            _localPlayer.Lifes++;
-            UpdateLifes();
+            IncreaseLifes();
         }else{
             lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;  
         }

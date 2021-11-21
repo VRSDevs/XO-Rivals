@@ -14,7 +14,6 @@ public class ScreenManager : MonoBehaviour
 
     //Control of miniGameChoosing
     [SerializeField] private GameObject miniGameChoosing;
-    [SerializeField] private GameObject ticTacScreen;
     [SerializeField] private ButtonsScript buttonsScript;
     public static int minigame = -1;
 
@@ -66,7 +65,6 @@ public class ScreenManager : MonoBehaviour
     }
 
     public void MinigameSelectionActivation(){
-        ticTacScreen.SetActive(false);
         //Hide chips
         for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
             buttonsScript.thisMatch.Chips[i].SetActive(false);
@@ -77,7 +75,6 @@ public class ScreenManager : MonoBehaviour
     public void MinigameSelection(int n){
         buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = n;
         miniGameChoosing.SetActive(false);
-        ticTacScreen.SetActive(true);
         
         //Update turn data and send it to opponent
         UpdateTurn();
