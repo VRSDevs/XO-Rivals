@@ -330,6 +330,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
+        
+        FindObjectOfType<PlayerInfo>().MatchId = -1;
 
         if (SceneManager.GetActiveScene().name.Equals("MainMenu") && !FindObjectOfType<GameManager>().IsPlaying)
         {
