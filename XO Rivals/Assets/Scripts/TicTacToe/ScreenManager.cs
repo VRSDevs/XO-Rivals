@@ -3,6 +3,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class ScreenManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class ScreenManager : MonoBehaviour
 
     //Control of miniGameChoosing
     [SerializeField] private GameObject miniGameChoosing;
+    [SerializeField] private Transform[] miniGamePlaces;
+    [SerializeField] private Button[] miniGameImages;
     [SerializeField] private GameObject ticTacScreen;
     [SerializeField] private GameObject instructions;
 
@@ -39,14 +42,6 @@ public class ScreenManager : MonoBehaviour
     //Reference to all butons
     [SerializeField] private Button[] buttonsReference;
 
-    void Start(){
-
-        if(buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn == buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName){
-            StartCoroutine(txtTimer("Turno de O"));
-        }else{
-            StartCoroutine(txtTimer("Turno de X"));
-        }
-    }
 
     public void UpdateTurn(){
         
@@ -87,22 +82,36 @@ public class ScreenManager : MonoBehaviour
     }
 
     public void MinigameSelectionActivation(){
-        //ticTacScreen.SetActive(false);
-        //Hide chips
-        //for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
-        //    buttonsScript.ChipsList[i].SetActive(false);
-        //}
+
         miniGameChoosing.SetActive(true);
-    }    
+
+        //Randomly choose minigames
+        int located = 0;
+        int num;
+        List<int> selected = new List<int>();
+        while(located < 3){
+            num = Random.Range(0,3);
+            if(!selected.Contains(num)){
+                selected.Add(num);
+                located++;
+            }
+        }
+
+        //Locate each minigame in its place
+        for(int i = 0; i < selected.Count; i++){
+            
+            miniGameImages[selected[i]].gameObject.SetActive(true);
+            miniGameImages[selected[i]].transform.position = miniGamePlaces[i].transform.position;
+        }
+    } 
+   
 
     public void MinigameSelection(int n){
         buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = n;
         miniGameChoosing.SetActive(false);
         ticTacScreen.SetActive(true);
-        Debug.Log("PREEEUPDATETUENHECHO");
         //Update turn data and send it to opponent
         UpdateTurn();
-        Debug.Log("UPDATETUENHECHO");
         ////Unhide chips
         //for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
         //    buttonsScript.thisMatch.Chips[i].SetActive(true);
@@ -178,31 +187,24 @@ public class ScreenManager : MonoBehaviour
                 instructionsLaberintoInstr.SetActive(true);
                 break;
         }
-
-
-
     }
 
     public void unshowInstructions()
     {
 
-
-
-
-             instructionsPistolero.SetActive(false);
-             instructionsPistoleroInstr.SetActive(false);
-         instructionsPistoleroLore.SetActive(false);
-
-
-      instructionsCocinitas.SetActive(false);
-          instructionsCocinitasInstr.SetActive(false);
-      instructionsCocinitasLore.SetActive(false);
-
+        instructionsPistolero.SetActive(false);
+        instructionsPistoleroInstr.SetActive(false);
+        instructionsPistoleroLore.SetActive(false);
 
 
         instructionsPlataformas.SetActive(false);
         instructionsPlataformasInstr.SetActive(false);
-       instructionsPlataformasLore.SetActive(false);
+        instructionsPlataformasLore.SetActive(false);
+
+        instructionsCocinitas.SetActive(false);
+        instructionsCocinitasInstr.SetActive(false);
+        instructionsCocinitasLore.SetActive(false);
+
 
         instructionsLaberinto.SetActive(false);
         instructionsLaberintoInstr.SetActive(false);
@@ -211,8 +213,6 @@ public class ScreenManager : MonoBehaviour
 
 
         instructions.SetActive(false);
-
-
 
     }
 

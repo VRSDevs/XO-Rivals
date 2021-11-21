@@ -167,8 +167,8 @@ public class Login : MonoBehaviour
                     if (result.Data != null){
                         //Get lifes
                         if(result.Data.ContainsKey("Lifes")){
-                            playerInfo.Lifes = int.Parse(result.Data["Lifes"].Value);
-                            playerInfo.Lifes = 3;
+                            playerInfo.Lives = int.Parse(result.Data["Lifes"].Value);
+                            playerInfo.Lives = 3;
                             Debug.Log("Successfully got player lifes");
                         }else{
                             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
@@ -185,7 +185,7 @@ public class Login : MonoBehaviour
                         //Get level
                         if(result.Data.ContainsKey("Level")){
                             playerInfo.Level = float.Parse(result.Data["Level"].Value);
-                            playerInfo.Level += 3.43f;
+                            playerInfo.Level += 3.82f;
                             Debug.Log("Successfully got player level");
                         }else{
                             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {

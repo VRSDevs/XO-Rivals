@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerInfo : MonoBehaviour {
         
@@ -24,7 +25,7 @@ public class PlayerInfo : MonoBehaviour {
     /// <summary>
     /// Vidas del jugador
     /// </summary>
-    public int Lifes;
+    public int Lives;
     /// <summary>
     /// Instante de ultima vida perdida
     /// </summary>

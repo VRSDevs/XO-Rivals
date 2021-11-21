@@ -109,14 +109,15 @@ public class PerderyGanar : MonoBehaviour
     {
         defeat.SetActive(true);
         Invoke("Defeat", 3f);
-        sounds.playDefeatSound();
+        FindObjectOfType<AudioManager>().Play("Defeat");
+
     }
 
     public void VictoryCanvas()
     {
         victory.SetActive(true);
         Invoke("Victory", 3f);
-        sounds.playVictorySound();
+        FindObjectOfType<AudioManager>().Play("Victory");
 
     }
 

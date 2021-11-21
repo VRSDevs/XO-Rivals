@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Random = UnityEngine.Random;
+using PlayFab;
+using TMPro;
 
 public class ButtonsScript : MonoBehaviour
 {
@@ -14,6 +16,12 @@ public class ButtonsScript : MonoBehaviour
     [SerializeField] private Sprite cross;
     public GameObject circleGO;
     public GameObject crossGO;
+    private GameObject circleTurn;
+    private GameObject crossTurn;
+
+    //Player names
+    [SerializeField] private TextMeshProUGUI nameO;
+    [SerializeField] private TextMeshProUGUI nameX;
 
     public List<Transform> botonesCuadricula;
 
@@ -80,12 +88,20 @@ public class ButtonsScript : MonoBehaviour
         + thisMatch.FilledPositions[2,0] + " " + thisMatch.FilledPositions[2,1] + " " + thisMatch.FilledPositions[2,2]);
         Debug.Log("Minigame chosen: " + thisMatch.MiniGameChosen);
 
+        //Activate player turn tile
+        if(thisMatch.WhosTurn == thisMatch.PlayerOName){
+            circleTurn.SetActive(true);
+        }else{
+            crossTurn.SetActive(true);
+        }
+
+        //Set name to each player
+        nameO.text = thisMatch.PlayerOName;
+        nameX.text = thisMatch.PlayerXName;
+
         startGame();
 
-
         colocarFichas();
-
-
 
         //SI VIENES DE UN MINIJUEGO SE HACE START Y SE ELIGE MINIJUEGO
         if (thisMatch.TurnMoment == 2)
@@ -97,8 +113,6 @@ public class ButtonsScript : MonoBehaviour
 
             if (miniWin)
             {
-
-
                 GameObject actual;
                 if (thisMatch.ActualChipTeam == "cross")
                 {
@@ -130,26 +144,12 @@ public class ButtonsScript : MonoBehaviour
                     //Add one to filled count
                     thisMatch.NumFilled++;
                 }
-
-
-
-
             }//Fin win
 
-            
-
-            Debug.Log("SE HACE MINIGAMESEÑLECTION");
+            Debug.Log("SE HACE MINIGAME SELECTION");
             screenManager.MinigameSelectionActivation();
-
-
-
-
         }
-
         CheckVictory();
-
-
-
     }
 
     /// <summary>
@@ -243,12 +243,6 @@ public class ButtonsScript : MonoBehaviour
                     //SceneManager.LoadScene("PlatformMinigame", LoadSceneMode.Additive);
                     break;
             }
-
-
-           
-
-
-
         }
 
         /*
@@ -315,6 +309,7 @@ public class ButtonsScript : MonoBehaviour
 
         }
     }
+
     public void CheckVictory(){
 
         bool[] array = new bool[8];
@@ -491,10 +486,14 @@ public class ButtonsScript : MonoBehaviour
                     
                     if (localPlayer.Name == thisMatch.PlayerOName)
                     {
+                        localPlayer.Level += 0.75f;
+                        UpdateLevel();
                         gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                     }
                     else
                     {
+                        localPlayer.Level += 0.35f;
+                        UpdateLevel();
                         gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                     }
                 }
@@ -504,10 +503,14 @@ public class ButtonsScript : MonoBehaviour
 
                     if (localPlayer.Name == thisMatch.PlayerXName)
                     {
+                        localPlayer.Level += 0.75f;
+                        UpdateLevel();
                         gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                     }
                     else
                     {
+                        localPlayer.Level += 0.35f;
+                        UpdateLevel();
                         gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                     }
                 }
@@ -528,6 +531,20 @@ public class ButtonsScript : MonoBehaviour
         //thisMatch.TurnMoment = 4;
         //Go to selectMinigame for opponent
         //screenManager.MinigameSelectionActivation();
+    }
+
+    private void UpdateLevel(){
+
+        //Upload lifes to server
+        PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
+                Data = new Dictionary<string, string>() {
+                    {"Level", localPlayer.Level.ToString()}}
+            },
+            result => Debug.Log("Successfully updated user level"),
+            error => {
+                Debug.Log("Got error setting user level");
+            }
+        );
     }
 
     #endregion
