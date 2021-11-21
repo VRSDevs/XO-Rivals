@@ -8,7 +8,9 @@ using UnityEngine.SceneManagement;
 public class TicTacToeController : MonoBehaviour
 {
     private GameManager _gameManager;
-
+    
+    public AudioClip Tic_Tac_toe_Music;
+    
     [SerializeField] public TMP_Text PlayerCounter;
 
     #region UnityCB
@@ -16,6 +18,8 @@ public class TicTacToeController : MonoBehaviour
     void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
+        FindObjectOfType<AudioManager>().ChangeMusic(Tic_Tac_toe_Music,"Main_menu");
+
     }
     
     void FixedUpdate()
@@ -32,6 +36,7 @@ public class TicTacToeController : MonoBehaviour
     /// </summary>
     public void GoBack()
     {
+        _gameManager.OnLeaveRoom();
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -40,6 +45,8 @@ public class TicTacToeController : MonoBehaviour
     /// </summary>
     public void Surrender()
     {
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetSurrenderStatus();
+        _gameManager._networkCommunications.SendEndMatchInfo("SR", "");
         _gameManager.OnLeaveRoom();
         SceneManager.LoadScene("MainMenu");
     }

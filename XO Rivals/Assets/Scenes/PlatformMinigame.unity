@@ -4152,7 +4152,7 @@ GameObject:
   - component: {fileID: 1245188515}
   - component: {fileID: 1245188514}
   m_Layer: 0
-  m_Name: Minigame Controller
+  m_Name: '@Minigame Controller'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4181,6 +4181,7 @@ MonoBehaviour:
   flag2: {fileID: 856188703}
   flag3: {fileID: 1373586484}
   flagSpriteO: {fileID: 21300000, guid: 9c8b9c3fc15949a47b7d5e292806f3d1, type: 3}
+  PlatformMusic: {fileID: 8300000, guid: 699e65c7af8d2984f9dc9c120bbb6b3f, type: 3}
   level: 1
 --- !u!4 &1245188515
 Transform:

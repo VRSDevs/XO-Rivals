@@ -4337,8 +4337,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9530a090b7e5f864e85030cfc4c9f744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumenSFX: 0
-  volumenMusica: 0
+  volumenSFX: 1
+  volumenMusica: 1
   CookingMusic: {fileID: 0}
   GunmanMusic: {fileID: 0}
   PlatformMusic: {fileID: 0}
@@ -4988,18 +4988,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 692649458}
-        m_TargetAssemblyTypeName: SFXManager, Assembly-CSharp
-        m_MethodName: playSelectionButton1Sound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 1544971429}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
         m_MethodName: OnPlayMenuClick
@@ -7634,7 +7622,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: LOG
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c1b2e0f63ad574a8c37ea7e400f080, type: 2}
   m_sharedMaterial: {fileID: -4185127859423837220, guid: 49c1b2e0f63ad574a8c37ea7e400f080, type: 2}
@@ -7793,7 +7781,7 @@ MonoBehaviour:
   nameTxt: {fileID: 553947641}
   level: {fileID: 523620166}
   lifesTxt: {fileID: 2367371}
-  lifesTxtShop: {fileID: 2012353256}
+  lifesTxtShop: {fileID: 0}
   lifesTime: {fileID: 276693855}
   lvlSlider: {fileID: 1711821105}
 --- !u!4 &1544971430
@@ -9198,7 +9186,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
