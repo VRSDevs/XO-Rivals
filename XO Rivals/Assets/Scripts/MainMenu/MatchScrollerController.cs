@@ -90,6 +90,10 @@ public class MatchScrollerController : MonoBehaviour
     {
         MatchesView view = new MatchesView(viewGO.transform)
         {
+            IDText =
+            {
+                text = model.MatchId
+            },
             NameText =
             {
                 text = model.MatchName
