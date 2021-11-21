@@ -128,6 +128,15 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Método para conectarse a una sala específica en Photon
+    /// </summary>
+    /// <param name="name"></param>
+    public void OnConnectToSpecificRoom(string name)
+    {
+        _networkController.ConnectToSpecificRoom(name);
+    }
+
+    /// <summary>
     /// Método para conectarse a la lobby general
     /// </summary>
     public void OnConnectToLobby()
