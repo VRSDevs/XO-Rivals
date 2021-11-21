@@ -56,7 +56,11 @@ public class Match
     /// <summary>
     /// ¿Terminó la partida?
     /// </summary>
-    public bool Ended;
+    private bool _ended;
+    /// <summary>
+    /// Razón por la cual acabó la partida
+    /// </summary>
+    public int EndReason;
 
     #endregion
 
@@ -88,7 +92,8 @@ public class Match
 
         Chips = new List<GameObject>();
 
-        Ended = false;
+        _ended = false;
+        EndReason = -1;
     }
     
     #endregion
@@ -101,7 +106,7 @@ public class Match
     /// <returns></returns>
     public bool IsEnded()
     {
-        return Ended;
+        return _ended;
     }
 
     #endregion
