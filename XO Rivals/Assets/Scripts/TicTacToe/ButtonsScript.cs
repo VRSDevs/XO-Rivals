@@ -367,7 +367,7 @@ public class ButtonsScript : MonoBehaviour
         if (win)
         {
             Debug.Log("HASA GAANAO");
-            gameState.IsPlaying = false;
+                    FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
 
             //Call endgame
             if (thisMatch.FilledPositions[col, row] == 0)
@@ -376,10 +376,12 @@ public class ButtonsScript : MonoBehaviour
 
                 if (localPlayer.Name == thisMatch.PlayerOName)
                 {
+
                     gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                 }
                 else
                 {
+                    FindObjectOfType<EndGameScript>().ShowMatchDefeat();
                     gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                 }
             }
@@ -389,11 +391,13 @@ public class ButtonsScript : MonoBehaviour
 
                 if (localPlayer.Name == thisMatch.PlayerXName)
                 {
-                   gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                    FindObjectOfType<EndGameScript>().ShowMatchVictory();
+                    gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                 }
                 else
                 {
-                   gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                    FindObjectOfType<EndGameScript>().ShowMatchDefeat();
+                    gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                 }
 
 
@@ -515,6 +519,7 @@ public class ButtonsScript : MonoBehaviour
         //Table full (draw)
         if (thisMatch.NumFilled == 9){
             Debug.Log("Draw");
+            FindObjectOfType<EndGameScript>().ShowMatchDraw();
             gameState._networkCommunications.SendEndMatchInfo("DW", "");
         }
 
