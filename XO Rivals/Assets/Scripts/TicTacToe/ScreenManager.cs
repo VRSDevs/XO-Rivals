@@ -248,6 +248,7 @@ public class ScreenManager : MonoBehaviour
 
 
     }
+    
     public void goInstrtext()
     {
         int i = buttonsScript.thisMatch.MiniGameChosen;
