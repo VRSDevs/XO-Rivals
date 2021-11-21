@@ -158,6 +158,7 @@ MonoBehaviour:
   victory: {fileID: 1200794244}
   defeat: {fileID: 1993580282}
   player: {fileID: 2000637811}
+  playerORB: {fileID: 1318435248}
   playerO: {fileID: 1318435246}
   playerX: {fileID: 2000637805}
   leftButton: {fileID: 1732832436}
