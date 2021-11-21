@@ -52,6 +52,7 @@ public class TicTacToeController : MonoBehaviour
     {
         _gameManager.IsPlaying = false;
         _gameManager.Surrendered = true;
+        _gameManager._networkCommunications.SendEndMatchInfo("SR", "");
         _gameManager.OnLeaveRoom();
         SceneManager.LoadScene("MainMenu");
     }
