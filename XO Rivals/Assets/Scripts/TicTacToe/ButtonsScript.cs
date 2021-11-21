@@ -278,20 +278,22 @@ public class ButtonsScript : MonoBehaviour
 
             if(win)
             {
-                gameState.IsPlaying = false;
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
                 
                 //Call endgame
                 if (thisMatch.FilledPositions[col, row] == 0)
                 {
                     Debug.Log("CIRCLE WIN");
-                    
+
                     if (localPlayer.Name == thisMatch.PlayerOName)
                     {
-                        gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                        gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                        FindObjectOfType<EndGameScript>().ShowMatchVictory();
                     }
                     else
                     {
-                        gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                        gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                        FindObjectOfType<EndGameScript>().ShowMatchDefeat();
                     }
                 }
                 else
@@ -300,11 +302,13 @@ public class ButtonsScript : MonoBehaviour
 
                     if (localPlayer.Name == thisMatch.PlayerXName)
                     {
-                        gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                        gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                        FindObjectOfType<EndGameScript>().ShowMatchVictory();
                     }
                     else
                     {
-                        gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                        gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                        FindObjectOfType<EndGameScript>().ShowMatchDefeat();
                     }
                 }
                 break;
@@ -315,7 +319,9 @@ public class ButtonsScript : MonoBehaviour
         //Table full (draw)
         if(thisMatch.NumFilled == 9){
             Debug.Log("Draw");
-            gameState._networkCommunications.SendEndMatchInfo("draw", "");
+            FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
+            gameState._networkCommunications.SendEndMatchInfo("DW", "");
+            FindObjectOfType<EndGameScript>().ShowMatchDraw();
         }
 
         thisMatch.TurnMoment = 4;

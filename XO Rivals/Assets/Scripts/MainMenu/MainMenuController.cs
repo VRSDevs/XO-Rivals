@@ -11,6 +11,9 @@ using PlayFab;
 
 public class MainMenuController : MonoBehaviour
 {
+    #region Vars
+
+    ////////////////// REFERENCIAS //////////////////
     [SerializeField] public GameObject MainMenuObject;
     [SerializeField] public GameObject PlayMenuObject;
     
@@ -28,20 +31,24 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public TextMeshProUGUI nameTxt;
     [SerializeField] public TextMeshProUGUI level;
     [SerializeField] public TextMeshProUGUI lifesTxt;
+    [SerializeField] public TextMeshProUGUI lifesTxtShop;
     [SerializeField] public TextMeshProUGUI lifesTime;
     [SerializeField] public Slider lvlSlider;
-
-    private DateTime recoverLifeTime;
-    private TimeSpan recoverRemainingTime;
-
+    
+    ////////////////// CLASES //////////////////
     private GameManager _gameManager;
     private PlayerInfo _localPlayer;
+    
+    ////////////////// VIDAS //////////////////
+    private DateTime recoverLifeTime;
+    private TimeSpan recoverRemainingTime;
     private float timePassed = 0f;
-
+    
+    ////////////////// PARTIDA //////////////////
     private string MatchName;
-
-    private int Mode;
-
+    
+    #endregion
+    
     #region UnityCB
 
     private void Start()
@@ -50,12 +57,11 @@ public class MainMenuController : MonoBehaviour
         _localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
 
         JoinGameButton.interactable = false;
-        Mode = 0;
 
         nameTxt.text = _localPlayer.Name;
         level.text = "Level: " + Math.Truncate(_localPlayer.Level);
         lvlSlider.value = _localPlayer.Level % 1;
-        lifesTxt.text = "Lifes: " + _localPlayer.Lifes;
+        lifesTxt.text = "Lives: " + _localPlayer.Lifes;
 
         if(_localPlayer.Lifes != 5){
             //recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
@@ -75,29 +81,20 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
-    private void CheckLifesTime(){
+    #endregion
 
-        recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
-        //Check remainingTime
-        if(recoverRemainingTime < TimeSpan.Zero){
-            //Recover one life
-            _localPlayer.Lifes++;
-            UpdateLifes();
-        }else{
-            lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;  
-        }
-    }
+    #region UpdateMethods
 
     private void UpdateLifes(){
 
-        lifesTxt.text = "Lifes: " + _localPlayer.Lifes;
+        lifesTxt.text = "Lives: " + _localPlayer.Lifes;
         if(_localPlayer.Lifes < 5){
             _localPlayer.LostLifeTime = System.DateTime.Now;
             //Upload lifes to server
             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                Data = new Dictionary<string, string>() {
-                    {"Lifes", _localPlayer.Lifes.ToString()},
-                    {"Life Lost", _localPlayer.LostLifeTime.ToString()}}
+                    Data = new Dictionary<string, string>() {
+                        {"Lifes", _localPlayer.Lifes.ToString()},
+                        {"Life Lost", _localPlayer.LostLifeTime.ToString()}}
                 },
                 result => Debug.Log("Successfully updated user lifes"),
                 error => {
@@ -112,9 +109,9 @@ public class MainMenuController : MonoBehaviour
         }else{
             //Upload lifes to server
             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                Data = new Dictionary<string, string>() {
-                    {"Lifes", _localPlayer.Lifes.ToString()},
-                    {"Life Lost", ""}}
+                    Data = new Dictionary<string, string>() {
+                        {"Lifes", _localPlayer.Lifes.ToString()},
+                        {"Life Lost", ""}}
                 },
                 result => Debug.Log("Successfully updated user lifes"),
                 error => {
@@ -151,8 +148,6 @@ public class MainMenuController : MonoBehaviour
     {
         MainMenuObject.SetActive(false);
         PlayMenuObject.SetActive(true);
-        SceneManager.LoadScene("Login");
-
     }
 
     /// <summary>
@@ -191,7 +186,7 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void OnJoinMatchClick()
     {
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Uniéndote a " + MatchName + " (BETA)";
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joining " + MatchName + " (BETA)";
         CreateGameButton.interactable = false;
         JoinGameButton.interactable = false;
         StartCoroutine(ChangeInteractionAfterJm());
@@ -280,7 +275,7 @@ public class MainMenuController : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Te hubieses unido a la sala";
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joined the match.";
         
         CreateGameButton.interactable = true;
 
@@ -298,6 +293,23 @@ public class MainMenuController : MonoBehaviour
             GameObject child = ViewContent.transform.GetChild(i).gameObject;
 
             child.GetComponent<Button>().interactable = interactable;
+        }
+    }
+
+    #endregion
+
+    #region OtherMethods
+
+    private void CheckLifesTime(){
+
+        recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
+        //Check remainingTime
+        if(recoverRemainingTime < TimeSpan.Zero){
+            //Recover one life
+            _localPlayer.Lifes++;
+            UpdateLifes();
+        }else{
+            lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;  
         }
     }
 

@@ -36,6 +36,7 @@ public class TicTacToeController : MonoBehaviour
     /// </summary>
     public void GoBack()
     {
+        _gameManager.OnLeaveRoom();
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -44,6 +45,8 @@ public class TicTacToeController : MonoBehaviour
     /// </summary>
     public void Surrender()
     {
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetSurrenderStatus();
+        _gameManager._networkCommunications.SendEndMatchInfo("SR", "");
         _gameManager.OnLeaveRoom();
         SceneManager.LoadScene("MainMenu");
     }

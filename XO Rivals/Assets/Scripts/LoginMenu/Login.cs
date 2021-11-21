@@ -116,7 +116,7 @@ public class Login : MonoBehaviour
     private void OnAuthentication(string username, string password)
     {
         Debug.Log("Modo: " + Mode);
-        Log.text = "Validando credenciales...";
+        Log.text = "Validating...";
         Authenticator.AuthWithPlayfab(username, password, Mode);
     }
 
@@ -144,20 +144,21 @@ public class Login : MonoBehaviour
             
             Authenticator.Reset();
 
-            Log.text = "Conectando...";
+            Log.text = "Connecting...";
             
             if (_gameManager.OnConnectToServer())
             {
-                Log.text = "Conectado.";
+                Log.text = "Connected.";
+                
                 _gameManager.SetPhotonNick(username);
+                
                 GameObject myPlayer = new GameObject();
                 PlayerInfo playerInfo = myPlayer.AddComponent<PlayerInfo>();
                 DontDestroyOnLoad(myPlayer);
                 playerInfo.name = "PlayerObject";
                 playerInfo.Name = username;
                 playerInfo.ID = Authenticator.playFabPlayerIdCache;
-
-                 
+                
                 //Get client data from PlayFab
                 PlayFabClientAPI.GetUserData(new PlayFab.ClientModels.GetUserDataRequest() {
                     PlayFabId = playerInfo.ID,
@@ -222,29 +223,10 @@ public class Login : MonoBehaviour
                     Debug.Log("Got error retrieving user data:");
                 });
                 
-
-                /*Get info from server /useless
-                if(PhotonNetwork.LocalPlayer.CustomProperties["Level"] != null){
-                    playerInfo.Level = (float) PhotonNetwork.LocalPlayer.CustomProperties["Level"];
-                }else{
-                    ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable();
-                    hash.Add("Level", 0f);
-                    PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-                    playerInfo.Level = 0f;
-                }
-
-                if(PhotonNetwork.LocalPlayer.CustomProperties["Lifes"] != null){
-                    playerInfo.Lifes = (int) PhotonNetwork.LocalPlayer.CustomProperties["Lifes"];
-                }else{
-                    ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable();
-                    hash.Add("Lifes", 5);
-                    PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-                    playerInfo.Lifes = 5;
-                }*/
             }
             else
             {
-                Log.text = "Error al conectar.";
+                Log.text = "Oops! Something went wrong.";
                 IsConnecting = false;
             }
         }
@@ -253,13 +235,13 @@ public class Login : MonoBehaviour
             switch (e.ErrorCode)
             {
                 case PlayFabErrorCode.UsernameNotAvailable:
-                    Log.text = "Nombre de usuario no disponible.";
+                    Log.text = "Username not available.";
                     break;
                 case PlayFabErrorCode.AccountNotFound:
-                    Log.text = "Cuenta no encontrada.";
+                    Log.text = "Account not found.";
                     break;
                 case PlayFabErrorCode.InvalidUsernameOrPassword:
-                    Log.text = "Nombre de usuario o contraseña inválido.";
+                    Log.text = "Invalid username or password.";
                     break;
             }
 
@@ -287,7 +269,7 @@ public class Login : MonoBehaviour
                 
         if (UsernameInput.text.Length < MIN_CHARS || PasswordInput.text.Length < MIN_CHARS)
         {
-            Log.text = "Longitud no correcta, mínimo " + MIN_CHARS;
+            Log.text = "Incorrect length. Minimum " + MIN_CHARS + " chars.";
             return false;
         }
 
