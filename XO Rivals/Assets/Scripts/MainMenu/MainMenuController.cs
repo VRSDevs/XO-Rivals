@@ -45,6 +45,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public TextMeshProUGUI lifesTxt;
     [SerializeField] public TextMeshProUGUI lifesTxtShop;
     [SerializeField] public TextMeshProUGUI lifesTime;
+    [SerializeField] public TextMeshProUGUI lvlPrcntg;
     [SerializeField] public Slider lvlSlider;
     
     ////////////////// CLASES //////////////////
@@ -72,9 +73,10 @@ public class MainMenuController : MonoBehaviour
         JoinGameButton.interactable = false;
 
         nameTxt.text = _localPlayer.Name;
-        level.text = "Level: " + Math.Truncate(_localPlayer.Level);
+        level.text = "Levesl: " + Math.Truncate(_localPlayer.Level);
         lvlSlider.value = _localPlayer.Level % 1;
         lifesTxt.text = "Lives: " + _localPlayer.Lifes;
+        lvlPrcntg.text = (int)((_localPlayer.Level % 1) * 100) + "/100";
         
         _matchToJoin = new MatchInfo();
 

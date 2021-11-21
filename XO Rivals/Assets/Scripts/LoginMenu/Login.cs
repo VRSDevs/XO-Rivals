@@ -186,7 +186,7 @@ public class Login : MonoBehaviour
                         //Get level
                         if(result.Data.ContainsKey("Level")){
                             playerInfo.Level = float.Parse(result.Data["Level"].Value);
-                            playerInfo.Level += 3.43f;
+                            playerInfo.Level += 3.82f;
                             Debug.Log("Successfully got player level");
                         }else{
                             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
