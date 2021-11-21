@@ -45,6 +45,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public TextMeshProUGUI lifesTxt;
     [SerializeField] public TextMeshProUGUI lifesTxtShop;
     [SerializeField] public TextMeshProUGUI lifesTime;
+    [SerializeField] public TextMeshProUGUI lvlPrcntg;
     [SerializeField] public Slider lvlSlider;
     
     ////////////////// CLASES //////////////////
@@ -55,6 +56,7 @@ public class MainMenuController : MonoBehaviour
     private DateTime recoverLifeTime;
     private TimeSpan recoverRemainingTime;
     private float timePassed = 0f;
+    private const int MAXLIVES = 3;
     
     ////////////////// PARTIDA //////////////////
     private MatchInfo _matchToJoin;
@@ -74,11 +76,12 @@ public class MainMenuController : MonoBehaviour
         nameTxt.text = _localPlayer.Name;
         level.text = "Level: " + Math.Truncate(_localPlayer.Level);
         lvlSlider.value = _localPlayer.Level % 1;
+        lvlPrcntg.text = ((int)(_localPlayer.Level % 1) * 100) + "/100"; 
         lifesTxt.text = "Lives: " + _localPlayer.Lives;
         
         _matchToJoin = new MatchInfo();
 
-        if (_localPlayer.Lives < 5){
+        if (_localPlayer.Lives < MAXLIVES){
             recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
             //recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(15);
             CheckLivesTime();
@@ -87,10 +90,10 @@ public class MainMenuController : MonoBehaviour
     }
 
     private void Update(){
-        if(_localPlayer.Lives < 5){
+        if(_localPlayer.Lives < MAXLIVES){
             timePassed += Time.deltaTime;
             if(timePassed >= 1.0f){ 
-                CheckLifesTime();
+                CheckLivesTime();
                 timePassed = 0f;
             }
         }
@@ -105,7 +108,7 @@ public class MainMenuController : MonoBehaviour
         _localPlayer.Lives++;
         lifesTxt.text = "Lives: " + _localPlayer.Lives;
         lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
-        if (_localPlayer.Lives < 5){
+        if (_localPlayer.Lives < MAXLIVES){
             _localPlayer.LostLifeTime = System.DateTime.Now;
             //Upload lifes to server
             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
@@ -148,8 +151,8 @@ public class MainMenuController : MonoBehaviour
             _localPlayer.Lives--;
             lifesTxt.text = "Lives: " + _localPlayer.Lives;
             lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
-            //If it has 4 lifes, update timer
-            if(_localPlayer.Lives == 4){
+            //If it has MAXLIVES - 1 lives, update timer
+            if(_localPlayer.Lives == MAXLIVES - 1){
                 _localPlayer.LostLifeTime = System.DateTime.Now;
                 //Upload lifes to server
                 PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
@@ -394,8 +397,7 @@ public class MainMenuController : MonoBehaviour
     }
     
     
-    private void CheckLifesTime(){
-
+    private void CheckLivesTime(){
         recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
         //Check remainingTime
         if(recoverRemainingTime < TimeSpan.Zero){

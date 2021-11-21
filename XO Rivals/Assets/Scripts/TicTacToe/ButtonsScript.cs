@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Random = UnityEngine.Random;
 using PlayFab;
+using TMPro;
 
 public class ButtonsScript : MonoBehaviour
 {
@@ -15,6 +16,12 @@ public class ButtonsScript : MonoBehaviour
     [SerializeField] private Sprite cross;
     public GameObject circleGO;
     public GameObject crossGO;
+    private GameObject circleTurn;
+    private GameObject crossTurn;
+
+    //Player names
+    [SerializeField] private TextMeshProUGUI nameO;
+    [SerializeField] private TextMeshProUGUI nameX;
 
     public List<Transform> botonesCuadricula;
 
@@ -81,12 +88,20 @@ public class ButtonsScript : MonoBehaviour
         + thisMatch.FilledPositions[2,0] + " " + thisMatch.FilledPositions[2,1] + " " + thisMatch.FilledPositions[2,2]);
         Debug.Log("Minigame chosen: " + thisMatch.MiniGameChosen);
 
+        //Activate player turn tile
+        if(thisMatch.WhosTurn == thisMatch.PlayerOName){
+            circleTurn.SetActive(true);
+        }else{
+            crossTurn.SetActive(true);
+        }
+
+        //Set name to each player
+        nameO.text = thisMatch.PlayerOName;
+        nameX.text = thisMatch.PlayerXName;
+
         startGame();
 
-
         colocarFichas();
-
-
 
         //SI VIENES DE UN MINIJUEGO SE HACE START Y SE ELIGE MINIJUEGO
         if (thisMatch.TurnMoment == 2)
