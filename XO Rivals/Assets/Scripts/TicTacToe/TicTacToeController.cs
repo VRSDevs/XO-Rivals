@@ -32,14 +32,6 @@ public class TicTacToeController : MonoBehaviour
     /// </summary>
     public void GoBack()
     {
-        SceneManager.LoadScene("MainMenu");
-    }
-
-    /// <summary>
-    /// Método para salir de la partida
-    /// </summary>
-    public void EndMatch()
-    {
         _gameManager.IsPlaying = false;
         _gameManager.OnLeaveRoom();
         SceneManager.LoadScene("MainMenu");
