@@ -170,7 +170,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         FindObjectOfType<GameManager>().IsPlaying = true;
         
         //Lose life and update server
-        FindObjectOfType<MainMenuController>().ReduceLifes();
+        FindObjectOfType<MainMenuController>().ReduceLives();
         
         SceneManager.LoadScene("TicTacToe_Server");
     }

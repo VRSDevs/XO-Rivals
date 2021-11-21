@@ -81,7 +81,7 @@ public class MainMenuController : MonoBehaviour
         if (_localPlayer.Lives != 5){
             //recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
             recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(15);
-            CheckLifesTime();
+            CheckLivesTime();
         }else
             lifesTime.text = "-:--";
     }
@@ -90,7 +90,7 @@ public class MainMenuController : MonoBehaviour
         if(_localPlayer.Lives != 5){
             timePassed += Time.deltaTime;
             if(timePassed >= 1.0f){ 
-                CheckLifesTime();
+                CheckLivesTime();
                 timePassed = 0f;
             }
         }
@@ -100,7 +100,7 @@ public class MainMenuController : MonoBehaviour
 
     #region UpdateMethods
 
-    private void IncreaseLifes(){
+    private void IncreaseLives(){
         _localPlayer.Lives++;
         lifesTxt.text = "Lives: " + _localPlayer.Lives;
         lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
@@ -139,7 +139,7 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
-    public void ReduceLifes(){
+    public void ReduceLives(){
         _localPlayer.Lives--;
         lifesTxt.text = "Lives: " + _localPlayer.Lives;
         lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
@@ -377,13 +377,13 @@ public class MainMenuController : MonoBehaviour
 
     #region OtherMethods
 
-    private void CheckLifesTime(){
+    private void CheckLivesTime(){
 
         recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
         //Check remainingTime
         if(recoverRemainingTime < TimeSpan.Zero){
             //Recover one life
-            IncreaseLifes();
+            IncreaseLives();
         }else{
             lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;  
         }
