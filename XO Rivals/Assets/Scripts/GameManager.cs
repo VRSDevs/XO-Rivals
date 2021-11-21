@@ -255,21 +255,34 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Método para convertir los datos del final de la partida en un objeto a enviar
+    /// </summary>
+    /// <param name="type">Tipo de final</param>
+    /// <param name="winner">Ganador de la partida</param>
+    /// <returns>Objeto a enviar</returns>
     public object[] EndMatchInfoToObject(string type, string winner)
     {
         object[] obj;
         
         switch (type)
         {
-            case "win":
-            case "defeat":
+            case "WN":
+            case "DF":
                 obj = new object[2];
 
                 obj[0] = type;
                 obj[1] = winner;
 
                 return obj;
-            case "draw":
+            case "DW":
+                obj = new object[1];
+                
+                obj[0] = type;
+                
+                return obj;
+            
+            case "SR":
                 obj = new object[1];
                 
                 obj[0] = type;
