@@ -57,8 +57,9 @@ public class MainMenuController : MonoBehaviour
         level.text = "Level: " + Math.Truncate(_localPlayer.Level);
         lvlSlider.value = _localPlayer.Level % 1;
         lifesTxt.text = "Lives: " + _localPlayer.Lifes;
+        lifesTxtShop.text = "Lives: " + _localPlayer.Lifes;
 
-        if(_localPlayer.Lifes != 5){
+        if (_localPlayer.Lifes != 5){
             //recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
             recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(15);
             CheckLifesTime();
@@ -92,7 +93,8 @@ public class MainMenuController : MonoBehaviour
     private void UpdateLifes(){
 
         lifesTxt.text = "Lives: " + _localPlayer.Lifes;
-        if(_localPlayer.Lifes < 5){
+        lifesTxtShop.text = "Lives: " + _localPlayer.Lifes;
+        if (_localPlayer.Lifes < 5){
             _localPlayer.LostLifeTime = System.DateTime.Now;
             //Upload lifes to server
             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
