@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
             rightButton.SetActive(false);
             jumpButton.SetActive(false);
 
-        }
+        } 
     }
 
     // Update is called once per frame
