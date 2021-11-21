@@ -5,7 +5,10 @@ using UnityEngine;
 public class SFXManager : MonoBehaviour
 {
     private AudioSource managerBoton;
-    
+
+    public float volumenSFX;
+    public float volumenMusica;
+
     public AudioClip CookingMusic;
     public AudioClip GunmanMusic;
     public AudioClip PlatformMusic;
@@ -42,55 +45,55 @@ public class SFXManager : MonoBehaviour
 
     public void playSelectionButton1Sound()
     {
-        managerBoton.PlayOneShot(SelectionButton1);
+        managerBoton.PlayOneShot(SelectionButton1, volumenSFX);
     }
 
     public void playSelectionButton2Sound()
     {
-        managerBoton.PlayOneShot(SelectionButton2);
+        managerBoton.PlayOneShot(SelectionButton2, volumenSFX);
     }
 
     public void playSelectionButton3Sound()
     {
-        managerBoton.PlayOneShot(SelectionButton3);
+        managerBoton.PlayOneShot(SelectionButton3, volumenSFX);
     }
 
     public void playSelectionButton4Sound()
     {
-        managerBoton.PlayOneShot(SelectionButton4);
+        managerBoton.PlayOneShot(SelectionButton4, volumenSFX);
     }
     
     
     public void playDeathSound()
     {
-        managerBoton.PlayOneShot(DeathSound);
+        managerBoton.PlayOneShot(DeathSound, volumenSFX);
     }
     public void playVictorySound()
     {
-        managerBoton.PlayOneShot(VictorySound);
+        managerBoton.PlayOneShot(VictorySound, volumenSFX);
     }
     public void playDefeatSound()
     {
-        managerBoton.PlayOneShot(DefeatSound);
+        managerBoton.PlayOneShot(DefeatSound, volumenSFX);
     }
     public void playWalkSound()
     {
-        managerBoton.PlayOneShot(WalkSound);
+        managerBoton.PlayOneShot(WalkSound, volumenSFX);
     }
     public void playReloadSound()
     {
-        managerBoton.PlayOneShot(ReloadSound);
+        managerBoton.PlayOneShot(ReloadSound, volumenSFX);
     }
     public void playShotSound()
     {
-        managerBoton.PlayOneShot(ShotSound);
+        managerBoton.PlayOneShot(ShotSound, volumenSFX);
     }
     public void playChipSound()
     {
-        managerBoton.PlayOneShot(ChipSound);
+        managerBoton.PlayOneShot(ChipSound, volumenSFX);
     }
     public void playCookingSound()
     {
-        managerBoton.PlayOneShot(CookingSound);
+        managerBoton.PlayOneShot(CookingSound, volumenSFX);
     }
 }
