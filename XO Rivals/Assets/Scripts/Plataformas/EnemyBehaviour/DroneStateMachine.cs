@@ -1,23 +1,31 @@
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 //Enum of different states
-public enum enemyState{WALKING, ATTACKING, RAGING, REROUTE}
+public enum droneState{WALKING, ATTACKING, RAGING, REROUTE}
 
-public class EnemyStateMachine : MonoBehaviour{
+public class DroneStateMachine : MonoBehaviour{
     
     //Character GameObject
-    [SerializeField] private GameObject character;
+    [SerializeField] private GameObject characterO;
+    [SerializeField] private GameObject characterX;
+    private GameObject characterPlaying;
+    
+    //Game variables
+    private GameManager gameState;
+    private Match thisMatch;
+    private PlayerInfo localPlayer;    
 
     //State
-    enemyState actualState = enemyState.WALKING;
+    droneState actualState = droneState.WALKING;
 
     //Parameters
     float timeAttacking = 0f;
     private const float MAXTIMEATTACKING = 3f;
     float speed;
     private const float BASESPEED = 2.5f;
-    private const float RAGESPEED = 4f;
+    private const float RAGESPEED = 3f;
     bool characterNear = false;
 
     //Pathfinding route
@@ -29,6 +37,16 @@ public class EnemyStateMachine : MonoBehaviour{
     void Start(){
         nextPoint = points[0];
         speed = BASESPEED;
+
+        //gameState = FindObjectOfType<GameManager>();
+        //thisMatch = gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name];
+        //localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
+        //if(localPlayer.Name == thisMatch.PlayerOName){
+        //    characterPlaying = characterO;
+        //}else{
+        //    characterPlaying = characterX;
+        //}
+        characterPlaying = characterO;
     }
 
     void Update(){
@@ -45,18 +63,18 @@ public class EnemyStateMachine : MonoBehaviour{
 
         switch(actualState){
 
-            case enemyState.WALKING:
+            case droneState.WALKING:
                 //If there is no character near
                 if(!charNear){
                     //Follow its path
                     GotoNextPoint();
                 }else{
-                    actualState = enemyState.ATTACKING;
+                    actualState = droneState.ATTACKING;
                     Debug.Log("Enter attack mode");
                 }
             break;
 
-            case enemyState.ATTACKING:
+            case droneState.ATTACKING:
                 //If there is character near
                 if(charNear){
                     timeAttacking += deltaTime;
@@ -66,32 +84,33 @@ public class EnemyStateMachine : MonoBehaviour{
                         GoToCharacter();
                     }else{
                         //Enter rageMode
-                        actualState = enemyState.RAGING;
+                        actualState = droneState.RAGING;
                         speed = RAGESPEED;
                         timeAttacking = 0f;
                         Debug.Log("Enrage");
                     }
                 //If character got away
                 }else{
-                    actualState = enemyState.REROUTE;
+                    actualState = droneState.REROUTE;
                     timeAttacking = 0f;
                 }
                 
             break;
 
-            case enemyState.RAGING:
+            case droneState.RAGING:
 
                 if(characterNear){
                     //Go to char, but faster
                     GoToCharacter();
                 }else{
                     //Return to route and slow down
-                    actualState = enemyState.REROUTE;
+                    Debug.Log("Gonna walk again");
+                    actualState = droneState.REROUTE;
                     speed = BASESPEED;
                 }
             break;
 
-            case enemyState.REROUTE:
+            case droneState.REROUTE:
 
                 int num = 0;
                 float minDistance = float.MaxValue;
@@ -109,7 +128,7 @@ public class EnemyStateMachine : MonoBehaviour{
                 //Go to walking with next point
                 destPoint = num;
                 nextPoint = points[destPoint];
-                actualState = enemyState.WALKING;
+                actualState = droneState.WALKING;
 
             break;
         }
@@ -131,11 +150,14 @@ public class EnemyStateMachine : MonoBehaviour{
     
     void GoToCharacter(){
         //Go to actual point
-        this.transform.position = Vector3.MoveTowards(this.transform.position, character.transform.position, Time.deltaTime * speed);
+        if(this.transform.position.x > points[0].position.x && this.transform.position.x < points[1].position.x)
+            this.transform.position = Vector3.MoveTowards(this.transform.position, characterPlaying.transform.position, Time.deltaTime * speed);
+        else
+            this.transform.position = Vector3.MoveTowards(this.transform.position, new Vector3(this.transform.position.x, characterPlaying.transform.position.y, characterPlaying.transform.position.z), Time.deltaTime * speed);
     }
 
     void CheckCharacter(){
-        if(Vector3.Distance(this.transform.position, character.transform.position) < 5)
+        if(Vector3.Distance(this.transform.position, characterPlaying.transform.position) < 10)
             characterNear = true;
         else
             characterNear = false;
