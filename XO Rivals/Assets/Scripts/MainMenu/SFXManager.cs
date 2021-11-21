@@ -32,7 +32,7 @@ public class SFXManager : MonoBehaviour
     void Start()
     {
         managerBoton = GetComponent<AudioSource>();
-        FindObjectOfType<SoundsManager>().Play(Tic_Tac_ToeMusic.name);
+        FindObjectOfType<SoundsManager>().Play("Tic-Tac-Toe");
 
     }
     
