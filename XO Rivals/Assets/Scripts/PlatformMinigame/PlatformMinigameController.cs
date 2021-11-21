@@ -80,11 +80,11 @@ public class PlatformMinigameController : MonoBehaviour
         }
         _gameManager = FindObjectOfType<GameManager>();
 
-        /*if (!_gameManager.IsWebGLMobile)
+        if (!_gameManager.IsWebGLMobile)
         {
             jumpButton.SetActive(false);
             rightButton.SetActive(false);
-        }*/
+        }
 
         
     }
