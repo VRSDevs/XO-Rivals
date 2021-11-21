@@ -9,6 +9,18 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using PlayFab;
 
+public struct MatchInfo
+{
+    public string MatchId { get; set; }
+    public string MatchName { get; set; }
+
+    public MatchInfo(string id, string name)
+    {
+        MatchId = id;
+        MatchName = name;
+    }
+}
+
 public class MainMenuController : MonoBehaviour
 {
     #region Vars
@@ -45,7 +57,7 @@ public class MainMenuController : MonoBehaviour
     private float timePassed = 0f;
     
     ////////////////// PARTIDA //////////////////
-    private string MatchName;
+    private MatchInfo _matchToJoin;
     
     #endregion
     
@@ -62,6 +74,8 @@ public class MainMenuController : MonoBehaviour
         level.text = "Level: " + Math.Truncate(_localPlayer.Level);
         lvlSlider.value = _localPlayer.Level % 1;
         lifesTxt.text = "Lives: " + _localPlayer.Lifes;
+        
+        _matchToJoin = new MatchInfo();
 
         if(_localPlayer.Lifes != 5){
             //recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
@@ -186,10 +200,14 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void OnJoinMatchClick()
     {
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joining " + MatchName + " (BETA)";
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joining " + _matchToJoin.MatchName + " (BETA)";
+        
+        StartCoroutine(ChangeInteractionAfterJm());
+        
         CreateGameButton.interactable = false;
         JoinGameButton.interactable = false;
-        StartCoroutine(ChangeInteractionAfterJm());
+        
+        
     }
 
     /// <summary>
@@ -222,7 +240,8 @@ public class MainMenuController : MonoBehaviour
             {
                 child.GetComponent<Button>().interactable = false;
                 JoinGameButton.interactable = true;
-                MatchName = selectedChildren["MatchName"].GetComponent<TextMeshProUGUI>().text;
+                _matchToJoin.MatchId = selectedChildren["MatchID"].GetComponent<TextMeshProUGUI>().text;
+                _matchToJoin.MatchName = selectedChildren["MatchName"].GetComponent<TextMeshProUGUI>().text;
                 continue;
             }
             
