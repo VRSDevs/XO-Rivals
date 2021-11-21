@@ -46,6 +46,15 @@ public class AudioManager : MonoBehaviour
         soundToStop.source.Stop();
     }
 
+    public void StopAllSongs()
+    {
+        foreach (var s in sounds)
+        {
+            s.source.Stop();
+        }
+
+    }
+
     public void Loop(string soundName, bool isLoopable) {
         Sound soundToLoop = Array.Find(sounds, sound => sound.name == soundName);
 
