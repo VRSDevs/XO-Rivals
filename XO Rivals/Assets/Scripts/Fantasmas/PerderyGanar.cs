@@ -124,7 +124,6 @@ public class PerderyGanar : MonoBehaviour
     {
         PlayerPrefs.SetInt("minigameWin", 0);
         FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
-        //SceneManager.UnloadSceneAsync("MinijuegoFantasmas");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 
@@ -132,7 +131,6 @@ public class PerderyGanar : MonoBehaviour
     {
         PlayerPrefs.SetInt("minigameWin", 1);
         FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
-        //SceneManager.UnloadSceneAsync("MinijuegoFantasmas");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 
