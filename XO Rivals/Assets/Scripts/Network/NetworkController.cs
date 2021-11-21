@@ -96,6 +96,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     private IEnumerator JoinSpecificRoom(string name)
     {
         yield return new WaitForSeconds(1);
+
+        PhotonNetwork.JoinRoom(name);
     }
 
     /// <summary>
