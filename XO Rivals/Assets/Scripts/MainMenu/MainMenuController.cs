@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using PlayFab;
+using PlayFab.ClientModels;
 
 public struct MatchInfo
 {
