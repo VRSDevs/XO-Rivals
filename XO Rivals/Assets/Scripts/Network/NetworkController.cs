@@ -271,9 +271,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
-
+        
+        /*
         if (FindObjectOfType<GameManager>().IsPlaying)
             StartCoroutine(LeaveInMatch());
+        */
     }
 
     #endregion
@@ -341,6 +343,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         return _creatingRoom;
     }
 
+    /*
     private IEnumerator LeaveInMatch()
     {
         yield return new WaitUntil(FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded);
@@ -354,6 +357,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 break;
         }
     }
+    */
 
     /// <summary>
     /// Método para transformar un dato en un valor hash
