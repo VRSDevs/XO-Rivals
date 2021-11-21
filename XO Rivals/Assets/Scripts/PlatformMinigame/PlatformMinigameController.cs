@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using DG.Tweening;
+using Photon.Pun;
+
 
 public class PlatformMinigameController : MonoBehaviour
 { 
 
     // Gamemanager
     private GameManager _gameManager;
+
+    public Match thisMatch;
+
+    public PlayerInfo localPlayer;
 
     // Controles de movil
     [SerializeField]
@@ -46,6 +51,13 @@ public class PlatformMinigameController : MonoBehaviour
     bool jugadorX = false;
     public int level = 3;
 
+    private void Awake()
+    {
+        _gameManager = FindObjectOfType<GameManager>();
+        thisMatch = _gameManager.PlayerMatches[PhotonNetwork.CurrentRoom.Name];
+        localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
+
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -69,17 +81,16 @@ public class PlatformMinigameController : MonoBehaviour
                 break;
         }
 
-        if (jugadorX)
-        {
-            playerO.SetActive(false);
-
-        }
-        else
+        if (thisMatch.PlayerOName == localPlayer.Name)
         {
             playerX.SetActive(false);
             flag1.gameObject.GetComponent<SpriteRenderer>().sprite = flagSpriteO;
             flag2.gameObject.GetComponent<SpriteRenderer>().sprite = flagSpriteO;
-            flag3.gameObject.GetComponent<SpriteRenderer>().sprite = flagSpriteO;
+            flag3.gameObject.GetComponent<SpriteRenderer>().sprite = flagSpriteO;       
+        }
+        else
+        {
+            playerO.SetActive(false);
         }
         _gameManager = FindObjectOfType<GameManager>();
 
@@ -88,13 +99,9 @@ public class PlatformMinigameController : MonoBehaviour
             jumpButton.SetActive(false);
             rightButton.SetActive(false);
         }
-
-
+        
         FindObjectOfType<AudioManager>().StopAllSongs();
-
-
         FindObjectOfType<AudioManager>().ChangeMusic(PlatformMusic,"Tic-Tac-Toe");
-
     }
 
     // Update is called once per frame

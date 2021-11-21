@@ -85,7 +85,7 @@ public class ButtonsScript : MonoBehaviour
 
         colocarFichas();
 
-        CheckVictory();
+
 
         //SI VIENES DE UN MINIJUEGO SE HACE START Y SE ELIGE MINIJUEGO
         if (thisMatch.TurnMoment == 2)
@@ -136,6 +136,8 @@ public class ButtonsScript : MonoBehaviour
 
             }//Fin win
 
+            
+
             Debug.Log("SE HACE MINIGAMESEÑLECTION");
             screenManager.MinigameSelectionActivation();
 
@@ -143,8 +145,8 @@ public class ButtonsScript : MonoBehaviour
 
 
         }
-       
 
+        CheckVictory();
 
 
 
@@ -163,16 +165,7 @@ public class ButtonsScript : MonoBehaviour
             {
                 screenManager.EnableButtons();
             }
-            else if(thisMatch.TurnMoment == 1 || thisMatch.TurnMoment == 2){
-                //Go directly to minigame
-                //PlayMinigame();
-            }else if(thisMatch.TurnMoment == 3){
-                //Go to check victory
-               // CheckVictory();
-            }else if(thisMatch.TurnMoment == 4){
-                //Go to choose minigame
-                //screenManager.MinigameSelectionActivation();
-            }
+      
         }else{
             //Disable interaction with tictac cause its not your turn
             screenManager.DisableButtons();
@@ -327,6 +320,95 @@ public class ButtonsScript : MonoBehaviour
         bool[] array = new bool[8];
         int col = thisMatch.ActualChip%3;
         int row = thisMatch.ActualChip / 3;
+        bool win=false;
+        //Primera Fila
+        if (thisMatch.FilledPositions[0 % 3, 0 / 3] != 3 && (thisMatch.FilledPositions[0 % 3, 0 / 3] == thisMatch.FilledPositions[1 % 3, 1 / 3]) && (thisMatch.FilledPositions[1 % 3,1 / 3] == thisMatch.FilledPositions[2 % 3, 2 / 3]))
+        {
+            win = true ;
+        }
+        //Segunda Fila
+        if (thisMatch.FilledPositions[3 % 3, 3 / 3] != 3 && (thisMatch.FilledPositions[3 % 3, 3 / 3] == thisMatch.FilledPositions[4 % 3, 4 / 3]) && (thisMatch.FilledPositions[4 % 3, 4 / 3] == thisMatch.FilledPositions[5 % 3, 5 / 3]))
+        {
+            win = true;
+        }
+        //Tercera Fila
+        if (thisMatch.FilledPositions[6 % 3, 6 / 3] != 3 && (thisMatch.FilledPositions[6 % 3, 6 / 3] == thisMatch.FilledPositions[7 % 3, 7 / 3]) && (thisMatch.FilledPositions[7 % 3, 7 / 3] == thisMatch.FilledPositions[8 % 3, 8 / 3]))
+        {
+            win = true;
+        }
+        //Primera columna
+        if (thisMatch.FilledPositions[0 % 3, 0 / 3] != 3 && (thisMatch.FilledPositions[0 % 3, 0 / 3] == thisMatch.FilledPositions[3 % 3, 3 / 3]) && (thisMatch.FilledPositions[3 % 3, 3 / 3] == thisMatch.FilledPositions[6 % 3, 6 / 3]))
+        {
+            win = true;
+        }
+        //Segunda columna
+        if (thisMatch.FilledPositions[1 % 3, 1 / 3] != 3 &&  (thisMatch.FilledPositions[1 % 3, 1 / 3] == thisMatch.FilledPositions[4 % 3, 4 / 3]) && (thisMatch.FilledPositions[4 % 3, 4 / 3] == thisMatch.FilledPositions[7 % 3, 7 / 3]))
+        {
+            win = true;
+        }
+        //Tercera columna
+        if (thisMatch.FilledPositions[2 % 3, 2 / 3] != 3 && (thisMatch.FilledPositions[2 % 3, 2 / 3] == thisMatch.FilledPositions[5 % 3, 5 / 3]) && (thisMatch.FilledPositions[5 % 3, 5 / 3] == thisMatch.FilledPositions[8 % 3, 8 / 3]))
+        {
+            win = true;
+        }
+        //Primera diagonal
+        if (thisMatch.FilledPositions[0 % 3, 0 / 3] != 3 && (thisMatch.FilledPositions[0 % 3, 0 / 3] == thisMatch.FilledPositions[4 % 3, 4 / 3]) && (thisMatch.FilledPositions[4 % 3, 4 / 3] == thisMatch.FilledPositions[8 % 3, 8 / 3]))
+        {
+            win = true;
+        }
+        //Segunda diagonal
+        if (thisMatch.FilledPositions[2 % 3, 2 / 3] != 3 && (thisMatch.FilledPositions[2 % 3, 2 / 3] == thisMatch.FilledPositions[4 % 3,4 / 3]) && (thisMatch.FilledPositions[4 % 3, 4 / 3] == thisMatch.FilledPositions[6 % 3, 6 / 3]))
+        {
+            win = true;
+        }
+
+
+
+        if (win)
+        {
+            Debug.Log("HASA GAANAO");
+            gameState.IsPlaying = false;
+
+            //Call endgame
+            if (thisMatch.FilledPositions[col, row] == 0)
+            {
+                Debug.Log("CIRCLE WIN");
+
+                if (localPlayer.Name == thisMatch.PlayerOName)
+                {
+                    gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                }
+                else
+                {
+                    gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                }
+            }
+            else
+            {
+                Debug.Log("CROSS WINS");
+
+                if (localPlayer.Name == thisMatch.PlayerXName)
+                {
+                   gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                }
+                else
+                {
+                   gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                }
+            }
+            
+        }
+
+
+
+
+
+
+
+
+
+
+        /*
 
         //Fill array with true every loop
         for (int w = 0; w < 8; w++){
@@ -387,6 +469,8 @@ public class ButtonsScript : MonoBehaviour
             }
 
             Debug.Log("HASA NO O SI GAANAO");
+
+        
             if (win)
             {
                 Debug.Log("HASA GAANAO");
@@ -424,8 +508,10 @@ public class ButtonsScript : MonoBehaviour
             i++;
         }while(i < 8);
 
+        */
+
         //Table full (draw)
-        if(thisMatch.NumFilled == 9){
+        if (thisMatch.NumFilled == 9){
             Debug.Log("Draw");
             gameState._networkCommunications.SendEndMatchInfo("draw", "");
         }
