@@ -150,8 +150,20 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
-        
-        Debug.Log("Desconexión del servidor: " + cause);
+
+        switch (cause)
+        {
+            // Caso ClientTimeout -> El cliente deja de recibir respuestas por parte del servidor
+            case DisconnectCause.ClientTimeout:
+                FindObjectOfType<GameManager>().ResetObject();
+                Destroy(GameObject.Find("PlayerObject"));
+
+                SceneManager.LoadScene("Login");
+                break;
+            default:
+                Debug.Log("Desconexión del servidor: " + cause);
+                break;
+        }
     }
 
     /// <summary>
