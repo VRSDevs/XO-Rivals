@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using PlayFab;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public TextMeshProUGUI nameTxt;
     [SerializeField] public TextMeshProUGUI level;
     [SerializeField] public TextMeshProUGUI lifesTxt;
+    [SerializeField] public TextMeshProUGUI lifesTxtShop;
     [SerializeField] public TextMeshProUGUI lifesTime;
     [SerializeField] public Slider lvlSlider;
 
@@ -54,25 +56,75 @@ public class MainMenuController : MonoBehaviour
         nameTxt.text = _localPlayer.Name;
         level.text = "Level: " + Math.Truncate(_localPlayer.Level);
         lvlSlider.value = _localPlayer.Level % 1;
-        lifesTxt.text = "Lifes: " + _localPlayer.Lifes;
-        //if(_localPlayer.Lifes != 5){
-            _localPlayer.LostLifeTime = System.DateTime.Now;
-            recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
-            recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
-            lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;
-        //}else{
-        //    lifesTime.text = "-:--";
-        //}
+        lifesTxt.text = "Lives: " + _localPlayer.Lifes;
+
+        if(_localPlayer.Lifes != 5){
+            //recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
+            recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(15);
+            CheckLifesTime();
+        }else
+            lifesTime.text = "-:--";
     }
 
     private void Update(){
-        //if(_localPlayer.Lifes != 5){
+        if(_localPlayer.Lifes != 5){
             timePassed += Time.deltaTime;
-            if(timePassed >= 1.0f){
-                recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
-                lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;
+            if(timePassed >= 1.0f){ 
+                CheckLifesTime();
+                timePassed = 0f;
             }
-        //}
+        }
+    }
+
+    private void CheckLifesTime(){
+
+        recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
+        //Check remainingTime
+        if(recoverRemainingTime < TimeSpan.Zero){
+            //Recover one life
+            _localPlayer.Lifes++;
+            UpdateLifes();
+        }else{
+            lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;  
+        }
+    }
+
+    private void UpdateLifes(){
+
+        lifesTxt.text = "Lives: " + _localPlayer.Lifes;
+        if(_localPlayer.Lifes < 5){
+            _localPlayer.LostLifeTime = System.DateTime.Now;
+            //Upload lifes to server
+            PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
+                Data = new Dictionary<string, string>() {
+                    {"Lifes", _localPlayer.Lifes.ToString()},
+                    {"Life Lost", _localPlayer.LostLifeTime.ToString()}}
+                },
+                result => Debug.Log("Successfully updated user lifes"),
+                error => {
+                    Debug.Log("Got error setting user lifes");
+                }
+            );
+            //Restart timer
+            //recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
+            recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(10);
+            recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
+            lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;            
+        }else{
+            //Upload lifes to server
+            PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
+                Data = new Dictionary<string, string>() {
+                    {"Lifes", _localPlayer.Lifes.ToString()},
+                    {"Life Lost", ""}}
+                },
+                result => Debug.Log("Successfully updated user lifes"),
+                error => {
+                    Debug.Log("Got error setting user lifes");
+                }
+            );
+            
+            lifesTime.text = "-:--";
+        }
     }
 
     #endregion
@@ -100,6 +152,8 @@ public class MainMenuController : MonoBehaviour
     {
         MainMenuObject.SetActive(false);
         PlayMenuObject.SetActive(true);
+        SceneManager.LoadScene("Login");
+
     }
 
     /// <summary>
@@ -119,6 +173,9 @@ public class MainMenuController : MonoBehaviour
         if (_gameManager.Matchmaking)
         {
             StartCoroutine(ChangeInteractionAfterCm("connect"));
+            //Lose life and update server
+            _localPlayer.Lifes--;
+            UpdateLifes();
             ConnectRandomMatch();
             CreateMatchImage.sprite = CancelMatchmakingSprite;
         }

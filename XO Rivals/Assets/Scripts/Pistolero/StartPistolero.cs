@@ -5,17 +5,19 @@ using UnityEngine.UI;
 
 public class StartPistolero : MonoBehaviour
 {
-   public Text text; //Texto explicativo
+    public Text text; //Texto explicativo
     public Button boton;//Boton de disparo
 
+    public AudioClip GunmanMusic;
 
+    
     // Start is called before the first frame update
     void Start()
     {
  
         StartCoroutine("Esperar"); //esperamos 3 segundos para que el jugador lea el texto
-
-
+        FindObjectOfType<AudioManager>().ChangeMusic(GunmanMusic,"Main_menu");
+        
     }
 
     // Update is called once per frame

@@ -1119,6 +1119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 438854522}
   boton: {fileID: 315764783}
+  GunmanMusic: {fileID: 8300000, guid: 16861b6d4ced9b14780f9296e5142c15, type: 3}
 --- !u!4 &1099654829
 Transform:
   m_ObjectHideFlags: 0

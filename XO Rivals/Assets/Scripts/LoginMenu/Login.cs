@@ -83,6 +83,9 @@ public class Login : MonoBehaviour
 
         // Limpieza del log
         Log.text = "";
+        
+        FindObjectOfType<AudioManager>().Play("Main_menu");
+
     }
 
     #endregion
@@ -165,6 +168,7 @@ public class Login : MonoBehaviour
                         //Get lifes
                         if(result.Data.ContainsKey("Lifes")){
                             playerInfo.Lifes = int.Parse(result.Data["Lifes"].Value);
+                            playerInfo.Lifes = 3;
                             Debug.Log("Successfully got player lifes");
                         }else{
                             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
@@ -196,10 +200,11 @@ public class Login : MonoBehaviour
                         }
 
                         //Get moment of life lost(if exists)
-                        if(result.Data.ContainsKey("Life Lost")){
+                        if(result.Data.ContainsKey("Life Lost") && result.Data["Life Lost"].Value != "" && result.Data["Life Lost"].Value != null){
                             playerInfo.LostLifeTime = DateTime.ParseExact(result.Data["Life Lost"].Value, "dd.MM.yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                             Debug.Log("Successfully got player life lost moment");
-                        }                 
+                        }  
+                        playerInfo.LostLifeTime = System.DateTime.Now;               
                     }else{
                         //Setup all information
                         PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
