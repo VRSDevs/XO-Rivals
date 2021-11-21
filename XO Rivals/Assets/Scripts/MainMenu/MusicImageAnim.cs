@@ -10,6 +10,9 @@ public class MusicImageAnim : MonoBehaviour
     private Slider slider;
 
     [SerializeField]
+    private Sprite sprite0;
+
+    [SerializeField]
     private Sprite sprite1;
     [SerializeField]
     private Sprite sprite2;
@@ -27,12 +30,17 @@ public class MusicImageAnim : MonoBehaviour
 
     void RefreshAnimMusic()
     {
-        if (slider.value < 0.25){
+        if (slider.value == 0)
+        {
+            image.sprite = sprite0;
+        }
+
+        if (slider.value < 0.25 && slider.value > 0.01){
             image.sprite = sprite1;
         } else if (slider.value >= 0.25 && slider.value < 0.75)
         {
             image.sprite = sprite2;
-        } else
+        } else if (slider.value >= 0.75) 
         {
             image.sprite = sprite3;
         }
