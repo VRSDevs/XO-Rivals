@@ -32,6 +32,7 @@ public class NetworkCommunications : MonoBehaviourPun
     {
         object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject(playerType);
         _View.RPC("PlayerInfoRPC", RpcTarget.Others, (object)objToSend);
+
     }
     
     /// <summary>
@@ -40,7 +41,7 @@ public class NetworkCommunications : MonoBehaviourPun
     public void SendMatchInfo(string type)
     {
         object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.MatchInfoToObject(type);
-        _View.RPC("RPCUpdateMatch", RpcTarget.All, (object)objToSend);
+        _View.RPC("RPCUpdateMatch", RpcTarget.Others, (object)objToSend);
     }
     
     /// <summary>
@@ -51,7 +52,7 @@ public class NetworkCommunications : MonoBehaviourPun
     public void SendEndMatchInfo(string type, string winner)
     {
         object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.EndMatchInfoToObject(type, winner);
-        _View.RPC("RPCEndMatch", RpcTarget.All, (object)objToSend);
+        _View.RPC("RPCEndMatch", RpcTarget.Others, (object)objToSend);
     }
     
     #endregion
@@ -99,7 +100,17 @@ public class NetworkCommunications : MonoBehaviourPun
             case "OppWon":
                 
                 Debug.Log("RPC oponente ganó");
-                
+                Debug.Log(obj[0] as string);
+                Debug.Log(obj[1] as string);
+                Debug.Log((int)obj[2]);
+                Debug.Log((int)obj[3]);
+                Debug.Log((int)obj[4]);
+                Debug.Log((int)obj[5]);
+                Debug.Log((string)obj[6]);
+                Debug.Log(obj[7] as string);
+
+
+
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = obj[1] as string;
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].NumFilled = (int)obj[2];
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions[
@@ -117,8 +128,12 @@ public class NetworkCommunications : MonoBehaviourPun
 
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
 
-                FindObjectOfType<ButtonsScript>().UpdateTurn();
-                
+                FindObjectOfType<ButtonsScript>().startGame();
+                FindObjectOfType<ButtonsScript>().colocarFichas();
+
+
+
+
                 break;
             case "OppLost":
                 
@@ -129,19 +144,25 @@ public class NetworkCommunications : MonoBehaviourPun
                 
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
 
-                FindObjectOfType<ButtonsScript>().UpdateTurn();
+                FindObjectOfType<ButtonsScript>().startGame();
                 
                 break;
         }
     }
     
+    /// <summary>
+    /// RPC recibido en el usuario con la información del final de la partida
+    /// </summary>
+    /// <param name="obj">Objeto con la información</param>
+    [PunRPC]
     public void RPCEndMatch(object[] obj)
     {
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
+        
         switch (obj[0] as string)
         {
-            case "win":
-            case "defeat":
-
+            case "WN":
+            case "DF":
                 if (obj[1].Equals(GameObject.Find("PlayerObject").GetComponent<PlayerInfo>().Name))
                 {
                     FindObjectOfType<EndGameScript>().ShowMatchVictory();
@@ -152,10 +173,12 @@ public class NetworkCommunications : MonoBehaviourPun
                 }
 
                 break;
-            case "draw":
-                
+            case "DW":
                 FindObjectOfType<EndGameScript>().ShowMatchDraw();
                 
+                break;
+            case "SR":
+                FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
                 break;
         }
     }

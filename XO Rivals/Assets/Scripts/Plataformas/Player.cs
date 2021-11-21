@@ -152,7 +152,6 @@ private void OnTriggerEnter2D(Collider2D other)
 
             FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
             PlayerPrefs.SetInt("minigameWin", 1);
-            //SceneManager.UnloadSceneAsync("PlatformMinigame");
             SceneManager.LoadScene("TicTacToe_Server");
         }
     }

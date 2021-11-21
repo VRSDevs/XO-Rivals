@@ -15,11 +15,29 @@ public class ScreenManager : MonoBehaviour
     //Control of miniGameChoosing
     [SerializeField] private GameObject miniGameChoosing;
     [SerializeField] private GameObject ticTacScreen;
+    [SerializeField] private GameObject instructions;
+
+    [SerializeField] private GameObject instructionsCocinitas;
+    [SerializeField] private GameObject instructionsCocinitasLore;
+    [SerializeField] private GameObject instructionsCocinitasInstr;
+
+    [SerializeField] private GameObject instructionsLaberinto;
+    [SerializeField] private GameObject instructionsLaberintoLore;
+    [SerializeField] private GameObject instructionsLaberintoInstr;
+
+    [SerializeField] private GameObject instructionsPistolero;
+    [SerializeField] private GameObject instructionsPistoleroLore;
+    [SerializeField] private GameObject instructionsPistoleroInstr;
+
+    [SerializeField] private GameObject instructionsPlataformas;
+    [SerializeField] private GameObject instructionsPlataformasLore;
+    [SerializeField] private GameObject instructionsPlataformasInstr;
+
     [SerializeField] private ButtonsScript buttonsScript;
     public static int minigame = -1;
 
     //Reference to all butons
-    [SerializeField] public Button[] buttonsReference;
+    [SerializeField] private Button[] buttonsReference;
 
     void Start(){
 
@@ -50,10 +68,12 @@ public class ScreenManager : MonoBehaviour
 
         if (buttonsScript.miniWin)
         {
+            Debug.Log("poshemosganao");
             buttonsScript.gameState._networkCommunications.SendMatchInfo("OppWon");
         }
         else
         {
+            Debug.Log("poshemosperdido");
             buttonsScript.gameState._networkCommunications.SendMatchInfo("OppLost");
         }
     }
@@ -63,14 +83,15 @@ public class ScreenManager : MonoBehaviour
         screenTxt.text = txt;
         yield return new WaitForSeconds(totalTime);
         screenTxt.enabled = false;
+        buttonsScript.thisMatch.TurnMoment = 4;
     }
 
     public void MinigameSelectionActivation(){
-        ticTacScreen.SetActive(false);
+        //ticTacScreen.SetActive(false);
         //Hide chips
-        for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
-            buttonsScript.thisMatch.Chips[i].SetActive(false);
-        }
+        //for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
+        //    buttonsScript.ChipsList[i].SetActive(false);
+        //}
         miniGameChoosing.SetActive(true);
     }    
 
@@ -78,40 +99,42 @@ public class ScreenManager : MonoBehaviour
         buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = n;
         miniGameChoosing.SetActive(false);
         ticTacScreen.SetActive(true);
-        
+        Debug.Log("PREEEUPDATETUENHECHO");
         //Update turn data and send it to opponent
         UpdateTurn();
-
-        //Unhide chips
-        for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
-            buttonsScript.thisMatch.Chips[i].SetActive(true);
-        }
+        Debug.Log("UPDATETUENHECHO");
+        ////Unhide chips
+        //for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
+        //    buttonsScript.thisMatch.Chips[i].SetActive(true);
+        //}
         //Disable interaction with tictac
         DisableButtons();
     }
 
     public void UpdateBoard(int col, int row, string tileName)
     {
-        
+        /*
         GameObject tile = GameObject.Find(tileName);
         
         switch (buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions[col, row])
         {
             case 0:
-                buttonsScript.actualChip = Instantiate(buttonsScript.circleGO, tile.transform.position, Quaternion.identity);
-                buttonsScript.actualChip.SetActive(true);
-                buttonsScript.actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+                buttonsScript.thisMatch.ActualChip = Instantiate(buttonsScript.circleGO, tile.transform.position, Quaternion.identity);
+                buttonsScript.thisMatch.ActualChip.SetActive(true);
+                buttonsScript.thisMatch.ActualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
                         
                 break;
             case 1:
-                buttonsScript.actualChip = Instantiate(buttonsScript.crossGO, tile.transform.position, Quaternion.identity);
-                buttonsScript.actualChip.SetActive(true);
-                buttonsScript.actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+                buttonsScript.thisMatch.ActualChip = Instantiate(buttonsScript.crossGO, tile.transform.position, Quaternion.identity);
+                buttonsScript.thisMatch.ActualChip.SetActive(true);
+                buttonsScript.thisMatch.ActualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
                         
                 break;
         }
         
-        buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].Chips.Add(buttonsScript.actualChip);
+        buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].Chips.Add(buttonsScript.thisMatch.ActualChip);
+
+        */
     }
     
     public void EnableButtons()
@@ -127,8 +150,138 @@ public class ScreenManager : MonoBehaviour
         }
     }
 
-    public void BackToMainMenu()
+
+    public void showInstruction(int i)
     {
-        SceneManager.LoadScene("MainMenu");
+        instructions.SetActive(true);
+
+        switch (i)
+        {
+            case 0://Pistolero
+                instructionsPistolero.SetActive(true);
+                instructionsPistoleroInstr.SetActive(true);
+                break;
+
+            case 1://Comida
+                instructionsCocinitas.SetActive(true);
+                instructionsCocinitasInstr.SetActive(true);
+
+                break;
+
+            case 2://Platform
+                instructionsPlataformas.SetActive(true);
+                instructionsPlataformasInstr.SetActive(true);
+
+                break;
+            case 3://Laberinto
+                instructionsLaberinto.SetActive(true);
+                instructionsLaberintoInstr.SetActive(true);
+                break;
+        }
+
+
+
     }
+
+    public void unshowInstructions()
+    {
+
+
+
+
+                    instructionsPistolero.SetActive(false);
+                    instructionsPistoleroInstr.SetActive(false);
+                    instructionsPistoleroLore.SetActive(false);
+
+
+                    instructionsCocinitas.SetActive(false);
+                    instructionsCocinitasInstr.SetActive(false);
+                    instructionsCocinitasLore.SetActive(false);
+
+
+
+                    instructionsPlataformas.SetActive(false);
+                    instructionsPlataformasInstr.SetActive(false);
+                    instructionsPlataformasLore.SetActive(false);
+
+
+                    instructions.SetActive(false);
+
+
+
+    }
+
+
+    public void goInstrLore()
+    {
+        int i = buttonsScript.thisMatch.MiniGameChosen;
+
+        switch (i)
+        {
+            case 0://Pistolero
+
+                instructionsPistoleroInstr.SetActive(false);
+                instructionsPistoleroLore.SetActive(true);
+                break;
+
+            case 1://Comida
+
+                instructionsCocinitasInstr.SetActive(false);
+                instructionsCocinitasLore.SetActive(true);
+
+                break;
+
+            case 2://Platform
+
+                instructionsPlataformasInstr.SetActive(false);
+                instructionsPlataformasLore.SetActive(true);
+
+                break;
+            case 3://Laberinto
+
+                instructionsLaberintoInstr.SetActive(false);
+                instructionsLaberintoLore.SetActive(true);
+
+                break;
+        }
+
+
+
+    }
+    public void goInstrtext()
+    {
+        int i = buttonsScript.thisMatch.MiniGameChosen;
+
+        switch (i)
+        {
+            case 0://Pistolero
+
+                instructionsPistoleroInstr.SetActive(true);
+                instructionsPistoleroLore.SetActive(false);
+                break;
+
+            case 1://Comida
+
+                instructionsCocinitasInstr.SetActive(true);
+                instructionsCocinitasLore.SetActive(false);
+
+                break;
+
+            case 2://Platform
+
+                instructionsPlataformasInstr.SetActive(true);
+                instructionsPlataformasLore.SetActive(false);
+
+                break;
+            case 3://Laberinto
+
+                instructionsLaberintoInstr.SetActive(true);
+                instructionsLaberintoLore.SetActive(false);
+
+                break;
+        }
+
+    }
+
+
 }

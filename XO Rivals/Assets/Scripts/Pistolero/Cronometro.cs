@@ -42,7 +42,8 @@ public class Cronometro : MonoBehaviour
             if (segundos<tiempoDesaparecido )
             {
                 float auxAlfa = textoCrono.color.a -0.001f;
-                textoCrono.color = new Color(textoCrono.color.r, textoCrono.color.g, textoCrono.color.b, auxAlfa);
+                //textoCrono.color = new Color(textoCrono.color.r, textoCrono.color.g, textoCrono.color.b, auxAlfa);
+                textoCrono.text = "--:--";
             }
 
         }
@@ -52,7 +53,7 @@ public class Cronometro : MonoBehaviour
     public void activarCrono()
     {
         activo = true;
-        textoExplicativo.text = "Release when the timer reaches 0:00";
+        //textoExplicativo.text = "Release when the timer reaches 0:00";
         timeEnemy = UnityEngine.Random.Range(0f, maxEnemy);
     }
     public void finCrono()
@@ -115,11 +116,11 @@ public class Cronometro : MonoBehaviour
 
             if (decimasEnemy < 10) //si son mas peque�s que 10 no sale el 0 de antes
             {
-                textoExplicativo.text = "This is your result!\nVICTORY AGAINST " + segundosEnemy + ":" + "0"+ decimasEnemy;
+                textoExplicativo.text = "VICTORY AGAINST " + segundosEnemy + ":" + "0"+ decimasEnemy + "\n \n Your time:";
             }
             else
             {
-                textoExplicativo.text = "This is your result!\nVICTORY AGAINST " + segundosEnemy + ":" + decimasEnemy;
+                textoExplicativo.text = "VICTORY AGAINST " + segundosEnemy + ":" + decimasEnemy + "\n \n Your time:";
             }
 
            
@@ -133,11 +134,11 @@ public class Cronometro : MonoBehaviour
             //StartCoroutine("EsperarD");
             if (decimasEnemy < 10) //si son mas peque�s que 10 no sale el 0 de antes
             {
-                textoExplicativo.text = "This is your result!\nLOST AGAINST " + segundosEnemy + ":" + "0"+decimasEnemy;
+                textoExplicativo.text = "LOST AGAINST " + segundosEnemy + ":" + "0"+decimasEnemy + "\n \n Your time:";
             }
             else
             {
-                textoExplicativo.text = "This is your result!\nLOST AGAINST " + segundosEnemy + ":" + decimasEnemy;
+                textoExplicativo.text = "LOST AGAINST " + segundosEnemy + ":" + decimasEnemy + "\n \n Your time:";
             }
 
            
@@ -150,7 +151,6 @@ public class Cronometro : MonoBehaviour
         yield return new WaitForSeconds(3);
         PlayerPrefs.SetInt("minigameWin", 1);
         FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
-        //SceneManager.UnloadSceneAsync("Pistolero");
         SceneManager.LoadScene("TicTacToe_Server");
         //SceneManager.LoadScene("PistoleroVictoria", LoadSceneMode.Additive);
     }
@@ -159,7 +159,6 @@ public class Cronometro : MonoBehaviour
         yield return new WaitForSeconds(3);
         PlayerPrefs.SetInt("minigameWin", 0);
         FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
-        //SceneManager.UnloadSceneAsync("Pistolero");
         SceneManager.LoadScene("TicTacToe_Server");
         //SceneManager.LoadScene("Pistolero Derrota", LoadSceneMode.Additive);
     }
