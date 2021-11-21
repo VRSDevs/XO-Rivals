@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class AnimationsController : MonoBehaviour
 {
+
+    public Match thisMatch;
+
+    public PlayerInfo localPlayer;
 
     // GameObjects
     [SerializeField]
@@ -38,13 +43,21 @@ public class AnimationsController : MonoBehaviour
     public bool prueba = true;
 
 
+    private void Awake()
+    {
+        _gameManager = FindObjectOfType<GameManager>();
+        thisMatch = _gameManager.PlayerMatches[PhotonNetwork.CurrentRoom.Name];
+        localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         crono = FindObjectOfType<Cronometro>();
 
         // Recoger de quien es el turno y activar los personajes necesarios
-        if (prueba)
+        if (thisMatch.PlayerOName == localPlayer.Name)
         {
             playerX.SetActive(false);
             iaO.SetActive(false);
