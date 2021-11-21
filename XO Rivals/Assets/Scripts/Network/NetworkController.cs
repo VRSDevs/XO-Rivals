@@ -85,10 +85,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// </summary>
     public void DisconnectFromRoom()
     {
-        if (FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SurrenderStatus() ||
-            FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded())
+        if (FindObjectOfType<GameManager>().IsPlaying)
         {
-            FindObjectOfType<GameManager>().PlayerMatches.Remove(PhotonNetwork.CurrentRoom.Name);
+            if (FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SurrenderStatus() ||
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded())
+            {
+                FindObjectOfType<GameManager>().PlayerMatches.Remove(PhotonNetwork.CurrentRoom.Name);
+            }
         }
         
         PhotonNetwork.LeaveRoom(true);
