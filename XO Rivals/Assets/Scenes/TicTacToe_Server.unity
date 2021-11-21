@@ -3481,7 +3481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb9b31da1d8211d46b1e584d8da88f7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tic_Tac_toe_Music: {fileID: 0}
+  Tic_Tac_toe_Music: {fileID: 8300000, guid: 213da277282909c4fb1a9c8db9f6280f, type: 3}
   PlayerCounter: {fileID: 466295767}
 --- !u!4 &970048714
 Transform:
@@ -7961,6 +7961,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+--- !u!1 &6299495709025673008 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6299495708482457880, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+  m_PrefabInstance: {fileID: 6299495709025673007}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6299495709025673009 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6299495709463213681, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+  m_PrefabInstance: {fileID: 6299495709025673007}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8973622830539711080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8043,6 +8053,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 970048713}
+        m_TargetAssemblyTypeName: TicTacToeController, Assembly-CSharp
+        m_MethodName: PutChip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -8232,9 +8254,9 @@ MonoBehaviour:
   instructionsCocinitas: {fileID: 932491112}
   instructionsCocinitasLore: {fileID: 620921665}
   instructionsCocinitasInstr: {fileID: 932491111}
-  instructionsLaberinto: {fileID: 1579495259}
+  instructionsLaberinto: {fileID: 6299495709025673009}
   instructionsLaberintoLore: {fileID: 1188183083}
-  instructionsLaberintoInstr: {fileID: 1579495258}
+  instructionsLaberintoInstr: {fileID: 6299495709025673008}
   instructionsPistolero: {fileID: 777539893}
   instructionsPistoleroLore: {fileID: 1053396595}
   instructionsPistoleroInstr: {fileID: 777539892}
@@ -8268,6 +8290,8 @@ MonoBehaviour:
   cross: {fileID: 21300000, guid: 64086e9c27835ba41832875641ae00ee, type: 3}
   circleGO: {fileID: 0}
   crossGO: {fileID: 0}
+  circleTurn: {fileID: 1502975252}
+  crossTurn: {fileID: 815351772}
   nameO: {fileID: 1288534602}
   nameX: {fileID: 1862349900}
   botonesCuadricula:
@@ -8459,6 +8483,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 970048713}
+        m_TargetAssemblyTypeName: TicTacToeController, Assembly-CSharp
+        m_MethodName: PutChip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &8973622831403405502
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8629,6 +8665,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 970048713}
+        m_TargetAssemblyTypeName: TicTacToeController, Assembly-CSharp
+        m_MethodName: PutChip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8973622831788748484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8681,6 +8729,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 970048713}
+        m_TargetAssemblyTypeName: TicTacToeController, Assembly-CSharp
+        m_MethodName: PutChip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -8855,6 +8915,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 970048713}
+        m_TargetAssemblyTypeName: TicTacToeController, Assembly-CSharp
+        m_MethodName: PutChip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &8973622831828787379
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8983,6 +9055,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 6
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 970048713}
+        m_TargetAssemblyTypeName: TicTacToeController, Assembly-CSharp
+        m_MethodName: PutChip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -9138,6 +9222,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 970048713}
+        m_TargetAssemblyTypeName: TicTacToeController, Assembly-CSharp
+        m_MethodName: PutChip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &8973622832271774251
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9235,6 +9331,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: ButtonsScript, Assembly-CSharp
         m_MethodName: PlaceTile
         m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 970048713}
+        m_TargetAssemblyTypeName: TicTacToeController, Assembly-CSharp
+        m_MethodName: PutChip
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9417,6 +9525,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 970048713}
+        m_TargetAssemblyTypeName: TicTacToeController, Assembly-CSharp
+        m_MethodName: PutChip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

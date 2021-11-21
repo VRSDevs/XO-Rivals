@@ -45,7 +45,7 @@ public class CambioEscenaDerrotaVictoria : MonoBehaviour
     {
         defeat.SetActive(true);
         Invoke("Defeat", 3f);
-        sounds.playDefeatSound();
+        FindObjectOfType<AudioManager>().Play("Defeat");
 
     }
 
@@ -53,7 +53,7 @@ public class CambioEscenaDerrotaVictoria : MonoBehaviour
     {
         victory.SetActive(true);
         Invoke("Victory", 3f);
-        sounds.playVictorySound();
+        FindObjectOfType<AudioManager>().Play("Victory");
 
     }
 

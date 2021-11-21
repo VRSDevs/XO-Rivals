@@ -47,6 +47,20 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyDown("d"))
+        {
+            horizontal = 1;
+        } else if (Input.GetKeyUp("d"))
+        {
+            horizontal = 0;
+        }
+
+        if (Input.GetKeyDown("space"))
+        {
+            JumpPhone();
+        }
+
         if (win)
         {
             player.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
@@ -127,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
             isDead = true;
             anim.SetBool("isDead", true);
             Invoke("DefeatCanvas", 3f);
-            sounds.playDeathSound();
+            FindObjectOfType<AudioManager>().Play("Death");
         } 
         if(collision.gameObject.tag == "FinishLine")
         {
@@ -152,14 +166,14 @@ public class PlayerMovement : MonoBehaviour
     {
         defeat.SetActive(true);
         Invoke("Defeat", 3f);
-        sounds.playDefeatSound();
+        FindObjectOfType<AudioManager>().Play("Defeat");
     }
 
     public void VictoryCanvas()
     {
         victory.SetActive(true);
         Invoke("Victory", 3f);
-        sounds.playVictorySound();
+        FindObjectOfType<AudioManager>().Play("Victory");
     }
 
     public void Defeat()

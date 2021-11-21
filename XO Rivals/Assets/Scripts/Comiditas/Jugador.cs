@@ -40,6 +40,24 @@ public class Jugador : MonoBehaviour
     void Update()
     {
 
+        if (Input.GetKeyDown("a"))
+        {
+            horizontal = -1;
+        }
+        else if (Input.GetKeyUp("a"))
+        {
+            horizontal = 0;
+        }
+
+        if (Input.GetKeyDown("d"))
+        {
+            horizontal = 1;
+        }
+        else if (Input.GetKeyUp("d"))
+        {
+            horizontal = 0;
+        }
+
         player.velocity = new Vector2(horizontal * speed, player.velocity.y);
         if (!isFacingRight && horizontal > 0f)
         {

@@ -17,15 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TicTacToe_Server.unity
     guid: 4b715a1e71a77684dacd49aa789d3b54
-  - enabled: 0
-    path: Assets/Scenes/TicTacToe.unity
-    guid: 0544b9456c782b14fafb17b1bcfc7de8
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/PlatformMinigame.unity
     guid: 13414cc9793dc6d489cea673e7718cb0
@@ -35,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Pistolero.unity
     guid: 4a4575736a555134aae06631f071b295
+  - enabled: 1
+    path: Assets/Scenes/Fanstasmas3D.unity
+    guid: f594e3e9a76eb564eabc6b9f84efa143
   m_configObjects: {}

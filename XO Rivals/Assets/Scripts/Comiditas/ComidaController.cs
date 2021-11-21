@@ -110,10 +110,7 @@ public class ComidaController : MonoBehaviour
         }
 
         FindObjectOfType<AudioManager>().StopAllSongs();
-
-        
         FindObjectOfType<AudioManager>().ChangeMusic(ComiditasMusic,"Tic-Tac-Toe");
-
     }
 
     // Update is called once per frame
@@ -157,14 +154,14 @@ public class ComidaController : MonoBehaviour
     {
         defeat.SetActive(true);
         Invoke("Defeat", 3f);
-        //sounds.playDefeatSound();
+        FindObjectOfType<AudioManager>().Play("Defeat");
     }
 
     public void VictoryCanvas()
     {
         victory.SetActive(true);
         Invoke("Victory", 3f);
-        sounds.playVictorySound();
+        FindObjectOfType<AudioManager>().Play("Victory");
     }
 
     public void Defeat()

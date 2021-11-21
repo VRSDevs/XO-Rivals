@@ -130,6 +130,7 @@ public class NetworkCommunications : MonoBehaviourPun
 
                 FindObjectOfType<ButtonsScript>().startGame();
                 FindObjectOfType<ButtonsScript>().colocarFichas();
+                FindObjectOfType<ButtonsScript>().CheckVictory();
 
 
 
@@ -170,6 +171,7 @@ public class NetworkCommunications : MonoBehaviourPun
                 else
                 {
                      FindObjectOfType<EndGameScript>().ShowMatchDefeat();
+                     FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
                 }
 
                 break;

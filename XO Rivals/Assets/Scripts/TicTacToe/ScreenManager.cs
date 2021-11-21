@@ -197,18 +197,23 @@ public class ScreenManager : MonoBehaviour
         instructionsPistoleroLore.SetActive(false);
 
 
+        instructionsPlataformas.SetActive(false);
+        instructionsPlataformasInstr.SetActive(false);
+        instructionsPlataformasLore.SetActive(false);
+
         instructionsCocinitas.SetActive(false);
         instructionsCocinitasInstr.SetActive(false);
         instructionsCocinitasLore.SetActive(false);
 
 
+        instructionsLaberinto.SetActive(false);
+        instructionsLaberintoInstr.SetActive(false);
+        instructionsLaberintoLore.SetActive(false);
 
-        instructionsPlataformas.SetActive(false);
-        instructionsPlataformasInstr.SetActive(false);
-        instructionsPlataformasLore.SetActive(false);
 
 
         instructions.SetActive(false);
+
     }
 
 
