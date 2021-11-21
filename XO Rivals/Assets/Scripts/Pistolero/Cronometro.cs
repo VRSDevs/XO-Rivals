@@ -42,7 +42,8 @@ public class Cronometro : MonoBehaviour
             if (segundos<tiempoDesaparecido )
             {
                 float auxAlfa = textoCrono.color.a -0.001f;
-                textoCrono.color = new Color(textoCrono.color.r, textoCrono.color.g, textoCrono.color.b, auxAlfa);
+                //textoCrono.color = new Color(textoCrono.color.r, textoCrono.color.g, textoCrono.color.b, auxAlfa);
+                textoCrono.text = "--:--";
             }
 
         }
