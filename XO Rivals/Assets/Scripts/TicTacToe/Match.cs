@@ -110,6 +110,18 @@ public class Match
     }
 
     #endregion
+
+    #region Setters
+
+    /// <summary>
+    /// Método para establecer el valor de si la partida ha terminado o no
+    /// </summary>
+    public void SetIsEnded()
+    {
+        _ended = !_ended;
+    }
+    
+    #endregion
     
     
 }
