@@ -74,11 +74,11 @@ public class MainMenuController : MonoBehaviour
         nameTxt.text = _localPlayer.Name;
         level.text = "Level: " + Math.Truncate(_localPlayer.Level);
         lvlSlider.value = _localPlayer.Level % 1;
-        lifesTxt.text = "Lives: " + _localPlayer.Lifes;
+        lifesTxt.text = "Lives: " + _localPlayer.Lives;
         
         _matchToJoin = new MatchInfo();
 
-        if (_localPlayer.Lifes != 5){
+        if (_localPlayer.Lives != 5){
             //recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
             recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(15);
             CheckLifesTime();
@@ -87,7 +87,7 @@ public class MainMenuController : MonoBehaviour
     }
 
     private void Update(){
-        if(_localPlayer.Lifes != 5){
+        if(_localPlayer.Lives != 5){
             timePassed += Time.deltaTime;
             if(timePassed >= 1.0f){ 
                 CheckLifesTime();
@@ -102,15 +102,15 @@ public class MainMenuController : MonoBehaviour
 
     private void IncreaseLifes(){
 
-        _localPlayer.Lifes++;
-        lifesTxt.text = "Lives: " + _localPlayer.Lifes;
-        lifesTxtShop.text = "Lives: " + _localPlayer.Lifes;
-        if (_localPlayer.Lifes < 5){
+        _localPlayer.Lives++;
+        lifesTxt.text = "Lives: " + _localPlayer.Lives;
+        lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
+        if (_localPlayer.Lives < 5){
             _localPlayer.LostLifeTime = System.DateTime.Now;
             //Upload lifes to server
             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
                     Data = new Dictionary<string, string>() {
-                        {"Lifes", _localPlayer.Lifes.ToString()},
+                        {"Lifes", _localPlayer.Lives.ToString()},
                         {"Life Lost", _localPlayer.LostLifeTime.ToString()}}
                 },
                 result => Debug.Log("Successfully updated user lifes"),
@@ -127,7 +127,7 @@ public class MainMenuController : MonoBehaviour
             //Upload lifes to server
             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
                     Data = new Dictionary<string, string>() {
-                        {"Lifes", _localPlayer.Lifes.ToString()},
+                        {"Lifes", _localPlayer.Lives.ToString()},
                         {"Life Lost", ""}}
                 },
                 result => Debug.Log("Successfully updated user lifes"),
@@ -142,16 +142,16 @@ public class MainMenuController : MonoBehaviour
 
     private void ReduceLifes(){
 
-        _localPlayer.Lifes--;
-        lifesTxt.text = "Lives: " + _localPlayer.Lifes;
-        lifesTxtShop.text = "Lives: " + _localPlayer.Lifes;
+        _localPlayer.Lives--;
+        lifesTxt.text = "Lives: " + _localPlayer.Lives;
+        lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
         //If it has 4 lifes, update timer
-        if(_localPlayer.Lifes == 4){
+        if(_localPlayer.Lives == 4){
             _localPlayer.LostLifeTime = System.DateTime.Now;
             //Upload lifes to server
             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
                     Data = new Dictionary<string, string>() {
-                        {"Lifes", _localPlayer.Lifes.ToString()},
+                        {"Lifes", _localPlayer.Lives.ToString()},
                         {"Life Lost", _localPlayer.LostLifeTime.ToString()}}
                 },
                 result => Debug.Log("Successfully reduced user lifes"),
@@ -168,7 +168,7 @@ public class MainMenuController : MonoBehaviour
             //Upload lifes to server
             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
                     Data = new Dictionary<string, string>() {
-                        {"Lifes", _localPlayer.Lifes.ToString()}}
+                        {"Lifes", _localPlayer.Lives.ToString()}}
                 },
                 result => Debug.Log("Successfully reduced user lifes"),
                 error => {
