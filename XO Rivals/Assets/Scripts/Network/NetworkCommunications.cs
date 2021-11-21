@@ -139,6 +139,7 @@ public class NetworkCommunications : MonoBehaviourPun
     /// RPC recibido en el usuario con la información del final de la partida
     /// </summary>
     /// <param name="obj">Objeto con la información</param>
+    [PunRPC]
     public void RPCEndMatch(object[] obj)
     {
         FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
