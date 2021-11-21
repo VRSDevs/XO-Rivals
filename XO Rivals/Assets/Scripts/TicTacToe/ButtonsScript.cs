@@ -76,7 +76,23 @@ public class ButtonsScript : MonoBehaviour
         //Initialize ScreenManager
         screenManager = FindObjectOfType<ScreenManager>();
     }
-    
+    public void updateIconTurn()
+    {
+
+        //Activate player turn tile
+        if (thisMatch.WhosTurn == thisMatch.PlayerOName)
+        {
+            circleTurn.SetActive(true);
+            crossTurn.SetActive(false);
+
+
+        }
+        else
+        {
+            crossTurn.SetActive(true);
+            circleTurn.SetActive(false);
+        }
+    }
     public void Start(){
         
         Debug.Log("Player O name: " + thisMatch.PlayerOName);
@@ -88,18 +104,7 @@ public class ButtonsScript : MonoBehaviour
         + thisMatch.FilledPositions[1,0] + " " + thisMatch.FilledPositions[1,1] + " " + thisMatch.FilledPositions[1,2] + "\n" 
         + thisMatch.FilledPositions[2,0] + " " + thisMatch.FilledPositions[2,1] + " " + thisMatch.FilledPositions[2,2]);
         Debug.Log("Minigame chosen: " + thisMatch.MiniGameChosen);
-
-        //Activate player turn tile
-        if(thisMatch.WhosTurn == thisMatch.PlayerOName){
-            circleTurn.SetActive(true);
-            crossTurn.SetActive(false);
-
-
-        }
-        else{
-            crossTurn.SetActive(true);
-            circleTurn.SetActive(false);
-        }
+        updateIconTurn();
 
         //Set name to each player
         nameO.text = thisMatch.PlayerOName;
@@ -175,6 +180,7 @@ public class ButtonsScript : MonoBehaviour
         }else{
             //Disable interaction with tictac cause its not your turn
             screenManager.DisableButtons();
+            
         }
     }
 
@@ -245,7 +251,7 @@ public class ButtonsScript : MonoBehaviour
                     //SceneManager.LoadScene("PlatformMinigame", LoadSceneMode.Additive);
                 break;
                 case 3:
-                    SceneManager.LoadScene("Fantasmas3D");
+                    SceneManager.LoadScene(7);
                     //SceneManager.LoadScene("PlatformMinigame", LoadSceneMode.Additive);
                     break;
             }
