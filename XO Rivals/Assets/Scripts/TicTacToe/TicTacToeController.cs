@@ -40,6 +40,7 @@ public class TicTacToeController : MonoBehaviour
     /// </summary>
     public void Surrender()
     {
+        _gameManager.Surrendered = true;
         _gameManager.OnLeaveRoom();
         SceneManager.LoadScene("MainMenu");
     }
