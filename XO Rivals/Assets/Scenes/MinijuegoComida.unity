@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 99837298}
   - component: {fileID: 99837297}
   m_Layer: 0
-  m_Name: Mini Game controller
+  m_Name: '@Mini Game controller'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -154,9 +154,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerColor: 0
   sounds: {fileID: 1691529432}
+  ComiditasMusic: {fileID: 8300000, guid: 52776ac4e18d7764fb63dd94f9486ae7, type: 3}
   victory: {fileID: 1200794244}
   defeat: {fileID: 1993580282}
   player: {fileID: 2000637811}
+  playerORB: {fileID: 1318435248}
   playerO: {fileID: 1318435246}
   playerX: {fileID: 2000637805}
   leftButton: {fileID: 1732832436}

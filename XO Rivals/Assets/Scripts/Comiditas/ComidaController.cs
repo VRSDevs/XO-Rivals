@@ -14,6 +14,7 @@ public class ComidaController : MonoBehaviour
 
     // Sounds
     public SFXManagerComida sounds;
+    public AudioClip ComiditasMusic;
     
     // Canvas final
     [SerializeField]
@@ -24,6 +25,8 @@ public class ComidaController : MonoBehaviour
     // Player
     [SerializeField]
     private Rigidbody2D player;
+    [SerializeField]
+    private Rigidbody2D playerORB;
 
     // Tipo jugador
     [SerializeField]
@@ -91,6 +94,12 @@ public class ComidaController : MonoBehaviour
             leftButton.SetActive(false);
             rightButton.SetActive(false);
         }
+
+        FindObjectOfType<AudioManager>().StopAllSongs();
+
+        
+        FindObjectOfType<AudioManager>().ChangeMusic(ComiditasMusic,"Tic-Tac-Toe");
+
     }
 
     // Update is called once per frame
@@ -115,6 +124,7 @@ public class ComidaController : MonoBehaviour
             panArriba.SetActive(false);
             orden = 1;
             player.constraints = RigidbodyConstraints2D.FreezeAll;
+            playerORB.constraints = RigidbodyConstraints2D.FreezeAll;
             lost = true;           
             
         }
@@ -257,6 +267,7 @@ public class ComidaController : MonoBehaviour
                     win = true;
                     crono.SetText("You won");
                     stopGenerador();
+                    playerORB.constraints = RigidbodyConstraints2D.FreezeAll;
                     player.constraints = RigidbodyConstraints2D.FreezeAll;
                     // Aqui se manda a alberto la victoria
                     Invoke("VictoryCanvas", 3f);

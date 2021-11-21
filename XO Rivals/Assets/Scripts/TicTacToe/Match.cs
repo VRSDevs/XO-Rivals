@@ -53,6 +53,14 @@ public class Match
     /// Lista de fichas
     /// </summary>
     public List<GameObject> Chips { get; set; }
+    /// <summary>
+    /// ¿Terminó la partida?
+    /// </summary>
+    private bool _ended;
+    /// <summary>
+    /// ¿Te rendiste?
+    /// </summary>
+    private bool _youSurrended;
 
     #endregion
 
@@ -83,14 +91,53 @@ public class Match
         NumFilled = 0;
 
         Chips = new List<GameObject>();
+
+        _ended = false;
+        _youSurrended = false;
     }
     
     #endregion
 
-    #region MyRegion
+    #region Getters
 
+    /// <summary>
+    /// Método para obtener si la partida ha finalizado o no
+    /// </summary>
+    /// <returns></returns>
+    public bool IsEnded()
+    {
+        return _ended;
+    }
+
+    /// <summary>
+    /// Método para obtener si el jugador local se rindió o no
+    /// </summary>
+    /// <returns></returns>
+    public bool SurrenderStatus()
+    {
+        return _youSurrended;
+    }
+
+    #endregion
+
+    #region Setters
+
+    /// <summary>
+    /// Método para establecer el valor de si la partida ha terminado o no
+    /// </summary>
+    public void SetIsEnded()
+    {
+        _ended = !_ended;
+    }
+
+    /// <summary>
+    /// Método para establecer el valor de si el jugador local se ha rendido o no
+    /// </summary>
+    public void SetSurrenderStatus()
+    {
+        _youSurrended = !_youSurrended;
+    }
     
-
     #endregion
     
     
