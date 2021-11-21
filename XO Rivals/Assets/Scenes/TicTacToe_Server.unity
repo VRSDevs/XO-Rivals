@@ -1499,7 +1499,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 970048713}
         m_TargetAssemblyTypeName: TicTacToeController, Assembly-CSharp
-        m_MethodName: Surrender
+        m_MethodName: GoBack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2149,7 +2149,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 970048713}
         m_TargetAssemblyTypeName: TicTacToeController, Assembly-CSharp
-        m_MethodName: Surrender
+        m_MethodName: GoBack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4506,7 +4506,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 970048713}
         m_TargetAssemblyTypeName: TicTacToeController, Assembly-CSharp
-        m_MethodName: Surrender
+        m_MethodName: GoBack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
