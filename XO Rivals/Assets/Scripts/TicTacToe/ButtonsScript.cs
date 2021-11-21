@@ -16,8 +16,9 @@ public class ButtonsScript : MonoBehaviour
     [SerializeField] private Sprite cross;
     public GameObject circleGO;
     public GameObject crossGO;
-    private GameObject circleTurn;
-    private GameObject crossTurn;
+
+    [SerializeField] private GameObject circleTurn;
+    [SerializeField] private GameObject crossTurn;
 
     //Player names
     [SerializeField] private TextMeshProUGUI nameO;
@@ -91,8 +92,13 @@ public class ButtonsScript : MonoBehaviour
         //Activate player turn tile
         if(thisMatch.WhosTurn == thisMatch.PlayerOName){
             circleTurn.SetActive(true);
-        }else{
+            crossTurn.SetActive(false);
+
+
+        }
+        else{
             crossTurn.SetActive(true);
+            circleTurn.SetActive(false);
         }
 
         //Set name to each player
