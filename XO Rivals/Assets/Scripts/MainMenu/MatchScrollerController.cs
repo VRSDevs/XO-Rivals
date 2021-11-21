@@ -40,7 +40,6 @@ public class MatchScrollerController : MonoBehaviour
         _totalMatches = 0;
         
         GetMatchesList();
-        StartCoroutine(UpdateMatchesList());
     }
 
     #endregion
@@ -58,23 +57,9 @@ public class MatchScrollerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Método para obtener la lista de partidas de manera periódica
+    /// Método ejecutado al recibir la lista de partidas del diccionario
     /// </summary>
-    /// <returns></returns>
-    private IEnumerator UpdateMatchesList()
-    {
-        yield return new WaitForSeconds(5);
-        
-        _totalMatches = FindObjectOfType<GameManager>().PlayerMatches.Count;
-            
-        FetchPlayerMatches(OnRecievedMatches);
-        StartCoroutine(UpdateMatchesList());
-    }
-    
-    /// <summary>
-    /// Método ejecutado al recibir
-    /// </summary>
-    /// <param name="list"></param>
+    /// <param name="list">Lista de partidas</param>
     private void OnRecievedMatches(MatchModel[] list)
     {
         foreach (Transform child in ViewContent)
@@ -95,6 +80,12 @@ public class MatchScrollerController : MonoBehaviour
     
     }
     
+    /// <summary>
+    /// Método para inicializar cada prefab a introducir a la vista
+    /// </summary>
+    /// <param name="viewGO"></param>
+    /// <param name="model"></param>
+    /// <returns></returns>
     private MatchesView IntializeMatchView(GameObject viewGO, MatchModel model)
     {
         MatchesView view = new MatchesView(viewGO.transform)
@@ -112,6 +103,10 @@ public class MatchScrollerController : MonoBehaviour
         return view;
     }
     
+    /// <summary>
+    /// Método para obtener la lista de partidas del diccionario
+    /// </summary>
+    /// <param name="onDone"></param>
     private void FetchPlayerMatches(Action<MatchModel[]> onDone)
     {
         var matchesList = _totalMatches < 1 ? new MatchModel[1] : new MatchModel[_totalMatches];
