@@ -189,23 +189,28 @@ public class ScreenManager : MonoBehaviour
 
 
 
-                    instructionsPistolero.SetActive(false);
-                    instructionsPistoleroInstr.SetActive(false);
-                    instructionsPistoleroLore.SetActive(false);
+             instructionsPistolero.SetActive(false);
+             instructionsPistoleroInstr.SetActive(false);
+         instructionsPistoleroLore.SetActive(false);
 
 
-                    instructionsCocinitas.SetActive(false);
-                    instructionsCocinitasInstr.SetActive(false);
-                    instructionsCocinitasLore.SetActive(false);
+      instructionsCocinitas.SetActive(false);
+          instructionsCocinitasInstr.SetActive(false);
+      instructionsCocinitasLore.SetActive(false);
 
 
 
-                    instructionsPlataformas.SetActive(false);
-                    instructionsPlataformasInstr.SetActive(false);
-                    instructionsPlataformasLore.SetActive(false);
+        instructionsPlataformas.SetActive(false);
+        instructionsPlataformasInstr.SetActive(false);
+       instructionsPlataformasLore.SetActive(false);
+
+        instructionsLaberinto.SetActive(false);
+        instructionsLaberintoInstr.SetActive(false);
+        instructionsLaberintoLore.SetActive(false);
 
 
-                    instructions.SetActive(false);
+
+        instructions.SetActive(false);
 
 
 
