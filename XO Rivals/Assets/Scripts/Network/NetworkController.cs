@@ -105,7 +105,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     private IEnumerator JoinRoom()
     {
         yield return new WaitForSeconds(1);
-        
+
+        _joinType = JoinType.RANDOM_ROON;
         PhotonNetwork.JoinRandomRoom();
     }
 
@@ -117,6 +118,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(1);
 
+        _joinType = JoinType.SPECIFIC_ROOM;
         PhotonNetwork.JoinRoom(_nameRoom);
     }
 
