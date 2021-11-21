@@ -28,6 +28,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// ¿Se está creando una partida?
     /// </summary>
     private bool _creatingRoom = false;
+    /// <summary>
+    /// Nombre de la sala específica
+    /// </summary>
+    private string _nameRoom = "";
 
     #endregion
     
@@ -75,7 +79,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <param name="name">ID de la sala</param>
     public void ConnectToSpecificRoom(string name)
     {
-        StartCoroutine(JoinSpecificRoom(name));
+        _nameRoom = name;
+        StartCoroutine(JoinSpecificRoom());
     }
 
     /// <summary>
@@ -93,11 +98,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// Corutina para tratar de unirse a una sala específica
     /// </summary>
     /// <returns></returns>
-    private IEnumerator JoinSpecificRoom(string name)
+    private IEnumerator JoinSpecificRoom()
     {
         yield return new WaitForSeconds(1);
 
-        PhotonNetwork.JoinRoom(name);
+        PhotonNetwork.JoinRoom(_nameRoom);
     }
 
     /// <summary>
@@ -270,6 +275,20 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 Debug.Log("Error " + returnCode + ": " + message);
                 break;
         }
+    }
+
+    /// <summary>
+    /// Método ejecutado cuando falla el acceso a la sala específica
+    /// </summary>
+    /// <param name="returnCode">Código de error</param>
+    /// <param name="message">Mensaje de error</param>
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        base.OnJoinRoomFailed(returnCode, message);
+        
+        Debug.Log("Error " + returnCode + ": " + message);
+        
+        StartCoroutine(CreateMatchRoom(_nameRoom));
     }
 
     /// <summary>
