@@ -116,7 +116,7 @@ public class Login : MonoBehaviour
     private void OnAuthentication(string username, string password)
     {
         Debug.Log("Modo: " + Mode);
-        Log.text = "Validando credenciales...";
+        Log.text = "Validating...";
         Authenticator.AuthWithPlayfab(username, password, Mode);
     }
 

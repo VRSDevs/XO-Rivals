@@ -188,7 +188,7 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void OnJoinMatchClick()
     {
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Uniéndote a " + MatchName + " (BETA)";
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joining " + MatchName + " (BETA)";
         CreateGameButton.interactable = false;
         JoinGameButton.interactable = false;
         StartCoroutine(ChangeInteractionAfterJm());
@@ -277,7 +277,7 @@ public class MainMenuController : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Te hubieses unido a la sala";
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joined the match.";
         
         CreateGameButton.interactable = true;
 
