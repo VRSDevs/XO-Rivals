@@ -954,6 +954,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8973622830577669330}
     m_Modifications:
+    - target: {fileID: 6248065804999505555, guid: 3f19306fedaee1544a4769476ff979d2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 798ca7d1ecf48ae4d841c01a0ce1a101, type: 3}
+    - target: {fileID: 6248065804999505556, guid: 3f19306fedaee1544a4769476ff979d2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6248065804999505556, guid: 3f19306fedaee1544a4769476ff979d2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6248065804999505556, guid: 3f19306fedaee1544a4769476ff979d2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6248065804999505556, guid: 3f19306fedaee1544a4769476ff979d2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8973622830577669343}
+    - target: {fileID: 6248065804999505556, guid: 3f19306fedaee1544a4769476ff979d2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6248065804999505556, guid: 3f19306fedaee1544a4769476ff979d2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6248065804999505556, guid: 3f19306fedaee1544a4769476ff979d2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BackToMainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 6248065804999505556, guid: 3f19306fedaee1544a4769476ff979d2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ScreenManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6248065804999505556, guid: 3f19306fedaee1544a4769476ff979d2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6248065804999505557, guid: 3f19306fedaee1544a4769476ff979d2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -7604,6 +7644,7 @@ MonoBehaviour:
   cross: {fileID: 21300000, guid: 64086e9c27835ba41832875641ae00ee, type: 3}
   circleGO: {fileID: 0}
   crossGO: {fileID: 0}
+  actualChip: {fileID: 0}
   SelectedTile: 
   col: 0
   row: 0

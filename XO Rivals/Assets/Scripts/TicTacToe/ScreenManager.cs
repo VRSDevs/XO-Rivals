@@ -126,4 +126,9 @@ public class ScreenManager : MonoBehaviour
             buttonsReference[i].interactable = false;
         }
     }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }
