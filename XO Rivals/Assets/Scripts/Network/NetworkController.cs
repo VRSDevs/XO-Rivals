@@ -85,9 +85,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// </summary>
     public void DisconnectFromRoom()
     {
-        if (FindObjectOfType<GameManager>().Surrendered)
+        if (FindObjectOfType<GameManager>().Surrendered || FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded())
         {
             FindObjectOfType<GameManager>().PlayerMatches.Remove(PhotonNetwork.CurrentRoom.Name);
+            FindObjectOfType<GameManager>().Surrendered = false;
         }
         
         PhotonNetwork.LeaveRoom(true);
@@ -272,10 +273,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnPlayerLeftRoom(otherPlayer);
 
         if (FindObjectOfType<GameManager>().IsPlaying)
-        {
-            FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
-            FindObjectOfType<GameManager>().IsPlaying = false;
-        }
+            StartCoroutine(LeaveInMatch());
     }
 
     #endregion
@@ -341,6 +339,20 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public bool GetCreatingRom()
     {
         return _creatingRoom;
+    }
+
+    private IEnumerator LeaveInMatch()
+    {
+        yield return new WaitUntil(FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded);
+
+        switch (FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].EndReason)
+        {
+            case 0:
+                break;
+            case 1: 
+                FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
+                break;
+        }
     }
 
     /// <summary>
