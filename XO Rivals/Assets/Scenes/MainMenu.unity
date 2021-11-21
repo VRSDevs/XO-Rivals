@@ -5238,6 +5238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 1173130006}
+  sprite0: {fileID: 21300000, guid: 108ec08d8c394cd48b26755965b9406e, type: 3}
   sprite1: {fileID: 21300000, guid: 279105e60c0be8542a8d0354a51da006, type: 3}
   sprite2: {fileID: 21300000, guid: eb256de49592b3a4ea3d73df0d020656, type: 3}
   sprite3: {fileID: 21300000, guid: 97ff30276f2ccc04781b5c11133b42b5, type: 3}
@@ -9290,6 +9291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 129152185}
+  sprite0: {fileID: 21300000, guid: c6535c2c7f94e7445b1295a1c753afda, type: 3}
   sprite1: {fileID: 21300000, guid: daffd8750aeacb04990132e2466f94dd, type: 3}
   sprite2: {fileID: 21300000, guid: e75f5031b54f5cc4cbbdf3218174125e, type: 3}
   sprite3: {fileID: 21300000, guid: f6ca4b105ce3f674190b34f9d4853885, type: 3}
