@@ -28,6 +28,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public TextMeshProUGUI nameTxt;
     [SerializeField] public TextMeshProUGUI level;
     [SerializeField] public TextMeshProUGUI lifesTxt;
+    [SerializeField] public TextMeshProUGUI lifesTxtShop;
     [SerializeField] public TextMeshProUGUI lifesTime;
     [SerializeField] public Slider lvlSlider;
 
@@ -55,7 +56,7 @@ public class MainMenuController : MonoBehaviour
         nameTxt.text = _localPlayer.Name;
         level.text = "Level: " + Math.Truncate(_localPlayer.Level);
         lvlSlider.value = _localPlayer.Level % 1;
-        lifesTxt.text = "Lifes: " + _localPlayer.Lifes;
+        lifesTxt.text = "Lives: " + _localPlayer.Lifes;
 
         if(_localPlayer.Lifes != 5){
             //recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
@@ -90,7 +91,7 @@ public class MainMenuController : MonoBehaviour
 
     private void UpdateLifes(){
 
-        lifesTxt.text = "Lifes: " + _localPlayer.Lifes;
+        lifesTxt.text = "Lives: " + _localPlayer.Lifes;
         if(_localPlayer.Lifes < 5){
             _localPlayer.LostLifeTime = System.DateTime.Now;
             //Upload lifes to server
