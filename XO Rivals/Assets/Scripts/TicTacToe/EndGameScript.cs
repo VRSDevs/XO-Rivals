@@ -22,6 +22,8 @@ public class EndGameScript : MonoBehaviour
         MatchDefeat.SetActive(false);
         MatchDraw.SetActive(false);
         SurrenderVictory.SetActive(false);
+        FindObjectOfType<AudioManager>().Play("VictoriaFinal");
+
     }
 
     public void ShowMatchDefeat()
@@ -30,6 +32,8 @@ public class EndGameScript : MonoBehaviour
         MatchDefeat.SetActive(true);
         MatchDraw.SetActive(false);
         SurrenderVictory.SetActive(false);
+        FindObjectOfType<AudioManager>().Play("DerrotaFinal");
+
     }
     
     public void ShowMatchDraw()
