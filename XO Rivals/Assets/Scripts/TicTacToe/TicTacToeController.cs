@@ -46,6 +46,11 @@ public class TicTacToeController : MonoBehaviour
     {
         FindObjectOfType<AudioManager>().Play("Chip");
     }
+    
+    public void SelectButton()
+    { 
+        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
+    }
 
     /// <summary>
     /// Método para abandonar la partida
