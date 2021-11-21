@@ -259,20 +259,31 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
 
         FindObjectOfType<PlayerInfo>().MatchId = PhotonNetwork.LocalPlayer.ActorNumber;
-        
-        UpdateCreatingStatus();
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount < MAX_PLAYERS_INROOM)
+        switch (_joinType)
         {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Waiting for players (" + 
-                PhotonNetwork.CurrentRoom.Players.Count + "/" + MAX_PLAYERS_INROOM + ")...";
-        }
-        else
-        {
-            FindObjectOfType<GameManager>().Matchmaking = false;
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Player found! Starting match...";
-            FindObjectOfType<GameManager>().SetupMatch("X");
-            StartCoroutine(StartMatch());
+            case JoinType.RANDOM_ROON:
+                
+                UpdateCreatingStatus();
+
+                if (PhotonNetwork.CurrentRoom.PlayerCount < MAX_PLAYERS_INROOM)
+                {
+                    GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Waiting for players (" + 
+                        PhotonNetwork.CurrentRoom.Players.Count + "/" + MAX_PLAYERS_INROOM + ")...";
+                }
+                else
+                {
+                    FindObjectOfType<GameManager>().Matchmaking = false;
+                    GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Player found! Starting match...";
+                    FindObjectOfType<GameManager>().SetupMatch("X");
+                    StartCoroutine(StartMatch());
+                }
+                
+                break;
+            case JoinType.SPECIFIC_ROOM:
+                FindObjectOfType<GameManager>().IsPlaying = true;
+                SceneManager.LoadScene("TicTacToe_Server");
+                break;
         }
     }
 
