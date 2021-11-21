@@ -129,6 +129,7 @@ public class NetworkCommunications : MonoBehaviourPun
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
 
                 FindObjectOfType<ButtonsScript>().startGame();
+                FindObjectOfType<ButtonsScript>().updateIconTurn(true);
                 FindObjectOfType<ButtonsScript>().colocarFichas();
                 FindObjectOfType<ButtonsScript>().CheckVictory();
 
@@ -146,6 +147,7 @@ public class NetworkCommunications : MonoBehaviourPun
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
 
                 FindObjectOfType<ButtonsScript>().startGame();
+                FindObjectOfType<ButtonsScript>().updateIconTurn(true);
 
                 break;
         }

@@ -25,6 +25,8 @@ public class ButtonsScript : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameX;
 
     public List<Transform> botonesCuadricula;
+    
+    public string TurnoPlayer;
 
     //Screen manager
     private ScreenManager screenManager;
@@ -76,11 +78,25 @@ public class ButtonsScript : MonoBehaviour
         //Initialize ScreenManager
         screenManager = FindObjectOfType<ScreenManager>();
     }
-    public void updateIconTurn()
+    public void updateIconTurn(bool change)
     {
+        if (change)
+        {
+            if (localPlayer.Name == thisMatch.PlayerXName)
+            {
+             
+                TurnoPlayer = thisMatch.PlayerXName;
+
+            }
+            else
+            {
+                
+                TurnoPlayer = thisMatch.PlayerOName;
+            }
+        }
 
         //Activate player turn tile
-        if (thisMatch.WhosTurn == thisMatch.PlayerOName)
+        if (TurnoPlayer == thisMatch.PlayerOName)
         {
             circleTurn.SetActive(true);
             crossTurn.SetActive(false);
@@ -104,13 +120,14 @@ public class ButtonsScript : MonoBehaviour
         + thisMatch.FilledPositions[1,0] + " " + thisMatch.FilledPositions[1,1] + " " + thisMatch.FilledPositions[1,2] + "\n" 
         + thisMatch.FilledPositions[2,0] + " " + thisMatch.FilledPositions[2,1] + " " + thisMatch.FilledPositions[2,2]);
         Debug.Log("Minigame chosen: " + thisMatch.MiniGameChosen);
-        updateIconTurn();
+
 
         //Set name to each player
         nameO.text = thisMatch.PlayerOName;
         nameX.text = thisMatch.PlayerXName;
 
         startGame();
+        updateIconTurn(false);
 
         colocarFichas();
 
@@ -158,6 +175,18 @@ public class ButtonsScript : MonoBehaviour
             }//Fin win
 
             Debug.Log("SE HACE MINIGAME SELECTION");
+            if (localPlayer.Name == thisMatch.PlayerXName)
+            {
+                TurnoPlayer = thisMatch.PlayerOName;
+              
+
+            }
+            else
+            {
+                TurnoPlayer = thisMatch.PlayerXName;
+                
+
+            }
             screenManager.MinigameSelectionActivation();
         }
         CheckVictory();
@@ -175,12 +204,35 @@ public class ButtonsScript : MonoBehaviour
             if (thisMatch.TurnMoment == 0)
             {
                 screenManager.EnableButtons();
+                if (localPlayer.Name == thisMatch.PlayerXName)
+                {
+                    TurnoPlayer = thisMatch.PlayerXName;
+                   
+                }
+                else
+                {
+                    TurnoPlayer = thisMatch.PlayerOName;
+                   
+                }
             }
       
         }else{
             //Disable interaction with tictac cause its not your turn
             screenManager.DisableButtons();
+            if (localPlayer.Name == thisMatch.PlayerXName)
+            {
+              
+                TurnoPlayer = thisMatch.PlayerOName;
+
+            }
+            else
+            {
+          
+                TurnoPlayer = thisMatch.PlayerXName;
+            }
             
+
+
         }
     }
 
