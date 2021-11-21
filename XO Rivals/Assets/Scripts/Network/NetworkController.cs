@@ -199,7 +199,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         
         UpdateCreatingStatus();
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount < 2)
+        if (PhotonNetwork.CurrentRoom.PlayerCount < MAX_PLAYERS_INROOM)
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Buscando jugadores...";
         }
