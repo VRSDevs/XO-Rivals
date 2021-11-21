@@ -334,7 +334,6 @@ public class MainMenuController : MonoBehaviour
 
         if (mode.Equals("cancel"))
         {
-            JoinGameButton.interactable = true;
             ChangeMatchListInteractions(true);
             BackButton.interactable = true;
         }
