@@ -69,29 +69,9 @@ public class ScreenManager : MonoBehaviour
     public void MinigameSelectionActivation(){
         //ticTacScreen.SetActive(false);
         //Hide chips
-        //SE COLOCAN LAS FICHAS EXISTENTES
-        for (int i = 0; i < 9; i++)
-        {
-
-            if (buttonsScript.thisMatch.FilledPositions[i % 3, i / 3] == 0)//Circle
-            {
-                GameObject actual;
-                actual = Instantiate(buttonsScript.circleGO, buttonsScript.botonesCuadricula[i].position, Quaternion.identity);
-                actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
-                actual.SetActive(true);
-            }
-
-            if (buttonsScript.thisMatch.FilledPositions[i % 3, i / 3] == 1)//Cross
-            {
-                GameObject actual;
-                actual = Instantiate(buttonsScript.crossGO, buttonsScript.botonesCuadricula[i].position, Quaternion.identity);
-                actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
-                actual.SetActive(true);
-            }
-
+        for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
+            buttonsScript.thisMatch.Chips[i].SetActive(false);
         }
-
-
         miniGameChoosing.SetActive(true);
     }    
 
