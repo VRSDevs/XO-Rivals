@@ -101,7 +101,6 @@ public class MainMenuController : MonoBehaviour
     #region UpdateMethods
 
     private void IncreaseLifes(){
-
         _localPlayer.Lives++;
         lifesTxt.text = "Lives: " + _localPlayer.Lives;
         lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
@@ -141,7 +140,6 @@ public class MainMenuController : MonoBehaviour
     }
 
     private void ReduceLifes(){
-
         _localPlayer.Lives--;
         lifesTxt.text = "Lives: " + _localPlayer.Lives;
         lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
@@ -226,6 +224,13 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void OnCreateMatchClick()
     {
+        if (_localPlayer.Lives == 0)
+        {
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Can´t do matchmaking. You don´t" +
+                " have enough lives!";
+            return;
+        }
+        
         _gameManager.Matchmaking = !_gameManager.Matchmaking;
         
         CreateGameButton.onClick.RemoveAllListeners();
