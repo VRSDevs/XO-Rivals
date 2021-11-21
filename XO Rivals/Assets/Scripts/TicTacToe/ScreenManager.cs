@@ -69,9 +69,9 @@ public class ScreenManager : MonoBehaviour
     public void MinigameSelectionActivation(){
         //ticTacScreen.SetActive(false);
         //Hide chips
-        for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
-            buttonsScript.thisMatch.Chips[i].SetActive(false);
-        }
+        //for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
+        //    buttonsScript.ChipsList[i].SetActive(false);
+        //}
         miniGameChoosing.SetActive(true);
     }    
 
@@ -83,10 +83,10 @@ public class ScreenManager : MonoBehaviour
         //Update turn data and send it to opponent
         UpdateTurn();
 
-        //Unhide chips
-        for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
-            buttonsScript.thisMatch.Chips[i].SetActive(true);
-        }
+        ////Unhide chips
+        //for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
+        //    buttonsScript.thisMatch.Chips[i].SetActive(true);
+        //}
         //Disable interaction with tictac
         DisableButtons();
     }

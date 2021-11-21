@@ -41,6 +41,8 @@ public class ButtonsScript : MonoBehaviour
     //Local player
     public PlayerInfo localPlayer;
 
+    public List<GameObject> ChipsList;
+
     #endregion
 
     #region UnityCB
@@ -94,15 +96,15 @@ public class ButtonsScript : MonoBehaviour
                 actual.SetActive(true);
             }
 
-        if (thisMatch.FilledPositions[i % 3, i / 3] == 1)//Cross
-            {
-            GameObject actual;
-            actual = Instantiate(crossGO, botonesCuadricula[i].position, Quaternion.identity);
-            actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
-            actual.SetActive(true);
-        }
+            if (thisMatch.FilledPositions[i % 3, i / 3] == 1)//Cross
+                {
+                GameObject actual;
+                actual = Instantiate(crossGO, botonesCuadricula[i].position, Quaternion.identity);
+                actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+                actual.SetActive(true);
+            }
 
-    }
+        }
 
 
 
@@ -131,7 +133,7 @@ public class ButtonsScript : MonoBehaviour
                     actual.SetActive(true);
 
                     //Add chip to list
-                    thisMatch.Chips.Add(actual);
+                    ChipsList.Add(actual);
                     //Add one to filled count
                     thisMatch.NumFilled++;
                 }
@@ -146,7 +148,7 @@ public class ButtonsScript : MonoBehaviour
                     actual.SetActive(true);
 
                     //Add chip to list
-                    thisMatch.Chips.Add(actual);
+                    ChipsList.Add(actual);
                     //Add one to filled count
                     thisMatch.NumFilled++;
                 }

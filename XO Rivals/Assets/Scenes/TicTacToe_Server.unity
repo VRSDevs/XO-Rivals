@@ -462,7 +462,7 @@ RectTransform:
   m_GameObject: {fileID: 182991351}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 110051110}
   - {fileID: 479380570}
@@ -473,12 +473,12 @@ RectTransform:
   - {fileID: 2098631759}
   - {fileID: 793464991}
   - {fileID: 314824310}
-  m_Father: {fileID: 8973622830577669330}
-  m_RootOrder: 10
+  m_Father: {fileID: 1961071661}
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 640, y: 360}
+  m_AnchoredPosition: {x: 640, y: 359.99997}
   m_SizeDelta: {x: 1280, y: 720}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &251228167
@@ -3263,6 +3263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb9b31da1d8211d46b1e584d8da88f7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Tic_Tac_toe_Music: {fileID: 0}
   PlayerCounter: {fileID: 466295767}
 --- !u!4 &970048714
 Transform:
@@ -6664,7 +6665,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1961071661
 RectTransform:
@@ -6691,6 +6692,7 @@ RectTransform:
   - {fileID: 932491110}
   - {fileID: 777539891}
   - {fileID: 1579495257}
+  - {fileID: 182991355}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7257,7 +7259,6 @@ RectTransform:
   - {fileID: 1645783952}
   - {fileID: 466295769}
   - {fileID: 1972096484}
-  - {fileID: 182991355}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7405,6 +7406,7 @@ MonoBehaviour:
   miniWin: 0
   gameState: {fileID: 0}
   localPlayer: {fileID: 0}
+  ChipsList: []
 --- !u!224 &8973622830952278643
 RectTransform:
   m_ObjectHideFlags: 0
