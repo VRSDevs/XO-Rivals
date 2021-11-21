@@ -8,7 +8,9 @@ using UnityEngine.SceneManagement;
 public class TicTacToeController : MonoBehaviour
 {
     private GameManager _gameManager;
-
+    
+    public AudioClip Tic_Tac_toe_Music;
+    
     [SerializeField] public TMP_Text PlayerCounter;
 
     #region UnityCB
@@ -16,6 +18,10 @@ public class TicTacToeController : MonoBehaviour
     void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
+        FindObjectOfType<AudioManager>().StopAllSongs();
+
+        FindObjectOfType<AudioManager>().ChangeMusic(Tic_Tac_toe_Music,"Main_menu");
+
     }
     
     void FixedUpdate()

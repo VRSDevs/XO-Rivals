@@ -14,6 +14,10 @@ public class AnimationsController : MonoBehaviour
     private GameObject iaO;
     [SerializeField]
     private GameObject iaX;
+    [SerializeField]
+    private GameObject bangIA;
+    [SerializeField]
+    private GameObject bangPl;
 
     // Animators
     [SerializeField]
@@ -64,6 +68,7 @@ public class AnimationsController : MonoBehaviour
         {
             AnimationIA0();
             AnimationIAX();
+            bangIA.SetActive(true);
 
         } 
         // Activar animación jugador
@@ -71,6 +76,7 @@ public class AnimationsController : MonoBehaviour
         {
             AnimationPlayer0();
             AnimationPlayerX();
+            bangPl.SetActive(true);
         }
         
     }

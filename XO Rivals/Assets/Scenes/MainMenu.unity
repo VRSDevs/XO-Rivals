@@ -7781,9 +7781,10 @@ MonoBehaviour:
   nameTxt: {fileID: 553947641}
   level: {fileID: 523620166}
   lifesTxt: {fileID: 2367371}
-  lifesTxtShop: {fileID: 0}
+  lifesTxtShop: {fileID: 2012353256}
   lifesTime: {fileID: 276693855}
   lvlSlider: {fileID: 1711821105}
+  musica: {fileID: 8300000, guid: 0b00eb9a3af602847b21be56fc5e2907, type: 3}
 --- !u!4 &1544971430
 Transform:
   m_ObjectHideFlags: 0

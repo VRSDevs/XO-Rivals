@@ -202,7 +202,7 @@ public class Login : MonoBehaviour
 
                         //Get moment of life lost(if exists)
                         if(result.Data.ContainsKey("Life Lost") && result.Data["Life Lost"].Value != "" && result.Data["Life Lost"].Value != null){
-                            playerInfo.LostLifeTime = DateTime.ParseExact(result.Data["Life Lost"].Value, "dd.MM.yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                            playerInfo.LostLifeTime = DateTime.ParseExact(result.Data["Life Lost"].Value, "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                             Debug.Log("Successfully got player life lost moment");
                         }  
                         playerInfo.LostLifeTime = System.DateTime.Now;               
@@ -286,6 +286,7 @@ public class Login : MonoBehaviour
     /// <param name="mode">Código del modo</param>
     public void UpdateLoginMode(int mode)
     {
+        FindObjectOfType<AudioManager>().Play("SelecctionButton");
 
         switch (mode)
         {

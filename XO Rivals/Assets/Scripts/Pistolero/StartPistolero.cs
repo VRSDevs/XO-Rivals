@@ -16,7 +16,11 @@ public class StartPistolero : MonoBehaviour
     {
  
         StartCoroutine("Esperar"); //esperamos 3 segundos para que el jugador lea el texto
-        FindObjectOfType<AudioManager>().ChangeMusic(GunmanMusic,"Main_menu");
+
+        FindObjectOfType<AudioManager>().StopAllSongs();
+
+
+        FindObjectOfType<AudioManager>().ChangeMusic(GunmanMusic,"Tic-Tac-Toe");
         
     }
 
@@ -31,7 +35,7 @@ public class StartPistolero : MonoBehaviour
     IEnumerator Esperar()
     {
         yield return new WaitForSeconds(3);
-        text.text = "The closer you release \n the higher chances to win \n good luck...";//cambiamos el texto explicativo despues de 3 segundos
+        //text.text = "The closer you release \n the higher chances to win \n good luck...";//cambiamos el texto explicativo despues de 3 segundos
         StartCoroutine("Esperar2"); //volvemos a esperar 3 segundos para que el jugador lea el texto
     }
 
@@ -39,7 +43,7 @@ public class StartPistolero : MonoBehaviour
     IEnumerator Esperar2()
     {
         yield return new WaitForSeconds(3);
-        text.text = "Press the button to start\n(Hold it)";//cambiamos el texto explicativo despues de 3 segundos
+        //text.text = "Press the button to start\n(Hold it)";//cambiamos el texto explicativo despues de 3 segundos
         boton.gameObject.SetActive(true);//Aparece elboton
     }
 
