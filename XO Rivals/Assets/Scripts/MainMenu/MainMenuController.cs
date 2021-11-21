@@ -45,7 +45,6 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public TextMeshProUGUI lifesTxt;
     [SerializeField] public TextMeshProUGUI lifesTxtShop;
     [SerializeField] public TextMeshProUGUI lifesTime;
-    [SerializeField] public TextMeshProUGUI lvlPrcntg;
     [SerializeField] public Slider lvlSlider;
     
     ////////////////// CLASES //////////////////
@@ -73,26 +72,25 @@ public class MainMenuController : MonoBehaviour
         JoinGameButton.interactable = false;
 
         nameTxt.text = _localPlayer.Name;
-        level.text = "Levesl: " + Math.Truncate(_localPlayer.Level);
+        level.text = "Level: " + Math.Truncate(_localPlayer.Level);
         lvlSlider.value = _localPlayer.Level % 1;
-        lvlPrcntg.text = (int)((_localPlayer.Level % 1) * 100) + "/100";
-        lifesTxt.text = "Lives: " + _localPlayer.Lives;
+        lifesTxt.text = "Lives: " + _localPlayer.Lifes;
         
         _matchToJoin = new MatchInfo();
 
-        if (_localPlayer.Lives != 5){
-            recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
-            //recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(15);
-            CheckLivesTime();
+        if (_localPlayer.Lifes != 5){
+            //recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
+            recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(15);
+            CheckLifesTime();
         }else
             lifesTime.text = "-:--";
     }
 
     private void Update(){
-        if(_localPlayer.Lives != 5){
+        if(_localPlayer.Lifes != 5){
             timePassed += Time.deltaTime;
             if(timePassed >= 1.0f){ 
-                CheckLivesTime();
+                CheckLifesTime();
                 timePassed = 0f;
             }
         }
@@ -102,16 +100,17 @@ public class MainMenuController : MonoBehaviour
 
     #region UpdateMethods
 
-    private void IncreaseLives(){
-        _localPlayer.Lives++;
-        lifesTxt.text = "Lives: " + _localPlayer.Lives;
-        lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
-        if (_localPlayer.Lives < 5){
+    private void IncreaseLifes(){
+
+        _localPlayer.Lifes++;
+        lifesTxt.text = "Lives: " + _localPlayer.Lifes;
+        lifesTxtShop.text = "Lives: " + _localPlayer.Lifes;
+        if (_localPlayer.Lifes < 5){
             _localPlayer.LostLifeTime = System.DateTime.Now;
             //Upload lifes to server
             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
                     Data = new Dictionary<string, string>() {
-                        {"Lifes", _localPlayer.Lives.ToString()},
+                        {"Lifes", _localPlayer.Lifes.ToString()},
                         {"Life Lost", _localPlayer.LostLifeTime.ToString()}}
                 },
                 result => Debug.Log("Successfully updated user lifes"),
@@ -120,15 +119,15 @@ public class MainMenuController : MonoBehaviour
                 }
             );
             //Restart timer
-            recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
-            //recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(10);
+            //recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
+            recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(10);
             recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
             lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;            
         }else{
             //Upload lifes to server
             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
                     Data = new Dictionary<string, string>() {
-                        {"Lifes", _localPlayer.Lives.ToString()},
+                        {"Lifes", _localPlayer.Lifes.ToString()},
                         {"Life Lost", ""}}
                 },
                 result => Debug.Log("Successfully updated user lifes"),
@@ -141,17 +140,18 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
-    public void ReduceLives(){
-        _localPlayer.Lives--;
-        lifesTxt.text = "Lives: " + _localPlayer.Lives;
-        lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
+    private void ReduceLifes(){
+
+        _localPlayer.Lifes--;
+        lifesTxt.text = "Lives: " + _localPlayer.Lifes;
+        lifesTxtShop.text = "Lives: " + _localPlayer.Lifes;
         //If it has 4 lifes, update timer
-        if(_localPlayer.Lives == 4){
+        if(_localPlayer.Lifes == 4){
             _localPlayer.LostLifeTime = System.DateTime.Now;
             //Upload lifes to server
             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
                     Data = new Dictionary<string, string>() {
-                        {"Lifes", _localPlayer.Lives.ToString()},
+                        {"Lifes", _localPlayer.Lifes.ToString()},
                         {"Life Lost", _localPlayer.LostLifeTime.ToString()}}
                 },
                 result => Debug.Log("Successfully reduced user lifes"),
@@ -160,15 +160,15 @@ public class MainMenuController : MonoBehaviour
                 }
             );
             //Restart timer
-            recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
-            //recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(10);
+            //recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
+            recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(10);
             recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
             lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;            
         }else{
             //Upload lifes to server
             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
                     Data = new Dictionary<string, string>() {
-                        {"Lifes", _localPlayer.Lives.ToString()}}
+                        {"Lifes", _localPlayer.Lifes.ToString()}}
                 },
                 result => Debug.Log("Successfully reduced user lifes"),
                 error => {
@@ -226,13 +226,6 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void OnCreateMatchClick()
     {
-        if (_localPlayer.Lives == 0)
-        {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Can´t do matchmaking. You don´t" +
-                " have enough lives!";
-            return;
-        }
-        
         _gameManager.Matchmaking = !_gameManager.Matchmaking;
         
         CreateGameButton.onClick.RemoveAllListeners();
@@ -245,6 +238,8 @@ public class MainMenuController : MonoBehaviour
         if (_gameManager.Matchmaking)
         {
             StartCoroutine(ChangeInteractionAfterCm("connect"));
+            //Lose life and update server
+            ReduceLifes();
             ConnectRandomMatch();
             CreateMatchImage.sprite = CancelMatchmakingSprite;
         }
@@ -379,13 +374,31 @@ public class MainMenuController : MonoBehaviour
 
     #region OtherMethods
 
-    private void CheckLivesTime(){
+    public void SelectButton1()
+    { 
+        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
+    }
+    public void SelectButton2()
+    { 
+        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
+    }
+    public void SelectButton3()
+    { 
+        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
+    }
+    public void SelectButton4()
+    { 
+        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
+    }
+    
+    
+    private void CheckLifesTime(){
 
         recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
         //Check remainingTime
         if(recoverRemainingTime < TimeSpan.Zero){
             //Recover one life
-            IncreaseLives();
+            IncreaseLifes();
         }else{
             lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;  
         }
