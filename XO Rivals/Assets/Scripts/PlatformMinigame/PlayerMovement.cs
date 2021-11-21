@@ -127,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
             isDead = true;
             anim.SetBool("isDead", true);
             Invoke("DefeatCanvas", 3f);
-            sounds.playDeathSound();
+            FindObjectOfType<AudioManager>().Play("Death");
         } 
         if(collision.gameObject.tag == "FinishLine")
         {
@@ -152,14 +152,14 @@ public class PlayerMovement : MonoBehaviour
     {
         defeat.SetActive(true);
         Invoke("Defeat", 3f);
-        sounds.playDefeatSound();
+        FindObjectOfType<AudioManager>().Play("Defeat");
     }
 
     public void VictoryCanvas()
     {
         victory.SetActive(true);
         Invoke("Victory", 3f);
-        sounds.playVictorySound();
+        FindObjectOfType<AudioManager>().Play("Victory");
     }
 
     public void Defeat()

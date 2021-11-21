@@ -3545,3 +3545,10 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
+  - clip: {fileID: 8300000, guid: 9dbd6873ec606f443933f82d91a9d744, type: 3}
+    source: {fileID: 0}
+    name: Jump
+    type: 1
+    volume: 1
+    pitch: 1
+    loop: 0

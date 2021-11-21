@@ -103,6 +103,11 @@ public class PlatformMinigameController : MonoBehaviour
         FindObjectOfType<AudioManager>().StopAllSongs();
         FindObjectOfType<AudioManager>().ChangeMusic(PlatformMusic,"Tic-Tac-Toe");
     }
+    
+    public void playJumpSound()
+    {
+        FindObjectOfType<AudioManager>().Play("Jump");
+    }
 
     // Update is called once per frame
     void Update()
