@@ -15,6 +15,24 @@ public class ScreenManager : MonoBehaviour
     //Control of miniGameChoosing
     [SerializeField] private GameObject miniGameChoosing;
     [SerializeField] private GameObject ticTacScreen;
+    [SerializeField] private GameObject instructions;
+
+    [SerializeField] private GameObject instructionsCocinitas;
+    [SerializeField] private GameObject instructionsCocinitasLore;
+    [SerializeField] private GameObject instructionsCocinitasInstr;
+
+    [SerializeField] private GameObject instructionsLaberinto;
+    [SerializeField] private GameObject instructionsLaberintoLore;
+    [SerializeField] private GameObject instructionsLaberintoInstr;
+
+    [SerializeField] private GameObject instructionsPistolero;
+    [SerializeField] private GameObject instructionsPistoleroLore;
+    [SerializeField] private GameObject instructionsPistoleroInstr;
+
+    [SerializeField] private GameObject instructionsPlataformas;
+    [SerializeField] private GameObject instructionsPlataformasLore;
+    [SerializeField] private GameObject instructionsPlataformasInstr;
+
     [SerializeField] private ButtonsScript buttonsScript;
     public static int minigame = -1;
 
@@ -131,4 +149,139 @@ public class ScreenManager : MonoBehaviour
             buttonsReference[i].interactable = false;
         }
     }
+
+
+    public void showInstruction(int i)
+    {
+        instructions.SetActive(true);
+
+        switch (i)
+        {
+            case 0://Pistolero
+                instructionsPistolero.SetActive(true);
+                instructionsPistoleroInstr.SetActive(true);
+                break;
+
+            case 1://Comida
+                instructionsCocinitas.SetActive(true);
+                instructionsCocinitasInstr.SetActive(true);
+
+                break;
+
+            case 2://Platform
+                instructionsPlataformas.SetActive(true);
+                instructionsPlataformasInstr.SetActive(true);
+
+                break;
+            case 3://Laberinto
+                instructionsLaberinto.SetActive(true);
+                instructionsLaberintoInstr.SetActive(true);
+                break;
+        }
+
+
+
+    }
+
+    public void unshowInstructions()
+    {
+
+
+
+
+                    instructionsPistolero.SetActive(false);
+                    instructionsPistoleroInstr.SetActive(false);
+                    instructionsPistoleroLore.SetActive(false);
+
+
+                    instructionsCocinitas.SetActive(false);
+                    instructionsCocinitasInstr.SetActive(false);
+                    instructionsCocinitasLore.SetActive(false);
+
+
+
+                    instructionsPlataformas.SetActive(false);
+                    instructionsPlataformasInstr.SetActive(false);
+                    instructionsPlataformasLore.SetActive(false);
+
+
+                    instructions.SetActive(false);
+
+
+
+    }
+
+
+    public void goInstrLore()
+    {
+        int i = buttonsScript.thisMatch.MiniGameChosen;
+
+        switch (i)
+        {
+            case 0://Pistolero
+
+                instructionsPistoleroInstr.SetActive(false);
+                instructionsPistoleroLore.SetActive(true);
+                break;
+
+            case 1://Comida
+
+                instructionsCocinitasInstr.SetActive(false);
+                instructionsCocinitasLore.SetActive(true);
+
+                break;
+
+            case 2://Platform
+
+                instructionsPlataformasInstr.SetActive(false);
+                instructionsPlataformasLore.SetActive(true);
+
+                break;
+            case 3://Laberinto
+
+                instructionsLaberintoInstr.SetActive(false);
+                instructionsLaberintoLore.SetActive(true);
+
+                break;
+        }
+
+
+
+    }
+    public void goInstrtext()
+    {
+        int i = buttonsScript.thisMatch.MiniGameChosen;
+
+        switch (i)
+        {
+            case 0://Pistolero
+
+                instructionsPistoleroInstr.SetActive(true);
+                instructionsPistoleroLore.SetActive(false);
+                break;
+
+            case 1://Comida
+
+                instructionsCocinitasInstr.SetActive(true);
+                instructionsCocinitasLore.SetActive(false);
+
+                break;
+
+            case 2://Platform
+
+                instructionsPlataformasInstr.SetActive(true);
+                instructionsPlataformasLore.SetActive(false);
+
+                break;
+            case 3://Laberinto
+
+                instructionsLaberintoInstr.SetActive(true);
+                instructionsLaberintoLore.SetActive(false);
+
+                break;
+        }
+
+    }
+
+
 }

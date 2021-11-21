@@ -85,7 +85,7 @@ public class ButtonsScript : MonoBehaviour
 
         colocarFichas();
 
-        CheckVictory();
+        //CheckVictory();
 
         //SI VIENES DE UN MINIJUEGO SE HACE START Y SE ELIGE MINIJUEGO
         if (thisMatch.TurnMoment == 2)
@@ -215,13 +215,16 @@ public class ButtonsScript : MonoBehaviour
             thisMatch.TurnMoment = 1;
 
             //Go to minigame
-            PlayMinigame();
+            //PlayMinigame();
+
+            screenManager.showInstruction(thisMatch.MiniGameChosen);
+
         }else{
             Debug.Log("Tile not empty");
         }
     }
 
-    private void PlayMinigame(){
+    public void PlayMinigame(){
 
         //If turnMoment equals 1, have to play minigame, else, you have already played it
         if(thisMatch.TurnMoment == 1){
@@ -242,6 +245,10 @@ public class ButtonsScript : MonoBehaviour
                     SceneManager.LoadScene("PlatformMinigame");
                     //SceneManager.LoadScene("PlatformMinigame", LoadSceneMode.Additive);
                 break;
+                case 3:
+                    SceneManager.LoadScene("Fantasmas3D");
+                    //SceneManager.LoadScene("PlatformMinigame", LoadSceneMode.Additive);
+                    break;
             }
 
 
