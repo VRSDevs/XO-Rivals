@@ -4337,8 +4337,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9530a090b7e5f864e85030cfc4c9f744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumenSFX: 0
-  volumenMusica: 0
+  volumenSFX: 1
+  volumenMusica: 1
   CookingMusic: {fileID: 0}
   GunmanMusic: {fileID: 0}
   PlatformMusic: {fileID: 0}
