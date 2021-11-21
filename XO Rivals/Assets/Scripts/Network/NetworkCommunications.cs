@@ -162,6 +162,7 @@ public class NetworkCommunications : MonoBehaviourPun
         switch (obj[0] as string)
         {
             case "WN":
+                break;
             case "DF":
                 if (obj[1].Equals(GameObject.Find("PlayerObject").GetComponent<PlayerInfo>().Name))
                 {
@@ -169,17 +170,18 @@ public class NetworkCommunications : MonoBehaviourPun
                 }
                 else
                 {
-                    FindObjectOfType<EndGameScript>().ShowMatchDefeat();
+                     FindObjectOfType<EndGameScript>().ShowMatchDefeat();
                 }
 
                 break;
             case "DW":
-                FindObjectOfType<EndGameScript>().ShowMatchDraw();
-                
+                    FindObjectOfType<EndGameScript>().ShowMatchDraw();
+
                 break;
             case "SR":
-                FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
+                    FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
                 break;
+
         }
     }
 
