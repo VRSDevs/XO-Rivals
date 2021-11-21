@@ -53,6 +53,10 @@ public class Match
     /// Lista de fichas
     /// </summary>
     public List<GameObject> Chips { get; set; }
+    /// <summary>
+    /// ¿Terminó la partida?
+    /// </summary>
+    public bool Ended;
 
     #endregion
 
@@ -83,13 +87,22 @@ public class Match
         NumFilled = 0;
 
         Chips = new List<GameObject>();
+
+        Ended = false;
     }
     
     #endregion
 
-    #region MyRegion
+    #region Getters
 
-    
+    /// <summary>
+    /// Método para obtener si la partida ha finalizado o no
+    /// </summary>
+    /// <returns></returns>
+    public bool IsEnded()
+    {
+        return Ended;
+    }
 
     #endregion
     
