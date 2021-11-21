@@ -130,7 +130,7 @@ public class ComidaController : MonoBehaviour
         {
             // Aqui se manda a alberto la derrota
             stopGenerador();
-            crono.SetText("You Lost");
+            crono.SetText("0:00");
             panAbajo.SetActive(false);
             queso.SetActive(false);
             carne.SetActive(false);
@@ -277,7 +277,7 @@ public class ComidaController : MonoBehaviour
                     panArriba.SetActive(true);
                     finished = true;
                     win = true;
-                    crono.SetText("You won");
+                    crono.SetText("0:00");
                     stopGenerador();
                     playerORB.constraints = RigidbodyConstraints2D.FreezeAll;
                     player.constraints = RigidbodyConstraints2D.FreezeAll;
