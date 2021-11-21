@@ -362,7 +362,7 @@ public class ButtonsScript : MonoBehaviour
             win = true;
         }
 
-        //win = true;
+
 
         if (win)
         {
@@ -376,13 +376,13 @@ public class ButtonsScript : MonoBehaviour
 
                 if (localPlayer.Name == thisMatch.PlayerOName)
                 {
-
+                    FindObjectOfType<EndGameScript>().ShowMatchVictory();
                     gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                 }
                 else
-                {
+                { 
                     FindObjectOfType<EndGameScript>().ShowMatchDefeat();
-                    gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                    gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                 }
             }
             else
@@ -391,13 +391,13 @@ public class ButtonsScript : MonoBehaviour
 
                 if (localPlayer.Name == thisMatch.PlayerXName)
                 {
-                    FindObjectOfType<EndGameScript>().ShowMatchVictory();
-                    gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                   FindObjectOfType<EndGameScript>().ShowMatchVictory();
+                   gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                 }
                 else
                 {
                     FindObjectOfType<EndGameScript>().ShowMatchDefeat();
-                    gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                    gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                 }
 
 

@@ -163,7 +163,7 @@ public class NetworkCommunications : MonoBehaviourPun
         {
             case "WN":
             case "DF":
-                if (obj[1].Equals(GameObject.Find("PlayerObject").GetComponent<PlayerInfo>().Name))
+                if (obj[1].Equals(GameObject.Find("PlayerObject").GetComponent<PlayerInfo>().Name))//RECIBE QUIEN GANA
                 {
                     FindObjectOfType<EndGameScript>().ShowMatchVictory();
                 }
