@@ -367,7 +367,7 @@ public class ButtonsScript : MonoBehaviour
         if (win)
         {
             Debug.Log("HASA GAANAO");
-                    FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
+           
 
             //Call endgame
             if (thisMatch.FilledPositions[col, row] == 0)
@@ -378,6 +378,7 @@ public class ButtonsScript : MonoBehaviour
                 {
                     FindObjectOfType<EndGameScript>().ShowMatchVictory();
                     gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                    FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
                 }
                 else
                 { 
@@ -392,7 +393,8 @@ public class ButtonsScript : MonoBehaviour
                 if (localPlayer.Name == thisMatch.PlayerXName)
                 {
                    FindObjectOfType<EndGameScript>().ShowMatchVictory();
-                   gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                    FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
+                    gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                 }
                 else
                 {
