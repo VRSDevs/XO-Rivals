@@ -7,6 +7,20 @@ using TMPro;
 
 public class ComidaController : MonoBehaviour
 {
+
+    // Boolean de prueba de cambio personaje
+    public bool playerColor = true;
+
+
+    // Sounds
+    public SFXManagerComida sounds;
+    
+    // Canvas final
+    [SerializeField]
+    private GameObject victory;
+    [SerializeField]
+    private GameObject defeat;
+
     // Player
     [SerializeField]
     private Rigidbody2D player;
@@ -59,6 +73,18 @@ public class ComidaController : MonoBehaviour
 
         generador = FindObjectOfType<Generador>();
 
+        StartCoroutine(DefeatNumerator());
+
+        // Valor a cambiar segun el color de ficha del jugador
+        if (playerColor)
+        {
+            playerO.SetActive(false);
+            playerX.SetActive(true);
+        } else
+        {
+            playerO.SetActive(true);
+            playerX.SetActive(false);
+        }
 
         if (!_gameManager.IsWebGLMobile)
         {
@@ -70,6 +96,7 @@ public class ComidaController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (time >= 0 && !finished)
         {
             time -= Time.deltaTime;
@@ -88,8 +115,8 @@ public class ComidaController : MonoBehaviour
             panArriba.SetActive(false);
             orden = 1;
             player.constraints = RigidbodyConstraints2D.FreezeAll;
-            Invoke("EndSceneLost", 5f);
-            lost = true;
+            lost = true;           
+            
         }
 
         if (win)
@@ -102,15 +129,33 @@ public class ComidaController : MonoBehaviour
         }
     }
 
-    void EndSceneLost()
+    public void DefeatCanvas()
     {
-        PlayerPrefs.SetInt("minigameWin", 0);
-       SceneManager.LoadScene("TicTacToe_Server");
+        defeat.SetActive(true);
+        Invoke("Defeat", 3f);
+        //sounds.playDefeatSound();
     }
 
-    void EndSceneWin()
+    public void VictoryCanvas()
+    {
+        victory.SetActive(true);
+        Invoke("Victory", 3f);
+        sounds.playVictorySound();
+    }
+
+    public void Defeat()
+    {
+        PlayerPrefs.SetInt("minigameWin", 0);
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        //SceneManager.UnloadSceneAsync("MinijuegoComida");
+        SceneManager.LoadScene("TicTacToe_Server");
+    }
+
+    public void Victory()
     {
         PlayerPrefs.SetInt("minigameWin", 1);
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        //SceneManager.UnloadSceneAsync("MinijuegoComida");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 
@@ -137,7 +182,7 @@ public class ComidaController : MonoBehaviour
                     panAbajo.SetActive(true);
                     orden++;
                 }           
-                 else
+                     else
                 {
                     panAbajo.SetActive(false);
                     queso.SetActive(false);
@@ -214,7 +259,7 @@ public class ComidaController : MonoBehaviour
                     stopGenerador();
                     player.constraints = RigidbodyConstraints2D.FreezeAll;
                     // Aqui se manda a alberto la victoria
-                    Invoke("EndSceneWin", 5f);
+                    Invoke("VictoryCanvas", 3f);
 
                 }
                 else
@@ -232,5 +277,17 @@ public class ComidaController : MonoBehaviour
 
 
 
+    }
+
+    IEnumerator DefeatNumerator()
+    {
+        yield return new WaitUntil(ReturnLost);
+
+        DefeatCanvas();
+    } 
+
+    public bool ReturnLost()
+    {
+        return lost;
     }
 }

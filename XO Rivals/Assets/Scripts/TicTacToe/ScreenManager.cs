@@ -19,7 +19,7 @@ public class ScreenManager : MonoBehaviour
     public static int minigame = -1;
 
     //Reference to all butons
-    [SerializeField] private Button[] buttonsReference;
+    [SerializeField] public Button[] buttonsReference;
 
     void Start(){
 
@@ -63,8 +63,6 @@ public class ScreenManager : MonoBehaviour
         screenTxt.text = txt;
         yield return new WaitForSeconds(totalTime);
         screenTxt.enabled = false;
-        buttonsScript.thisMatch.TurnMoment = 4;
-        MinigameSelectionActivation();
     }
 
     public void MinigameSelectionActivation(){
@@ -86,7 +84,7 @@ public class ScreenManager : MonoBehaviour
 
         //Unhide chips
         for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
-            buttonsScript.thisMatch.Chips[i].SetActive(false);
+            buttonsScript.thisMatch.Chips[i].SetActive(true);
         }
         //Disable interaction with tictac
         DisableButtons();
@@ -127,5 +125,10 @@ public class ScreenManager : MonoBehaviour
         for(int i = 0; i < buttonsReference.Length; i++){
             buttonsReference[i].interactable = false;
         }
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }

@@ -3,7 +3,24 @@ guid: 9530a090b7e5f864e85030cfc4c9f744
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - CookingMusic: {instanceID: 0}
+  - GunmanMusic: {instanceID: 0}
+  - PlatformMusic: {instanceID: 0}
+  - Tic_Tac_ToeMusic: {instanceID: 0}
+  - ShopMusic: {instanceID: 0}
+  - SelectionButton1: {instanceID: 0}
+  - SelectionButton2: {instanceID: 0}
+  - SelectionButton3: {instanceID: 0}
+  - SelectionButton4: {instanceID: 0}
+  - DeathSound: {instanceID: 0}
+  - VictorySound: {instanceID: 0}
+  - DefeatSound: {instanceID: 0}
+  - WalkSound: {instanceID: 0}
+  - ReloadSound: {instanceID: 0}
+  - ShotSound: {instanceID: 0}
+  - ChipSound: {instanceID: 0}
+  - CookingSound: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -33,8 +33,10 @@ public class Timer : MonoBehaviour
                 ScriptPlayer.textValue = " Game Over";
                 lost = true;
                 ScriptPlayer.OnDisable();
-                PlayerPrefs.SetInt("minigameWin", 0);
 
+                FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+                PlayerPrefs.SetInt("minigameWin", 0);
+                //SceneManager.UnloadSceneAsync("PlatformMinigame");
                 SceneManager.LoadScene("TicTacToe_Server");
             }
 

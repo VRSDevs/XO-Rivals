@@ -6,22 +6,75 @@ using UnityEngine.UI;
 
 public class MatchScrollerController : MonoBehaviour
 {
-    [SerializeField] public RectTransform MatchPrefab;
+    #region Vars
+
+    /// <summary>
+    /// Referencia al prefab de la partida
+    /// </summary>
+    [SerializeField] public GameObject MatchPrefab;
+    /// <summary>
+    /// Referencia a la vista de scroll
+    /// </summary>
     [SerializeField] public ScrollRect ScrollView;
+    /// <summary>
+    /// Referencia a la vista del contenido
+    /// </summary>
     [SerializeField] public RectTransform ViewContent;
     
+    /// <summary>
+    /// Lista de las vistas a insertar en el scroll
+    /// </summary>
     private List<MatchesView> views = new List<MatchesView>();
 
-    private void Update()
+    /// <summary>
+    /// Número total de partidas
+    /// </summary>
+    private int _totalMatches;
+
+    #endregion
+
+    #region UnityCB
+
+    private void Start()
     {
-        UpdateMatchesList();
+        _totalMatches = 0;
+        
+        GetMatchesList();
+        StartCoroutine(UpdateMatchesList());
     }
 
-    private void UpdateMatchesList()
+    #endregion
+
+    #region Algorithm
+
+    /// <summary>
+    /// Método para obtener la lista de partidas en un comienzo
+    /// </summary>
+    private void GetMatchesList()
     {
-        FetchPlayerMatches(5, OnRecievedMatches);
+        _totalMatches = FindObjectOfType<GameManager>().PlayerMatches.Count;
+        
+        FetchPlayerMatches(OnRecievedMatches);
+    }
+
+    /// <summary>
+    /// Método para obtener la lista de partidas de manera periódica
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator UpdateMatchesList()
+    {
+        yield return new WaitForSeconds(5);
+        
+        _totalMatches = FindObjectOfType<GameManager>().PlayerMatches.Count;
+            
+        FetchPlayerMatches(OnRecievedMatches);
+        StartCoroutine(UpdateMatchesList());
     }
     
+    /// <summary>
+    /// Método ejecutado al recibir
+    /// </summary>
+    /// <param name="list"></param>
     private void OnRecievedMatches(MatchModel[] list)
     {
         foreach (Transform child in ViewContent)
@@ -33,10 +86,13 @@ public class MatchScrollerController : MonoBehaviour
 
         foreach (var matchModel in list)
         {
-            var instance = Instantiate(MatchPrefab.gameObject, ViewContent, false);
+            var instance = Instantiate(MatchPrefab, ViewContent, false);
+            if (_totalMatches < 1) instance.GetComponent<Button>().interactable = false;
+            
             var view = IntializeMatchView(instance, matchModel);
             views.Add(view);
         }
+    
     }
     
     private MatchesView IntializeMatchView(GameObject viewGO, MatchModel model)
@@ -56,18 +112,34 @@ public class MatchScrollerController : MonoBehaviour
         return view;
     }
     
-    private void FetchPlayerMatches(int count, Action<MatchModel[]> onDone)
+    private void FetchPlayerMatches(Action<MatchModel[]> onDone)
     {
-        var matchesList = new MatchModel[count];
-        for (int i = 0; i < matchesList.Length; i++)
+        var matchesList = _totalMatches < 1 ? new MatchModel[1] : new MatchModel[_totalMatches];
+
+        if (_totalMatches < 1)
         {
-            matchesList[i] = new MatchModel
+            matchesList[_totalMatches] = new MatchModel
             {
-                MatchName = "Sala " + i,
-                MatchStatus = "Turno de X"
+                MatchName = "No tienes partidas activas",
+                MatchStatus = ""
             };
         }
-
+        else
+        {
+            int i = 0;
+            foreach (Match match in FindObjectOfType<GameManager>().PlayerMatches.Values)
+            {
+                matchesList[i] = new MatchModel
+                {
+                    MatchName = match.MatchId,
+                    MatchStatus = match.WhosTurn
+                };
+                i++;
+            }
+        }
+        
         onDone(matchesList);
     }
+
+    #endregion
 }

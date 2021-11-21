@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class Match
 {
     #region Vars
 
-    /*
+    
     /// <summary>
     /// ID de la partida
     /// </summary>
     public string MatchId { get; set; }
-    
+    /*
     /// <summary>
     /// ID del dueño de la partida
     /// </summary>
@@ -45,7 +46,11 @@ public class Match
     /// </summary>
     public int NumFilled { get; set; }
     /// <summary>
-    /// Lista de las fichas
+    /// Array del tablero
+    /// </summary>
+    public int ChosenPosition { get; set; }
+    /// <summary>
+    /// Lista de fichas
     /// </summary>
     public List<GameObject> Chips { get; set; }
 
@@ -58,13 +63,13 @@ public class Match
     /// </summary>
     public Match()
     {
-        //MatchId = "";
+        MatchId = PhotonNetwork.CurrentRoom.Name;
         //OwnerId = "";
         PlayerOName = "";
         PlayerXName = "";
         WhosTurn = "";
         TurnMoment = 0;
-        MiniGameChosen = -1;
+        MiniGameChosen = Random.Range(0,2);
 
         FilledPositions = new int[3, 3];
         for (int i = 0; i < FilledPositions.GetLength(0); i++)

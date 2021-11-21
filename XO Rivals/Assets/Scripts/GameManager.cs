@@ -105,6 +105,48 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Getters
+
+    /// <summary>
+    /// Método para obtener si se está creando una partida
+    /// </summary>
+    /// <returns>¿Se está creando la partida?</returns>
+    public bool GetIsCreatingMatch()
+    {
+        return _networkController.GetCreatingRom();
+    }
+
+    #endregion
+    
+    #region Setters
+    
+    /// <summary>
+    /// Método para actualizar el nick del cliente en Photon
+    /// </summary>
+    /// <param name="nick">Nick del cliente</param>
+    public void SetPhotonNick(string nick)
+    {
+        _networkController.SetNickName(nick);
+    }
+    
+    /// <summary>
+    /// Método para actualizar el estado del jugador para empezar la partida
+    /// </summary>
+    public void SetReadyStatus()
+    {
+        _networkController.UpdateReadyStatus();
+    }
+
+    /// <summary>
+    /// Método para actualizar la variable de control de creación de partida
+    /// </summary>
+    public void SetCreatingRoomStatus()
+    {
+        _networkController.UpdateCreatingStatus();
+    }
+
+    #endregion
+
     #region ConnectionMethods
 
     /// <summary>
@@ -114,6 +156,14 @@ public class GameManager : MonoBehaviour
     public bool OnConnectToServer()
     {
         return _networkController.ConnectToServer();
+    }
+
+    /// <summary>
+    /// Método para desconectarse del servidor
+    /// </summary>
+    public void OnDisconnectToServer()
+    {
+        _networkController.DisconnectFromServer();
     }
     
     /// <summary>
@@ -166,27 +216,6 @@ public class GameManager : MonoBehaviour
         }
         
         _networkCommunications.SendPlayerInfoPackage(playerType);
-    }
-
-    #endregion
-
-    #region UpdateMethods
-    
-    /// <summary>
-    /// Método para actualizar el nick del cliente en Photon
-    /// </summary>
-    /// <param name="nick">Nick del cliente</param>
-    public void UpdatePhotonNick(string nick)
-    {
-        _networkController.SetNickName(nick);
-    }
-    
-    /// <summary>
-    /// Método para actualizar el estado del jugador para empezar la partida
-    /// </summary>
-    public void UpdateReadyStatus()
-    {
-        _networkController.UpdateReadyStatus();
     }
 
     #endregion
@@ -291,6 +320,23 @@ public class GameManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    #endregion
+
+    #region OtherMethods
+
+    /// <summary>
+    /// Método para resetear las variables del objeto
+    /// </summary>
+    public void ResetObject()
+    {
+        _networkController = gameObject.AddComponent<NetworkController>();
+        _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
+        
+        PlayerMatches.Clear();
+        Matchmaking = false;
+        IsPlaying = false;
     }
 
     #endregion

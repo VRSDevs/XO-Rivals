@@ -14,13 +14,13 @@ public class ButtonsScript : MonoBehaviour
     [SerializeField] private Sprite cross;
     public GameObject circleGO;
     public GameObject crossGO;
+    public GameObject actualChip;
 
     //Screen manager
     private ScreenManager screenManager;
 
     //Array of positions
     public string SelectedTile;
-    public GameObject actualChip;
 
     //Variables for victory
     public int col, row;
@@ -45,6 +45,17 @@ public class ButtonsScript : MonoBehaviour
     #region UnityCB
 
     private void Awake() {
+
+        gameState = FindObjectOfType<GameManager>();
+        thisMatch = gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name];
+        localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
+        
+        //Initialize ScreenManager
+        screenManager = FindObjectOfType<ScreenManager>();
+    }
+    
+    public void Start(){
+        
         //Create the circle
         circleGO = new GameObject();
         SpriteRenderer circleRenderer = circleGO.AddComponent<SpriteRenderer>();
@@ -57,36 +68,29 @@ public class ButtonsScript : MonoBehaviour
         crossRenderer.sprite = cross;
         crossGO.SetActive(false);
 
-        gameState = FindObjectOfType<GameManager>();
-        thisMatch = gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name];
-        localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
-        
-        //Initialize ScreenManager
-        screenManager = FindObjectOfType<ScreenManager>();
-    }
-    
-    public void Start(){
-        
         Debug.Log("Player O name: " + thisMatch.PlayerOName);
         Debug.Log("Player X name: " + thisMatch.PlayerXName);
         Debug.Log("Turn: " + thisMatch.WhosTurn);
         Debug.Log("Turn moment: " + thisMatch.TurnMoment);
         Debug.Log("Numfilled: " + thisMatch.NumFilled);
-        Debug.Log("Board: ");
-        for(int i = 0; i < 3; i++){
-            Debug.Log("[" + i);
-            for(int j = 0; j < 3; j++){
-                Debug.Log(j + "] = " + thisMatch.FilledPositions[i,j]);
-            }
-        }
+        Debug.Log(thisMatch.FilledPositions[0,0] + " " + thisMatch.FilledPositions[0,1] + " " + thisMatch.FilledPositions[0,2] + "\n" 
+        + thisMatch.FilledPositions[1,0] + " " + thisMatch.FilledPositions[1,1] + " " + thisMatch.FilledPositions[1,2] + "\n" 
+        + thisMatch.FilledPositions[2,0] + " " + thisMatch.FilledPositions[2,1] + " " + thisMatch.FilledPositions[2,2]);
         Debug.Log("Minigame chosen: " + thisMatch.MiniGameChosen);
 
+        UpdateChips();
         UpdateTurn();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
+    #endregion
+
+    #region MainMethods
+
+    public void UpdateChips(){
+        for(int i = 0; i < thisMatch.Chips.Count; i++){
+            thisMatch.Chips[i].SetActive(true);
+        }
+    }
     public void UpdateTurn()
     {
         //If its your turn, play, if its not, only can see
@@ -97,9 +101,12 @@ public class ButtonsScript : MonoBehaviour
             {
                 screenManager.EnableButtons();
             }
-            else if(thisMatch.TurnMoment == 1 || thisMatch.TurnMoment == 2){
+            else if(thisMatch.TurnMoment == 1){
                 //Go directly to minigame
                 PlayMinigame();
+            }else if(thisMatch.TurnMoment == 2){
+                //Go directly to minigame
+                CheckMinigame();
             }else if(thisMatch.TurnMoment == 3){
                 //Go to check victory
                 CheckVictory();
@@ -112,11 +119,6 @@ public class ButtonsScript : MonoBehaviour
             screenManager.DisableButtons();
         }
     }
-
-    #endregion
-
-    #region MainMethods
-    
     public void PlaceTile(int pos){
 
         //Get row and column
@@ -130,14 +132,21 @@ public class ButtonsScript : MonoBehaviour
             GameObject tile = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
             SelectedTile = tile.name;
             
+            thisMatch.ChosenPosition = pos;
             //Set chip to player type
-            if(thisMatch.PlayerOName == localPlayer.Name)
-                actualChip = Instantiate(circleGO, tile.transform.position, Quaternion.identity);
-            else
-                actualChip = Instantiate(crossGO, tile.transform.position, Quaternion.identity);
-
-            actualChip.SetActive(true);
-            actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+            /*
+            if(thisMatch.PlayerOName == localPlayer.Name){
+                thisMatch.ActualChip = new GameObject();
+                thisMatch.ActualChip.AddComponent<SpriteRenderer>().sprite = circle;
+                thisMatch.ActualChip.transform.position = tile.transform.position;
+            }else{
+                thisMatch.ActualChip = new GameObject();
+                thisMatch.ActualChip.AddComponent<SpriteRenderer>().sprite = cross;
+                thisMatch.ActualChip.transform.position = tile.transform.position;
+            }
+            thisMatch.ActualChip.SetActive(true);
+            thisMatch.ActualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0.35f);
+            */
             thisMatch.TurnMoment = 1;
 
             //Go to minigame
@@ -149,24 +158,29 @@ public class ButtonsScript : MonoBehaviour
 
     private void PlayMinigame(){
 
-        //If turnMoment equals 1, have to play minigame, else, you have already played it
-        if(thisMatch.TurnMoment == 1){
-            miniWin = false;
-            PlayerPrefs.SetInt("minigameWin", 0);
-            switch(thisMatch.MiniGameChosen){
-                case 0:
-                    SceneManager.LoadScene("Pistolero");
-                break;
+        //Reset minigameWin variable
+        miniWin = false;
+        PlayerPrefs.SetInt("minigameWin", 0);
 
-                case 1:
-                    SceneManager.LoadScene("MinijuegoComida");
-                break;
+        switch(thisMatch.MiniGameChosen){
+            case 0:
+                SceneManager.LoadScene("Pistolero");
+                //SceneManager.LoadScene("Pistolero", LoadSceneMode.Additive);
+            break;
 
-                case 2:
-                    SceneManager.LoadScene("2D Platform");
-                break;
-            }
+            case 1:
+                SceneManager.LoadScene("MinijuegoComida");
+                //SceneManager.LoadScene("MinijuegoComida", LoadSceneMode.Additive);
+            break;
+
+            case 2:
+                SceneManager.LoadScene("PlatformMinigame");
+                //SceneManager.LoadScene("PlatformMinigame", LoadSceneMode.Additive);
+            break;
         }
+    }
+    
+    public void CheckMinigame(){
 
         //Check minigame win
         miniWin = (PlayerPrefs.GetInt("minigameWin") == 1);
@@ -174,11 +188,14 @@ public class ButtonsScript : MonoBehaviour
 
             //Save position
             thisMatch.FilledPositions[col,row] = (thisMatch.WhosTurn == thisMatch.PlayerOName ? 0: 1);
-            //Paint tile completely
-            actualChip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
-            //Add chip to list
-            thisMatch.Chips.Add(actualChip);
+            
+            //Add chip
+            if(thisMatch.PlayerOName == localPlayer.Name){
+                actualChip = Instantiate(circleGO, screenManager.buttonsReference[thisMatch.ChosenPosition].transform.position, Quaternion.identity);
 
+            }else{
+                actualChip = Instantiate(crossGO, screenManager.buttonsReference[thisMatch.ChosenPosition].transform.position, Quaternion.identity);
+            }
             //Add one to filled count
             thisMatch.NumFilled++;
 
@@ -188,14 +205,16 @@ public class ButtonsScript : MonoBehaviour
             //If someone won or draw, go to next scene. Else, choose minigame for opponent
             thisMatch.TurnMoment = 3;
             CheckVictory();
+
         }else{
 
             //No need to checkVictory because no tile has been set
-            Destroy(actualChip);
+            thisMatch.TurnMoment = 4;
             StartCoroutine(screenManager.txtTimer("¡Turno perdido!"));
+            screenManager.MinigameSelectionActivation();
         }
     }
-    
+
     public void CheckVictory(){
 
         bool[] array = new bool[8];

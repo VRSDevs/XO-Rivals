@@ -6,10 +6,21 @@ using UnityEngine.UI;
 
 public class PerderyGanar : MonoBehaviour
 {
+
+    // Sounds
+    public SFXManagerFantasma sounds;
+
+    
+    [SerializeField]
+    private GameObject victory;
+    [SerializeField]
+    private GameObject defeat;
+
     public int seconds =3;
     public Text textoSegundos;
     public Text textoCuentaAtras;
     public List<GameObject> enemigos;
+    private bool lost = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,11 +39,12 @@ public class PerderyGanar : MonoBehaviour
     {
         if (collision.gameObject.name == "Enemy3D")
         {
-
-            Debug.Log("Perdido!");
-            PlayerPrefs.SetInt("minigameWin", 0);
-            SceneManager.UnloadSceneAsync("Fantasmas3D");
-
+            if (seconds != 21)
+            {
+                lost = true;
+                Invoke("DefeatCanvas", 0.2f);
+            }
+            
 
         }
 
@@ -44,12 +56,10 @@ public class PerderyGanar : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        if (seconds == 20)//SI AGUANTAS 20 SEGUNDOS GANAS
+        if (seconds == 20 && !lost)//SI AGUANTAS 20 SEGUNDOS GANAS
         {
-            textoSegundos.color = Color.green;
-            textoCuentaAtras.text = "WIN";
-            StartCoroutine(victoria());
-
+            seconds++;
+            Invoke("VictoryCanvas", 1f);
         }
         else
         {
@@ -95,5 +105,36 @@ public class PerderyGanar : MonoBehaviour
         SceneManager.UnloadSceneAsync("Fantasmas3D");
     }
 
+    public void DefeatCanvas()
+    {
+        defeat.SetActive(true);
+        Invoke("Defeat", 3f);
+        sounds.playDefeatSound();
+    }
+
+    public void VictoryCanvas()
+    {
+        victory.SetActive(true);
+        Invoke("Victory", 3f);
+        sounds.playVictorySound();
 
     }
+
+    public void Defeat()
+    {
+        PlayerPrefs.SetInt("minigameWin", 0);
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        //SceneManager.UnloadSceneAsync("MinijuegoFantasmas");
+        SceneManager.LoadScene("TicTacToe_Server");
+    }
+
+    public void Victory()
+    {
+        PlayerPrefs.SetInt("minigameWin", 1);
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        //SceneManager.UnloadSceneAsync("MinijuegoFantasmas");
+        SceneManager.LoadScene("TicTacToe_Server");
+    }
+
+
+}
