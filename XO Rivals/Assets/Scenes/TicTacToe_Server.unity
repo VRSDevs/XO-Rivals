@@ -973,7 +973,7 @@ PrefabInstance:
     - target: {fileID: 6248065804999505556, guid: 3f19306fedaee1544a4769476ff979d2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 8973622830577669343}
+      objectReference: {fileID: 970048713}
     - target: {fileID: 6248065804999505556, guid: 3f19306fedaee1544a4769476ff979d2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -984,11 +984,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6248065804999505556, guid: 3f19306fedaee1544a4769476ff979d2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: BackToMainMenu
+      value: GoBack
       objectReference: {fileID: 0}
     - target: {fileID: 6248065804999505556, guid: 3f19306fedaee1544a4769476ff979d2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: ScreenManager, Assembly-CSharp
+      value: TicTacToeController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6248065804999505556, guid: 3f19306fedaee1544a4769476ff979d2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
