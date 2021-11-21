@@ -5,6 +5,7 @@ using PlayFab;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using Photon.Pun;
 
 /// <summary>
 /// Modo de inicio de sesión activo
@@ -155,8 +156,90 @@ public class Login : MonoBehaviour
                 DontDestroyOnLoad(myPlayer);
                 playerInfo.name = "PlayerObject";
                 playerInfo.Name = username;
-                //myPlayer.Id = get ID from server //innecesario
-                //myPlayer.Elo = get ELO from server
+                playerInfo.ID = Authenticator.playFabPlayerIdCache;
+
+                 
+                //Get client data from PlayFab
+                PlayFabClientAPI.GetUserData(new PlayFab.ClientModels.GetUserDataRequest() {
+                    PlayFabId = playerInfo.ID,
+                    Keys = null
+                }, result => {
+                    Debug.Log("Got user data:");
+                    if (result.Data != null){
+                        //Get lifes
+                        if(result.Data.ContainsKey("Lifes")){
+                            playerInfo.Lifes = int.Parse(result.Data["Lifes"].Value);
+                            Debug.Log("Successfully got player lifes");
+                        }else{
+                            PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
+                                Data = new Dictionary<string, string>() {
+                                    {"Lifes", "5"}
+                                }
+                            },
+                            result => Debug.Log("Successfully updated user lifes"),
+                            error => {
+                                Debug.Log("Got error setting user lifes");
+                            });
+                        }
+
+                        //Get level
+                        if(result.Data.ContainsKey("Level")){
+                            playerInfo.Level = float.Parse(result.Data["Level"].Value);
+                            playerInfo.Level += 3.43f;
+                            Debug.Log("Successfully got player level");
+                        }else{
+                            PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
+                                Data = new Dictionary<string, string>() {
+                                    {"Level", "0.0"}
+                                }
+                            },
+                            result => Debug.Log("Successfully updated user level"),
+                            error => {
+                                Debug.Log("Got error setting user level");
+                            });
+                        }
+
+                        //Get moment of life lost(if exists)
+                        if(result.Data.ContainsKey("Life Lost")){
+                            playerInfo.LostLifeTime = DateTime.ParseExact(result.Data["Life Lost"].Value, "dd.MM.yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                            Debug.Log("Successfully got player life lost moment");
+                        }                 
+                    }else{
+                        //Setup all information
+                        PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
+                            Data = new Dictionary<string, string>() {
+                                {"Lifes", "5"},
+                                {"Level", "0"}
+                            }
+                        },
+                        result => Debug.Log("Successfully updated user information"),
+                        error => {
+                            Debug.Log("Got error setting user information");
+                        });
+                    }
+                }, (error) => {
+                    Debug.Log("Got error retrieving user data:");
+                });
+                
+
+                /*Get info from server /useless
+                if(PhotonNetwork.LocalPlayer.CustomProperties["Level"] != null){
+                    playerInfo.Level = (float) PhotonNetwork.LocalPlayer.CustomProperties["Level"];
+                }else{
+                    ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable();
+                    hash.Add("Level", 0f);
+                    PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+                    playerInfo.Level = 0f;
+                }
+
+                if(PhotonNetwork.LocalPlayer.CustomProperties["Lifes"] != null){
+                    playerInfo.Lifes = (int) PhotonNetwork.LocalPlayer.CustomProperties["Lifes"];
+                }else{
+                    ExitGames.Client.Photon.Hashtable hash = new ExitGames.Client.Photon.Hashtable();
+                    hash.Add("Lifes", 5);
+                    PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+                    playerInfo.Lifes = 5;
+                }*/
             }
             else
             {

@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     // Variables del movimiento
     private float horizontal;
     private float speed = 5f;
-    private float jumpingPower = 5f;
+    private float jumpingPower = 6f;
 
     private void Awake()
     {
@@ -164,13 +164,17 @@ public class PlayerMovement : MonoBehaviour
 
     public void Defeat()
     {
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
         PlayerPrefs.SetInt("minigameWin", 0);
+        //SceneManager.UnloadSceneAsync("PlatformMinigame");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 
     public void Victory()
     {
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
         PlayerPrefs.SetInt("minigameWin", 1);
+        //SceneManager.UnloadSceneAsync("PlatformMinigame");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 }

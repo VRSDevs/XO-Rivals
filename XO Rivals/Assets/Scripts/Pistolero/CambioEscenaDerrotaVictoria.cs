@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using Photon.Pun;
+using Photon.Realtime;
 public class CambioEscenaDerrotaVictoria : MonoBehaviour
 {
 
@@ -60,6 +61,7 @@ public class CambioEscenaDerrotaVictoria : MonoBehaviour
     {
         PlayerPrefs.SetInt("minigameWin", 0);
         FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        //SceneManager.UnloadSceneAsync("Pistolero");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 
@@ -67,6 +69,7 @@ public class CambioEscenaDerrotaVictoria : MonoBehaviour
     {
         PlayerPrefs.SetInt("minigameWin", 1);
         FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        //SceneManager.UnloadSceneAsync("Pistolero");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 

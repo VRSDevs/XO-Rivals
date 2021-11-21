@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
+using PlayFab;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
@@ -39,6 +40,16 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public bool ConnectToServer()
     {
         return PhotonNetwork.ConnectUsingSettings();
+    }
+
+    /// <summary>
+    /// Método para desconectarse del servidor de Photon
+    /// </summary>
+    /// <returns></returns>
+    public void DisconnectFromServer()
+    {
+        PlayFabClientAPI.ForgetAllCredentials();
+        PhotonNetwork.Disconnect();
     }
 
     /// <summary>
@@ -86,7 +97,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions = new int[3,3];
         FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
         FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].Chips = new List<GameObject>();
-        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = 0;
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = 1;
     }
 
     #endregion
@@ -107,6 +118,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
         });
     }
 
+    /// <summary>
+    /// Corutina para empezar la partida que es ejecutada tras la preparación del jugador
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator StartMatch()
     {
         yield return new WaitUntil(GetReadyStatus);
@@ -120,7 +135,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     #region PUN_CB
 
     /// <summary>
-    /// Método ejecutado cuando se conecta al servidor
+    /// CB cuando el usuario se conecta al servidor
     /// </summary>
     public override void OnConnectedToMaster()
     {
@@ -132,6 +147,17 @@ public class NetworkController : MonoBehaviourPunCallbacks
         }
         
         ConnectToLobby();
+    }
+
+    /// <summary>
+    /// CB cuando el usuario se desconecta del servidor
+    /// </summary>
+    /// <param name="cause"></param>
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        base.OnDisconnected(cause);
+        
+        Debug.Log("Desconexión del servidor: " + cause);
     }
 
     /// <summary>
@@ -222,7 +248,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnLeftRoom();
 
-        if (SceneManager.GetActiveScene().name.Equals("MainMenu"))
+        if (SceneManager.GetActiveScene().name.Equals("MainMenu") && _creatingRoom)
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Búsqueda cancelada.";
             UpdateCreatingStatus();
@@ -236,7 +262,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
-
+   
         if (PhotonNetwork.CurrentRoom.PlayerCount != MAX_PLAYERS_INROOM) return;
 
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";

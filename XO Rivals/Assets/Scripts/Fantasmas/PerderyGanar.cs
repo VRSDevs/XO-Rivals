@@ -20,6 +20,7 @@ public class PerderyGanar : MonoBehaviour
     public Text textoSegundos;
     public Text textoCuentaAtras;
     public List<GameObject> enemigos;
+    private bool lost = false;
 
     // Start is called before the first frame update
     void Start()
@@ -38,8 +39,12 @@ public class PerderyGanar : MonoBehaviour
     {
         if (collision.gameObject.name == "Enemy3D")
         {
-
-            Invoke("DefeatCanvas", 3f);
+            if (seconds != 21)
+            {
+                lost = true;
+                Invoke("DefeatCanvas", 0.2f);
+            }
+            
 
         }
 
@@ -51,9 +56,10 @@ public class PerderyGanar : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        if (seconds == 20)//SI AGUANTAS 20 SEGUNDOS GANAS
-        {          
-            Invoke("VictoryCanvas", 2f);
+        if (seconds == 20 && !lost)//SI AGUANTAS 20 SEGUNDOS GANAS
+        {
+            seconds++;
+            Invoke("VictoryCanvas", 1f);
         }
         else
         {
@@ -117,12 +123,16 @@ public class PerderyGanar : MonoBehaviour
     public void Defeat()
     {
         PlayerPrefs.SetInt("minigameWin", 0);
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        //SceneManager.UnloadSceneAsync("MinijuegoFantasmas");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 
     public void Victory()
     {
         PlayerPrefs.SetInt("minigameWin", 1);
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        //SceneManager.UnloadSceneAsync("MinijuegoFantasmas");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 

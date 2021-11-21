@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9d30fbc956474f4cb441853494ddb16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerColor: 0
   sounds: {fileID: 1691529432}
   victory: {fileID: 1200794244}
   defeat: {fileID: 1993580282}
@@ -1438,7 +1439,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1318435247
 MonoBehaviour:
   m_ObjectHideFlags: 0

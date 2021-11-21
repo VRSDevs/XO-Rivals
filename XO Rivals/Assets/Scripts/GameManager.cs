@@ -157,6 +157,14 @@ public class GameManager : MonoBehaviour
     {
         return _networkController.ConnectToServer();
     }
+
+    /// <summary>
+    /// Método para desconectarse del servidor
+    /// </summary>
+    public void OnDisconnectToServer()
+    {
+        _networkController.DisconnectFromServer();
+    }
     
     /// <summary>
     /// Método para conectarse a una sala en Photon
@@ -312,6 +320,23 @@ public class GameManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    #endregion
+
+    #region OtherMethods
+
+    /// <summary>
+    /// Método para resetear las variables del objeto
+    /// </summary>
+    public void ResetObject()
+    {
+        _networkController = gameObject.AddComponent<NetworkController>();
+        _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
+        
+        PlayerMatches.Clear();
+        Matchmaking = false;
+        IsPlaying = false;
     }
 
     #endregion

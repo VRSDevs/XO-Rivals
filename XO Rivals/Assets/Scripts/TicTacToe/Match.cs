@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class Match
 {
     #region Vars
 
-    /*
+    
     /// <summary>
     /// ID de la partida
     /// </summary>
     public string MatchId { get; set; }
-    
+    /*
     /// <summary>
     /// ID del dueño de la partida
     /// </summary>
@@ -45,13 +46,13 @@ public class Match
     /// </summary>
     public int NumFilled { get; set; }
     /// <summary>
-    /// Lista de las fichas
+    /// Array del tablero
+    /// </summary>
+    public int ChosenPosition { get; set; }
+    /// <summary>
+    /// Lista de fichas
     /// </summary>
     public List<GameObject> Chips { get; set; }
-    // <summary>
-    /// Ficha actual
-    /// </summary>
-    public GameObject ActualChip { get; set; }
 
     #endregion
 
@@ -62,7 +63,7 @@ public class Match
     /// </summary>
     public Match()
     {
-        //MatchId = "";
+        MatchId = PhotonNetwork.CurrentRoom.Name;
         //OwnerId = "";
         PlayerOName = "";
         PlayerXName = "";
@@ -82,7 +83,6 @@ public class Match
         NumFilled = 0;
 
         Chips = new List<GameObject>();
-
     }
     
     #endregion

@@ -7,7 +7,11 @@ using TMPro;
 
 public class ComidaController : MonoBehaviour
 {
-    
+
+    // Boolean de prueba de cambio personaje
+    public bool playerColor = true;
+
+
     // Sounds
     public SFXManagerComida sounds;
     
@@ -69,6 +73,18 @@ public class ComidaController : MonoBehaviour
 
         generador = FindObjectOfType<Generador>();
 
+        StartCoroutine(DefeatNumerator());
+
+        // Valor a cambiar segun el color de ficha del jugador
+        if (playerColor)
+        {
+            playerO.SetActive(false);
+            playerX.SetActive(true);
+        } else
+        {
+            playerO.SetActive(true);
+            playerX.SetActive(false);
+        }
 
         if (!_gameManager.IsWebGLMobile)
         {
@@ -80,6 +96,7 @@ public class ComidaController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (time >= 0 && !finished)
         {
             time -= Time.deltaTime;
@@ -98,8 +115,8 @@ public class ComidaController : MonoBehaviour
             panArriba.SetActive(false);
             orden = 1;
             player.constraints = RigidbodyConstraints2D.FreezeAll;
-            Invoke("DefeatCanvas", 3f);
-            lost = true;
+            lost = true;           
+            
         }
 
         if (win)
@@ -130,6 +147,7 @@ public class ComidaController : MonoBehaviour
     {
         PlayerPrefs.SetInt("minigameWin", 0);
         FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        //SceneManager.UnloadSceneAsync("MinijuegoComida");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 
@@ -137,6 +155,7 @@ public class ComidaController : MonoBehaviour
     {
         PlayerPrefs.SetInt("minigameWin", 1);
         FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        //SceneManager.UnloadSceneAsync("MinijuegoComida");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 
@@ -258,5 +277,17 @@ public class ComidaController : MonoBehaviour
 
 
 
+    }
+
+    IEnumerator DefeatNumerator()
+    {
+        yield return new WaitUntil(ReturnLost);
+
+        DefeatCanvas();
+    } 
+
+    public bool ReturnLost()
+    {
+        return lost;
     }
 }
