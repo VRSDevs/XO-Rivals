@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Random = UnityEngine.Random;
+using PlayFab;
 
 public class ButtonsScript : MonoBehaviour
 {
@@ -97,8 +98,6 @@ public class ButtonsScript : MonoBehaviour
 
             if (miniWin)
             {
-
-
                 GameObject actual;
                 if (thisMatch.ActualChipTeam == "cross")
                 {
@@ -130,26 +129,12 @@ public class ButtonsScript : MonoBehaviour
                     //Add one to filled count
                     thisMatch.NumFilled++;
                 }
-
-
-
-
             }//Fin win
 
-            
-
-            Debug.Log("SE HACE MINIGAMESEÑLECTION");
+            Debug.Log("SE HACE MINIGAME SELECTION");
             screenManager.MinigameSelectionActivation();
-
-
-
-
         }
-
         CheckVictory();
-
-
-
     }
 
     /// <summary>
@@ -243,12 +228,6 @@ public class ButtonsScript : MonoBehaviour
                     //SceneManager.LoadScene("PlatformMinigame", LoadSceneMode.Additive);
                     break;
             }
-
-
-           
-
-
-
         }
 
         /*
@@ -315,6 +294,7 @@ public class ButtonsScript : MonoBehaviour
 
         }
     }
+
     public void CheckVictory(){
 
         bool[] array = new bool[8];
@@ -483,10 +463,14 @@ public class ButtonsScript : MonoBehaviour
                     
                     if (localPlayer.Name == thisMatch.PlayerOName)
                     {
+                        localPlayer.Level += 0.75f;
+                        UpdateLevel();
                         gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                     }
                     else
                     {
+                        localPlayer.Level += 0.35f;
+                        UpdateLevel();
                         gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                     }
                 }
@@ -496,10 +480,14 @@ public class ButtonsScript : MonoBehaviour
 
                     if (localPlayer.Name == thisMatch.PlayerXName)
                     {
+                        localPlayer.Level += 0.75f;
+                        UpdateLevel();
                         gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                     }
                     else
                     {
+                        localPlayer.Level += 0.35f;
+                        UpdateLevel();
                         gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                     }
                 }
@@ -519,6 +507,20 @@ public class ButtonsScript : MonoBehaviour
         //thisMatch.TurnMoment = 4;
         //Go to selectMinigame for opponent
         //screenManager.MinigameSelectionActivation();
+    }
+
+    private void UpdateLevel(){
+
+        //Upload lifes to server
+        PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
+                Data = new Dictionary<string, string>() {
+                    {"Level", localPlayer.Level.ToString()}}
+            },
+            result => Debug.Log("Successfully updated user level"),
+            error => {
+                Debug.Log("Got error setting user level");
+            }
+        );
     }
 
     #endregion
