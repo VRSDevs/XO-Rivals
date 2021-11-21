@@ -78,16 +78,16 @@ public class MainMenuController : MonoBehaviour
         
         _matchToJoin = new MatchInfo();
 
-        if (_localPlayer.Lives != 5){
-            //recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
-            recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(15);
-            CheckLifesTime();
+        if (_localPlayer.Lives < 5){
+            recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
+            //recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(15);
+            CheckLivesTime();
         }else
             lifesTime.text = "-:--";
     }
 
     private void Update(){
-        if(_localPlayer.Lives != 5){
+        if(_localPlayer.Lives < 5){
             timePassed += Time.deltaTime;
             if(timePassed >= 1.0f){ 
                 CheckLifesTime();
@@ -141,42 +141,46 @@ public class MainMenuController : MonoBehaviour
     }
 
     public void ReduceLives(){
+    
+        //Reduce only if it doesnt have infinite (999) lifes
+        if(_localPlayer.Lives != 999){
 
-        _localPlayer.Lives--;
-        lifesTxt.text = "Lives: " + _localPlayer.Lives;
-        lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
-        //If it has 4 lifes, update timer
-        if(_localPlayer.Lives == 4){
-            _localPlayer.LostLifeTime = System.DateTime.Now;
-            //Upload lifes to server
-            PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                    Data = new Dictionary<string, string>() {
-                        {"Lifes", _localPlayer.Lives.ToString()},
-                        {"Life Lost", _localPlayer.LostLifeTime.ToString()}}
-                },
-                result => Debug.Log("Successfully reduced user lifes"),
-                error => {
-                    Debug.Log("Got error reducing user lifes");
-                }
-            );
-            //Restart timer
-            //recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
-            recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(10);
-            recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
-            lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;            
-        }else{
-            //Upload lifes to server
-            PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                    Data = new Dictionary<string, string>() {
-                        {"Lifes", _localPlayer.Lives.ToString()}}
-                },
-                result => Debug.Log("Successfully reduced user lifes"),
-                error => {
-                    Debug.Log("Got error reducing user lifes");
-                }
-            );
-            
-            lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;
+            _localPlayer.Lives--;
+            lifesTxt.text = "Lives: " + _localPlayer.Lives;
+            lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
+            //If it has 4 lifes, update timer
+            if(_localPlayer.Lives == 4){
+                _localPlayer.LostLifeTime = System.DateTime.Now;
+                //Upload lifes to server
+                PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
+                        Data = new Dictionary<string, string>() {
+                            {"Lifes", _localPlayer.Lives.ToString()},
+                            {"Life Lost", _localPlayer.LostLifeTime.ToString()}}
+                    },
+                    result => Debug.Log("Successfully reduced user lifes"),
+                    error => {
+                        Debug.Log("Got error reducing user lifes");
+                    }
+                );
+                //Restart timer
+                recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
+                //recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(10);
+                recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
+                lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;            
+            }else{
+                //Upload lifes to server
+                PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
+                        Data = new Dictionary<string, string>() {
+                            {"Lifes", _localPlayer.Lives.ToString()}}
+                    },
+                    result => Debug.Log("Successfully reduced user lifes"),
+                    error => {
+                        Debug.Log("Got error reducing user lifes");
+                    }
+                );
+                
+                lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;
+            }
         }
     }
 
