@@ -232,6 +232,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Couldn´t create the match.";
     }
 
+    /// <summary>
+    /// CB de Photon para cuando se une a la sala con éxito
+    /// </summary>
+    /// <param name="returnCode">Código de error</param>
+    /// <param name="message">Mensaje de error</param>
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
@@ -255,7 +260,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
-    /// Método ejecutado cuando falla el acceso a la sala aleatoria
+    /// CB de Photon ejecutado cuando falla el acceso a la sala aleatoria
     /// </summary>
     /// <param name="returnCode">Código de error</param>
     /// <param name="message">Mensaje de error</param>
