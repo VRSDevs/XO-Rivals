@@ -286,6 +286,7 @@ public class Login : MonoBehaviour
     /// <param name="mode">Código del modo</param>
     public void UpdateLoginMode(int mode)
     {
+        FindObjectOfType<AudioManager>().Play("SelecctionButton");
 
         switch (mode)
         {

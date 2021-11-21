@@ -3392,3 +3392,10 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 1
+  - clip: {fileID: 8300000, guid: 741a341588e1cdc40b7628dae9afe70d, type: 3}
+    source: {fileID: 0}
+    name: SelecctionButton
+    type: 1
+    volume: 1
+    pitch: 1
+    loop: 0
