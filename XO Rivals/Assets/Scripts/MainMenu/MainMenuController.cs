@@ -131,6 +131,7 @@ public class MainMenuController : MonoBehaviour
 
         _localPlayer.Lifes--;
         lifesTxt.text = "Lives: " + _localPlayer.Lifes;
+        lifesTxtShop.text = "Lives: " + _localPlayer.Lifes;
         //If it has 4 lifes, update timer
         if(_localPlayer.Lifes == 4){
             _localPlayer.LostLifeTime = System.DateTime.Now;
@@ -162,7 +163,7 @@ public class MainMenuController : MonoBehaviour
                 }
             );
             
-            lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds; 
+            lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;
         }
     }
 
