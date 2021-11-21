@@ -128,6 +128,15 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Método para conectarse a una sala específica en Photon
+    /// </summary>
+    /// <param name="name"></param>
+    public void OnConnectToSpecificRoom(string name)
+    {
+        _networkController.ConnectToSpecificRoom(name);
+    }
+
+    /// <summary>
     /// Método para conectarse a la lobby general
     /// </summary>
     public void OnConnectToLobby()
@@ -219,11 +228,13 @@ public class GameManager : MonoBehaviour
                 objOppWon[0] = type;
                 objOppWon[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
                 objOppWon[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].NumFilled;
-                objOppWon[3] = FindObjectOfType<ButtonsScript>().col;
-                objOppWon[4] = FindObjectOfType<ButtonsScript>().row;
+                objOppWon[3] = FindObjectOfType<ButtonsScript>().thisMatch.ActualChip%3;
+               
+                objOppWon[4] = FindObjectOfType<ButtonsScript>().thisMatch.ActualChip /3;
+                
                 objOppWon[5] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions[
-                    FindObjectOfType<ButtonsScript>().col,
-                    FindObjectOfType<ButtonsScript>().row
+                    FindObjectOfType<ButtonsScript>().thisMatch.ActualChip % 3,
+                   FindObjectOfType<ButtonsScript>().thisMatch.ActualChip / 3
                 ];
                 objOppWon[6] = FindObjectOfType<ButtonsScript>().SelectedTile;
                 objOppWon[7] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen;

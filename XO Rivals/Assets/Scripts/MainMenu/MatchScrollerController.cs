@@ -90,6 +90,10 @@ public class MatchScrollerController : MonoBehaviour
     {
         MatchesView view = new MatchesView(viewGO.transform)
         {
+            IDText =
+            {
+                text = model.MatchId
+            },
             NameText =
             {
                 text = model.MatchName
@@ -115,7 +119,8 @@ public class MatchScrollerController : MonoBehaviour
         {
             matchesList[_totalMatches] = new MatchModel
             {
-                MatchName = "No tienes partidas activas",
+                MatchId = "",
+                MatchName = "No matches found!",
                 MatchStatus = ""
             };
         }
@@ -124,10 +129,14 @@ public class MatchScrollerController : MonoBehaviour
             int i = 0;
             foreach (Match match in FindObjectOfType<GameManager>().PlayerMatches.Values)
             {
+                string opponent = match.PlayerOName.Equals(FindObjectOfType<PlayerInfo>().Name)
+                    ? match.PlayerXName
+                    : match.PlayerOName;
                 matchesList[i] = new MatchModel
                 {
-                    MatchName = match.MatchId,
-                    MatchStatus = match.WhosTurn
+                    MatchId = match.MatchId,
+                    MatchName = "Match against " + opponent,
+                    MatchStatus = match.WhosTurn + "'s turn"
                 };
                 i++;
             }

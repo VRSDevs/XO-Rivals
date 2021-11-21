@@ -8,6 +8,17 @@ using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Tipos de salas a las que unirse
+///     RANDOM_ROON - Sala aleatoria
+///     SPECIFIC_ROOM - Sala específica
+/// </summary>
+public enum JoinType
+{
+    RANDOM_ROON,
+    SPECIFIC_ROOM
+}
+
 public class NetworkController : MonoBehaviourPunCallbacks
 {
     #region Variables
@@ -28,6 +39,14 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// ¿Se está creando una partida?
     /// </summary>
     private bool _creatingRoom = false;
+    /// <summary>
+    /// Nombre de la sala específica
+    /// </summary>
+    private string _nameRoom = "";
+    /// <summary>
+    /// Tipo de unión a sala
+    /// </summary>
+    private JoinType _joinType;
 
     #endregion
     
@@ -70,14 +89,37 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
+    /// Método para establecer conexión a una sala en específico
+    /// </summary>
+    /// <param name="name">ID de la sala</param>
+    public void ConnectToSpecificRoom(string name)
+    {
+        _nameRoom = name;
+        StartCoroutine(RejoinRoom());
+    }
+
+    /// <summary>
     /// Corutina para tratar de unirse a una sala
     /// </summary>
     /// <returns></returns>
     private IEnumerator JoinRoom()
     {
         yield return new WaitForSeconds(1);
-        
+
+        _joinType = JoinType.RANDOM_ROON;
         PhotonNetwork.JoinRandomRoom();
+    }
+
+    /// <summary>
+    /// Corutina para tratar de unirse a una sala específica
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator RejoinRoom()
+    {
+        yield return new WaitForSeconds(1);
+
+        _joinType = JoinType.SPECIFIC_ROOM;
+        PhotonNetwork.RejoinRoom(_nameRoom);
     }
 
     /// <summary>
@@ -91,10 +133,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded())
             {
                 FindObjectOfType<GameManager>().PlayerMatches.Remove(PhotonNetwork.CurrentRoom.Name);
+                PhotonNetwork.LeaveRoom(false);
             }
         }
         
-        PhotonNetwork.LeaveRoom(true);
+        PhotonNetwork.LeaveRoom();
     }
 
     #endregion
@@ -112,6 +155,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(roomName, new Photon.Realtime.RoomOptions()
         {
             MaxPlayers = MAX_PLAYERS_INROOM,
+            PlayerTtl = -1
         });
     }
 
@@ -207,30 +251,46 @@ public class NetworkController : MonoBehaviourPunCallbacks
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Couldn´t create the match.";
     }
 
+    /// <summary>
+    /// CB de Photon para cuando se une a la sala con éxito
+    /// </summary>
+    /// <param name="returnCode">Código de error</param>
+    /// <param name="message">Mensaje de error</param>
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
 
         FindObjectOfType<PlayerInfo>().MatchId = PhotonNetwork.LocalPlayer.ActorNumber;
-        
-        UpdateCreatingStatus();
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount < MAX_PLAYERS_INROOM)
+        switch (_joinType)
         {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Waiting for players (" + 
-                PhotonNetwork.CurrentRoom.Players.Count + "/" + MAX_PLAYERS_INROOM + ")...";
-        }
-        else
-        {
-            FindObjectOfType<GameManager>().Matchmaking = false;
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Player found! Starting match...";
-            FindObjectOfType<GameManager>().SetupMatch("X");
-            StartCoroutine(StartMatch());
+            case JoinType.RANDOM_ROON:
+                
+                UpdateCreatingStatus();
+
+                if (PhotonNetwork.CurrentRoom.PlayerCount < MAX_PLAYERS_INROOM)
+                {
+                    GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Waiting for players (" + 
+                        PhotonNetwork.CurrentRoom.Players.Count + "/" + MAX_PLAYERS_INROOM + ")...";
+                }
+                else
+                {
+                    FindObjectOfType<GameManager>().Matchmaking = false;
+                    GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Player found! Starting match...";
+                    FindObjectOfType<GameManager>().SetupMatch("X");
+                    StartCoroutine(StartMatch());
+                }
+                
+                break;
+            case JoinType.SPECIFIC_ROOM:
+                FindObjectOfType<GameManager>().IsPlaying = true;
+                SceneManager.LoadScene("TicTacToe_Server");
+                break;
         }
     }
 
     /// <summary>
-    /// Método ejecutado cuando falla el acceso a la sala aleatoria
+    /// CB de Photon ejecutado cuando falla el acceso a la sala aleatoria
     /// </summary>
     /// <param name="returnCode">Código de error</param>
     /// <param name="message">Mensaje de error</param>
@@ -253,11 +313,27 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
+    /// Método ejecutado cuando falla el acceso a la sala específica
+    /// </summary>
+    /// <param name="returnCode">Código de error</param>
+    /// <param name="message">Mensaje de error</param>
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        base.OnJoinRoomFailed(returnCode, message);
+        
+        Debug.Log("Error " + returnCode + ": " + message);
+        
+        StartCoroutine(CreateMatchRoom(_nameRoom));
+    }
+
+    /// <summary>
     /// CB de Photon para cuando se abandona la sala.
     /// </summary>
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
+        
+        FindObjectOfType<PlayerInfo>().MatchId = -1;
 
         if (SceneManager.GetActiveScene().name.Equals("MainMenu") && !FindObjectOfType<GameManager>().IsPlaying)
         {

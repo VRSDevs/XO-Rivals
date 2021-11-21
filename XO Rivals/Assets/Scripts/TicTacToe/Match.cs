@@ -53,6 +53,9 @@ public class Match
     /// Lista de fichas
     /// </summary>
     public List<GameObject> Chips { get; set; }
+    public int ActualChip { get; internal set; }
+    public string ActualChipTeam { get; internal set; }
+
     /// <summary>
     /// ¿Terminó la partida?
     /// </summary>
@@ -61,6 +64,8 @@ public class Match
     /// ¿Te rendiste?
     /// </summary>
     private bool _youSurrended;
+ 
+
 
     #endregion
 
@@ -77,7 +82,8 @@ public class Match
         PlayerXName = "";
         WhosTurn = "";
         TurnMoment = 0;
-        MiniGameChosen = Random.Range(0,2);
+        //MiniGameChosen = Random.Range(0,2);
+        MiniGameChosen = 0;
 
         FilledPositions = new int[3, 3];
         for (int i = 0; i < FilledPositions.GetLength(0); i++)

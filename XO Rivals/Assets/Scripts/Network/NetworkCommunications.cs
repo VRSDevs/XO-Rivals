@@ -32,6 +32,7 @@ public class NetworkCommunications : MonoBehaviourPun
     {
         object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject(playerType);
         _View.RPC("PlayerInfoRPC", RpcTarget.Others, (object)objToSend);
+
     }
     
     /// <summary>
@@ -40,7 +41,7 @@ public class NetworkCommunications : MonoBehaviourPun
     public void SendMatchInfo(string type)
     {
         object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.MatchInfoToObject(type);
-        _View.RPC("RPCUpdateMatch", RpcTarget.All, (object)objToSend);
+        _View.RPC("RPCUpdateMatch", RpcTarget.Others, (object)objToSend);
     }
     
     /// <summary>
@@ -99,7 +100,17 @@ public class NetworkCommunications : MonoBehaviourPun
             case "OppWon":
                 
                 Debug.Log("RPC oponente ganó");
-                
+                Debug.Log(obj[0] as string);
+                Debug.Log(obj[1] as string);
+                Debug.Log((int)obj[2]);
+                Debug.Log((int)obj[3]);
+                Debug.Log((int)obj[4]);
+                Debug.Log((int)obj[5]);
+                Debug.Log((string)obj[6]);
+                Debug.Log(obj[7] as string);
+
+
+
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = obj[1] as string;
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].NumFilled = (int)obj[2];
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions[
@@ -117,8 +128,12 @@ public class NetworkCommunications : MonoBehaviourPun
 
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
 
-                FindObjectOfType<ButtonsScript>().UpdateTurn();
-                
+                FindObjectOfType<ButtonsScript>().startGame();
+                FindObjectOfType<ButtonsScript>().colocarFichas();
+
+
+
+
                 break;
             case "OppLost":
                 
@@ -129,7 +144,7 @@ public class NetworkCommunications : MonoBehaviourPun
                 
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
 
-                FindObjectOfType<ButtonsScript>().UpdateTurn();
+                FindObjectOfType<ButtonsScript>().startGame();
                 
                 break;
         }
