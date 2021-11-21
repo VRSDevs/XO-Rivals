@@ -167,8 +167,8 @@ public class Login : MonoBehaviour
                     if (result.Data != null){
                         //Get lifes
                         if(result.Data.ContainsKey("Lifes")){
-                            playerInfo.Lifes = int.Parse(result.Data["Lifes"].Value);
-                            playerInfo.Lifes = 3;
+                            playerInfo.Lives = int.Parse(result.Data["Lifes"].Value);
+                            playerInfo.Lives = 3;
                             Debug.Log("Successfully got player lifes");
                         }else{
                             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
