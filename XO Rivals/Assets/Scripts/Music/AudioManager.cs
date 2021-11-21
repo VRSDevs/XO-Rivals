@@ -25,8 +25,8 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void ChangeMusic(AudioClip song) {
-        Sound soundToChange = Array.Find(sounds, sound => sound.name == "BGMusic");
+    public void ChangeMusic(AudioClip song, String soundName) {
+        Sound soundToChange = Array.Find(sounds, sound => sound.name == soundName);
         soundToChange.source.Stop();
         soundToChange.source.clip = song;
         soundToChange.source.Play();

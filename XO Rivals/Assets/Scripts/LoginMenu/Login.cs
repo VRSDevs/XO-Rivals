@@ -83,6 +83,8 @@ public class Login : MonoBehaviour
 
         // Limpieza del log
         Log.text = "";
+        
+        
     }
 
     #endregion
