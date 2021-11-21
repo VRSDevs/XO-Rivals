@@ -3097,7 +3097,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &416353110
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7793,6 +7793,7 @@ MonoBehaviour:
   nameTxt: {fileID: 553947641}
   level: {fileID: 523620166}
   lifesTxt: {fileID: 2367371}
+  lifesTxtShop: {fileID: 0}
   lifesTime: {fileID: 276693855}
   lvlSlider: {fileID: 1711821105}
 --- !u!4 &1544971430
