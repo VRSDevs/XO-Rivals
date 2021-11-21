@@ -9,9 +9,10 @@ public class Settings : MonoBehaviour
     public bool activatedSounds = false;
     public float musicVolume;
     public float soundVolume;
-    public AudioManager AudioManager;
-    void Awake() {
-        //GameObject.Find("GeneralVolume").GetComponent<Toggle>().isOn = activatedSounds;
+    private AudioManager AudioManager;
+    void Awake()
+    {
+        AudioManager = FindObjectOfType<AudioManager>();
     }
     public void SetMusicVolume(float volume) {
         AudioManager.SetMusicVolume(volume, soundTypes.M);
