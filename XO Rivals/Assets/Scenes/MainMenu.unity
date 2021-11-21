@@ -1555,12 +1555,24 @@ MonoBehaviour:
   m_HandleRect: {fileID: 305437216}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 2
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 692649461}
+        m_TargetAssemblyTypeName: VolumeSliderManager, Assembly-CSharp
+        m_MethodName: cambiarSliderSFX
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &154835993
 GameObject:
   m_ObjectHideFlags: 0
@@ -4305,6 +4317,7 @@ GameObject:
   - component: {fileID: 692649460}
   - component: {fileID: 692649459}
   - component: {fileID: 692649458}
+  - component: {fileID: 692649461}
   m_Layer: 0
   m_Name: '@SFXManager'
   m_TagString: Untagged
@@ -4324,15 +4337,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9530a090b7e5f864e85030cfc4c9f744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  volumenSFX: 0
+  volumenMusica: 0
   CookingMusic: {fileID: 0}
   GunmanMusic: {fileID: 0}
   PlatformMusic: {fileID: 0}
   Tic_Tac_ToeMusic: {fileID: 0}
   ShopMusic: {fileID: 0}
-  SelectionButton1: {fileID: 0}
-  SelectionButton2: {fileID: 0}
-  SelectionButton3: {fileID: 0}
-  SelectionButton4: {fileID: 0}
+  SelectionButton1: {fileID: 8300000, guid: ef01abf2e4e9ea84e82c6a7db1f36498, type: 3}
+  SelectionButton2: {fileID: 8300000, guid: 0c14f1b57f0b0744ab642c8c7792c351, type: 3}
+  SelectionButton3: {fileID: 8300000, guid: d8ec08f9a9982634a838457357da9cbc, type: 3}
+  SelectionButton4: {fileID: 8300000, guid: dca47d91d4f53344b89287053e079741, type: 3}
   DeathSound: {fileID: 0}
   VictorySound: {fileID: 0}
   DefeatSound: {fileID: 0}
@@ -4451,6 +4466,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &692649461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692649457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82c04a9e2dbda0e4cb958c29cd65f519, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfxSlider: {fileID: 129152185}
+  musicSlider: {fileID: 1173130006}
+  manager: {fileID: 692649458}
+  sliderValueSfx: 0
+  sliderValueMusic: 0
 --- !u!1 &727088541
 GameObject:
   m_ObjectHideFlags: 0
@@ -6139,12 +6171,24 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1232537}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 2
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 692649461}
+        m_TargetAssemblyTypeName: VolumeSliderManager, Assembly-CSharp
+        m_MethodName: cambiarSliderMusica
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1182218948
 GameObject:
   m_ObjectHideFlags: 0
