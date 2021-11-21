@@ -214,7 +214,7 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void OnJoinMatchClick()
     {
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joining " + _matchToJoin.MatchName + " (BETA)";
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joining " + _matchToJoin.MatchName + "...";
         
         StartCoroutine(ChangeInteractionAfterJm());
         
