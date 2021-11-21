@@ -259,6 +259,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnLeftRoom();
 
+        FindObjectOfType<GameManager>().IsPlaying = false;
+
         if (SceneManager.GetActiveScene().name.Equals("MainMenu") && _creatingRoom)
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Matchmaking stopped.";
