@@ -35,7 +35,6 @@ public class SoundsManager : MonoBehaviour
     public void Play(string soundName) {
         // Buscar en el array de sonidos aquel que tiene el mismo nombre del que se quiere reproducir
         Sound soundToPlay = Array.Find(sounds, sound => sound.name == soundName);
-        Debug.Log(soundToPlay.name);
         // Reproducir sonido
         soundToPlay.source.Play();
     }
