@@ -85,19 +85,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// </summary>
     public void DisconnectFromRoom()
     {
-        PhotonNetwork.LeaveRoom(true);
+        if (FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SurrenderStatus() ||
+            FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded())
+        {
+            FindObjectOfType<GameManager>().PlayerMatches.Remove(PhotonNetwork.CurrentRoom.Name);
+        }
         
-        if (!FindObjectOfType<GameManager>().IsPlaying) return;
-        //FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].MatchId = "";
-        //FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].OwnerId = "";
-        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = null;
-        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = null;
-        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = "";
-        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].NumFilled = 0;
-        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions = new int[3,3];
-        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
-        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].Chips = new List<GameObject>();
-        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = 1;
+        PhotonNetwork.LeaveRoom(true);
     }
 
     #endregion
@@ -206,7 +200,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         
         UpdateCreatingStatus();
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount < 2)
+        if (PhotonNetwork.CurrentRoom.PlayerCount < MAX_PLAYERS_INROOM)
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Buscando jugadores...";
         }
@@ -277,12 +271,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
-
+        
+        /*
         if (FindObjectOfType<GameManager>().IsPlaying)
-        {
-            FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
-            FindObjectOfType<GameManager>().IsPlaying = false;
-        }
+            StartCoroutine(LeaveInMatch());
+        */
     }
 
     #endregion
@@ -349,6 +342,22 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         return _creatingRoom;
     }
+
+    /*
+    private IEnumerator LeaveInMatch()
+    {
+        yield return new WaitUntil(FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded);
+
+        switch (FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].EndReason)
+        {
+            case 0:
+                break;
+            case 1: 
+                FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
+                break;
+        }
+    }
+    */
 
     /// <summary>
     /// Método para transformar un dato en un valor hash
