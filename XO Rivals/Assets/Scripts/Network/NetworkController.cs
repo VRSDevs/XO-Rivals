@@ -65,7 +65,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// </summary>
     public void ConnectToRandomRoom()
     {
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Buscando salas...";
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Searching games...";
         StartCoroutine(JoinRoom());
     }
 
@@ -137,7 +137,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         
         if (SceneManager.GetActiveScene().name.Equals("Login"))
         {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Conectado al servidor. Conectando al lobby...";
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Connected to server. Connecting to lobby...";
         }
         
         ConnectToLobby();
@@ -150,8 +150,20 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
-        
-        Debug.Log("Desconexión del servidor: " + cause);
+
+        switch (cause)
+        {
+            // Caso ClientTimeout -> El cliente deja de recibir respuestas por parte del servidor
+            case DisconnectCause.ClientTimeout:
+                FindObjectOfType<GameManager>().ResetObject();
+                Destroy(GameObject.Find("PlayerObject"));
+
+                SceneManager.LoadScene("Login");
+                break;
+            default:
+                Debug.Log("Desconexión del servidor: " + cause);
+                break;
+        }
     }
 
     /// <summary>
@@ -163,7 +175,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
         if (!SceneManager.GetActiveScene().name.Equals("Login")) return;
         
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Conectado al lobby general.";
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Connected to the lobby.";
         Debug.Log("Hola, " + PhotonNetwork.NickName);
 
         SceneManager.LoadScene("MainMenu");
@@ -176,7 +188,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnCreatedRoom();
 
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Sala creada con éxito.";
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Match created successfully.";
     }
     
     /// <summary>
@@ -189,7 +201,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnCreateRoomFailed(returnCode, message);
         
         Debug.Log("Error " + returnCode + ": " + message);
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Fallo al crear la sala.";
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Couldn´t create the match.";
     }
 
     public override void OnJoinedRoom()
@@ -202,12 +214,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.CurrentRoom.PlayerCount < MAX_PLAYERS_INROOM)
         {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Buscando jugadores...";
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Waiting for players (" + 
+                PhotonNetwork.CurrentRoom.Players.Count + "/" + MAX_PLAYERS_INROOM + ")...";
         }
         else
         {
             FindObjectOfType<GameManager>().Matchmaking = false;
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Player found! Starting match...";
             FindObjectOfType<GameManager>().SetupMatch("X");
             StartCoroutine(StartMatch());
         }
@@ -226,7 +239,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         {
             // Caso 32760 - Ninguna sala disponible
             case 32760:
-                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No hay salas activas. Creando una...";
+                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Couldn´t find any matches. Creating one...";
 
                 StartCoroutine(CreateMatchRoom(GetHashValue("Sala " + PhotonNetwork.CountOfRooms)));
                 break;
@@ -245,7 +258,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
         if (SceneManager.GetActiveScene().name.Equals("MainMenu") && _creatingRoom)
         {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Búsqueda cancelada.";
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Matchmaking stopped.";
             UpdateCreatingStatus();
         }
     }
@@ -261,7 +274,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.PlayerCount != MAX_PLAYERS_INROOM) return;
 
         FindObjectOfType<GameManager>().Matchmaking = false;
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Player found! Starting match...";
         FindObjectOfType<GameManager>().SetupMatch("O");
         StartCoroutine(StartMatch());
     }
