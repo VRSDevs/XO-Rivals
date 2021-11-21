@@ -287,11 +287,11 @@ public class ButtonsScript : MonoBehaviour
                     
                     if (localPlayer.Name == thisMatch.PlayerOName)
                     {
-                        gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                        gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                     }
                     else
                     {
-                        gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                        gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                     }
                 }
                 else
@@ -300,11 +300,11 @@ public class ButtonsScript : MonoBehaviour
 
                     if (localPlayer.Name == thisMatch.PlayerXName)
                     {
-                        gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                        gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                     }
                     else
                     {
-                        gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                        gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                     }
                 }
                 break;
@@ -315,7 +315,7 @@ public class ButtonsScript : MonoBehaviour
         //Table full (draw)
         if(thisMatch.NumFilled == 9){
             Debug.Log("Draw");
-            gameState._networkCommunications.SendEndMatchInfo("draw", "");
+            gameState._networkCommunications.SendEndMatchInfo("DW", "");
         }
 
         thisMatch.TurnMoment = 4;
