@@ -186,7 +186,7 @@ public class enemyActionNode : enemyNode{
     }
 }
 
-public class EnemyBehaviourTree : MonoBehaviour {
+public class DroneBehaviourTree : MonoBehaviour {
 
     //Character GameObject
     [SerializeField] private GameObject character;
@@ -301,7 +301,10 @@ public class EnemyBehaviourTree : MonoBehaviour {
         timeAttacking += Time.deltaTime;
 
         //Go to actual point
-        this.transform.position = Vector3.MoveTowards(this.transform.position, character.transform.position, Time.deltaTime * speed);
+        if(this.transform.position.x > points[0].position.x && this.transform.position.x < points[1].position.x)
+            this.transform.position = Vector3.MoveTowards(this.transform.position, character.transform.position, Time.deltaTime * speed);
+        else
+            this.transform.position = Vector3.MoveTowards(this.transform.position, new Vector3(this.transform.position.x, character.transform.position.y, character.transform.position.z), Time.deltaTime * speed);
     }
 
     void GoToCharacterRage(){
@@ -310,7 +313,10 @@ public class EnemyBehaviourTree : MonoBehaviour {
         speed = RAGESPEED;
 
         //Go to actual point
-        this.transform.position = Vector3.MoveTowards(this.transform.position, character.transform.position, Time.deltaTime * speed);
+        if(this.transform.position.x > points[0].position.x && this.transform.position.x < points[1].position.x)
+            this.transform.position = Vector3.MoveTowards(this.transform.position, character.transform.position, Time.deltaTime * speed);
+        else
+            this.transform.position = Vector3.MoveTowards(this.transform.position, new Vector3(this.transform.position.x, character.transform.position.y, character.transform.position.z), Time.deltaTime * speed);
     }
 
     float CheckCharacter(){
