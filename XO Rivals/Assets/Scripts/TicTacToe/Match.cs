@@ -53,6 +53,9 @@ public class Match
     /// Lista de fichas
     /// </summary>
     public List<GameObject> Chips { get; set; }
+    public int ActualChip { get; internal set; }
+    public string ActualChipTeam { get; internal set; }
+
     /// <summary>
     /// ¿Terminó la partida?
     /// </summary>
@@ -61,6 +64,8 @@ public class Match
     /// ¿Te rendiste?
     /// </summary>
     private bool _youSurrended;
+ 
+
 
     #endregion
 
