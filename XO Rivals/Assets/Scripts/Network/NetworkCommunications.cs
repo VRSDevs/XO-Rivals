@@ -141,6 +141,8 @@ public class NetworkCommunications : MonoBehaviourPun
     /// <param name="obj">Objeto con la información</param>
     public void RPCEndMatch(object[] obj)
     {
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
+        
         switch (obj[0] as string)
         {
             case "WN":
