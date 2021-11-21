@@ -168,6 +168,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
         yield return new WaitUntil(GetReadyStatus);
         
         FindObjectOfType<GameManager>().IsPlaying = true;
+        
+        //Lose life and update server
+        FindObjectOfType<MainMenuController>().ReduceLifes();
+        
         SceneManager.LoadScene("TicTacToe_Server");
     }
     

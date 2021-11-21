@@ -139,7 +139,7 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
-    private void ReduceLifes(){
+    public void ReduceLifes(){
         _localPlayer.Lives--;
         lifesTxt.text = "Lives: " + _localPlayer.Lives;
         lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
@@ -243,8 +243,6 @@ public class MainMenuController : MonoBehaviour
         if (_gameManager.Matchmaking)
         {
             StartCoroutine(ChangeInteractionAfterCm("connect"));
-            //Lose life and update server
-            ReduceLifes();
             ConnectRandomMatch();
             CreateMatchImage.sprite = CancelMatchmakingSprite;
         }
