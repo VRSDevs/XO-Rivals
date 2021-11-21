@@ -81,11 +81,14 @@ public class GameManager : MonoBehaviour
     /// ¿Está jugando?
     /// </summary>
     [NonSerialized] public bool IsPlaying;
-
     /// <summary>
-    /// 
+    /// ¿Está buscando partida?
     /// </summary>
     [NonSerialized] public bool Matchmaking;
+    /// <summary>
+    /// ¿Se rindió?
+    /// </summary>
+    [NonSerialized] public bool Surrendered;
     
     #endregion
 
