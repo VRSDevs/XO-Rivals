@@ -374,6 +374,24 @@ public class MainMenuController : MonoBehaviour
 
     #region OtherMethods
 
+    public void SelectButton1()
+    { 
+        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
+    }
+    public void SelectButton2()
+    { 
+        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
+    }
+    public void SelectButton3()
+    { 
+        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
+    }
+    public void SelectButton4()
+    { 
+        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
+    }
+    
+    
     private void CheckLifesTime(){
 
         recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
