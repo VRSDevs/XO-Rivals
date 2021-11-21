@@ -70,6 +70,15 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
+    /// Método para establecer conexión a una sala en específico
+    /// </summary>
+    /// <param name="name">ID de la sala</param>
+    public void ConnectToSpecificRoom(string name)
+    {
+        StartCoroutine(JoinSpecificRoom(name));
+    }
+
+    /// <summary>
     /// Corutina para tratar de unirse a una sala
     /// </summary>
     /// <returns></returns>
@@ -78,6 +87,15 @@ public class NetworkController : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1);
         
         PhotonNetwork.JoinRandomRoom();
+    }
+
+    /// <summary>
+    /// Corutina para tratar de unirse a una sala específica
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator JoinSpecificRoom(string name)
+    {
+        yield return new WaitForSeconds(1);
     }
 
     /// <summary>
