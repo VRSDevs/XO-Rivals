@@ -95,7 +95,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public void ConnectToSpecificRoom(string name)
     {
         _nameRoom = name;
-        StartCoroutine(JoinSpecificRoom());
+        StartCoroutine(RejoinRoom());
     }
 
     /// <summary>
@@ -114,12 +114,12 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// Corutina para tratar de unirse a una sala específica
     /// </summary>
     /// <returns></returns>
-    private IEnumerator JoinSpecificRoom()
+    private IEnumerator RejoinRoom()
     {
         yield return new WaitForSeconds(1);
 
         _joinType = JoinType.SPECIFIC_ROOM;
-        PhotonNetwork.JoinRoom(_nameRoom);
+        PhotonNetwork.RejoinRoom(_nameRoom);
     }
 
     /// <summary>
