@@ -3392,9 +3392,107 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 1
-  - clip: {fileID: 8300000, guid: 741a341588e1cdc40b7628dae9afe70d, type: 3}
+  - clip: {fileID: 8300000, guid: ccf69dce062307f4db4bdb77b53d5712, type: 3}
     source: {fileID: 0}
-    name: SelecctionButton
+    name: SelecctionButton1
+    type: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: b50203cbfccbd7549a05e0a71838a2cd, type: 3}
+    source: {fileID: 0}
+    name: Defeat
+    type: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: 0cbcb6ea91b040640a4145684908e254, type: 3}
+    source: {fileID: 0}
+    name: Death
+    type: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: ccf69dce062307f4db4bdb77b53d5712, type: 3}
+    source: {fileID: 0}
+    name: SelecctionButton2
+    type: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: d1010f461011d3b45ab0b83bad59cdc1, type: 3}
+    source: {fileID: 0}
+    name: Victory
+    type: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 0}
+    source: {fileID: 0}
+    name: Walk
+    type: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: 6217880113dcc434fb41467e75ef00cd, type: 3}
+    source: {fileID: 0}
+    name: Reload
+    type: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: 36aecaec02d52134db1204409c5bcf87, type: 3}
+    source: {fileID: 0}
+    name: Shot
+    type: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: ccf69dce062307f4db4bdb77b53d5712, type: 3}
+    source: {fileID: 0}
+    name: SelecctionButton3
+    type: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: 47a1d08c4f302684984468a58ca19441, type: 3}
+    source: {fileID: 0}
+    name: Chip
+    type: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 0}
+    source: {fileID: 0}
+    name: Cooking
+    type: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 0}
+    source: {fileID: 0}
+    name: Laberinto
+    type: 0
+    volume: 1
+    pitch: 1
+    loop: 1
+  - clip: {fileID: 0}
+    source: {fileID: 0}
+    name: VictoriaFinal
+    type: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 0}
+    source: {fileID: 0}
+    name: DerrotaFinal
+    type: 1
+    volume: 1
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 0}
+    source: {fileID: 0}
+    name: SelecctionButton4
     type: 1
     volume: 1
     pitch: 1
