@@ -133,6 +133,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded())
             {
                 FindObjectOfType<GameManager>().PlayerMatches.Remove(PhotonNetwork.CurrentRoom.Name);
+                PhotonNetwork.LeaveRoom(false);
             }
         }
         
@@ -154,6 +155,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(roomName, new Photon.Realtime.RoomOptions()
         {
             MaxPlayers = MAX_PLAYERS_INROOM,
+            PlayerTtl = -1
         });
     }
 
