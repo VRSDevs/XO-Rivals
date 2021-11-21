@@ -58,8 +58,6 @@ public class MainMenuController : MonoBehaviour
 
         JoinGameButton.interactable = false;
 
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "";
-
         nameTxt.text = _localPlayer.Name;
         level.text = "Level: " + Math.Truncate(_localPlayer.Level);
         lvlSlider.value = _localPlayer.Level % 1;
