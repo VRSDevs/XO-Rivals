@@ -83,6 +83,9 @@ public class Login : MonoBehaviour
 
         // Limpieza del log
         Log.text = "";
+        
+        FindObjectOfType<AudioManager>().Play("Main_menu");
+
     }
 
     #endregion

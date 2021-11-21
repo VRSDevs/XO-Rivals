@@ -152,6 +152,8 @@ public class MainMenuController : MonoBehaviour
     {
         MainMenuObject.SetActive(false);
         PlayMenuObject.SetActive(true);
+        SceneManager.LoadScene("Login");
+
     }
 
     /// <summary>
