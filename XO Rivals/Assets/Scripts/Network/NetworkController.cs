@@ -206,6 +206,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         }
         else
         {
+            FindObjectOfType<GameManager>().Matchmaking = false;
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
             FindObjectOfType<GameManager>().SetupMatch("X");
             StartCoroutine(StartMatch());
@@ -259,6 +260,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
    
         if (PhotonNetwork.CurrentRoom.PlayerCount != MAX_PLAYERS_INROOM) return;
 
+        FindObjectOfType<GameManager>().Matchmaking = false;
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Jugador encontrado! Empezando partida...";
         FindObjectOfType<GameManager>().SetupMatch("O");
         StartCoroutine(StartMatch());
@@ -342,22 +344,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         return _creatingRoom;
     }
-
-    /*
-    private IEnumerator LeaveInMatch()
-    {
-        yield return new WaitUntil(FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded);
-
-        switch (FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].EndReason)
-        {
-            case 0:
-                break;
-            case 1: 
-                FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
-                break;
-        }
-    }
-    */
 
     /// <summary>
     /// Método para transformar un dato en un valor hash
