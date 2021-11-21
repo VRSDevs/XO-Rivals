@@ -83,36 +83,14 @@ public class ButtonsScript : MonoBehaviour
         startGame();
 
 
+        colocarFichas();
 
-        //SE COLOCAN LAS FICHAS EXISTENTES
-        for (int i = 0; i<9; i++)
-        {
-
-            if (thisMatch.FilledPositions[i%3,i/3] == 0)//Circle
-            {
-                GameObject actual;
-                actual = Instantiate(circleGO, botonesCuadricula[i].position, Quaternion.identity);
-                actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
-                actual.SetActive(true);
-            }
-
-            if (thisMatch.FilledPositions[i % 3, i / 3] == 1)//Cross
-                {
-                GameObject actual;
-                actual = Instantiate(crossGO, botonesCuadricula[i].position, Quaternion.identity);
-                actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
-                actual.SetActive(true);
-            }
-
-        }
-
-
-
+        CheckVictory();
 
         //SI VIENES DE UN MINIJUEGO SE HACE START Y SE ELIGE MINIJUEGO
         if (thisMatch.TurnMoment == 2)
         {
-
+            Debug.Log("AAAAAAAA");
 
             miniWin = (PlayerPrefs.GetInt("minigameWin") == 1);
             Debug.Log(miniWin);
@@ -158,7 +136,7 @@ public class ButtonsScript : MonoBehaviour
 
             }//Fin win
 
-
+            Debug.Log("SE HACE MINIGAMESEÑLECTION");
             screenManager.MinigameSelectionActivation();
 
 
@@ -312,6 +290,31 @@ public class ButtonsScript : MonoBehaviour
 
     }
     
+    public void colocarFichas()
+    {
+
+        //SE COLOCAN LAS FICHAS EXISTENTES
+        for (int i = 0; i < 9; i++)
+        {
+
+            if (thisMatch.FilledPositions[i % 3, i / 3] == 0)//Circle
+            {
+                GameObject actual;
+                actual = Instantiate(circleGO, botonesCuadricula[i].position, Quaternion.identity);
+                actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+                actual.SetActive(true);
+            }
+
+            if (thisMatch.FilledPositions[i % 3, i / 3] == 1)//Cross
+            {
+                GameObject actual;
+                actual = Instantiate(crossGO, botonesCuadricula[i].position, Quaternion.identity);
+                actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+                actual.SetActive(true);
+            }
+
+        }
+    }
     public void CheckVictory(){
 
         bool[] array = new bool[8];

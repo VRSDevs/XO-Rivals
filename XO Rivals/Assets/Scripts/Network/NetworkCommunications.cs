@@ -32,6 +32,7 @@ public class NetworkCommunications : MonoBehaviourPun
     {
         object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject(playerType);
         _View.RPC("PlayerInfoRPC", RpcTarget.Others, (object)objToSend);
+
     }
     
     /// <summary>
@@ -128,11 +129,11 @@ public class NetworkCommunications : MonoBehaviourPun
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
 
                 FindObjectOfType<ButtonsScript>().startGame();
+                FindObjectOfType<ButtonsScript>().colocarFichas();
 
 
 
 
-                
                 break;
             case "OppLost":
                 

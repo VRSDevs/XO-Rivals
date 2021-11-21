@@ -50,10 +50,12 @@ public class ScreenManager : MonoBehaviour
 
         if (buttonsScript.miniWin)
         {
+            Debug.Log("poshemosganao");
             buttonsScript.gameState._networkCommunications.SendMatchInfo("OppWon");
         }
         else
         {
+            Debug.Log("poshemosperdido");
             buttonsScript.gameState._networkCommunications.SendMatchInfo("OppLost");
         }
     }
@@ -79,10 +81,10 @@ public class ScreenManager : MonoBehaviour
         buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = n;
         miniGameChoosing.SetActive(false);
         ticTacScreen.SetActive(true);
-        
+        Debug.Log("PREEEUPDATETUENHECHO");
         //Update turn data and send it to opponent
         UpdateTurn();
-
+        Debug.Log("UPDATETUENHECHO");
         ////Unhide chips
         //for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
         //    buttonsScript.thisMatch.Chips[i].SetActive(true);
