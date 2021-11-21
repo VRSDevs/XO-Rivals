@@ -157,8 +157,8 @@ public class NetworkCommunications : MonoBehaviourPun
     [PunRPC]
     public void RPCEndMatch(object[] obj)
     {
-        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
-        
+
+
         switch (obj[0] as string)
         {
             case "WN":
@@ -169,17 +169,18 @@ public class NetworkCommunications : MonoBehaviourPun
                 }
                 else
                 {
-                    FindObjectOfType<EndGameScript>().ShowMatchDefeat();
+                     FindObjectOfType<EndGameScript>().ShowMatchDefeat();
                 }
 
                 break;
             case "DW":
-                FindObjectOfType<EndGameScript>().ShowMatchDraw();
-                
+                    FindObjectOfType<EndGameScript>().ShowMatchDraw();
+
                 break;
             case "SR":
-                FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
+                    FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
                 break;
+
         }
     }
 
