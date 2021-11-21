@@ -95,7 +95,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public void ConnectToSpecificRoom(string name)
     {
         _nameRoom = name;
-        StartCoroutine(JoinSpecificRoom());
+        StartCoroutine(RejoinRoom());
     }
 
     /// <summary>
@@ -114,12 +114,12 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// Corutina para tratar de unirse a una sala específica
     /// </summary>
     /// <returns></returns>
-    private IEnumerator JoinSpecificRoom()
+    private IEnumerator RejoinRoom()
     {
         yield return new WaitForSeconds(1);
 
         _joinType = JoinType.SPECIFIC_ROOM;
-        PhotonNetwork.JoinRoom(_nameRoom);
+        PhotonNetwork.RejoinRoom(_nameRoom);
     }
 
     /// <summary>
@@ -133,6 +133,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded())
             {
                 FindObjectOfType<GameManager>().PlayerMatches.Remove(PhotonNetwork.CurrentRoom.Name);
+                PhotonNetwork.LeaveRoom(false);
             }
         }
         
@@ -154,6 +155,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(roomName, new Photon.Realtime.RoomOptions()
         {
             MaxPlayers = MAX_PLAYERS_INROOM,
+            PlayerTtl = -1
         });
     }
 
@@ -330,6 +332,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
+        
+        FindObjectOfType<PlayerInfo>().MatchId = -1;
 
         if (SceneManager.GetActiveScene().name.Equals("MainMenu") && !FindObjectOfType<GameManager>().IsPlaying)
         {
