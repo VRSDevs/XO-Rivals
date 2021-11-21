@@ -157,15 +157,10 @@ public class ButtonsScript : MonoBehaviour
             }//Fin win
 
 
-           // screenManager.MinigameSelectionActivation();
+            screenManager.MinigameSelectionActivation();
 
 
 
-
-
-
-
-            // screenManager.MinigameSelectionActivation();
 
         }
        

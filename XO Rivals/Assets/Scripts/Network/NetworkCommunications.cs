@@ -99,7 +99,17 @@ public class NetworkCommunications : MonoBehaviourPun
             case "OppWon":
                 
                 Debug.Log("RPC oponente ganó");
-                
+                Debug.Log(obj[0] as string);
+                Debug.Log(obj[1] as string);
+                Debug.Log((int)obj[2]);
+                Debug.Log((int)obj[3]);
+                Debug.Log((int)obj[4]);
+                Debug.Log((int)obj[5]);
+                Debug.Log((string)obj[6]);
+                Debug.Log(obj[7] as string);
+
+
+
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = obj[1] as string;
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].NumFilled = (int)obj[2];
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions[
