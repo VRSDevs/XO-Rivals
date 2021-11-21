@@ -41,7 +41,7 @@ public class NetworkCommunications : MonoBehaviourPun
     public void SendMatchInfo(string type)
     {
         object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.MatchInfoToObject(type);
-        _View.RPC("RPCUpdateMatch", RpcTarget.Others, (object)objToSend);
+        _View.RPC("RPCUpdateMatch", RpcTarget.OthersBuffered, (object)objToSend);
     }
     
     /// <summary>
@@ -52,7 +52,7 @@ public class NetworkCommunications : MonoBehaviourPun
     public void SendEndMatchInfo(string type, string winner)
     {
         object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.EndMatchInfoToObject(type, winner);
-        _View.RPC("RPCEndMatch", RpcTarget.Others, (object)objToSend);
+        _View.RPC("RPCEndMatch", RpcTarget.OthersBuffered, (object)objToSend);
     }
     
     #endregion
@@ -145,7 +145,7 @@ public class NetworkCommunications : MonoBehaviourPun
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
 
                 FindObjectOfType<ButtonsScript>().startGame();
-                
+
                 break;
         }
     }
