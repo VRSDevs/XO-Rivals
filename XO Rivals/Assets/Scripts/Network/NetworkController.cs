@@ -85,10 +85,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// </summary>
     public void DisconnectFromRoom()
     {
-        if (FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SurrenderStatus() ||
-            FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded())
+        if (FindObjectOfType<GameManager>().IsPlaying)
         {
-            FindObjectOfType<GameManager>().PlayerMatches.Remove(PhotonNetwork.CurrentRoom.Name);
+            if (FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SurrenderStatus() ||
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded())
+            {
+                FindObjectOfType<GameManager>().PlayerMatches.Remove(PhotonNetwork.CurrentRoom.Name);
+            }
         }
         
         PhotonNetwork.LeaveRoom(true);
@@ -256,11 +259,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnLeftRoom();
 
-        if (SceneManager.GetActiveScene().name.Equals("MainMenu") && _creatingRoom)
+        if (SceneManager.GetActiveScene().name.Equals("MainMenu") && !FindObjectOfType<GameManager>().IsPlaying)
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Matchmaking stopped.";
             UpdateCreatingStatus();
         }
+        
+        FindObjectOfType<GameManager>().IsPlaying = false;
     }
 
     /// <summary>
@@ -353,7 +358,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// Método para obtener si se está creando la partida o no
     /// </summary>
     /// <returns></returns>
-    public bool GetCreatingRom()
+    public bool GetCreatingRoom()
     {
         return _creatingRoom;
     }

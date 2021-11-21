@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
     /// <returns>¿Se está creando la partida?</returns>
     public bool GetIsCreatingMatch()
     {
-        return _networkController.GetCreatingRom();
+        return _networkController.GetCreatingRoom();
     }
 
     #endregion
