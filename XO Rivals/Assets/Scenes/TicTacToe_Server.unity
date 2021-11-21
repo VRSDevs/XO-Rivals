@@ -7961,6 +7961,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+--- !u!1 &6299495709025673008 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6299495708482457880, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+  m_PrefabInstance: {fileID: 6299495709025673007}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6299495709025673009 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6299495709463213681, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+  m_PrefabInstance: {fileID: 6299495709025673007}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8973622830539711080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8244,9 +8254,9 @@ MonoBehaviour:
   instructionsCocinitas: {fileID: 932491112}
   instructionsCocinitasLore: {fileID: 620921665}
   instructionsCocinitasInstr: {fileID: 932491111}
-  instructionsLaberinto: {fileID: 1579495259}
+  instructionsLaberinto: {fileID: 6299495709025673009}
   instructionsLaberintoLore: {fileID: 1188183083}
-  instructionsLaberintoInstr: {fileID: 1579495258}
+  instructionsLaberintoInstr: {fileID: 6299495709025673008}
   instructionsPistolero: {fileID: 777539893}
   instructionsPistoleroLore: {fileID: 1053396595}
   instructionsPistoleroInstr: {fileID: 777539892}
@@ -8280,6 +8290,8 @@ MonoBehaviour:
   cross: {fileID: 21300000, guid: 64086e9c27835ba41832875641ae00ee, type: 3}
   circleGO: {fileID: 0}
   crossGO: {fileID: 0}
+  circleTurn: {fileID: 1502975252}
+  crossTurn: {fileID: 815351772}
   nameO: {fileID: 1288534602}
   nameX: {fileID: 1862349900}
   botonesCuadricula:
