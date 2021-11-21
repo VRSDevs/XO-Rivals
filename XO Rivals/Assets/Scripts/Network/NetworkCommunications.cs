@@ -51,7 +51,7 @@ public class NetworkCommunications : MonoBehaviourPun
     public void SendEndMatchInfo(string type, string winner)
     {
         object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.EndMatchInfoToObject(type, winner);
-        _View.RPC("RPCEndMatch", RpcTarget.All, (object)objToSend);
+        _View.RPC("RPCEndMatch", RpcTarget.Others, (object)objToSend);
     }
     
     #endregion
@@ -145,13 +145,19 @@ public class NetworkCommunications : MonoBehaviourPun
         }
     }
     
+    /// <summary>
+    /// RPC recibido en el usuario con la información del final de la partida
+    /// </summary>
+    /// <param name="obj">Objeto con la información</param>
+    [PunRPC]
     public void RPCEndMatch(object[] obj)
     {
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
+        
         switch (obj[0] as string)
         {
-            case "win":
-            case "defeat":
-
+            case "WN":
+            case "DF":
                 if (obj[1].Equals(GameObject.Find("PlayerObject").GetComponent<PlayerInfo>().Name))
                 {
                     FindObjectOfType<EndGameScript>().ShowMatchVictory();
@@ -162,10 +168,12 @@ public class NetworkCommunications : MonoBehaviourPun
                 }
 
                 break;
-            case "draw":
-                
+            case "DW":
                 FindObjectOfType<EndGameScript>().ShowMatchDraw();
                 
+                break;
+            case "SR":
+                FindObjectOfType<EndGameScript>().ShowSurrenderVictory();
                 break;
         }
     }

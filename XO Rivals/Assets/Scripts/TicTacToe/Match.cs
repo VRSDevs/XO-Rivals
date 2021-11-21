@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class Match
 {
     #region Vars
 
-    /*
+    
     /// <summary>
     /// ID de la partida
     /// </summary>
     public string MatchId { get; set; }
-    
+    /*
     /// <summary>
     /// ID del dueño de la partida
     /// </summary>
@@ -45,14 +46,21 @@ public class Match
     /// </summary>
     public int NumFilled { get; set; }
     /// <summary>
-    /// Lista de las fichas
+    /// Array del tablero
+    /// </summary>
+    public int ChosenPosition { get; set; }
+    /// <summary>
+    /// Lista de fichas
     /// </summary>
     public List<GameObject> Chips { get; set; }
-    // <summary>
-    /// Ficha actual
+    /// <summary>
+    /// ¿Terminó la partida?
     /// </summary>
-    public int ActualChip { get; set; }
-    public string ActualChipTeam { get; set; }
+    private bool _ended;
+    /// <summary>
+    /// ¿Te rendiste?
+    /// </summary>
+    private bool _youSurrended;
 
     #endregion
 
@@ -63,13 +71,14 @@ public class Match
     /// </summary>
     public Match()
     {
-        //MatchId = "";
+        MatchId = PhotonNetwork.CurrentRoom.Name;
         //OwnerId = "";
         PlayerOName = "";
         PlayerXName = "";
         WhosTurn = "";
         TurnMoment = 0;
-        MiniGameChosen = Random.Range(0,2);
+        //MiniGameChosen = Random.Range(0,2);
+        MiniGameChosen = 0;
 
         FilledPositions = new int[3, 3];
         for (int i = 0; i < FilledPositions.GetLength(0); i++)
@@ -84,14 +93,52 @@ public class Match
 
         Chips = new List<GameObject>();
 
+        _ended = false;
+        _youSurrended = false;
     }
     
     #endregion
 
-    #region MyRegion
+    #region Getters
 
+    /// <summary>
+    /// Método para obtener si la partida ha finalizado o no
+    /// </summary>
+    /// <returns></returns>
+    public bool IsEnded()
+    {
+        return _ended;
+    }
+
+    /// <summary>
+    /// Método para obtener si el jugador local se rindió o no
+    /// </summary>
+    /// <returns></returns>
+    public bool SurrenderStatus()
+    {
+        return _youSurrended;
+    }
+
+    #endregion
+
+    #region Setters
+
+    /// <summary>
+    /// Método para establecer el valor de si la partida ha terminado o no
+    /// </summary>
+    public void SetIsEnded()
+    {
+        _ended = !_ended;
+    }
+
+    /// <summary>
+    /// Método para establecer el valor de si el jugador local se ha rendido o no
+    /// </summary>
+    public void SetSurrenderStatus()
+    {
+        _youSurrended = !_youSurrended;
+    }
     
-
     #endregion
     
     
