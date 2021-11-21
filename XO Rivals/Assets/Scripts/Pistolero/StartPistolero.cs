@@ -16,7 +16,9 @@ public class StartPistolero : MonoBehaviour
     {
  
         StartCoroutine("Esperar"); //esperamos 3 segundos para que el jugador lea el texto
+
         FindObjectOfType<AudioManager>().StopAllSongs();
+
 
         FindObjectOfType<AudioManager>().ChangeMusic(GunmanMusic,"Tic-Tac-Toe");
         

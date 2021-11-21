@@ -19,6 +19,7 @@ public class TicTacToeController : MonoBehaviour
     {
         _gameManager = FindObjectOfType<GameManager>();
         FindObjectOfType<AudioManager>().StopAllSongs();
+
         FindObjectOfType<AudioManager>().ChangeMusic(Tic_Tac_toe_Music,"Main_menu");
 
     }
