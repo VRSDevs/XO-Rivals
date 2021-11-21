@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
     /// <param name="name"></param>
     public void OnConnectToSpecificRoom(string name)
     {
-        
+        _networkController.ConnectToSpecificRoom(name);
     }
 
     /// <summary>
