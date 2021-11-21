@@ -51,7 +51,7 @@ public class TicTacToeController : MonoBehaviour
     public void Surrender()
     {
         _gameManager.IsPlaying = false;
-        _gameManager.Surrendered = true;
+        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetSurrenderStatus();
         _gameManager._networkCommunications.SendEndMatchInfo("SR", "");
         _gameManager.OnLeaveRoom();
         SceneManager.LoadScene("MainMenu");
