@@ -8,6 +8,17 @@ using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Tipos de salas a las que unirse
+///     RANDOM_ROON - Sala aleatoria
+///     SPECIFIC_ROOM - Sala específica
+/// </summary>
+public enum JoiningRoom
+{
+    RANDOM_ROON,
+    SPECIFIC_ROOM
+}
+
 public class NetworkController : MonoBehaviourPunCallbacks
 {
     #region Variables
