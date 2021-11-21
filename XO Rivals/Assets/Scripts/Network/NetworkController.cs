@@ -259,13 +259,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         base.OnLeftRoom();
 
-        FindObjectOfType<GameManager>().IsPlaying = false;
-
-        if (SceneManager.GetActiveScene().name.Equals("MainMenu") && _creatingRoom)
+        if (SceneManager.GetActiveScene().name.Equals("MainMenu") && !FindObjectOfType<GameManager>().IsPlaying)
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Matchmaking stopped.";
             UpdateCreatingStatus();
         }
+        
+        FindObjectOfType<GameManager>().IsPlaying = false;
     }
 
     /// <summary>
@@ -358,7 +358,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// Método para obtener si se está creando la partida o no
     /// </summary>
     /// <returns></returns>
-    public bool GetCreatingRom()
+    public bool GetCreatingRoom()
     {
         return _creatingRoom;
     }
