@@ -25,7 +25,7 @@ public class ButtonsScript : MonoBehaviour
     public string SelectedTile;
 
     //Variables for victory
-    public int col, row;
+   // public int col, row;
 
     //Minigame chosen
     private int opponentMinigame;
@@ -86,7 +86,7 @@ public class ButtonsScript : MonoBehaviour
 
         colocarFichas();
 
-        //CheckVictory();
+
 
         //SI VIENES DE UN MINIJUEGO SE HACE START Y SE ELIGE MINIJUEGO
         if (thisMatch.TurnMoment == 2)
@@ -134,6 +134,7 @@ public class ButtonsScript : MonoBehaviour
             Debug.Log("SE HACE MINIGAME SELECTION");
             screenManager.MinigameSelectionActivation();
         }
+        CheckVictory();
     }
 
     /// <summary>
@@ -149,16 +150,7 @@ public class ButtonsScript : MonoBehaviour
             {
                 screenManager.EnableButtons();
             }
-            else if(thisMatch.TurnMoment == 1 || thisMatch.TurnMoment == 2){
-                //Go directly to minigame
-                //PlayMinigame();
-            }else if(thisMatch.TurnMoment == 3){
-                //Go to check victory
-                CheckVictory();
-            }else if(thisMatch.TurnMoment == 4){
-                //Go to choose minigame
-                //screenManager.MinigameSelectionActivation();
-            }
+      
         }else{
             //Disable interaction with tictac cause its not your turn
             screenManager.DisableButtons();
@@ -172,11 +164,11 @@ public class ButtonsScript : MonoBehaviour
     public void PlaceTile(int pos){
 
         //Get row and column
-        col = pos % 3;
-        row = pos / 3;
+        //col = pos % 3;
+        //row = pos / 3;
         
         //Check if position is already filled
-        if(thisMatch.FilledPositions[col,row] == 3){
+        if(thisMatch.FilledPositions[pos%3,pos/3] == 3){
             
             //Places a sprite or another depending on player
             GameObject tile = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
@@ -306,9 +298,100 @@ public class ButtonsScript : MonoBehaviour
     public void CheckVictory(){
 
         bool[] array = new bool[8];
+        int col = thisMatch.ActualChip%3;
+        int row = thisMatch.ActualChip / 3;
+        bool win=false;
+        //Primera Fila
+        if (thisMatch.FilledPositions[0 % 3, 0 / 3] != 3 && (thisMatch.FilledPositions[0 % 3, 0 / 3] == thisMatch.FilledPositions[1 % 3, 1 / 3]) && (thisMatch.FilledPositions[1 % 3,1 / 3] == thisMatch.FilledPositions[2 % 3, 2 / 3]))
+        {
+            win = true ;
+        }
+        //Segunda Fila
+        if (thisMatch.FilledPositions[3 % 3, 3 / 3] != 3 && (thisMatch.FilledPositions[3 % 3, 3 / 3] == thisMatch.FilledPositions[4 % 3, 4 / 3]) && (thisMatch.FilledPositions[4 % 3, 4 / 3] == thisMatch.FilledPositions[5 % 3, 5 / 3]))
+        {
+            win = true;
+        }
+        //Tercera Fila
+        if (thisMatch.FilledPositions[6 % 3, 6 / 3] != 3 && (thisMatch.FilledPositions[6 % 3, 6 / 3] == thisMatch.FilledPositions[7 % 3, 7 / 3]) && (thisMatch.FilledPositions[7 % 3, 7 / 3] == thisMatch.FilledPositions[8 % 3, 8 / 3]))
+        {
+            win = true;
+        }
+        //Primera columna
+        if (thisMatch.FilledPositions[0 % 3, 0 / 3] != 3 && (thisMatch.FilledPositions[0 % 3, 0 / 3] == thisMatch.FilledPositions[3 % 3, 3 / 3]) && (thisMatch.FilledPositions[3 % 3, 3 / 3] == thisMatch.FilledPositions[6 % 3, 6 / 3]))
+        {
+            win = true;
+        }
+        //Segunda columna
+        if (thisMatch.FilledPositions[1 % 3, 1 / 3] != 3 &&  (thisMatch.FilledPositions[1 % 3, 1 / 3] == thisMatch.FilledPositions[4 % 3, 4 / 3]) && (thisMatch.FilledPositions[4 % 3, 4 / 3] == thisMatch.FilledPositions[7 % 3, 7 / 3]))
+        {
+            win = true;
+        }
+        //Tercera columna
+        if (thisMatch.FilledPositions[2 % 3, 2 / 3] != 3 && (thisMatch.FilledPositions[2 % 3, 2 / 3] == thisMatch.FilledPositions[5 % 3, 5 / 3]) && (thisMatch.FilledPositions[5 % 3, 5 / 3] == thisMatch.FilledPositions[8 % 3, 8 / 3]))
+        {
+            win = true;
+        }
+        //Primera diagonal
+        if (thisMatch.FilledPositions[0 % 3, 0 / 3] != 3 && (thisMatch.FilledPositions[0 % 3, 0 / 3] == thisMatch.FilledPositions[4 % 3, 4 / 3]) && (thisMatch.FilledPositions[4 % 3, 4 / 3] == thisMatch.FilledPositions[8 % 3, 8 / 3]))
+        {
+            win = true;
+        }
+        //Segunda diagonal
+        if (thisMatch.FilledPositions[2 % 3, 2 / 3] != 3 && (thisMatch.FilledPositions[2 % 3, 2 / 3] == thisMatch.FilledPositions[4 % 3,4 / 3]) && (thisMatch.FilledPositions[4 % 3, 4 / 3] == thisMatch.FilledPositions[6 % 3, 6 / 3]))
+        {
+            win = true;
+        }
+
+
+
+        if (win)
+        {
+            Debug.Log("HASA GAANAO");
+            gameState.IsPlaying = false;
+
+            //Call endgame
+            if (thisMatch.FilledPositions[col, row] == 0)
+            {
+                Debug.Log("CIRCLE WIN");
+
+                if (localPlayer.Name == thisMatch.PlayerOName)
+                {
+                    gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                }
+                else
+                {
+                    gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                }
+            }
+            else
+            {
+                Debug.Log("CROSS WINS");
+
+                if (localPlayer.Name == thisMatch.PlayerXName)
+                {
+                   gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                }
+                else
+                {
+                   gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                }
+            }
+            
+        }
+
+
+
+
+
+
+
+
+
+
+        /*
 
         //Fill array with true every loop
-        for(int w = 0; w < 8; w++){
+        for (int w = 0; w < 8; w++){
             array[w] = true;
         }
 
@@ -318,12 +401,13 @@ public class ButtonsScript : MonoBehaviour
         }
 
         //If they dont add 2, they are not on the secondary diagonal
-        if(col+row != 2){
+        if(col + row != 2){
             array[7] = false;
         }
 
         //Check column
-        switch(col){
+        switch(col)
+        {
             case 0:
                 array[1] = array[2] = false;
             break;
@@ -364,8 +448,12 @@ public class ButtonsScript : MonoBehaviour
                 win = TestDiag(i%6);
             }
 
-            if(win)
+            Debug.Log("HASA NO O SI GAANAO");
+
+        
+            if (win)
             {
+                Debug.Log("HASA GAANAO");
                 gameState.IsPlaying = false;
                 
                 //Call endgame
@@ -408,13 +496,15 @@ public class ButtonsScript : MonoBehaviour
             i++;
         }while(i < 8);
 
+        */
+
         //Table full (draw)
-        if(thisMatch.NumFilled == 9){
+        if (thisMatch.NumFilled == 9){
             Debug.Log("Draw");
             gameState._networkCommunications.SendEndMatchInfo("draw", "");
         }
 
-        thisMatch.TurnMoment = 4;
+        //thisMatch.TurnMoment = 4;
         //Go to selectMinigame for opponent
         //screenManager.MinigameSelectionActivation();
     }

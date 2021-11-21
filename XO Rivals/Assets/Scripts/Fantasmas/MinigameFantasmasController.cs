@@ -35,8 +35,8 @@ public class MinigameFantasmasController : MonoBehaviour
             downButton.SetActive(false);
         }
         
+        FindObjectOfType<AudioManager>().StopAllSongs();
         FindObjectOfType<AudioManager>().ChangeMusic(MusicaBosque,"Tic-Tac-Toe");
-
     }
 
     // Update is called once per frame

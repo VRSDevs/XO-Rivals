@@ -20,6 +20,7 @@ public class Cronometro : MonoBehaviour
     public float timeEnemy=-1;
     public float maxEnemy = 2f;
     public CambioEscenaDerrotaVictoria cambioEscena;
+    public GameObject pergamino;
 
     // Update is called once per frame
     void Update()
@@ -116,10 +117,12 @@ public class Cronometro : MonoBehaviour
 
             if (decimasEnemy < 10) //si son mas peque�s que 10 no sale el 0 de antes
             {
+                pergamino.SetActive(true);
                 textoExplicativo.text = "VICTORY AGAINST " + segundosEnemy + ":" + "0"+ decimasEnemy + "\n \n Your time:";
             }
             else
             {
+                pergamino.SetActive(true);
                 textoExplicativo.text = "VICTORY AGAINST " + segundosEnemy + ":" + decimasEnemy + "\n \n Your time:";
             }
 
@@ -134,10 +137,12 @@ public class Cronometro : MonoBehaviour
             //StartCoroutine("EsperarD");
             if (decimasEnemy < 10) //si son mas peque�s que 10 no sale el 0 de antes
             {
+                pergamino.SetActive(true);
                 textoExplicativo.text = "LOST AGAINST " + segundosEnemy + ":" + "0"+decimasEnemy + "\n \n Your time:";
             }
             else
             {
+                pergamino.SetActive(true);
                 textoExplicativo.text = "LOST AGAINST " + segundosEnemy + ":" + decimasEnemy + "\n \n Your time:";
             }
 

@@ -229,9 +229,9 @@ public class GameManager : MonoBehaviour
                 objOppWon[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
                 objOppWon[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].NumFilled;
                 objOppWon[3] = FindObjectOfType<ButtonsScript>().thisMatch.ActualChip%3;
-                Debug.Log(FindObjectOfType<ButtonsScript>().col + "col");
+               
                 objOppWon[4] = FindObjectOfType<ButtonsScript>().thisMatch.ActualChip /3;
-                Debug.Log(FindObjectOfType<ButtonsScript>().col + "row");
+                
                 objOppWon[5] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions[
                     FindObjectOfType<ButtonsScript>().thisMatch.ActualChip % 3,
                    FindObjectOfType<ButtonsScript>().thisMatch.ActualChip / 3

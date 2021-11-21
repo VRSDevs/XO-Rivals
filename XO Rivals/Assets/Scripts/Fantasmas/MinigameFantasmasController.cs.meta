@@ -3,7 +3,12 @@ guid: db9e8e747507d3443919ebb172e05c7a
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - leftButton: {instanceID: 0}
+  - rightButton: {instanceID: 0}
+  - upButton: {instanceID: 0}
+  - downButton: {instanceID: 0}
+  - MusicaBosque: {fileID: 8300000, guid: 96c8795bac58a87419b06f87c4c2d479, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
