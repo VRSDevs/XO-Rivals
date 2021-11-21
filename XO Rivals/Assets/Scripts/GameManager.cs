@@ -39,11 +39,7 @@ public class GameManager : MonoBehaviour
     /// ¿Está buscando partida?
     /// </summary>
     [NonSerialized] public bool Matchmaking;
-    /// <summary>
-    /// ¿Se rindió?
-    /// </summary>
-    [NonSerialized] public bool Surrendered;
-    
+
     #endregion
 
     #region UnityCB
@@ -56,8 +52,7 @@ public class GameManager : MonoBehaviour
         PlayerMatches = new Dictionary<string, Match>();
         Matchmaking = false;
         IsPlaying = false;
-        Surrendered = false;
-        
+
         DontDestroyOnLoad(this);
     }
 
@@ -308,7 +303,6 @@ public class GameManager : MonoBehaviour
         PlayerMatches.Clear();
         Matchmaking = false;
         IsPlaying = false;
-        Surrendered = false;
     }
 
     #endregion
