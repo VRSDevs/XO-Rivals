@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Random = UnityEngine.Random;
 using PlayFab;
+using TMPro;
 
 public class ButtonsScript : MonoBehaviour
 {
@@ -15,6 +16,12 @@ public class ButtonsScript : MonoBehaviour
     [SerializeField] private Sprite cross;
     public GameObject circleGO;
     public GameObject crossGO;
+    private GameObject circleTurn;
+    private GameObject crossTurn;
+
+    //Player names
+    [SerializeField] private TextMeshProUGUI nameO;
+    [SerializeField] private TextMeshProUGUI nameX;
 
     public List<Transform> botonesCuadricula;
 
@@ -81,12 +88,20 @@ public class ButtonsScript : MonoBehaviour
         + thisMatch.FilledPositions[2,0] + " " + thisMatch.FilledPositions[2,1] + " " + thisMatch.FilledPositions[2,2]);
         Debug.Log("Minigame chosen: " + thisMatch.MiniGameChosen);
 
+        //Activate player turn tile
+        if(thisMatch.WhosTurn == thisMatch.PlayerOName){
+            circleTurn.SetActive(true);
+        }else{
+            crossTurn.SetActive(true);
+        }
+
+        //Set name to each player
+        nameO.text = thisMatch.PlayerOName;
+        nameX.text = thisMatch.PlayerXName;
+
         startGame();
 
-
         colocarFichas();
-
-
 
         //SI VIENES DE UN MINIJUEGO SE HACE START Y SE ELIGE MINIJUEGO
         if (thisMatch.TurnMoment == 2)
@@ -347,7 +362,7 @@ public class ButtonsScript : MonoBehaviour
         if (win)
         {
             Debug.Log("HASA GAANAO");
-            gameState.IsPlaying = false;
+                    FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
 
             //Call endgame
             if (thisMatch.FilledPositions[col, row] == 0)
@@ -356,11 +371,13 @@ public class ButtonsScript : MonoBehaviour
 
                 if (localPlayer.Name == thisMatch.PlayerOName)
                 {
-                    gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                    FindObjectOfType<EndGameScript>().ShowMatchVictory();
+                    gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                 }
                 else
-                {
-                    gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                { 
+                    FindObjectOfType<EndGameScript>().ShowMatchDefeat();
+                    gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                 }
             }
             else
@@ -369,12 +386,16 @@ public class ButtonsScript : MonoBehaviour
 
                 if (localPlayer.Name == thisMatch.PlayerXName)
                 {
-                   gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                   FindObjectOfType<EndGameScript>().ShowMatchVictory();
+                   gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                 }
                 else
                 {
-                   gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                    FindObjectOfType<EndGameScript>().ShowMatchDefeat();
+                    gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                 }
+
+
             }
             
         }
@@ -501,7 +522,8 @@ public class ButtonsScript : MonoBehaviour
         //Table full (draw)
         if (thisMatch.NumFilled == 9){
             Debug.Log("Draw");
-            gameState._networkCommunications.SendEndMatchInfo("draw", "");
+            FindObjectOfType<EndGameScript>().ShowMatchDraw();
+            gameState._networkCommunications.SendEndMatchInfo("DW", "");
         }
 
         //thisMatch.TurnMoment = 4;
