@@ -141,11 +141,25 @@ public class MainMenuController : MonoBehaviour
 
     #region MatchMethods
 
+    /// <summary>
+    /// Método para conectarse a una sala aleatoria
+    /// </summary>
     private void ConnectRandomMatch()
     {
         _gameManager.OnConnectToRoom();
     }
 
+    /// <summary>
+    /// Método para conectarse a una sala en específico
+    /// </summary>
+    private void ConnectToMatch()
+    {
+        _gameManager.OnConnectToSpecificRoom(_matchToJoin.MatchId);
+    }
+
+    /// <summary>
+    /// Método para abandonar la búsqueda de partidas
+    /// </summary>
     private void LeaveMatchmaking()
     {
         _gameManager.OnLeaveRoom();
@@ -207,7 +221,7 @@ public class MainMenuController : MonoBehaviour
         CreateGameButton.interactable = false;
         JoinGameButton.interactable = false;
         
-        
+        ConnectToMatch();
     }
 
     /// <summary>
