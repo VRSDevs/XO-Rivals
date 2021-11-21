@@ -88,13 +88,9 @@ public class PlatformMinigameController : MonoBehaviour
             jumpButton.SetActive(false);
             rightButton.SetActive(false);
         }
-
-
+        
         FindObjectOfType<AudioManager>().StopAllSongs();
-
-
         FindObjectOfType<AudioManager>().ChangeMusic(PlatformMusic,"Tic-Tac-Toe");
-
     }
 
     // Update is called once per frame
