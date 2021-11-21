@@ -7617,7 +7617,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   screenTxt: {fileID: 1645783950}
   miniGameChoosing: {fileID: 182991351}
-  ticTacScreen: {fileID: 8973622830577669342}
   buttonsScript: {fileID: 8973622830952278642}
   buttonsReference:
   - {fileID: 8973622832333863753}

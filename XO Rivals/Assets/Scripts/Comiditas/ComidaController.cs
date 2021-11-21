@@ -157,7 +157,6 @@ public class ComidaController : MonoBehaviour
     {
         PlayerPrefs.SetInt("minigameWin", 0);
         FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
-        //SceneManager.UnloadSceneAsync("MinijuegoComida");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 
@@ -165,7 +164,6 @@ public class ComidaController : MonoBehaviour
     {
         PlayerPrefs.SetInt("minigameWin", 1);
         FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
-        //SceneManager.UnloadSceneAsync("MinijuegoComida");
         SceneManager.LoadScene("TicTacToe_Server");
     }
 
