@@ -25,7 +25,7 @@ public class PlayerInfo : MonoBehaviour {
     /// <summary>
     /// Vidas del jugador
     /// </summary>
-    [FormerlySerializedAs("Lifes")] public int Lives;
+    public int Lives;
     /// <summary>
     /// Instante de ultima vida perdida
     /// </summary>
