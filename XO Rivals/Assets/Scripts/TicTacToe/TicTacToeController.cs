@@ -36,7 +36,7 @@ public class TicTacToeController : MonoBehaviour
     }
 
     /// <summary>
-    /// Método para acabar la partida (tras condición de victoria/derrota)
+    /// Método para salir de la partida
     /// </summary>
     public void EndMatch()
     {
