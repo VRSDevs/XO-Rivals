@@ -31,9 +31,7 @@ public class SFXManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        managerBoton = GetComponent<AudioSource>();
-        FindObjectOfType<SoundsManager>().Play("Tic-Tac-Toe");
-
+   
     }
     
     // Update is called once per frame

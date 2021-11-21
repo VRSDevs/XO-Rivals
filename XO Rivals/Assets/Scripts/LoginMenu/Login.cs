@@ -12,6 +12,7 @@ using UnityEngine;
 ///     REGISTER - Registrarse
 ///     LOGIN - Iniciar sesión
 /// </summary>
+/// 
 [Serializable]
 public enum LoginMode
 {
@@ -82,6 +83,9 @@ public class Login : MonoBehaviour
 
         // Limpieza del log
         Log.text = "";
+        
+        FindObjectOfType<SoundsManager>().Play("Tic-Tac-Toe");
+
     }
 
     #endregion
