@@ -3204,7 +3204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopText: {fileID: 384502195}
-  _mainController: {fileID: 0}
+  _mainController: {fileID: 1544971429}
 --- !u!1 &458155885
 GameObject:
   m_ObjectHideFlags: 0
