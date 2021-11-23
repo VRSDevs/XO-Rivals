@@ -19,6 +19,7 @@ public class PerderyGanar : MonoBehaviour
     public int seconds =3;
     public Text textoSegundos;
     public Text textoCuentaAtras;
+    public GameObject crono;
     public List<GameObject> enemigos;
     private bool lost = false;
 
@@ -26,6 +27,8 @@ public class PerderyGanar : MonoBehaviour
     void Start()
     {
         textoCuentaAtras.text = "" + seconds;
+        textoSegundos.gameObject.SetActive(false);
+        crono.SetActive(false);
         StartCoroutine(cuentaAtras()); //PRIMERO HACEMOS LA CUENTA ATRAS
     }
 
@@ -77,6 +80,8 @@ public class PerderyGanar : MonoBehaviour
 
         if (seconds ==1)
         {
+            textoSegundos.gameObject.SetActive(true);
+            crono.SetActive(true);
             seconds = 0;
             textoCuentaAtras.text = "";
             textoSegundos.text = "" + seconds;

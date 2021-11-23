@@ -1,14 +1,17 @@
 ---
-name: Informe de Bugs
+name: Informe de Bugs (Alto)
 about: Crea informes de bugs para mejorar el producto
-title: "[BUG]"
-labels: bug
+title: "[BUG - HGH]"
+labels: bug, high-impact
 assignees: ''
 
 ---
 
 **Descripción**
 Descripción del fallo del producto.
+
+**Impacto**
+- Alto.
 
 **Pasos**
 Pasos para reproducir el error:

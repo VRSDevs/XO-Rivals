@@ -83,14 +83,11 @@ public class ButtonsScript : MonoBehaviour
         if (change)
         {
             if (localPlayer.Name == thisMatch.PlayerXName)
-            {
-             
+            {             
                 TurnoPlayer = thisMatch.PlayerXName;
-
             }
             else
-            {
-                
+            {                
                 TurnoPlayer = thisMatch.PlayerOName;
             }
         }
@@ -424,10 +421,7 @@ public class ButtonsScript : MonoBehaviour
 
 
         if (win)
-        {
-            Debug.Log("HASA GAANAO");
-           
-
+        {  
             //Call endgame
             if (thisMatch.FilledPositions[col, row] == 0)
             {
@@ -435,12 +429,16 @@ public class ButtonsScript : MonoBehaviour
 
                 if (localPlayer.Name == thisMatch.PlayerOName)
                 {
+                    localPlayer.Level += 0.75f;
+                    UpdateLevel();
                     FindObjectOfType<EndGameScript>().ShowMatchVictory();
                     gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                     FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
                 }
                 else
-                { 
+                {
+                    localPlayer.Level += 0.75f;
+                    UpdateLevel();
                     FindObjectOfType<EndGameScript>().ShowMatchDefeat();
                     gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                 }
@@ -451,7 +449,7 @@ public class ButtonsScript : MonoBehaviour
 
                 if (localPlayer.Name == thisMatch.PlayerXName)
                 {
-                   FindObjectOfType<EndGameScript>().ShowMatchVictory();
+                    FindObjectOfType<EndGameScript>().ShowMatchVictory();
                     FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
                     gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                 }

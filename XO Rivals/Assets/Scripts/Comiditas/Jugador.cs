@@ -44,7 +44,8 @@ public class Jugador : MonoBehaviour
         {
             horizontal = -1;
         }
-        else if (Input.GetKeyUp("a"))
+        
+        if (Input.GetKeyUp("a"))
         {
             horizontal = 0;
         }
@@ -53,7 +54,8 @@ public class Jugador : MonoBehaviour
         {
             horizontal = 1;
         }
-        else if (Input.GetKeyUp("d"))
+        
+        if (Input.GetKeyUp("d"))
         {
             horizontal = 0;
         }

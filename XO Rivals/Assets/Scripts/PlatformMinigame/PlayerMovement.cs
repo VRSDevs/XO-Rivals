@@ -51,7 +51,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown("d"))
         {
             horizontal = 1;
-        } else if (Input.GetKeyUp("d"))
+        }  
+        if (Input.GetKeyUp("d"))
         {
             horizontal = 0;
         }
