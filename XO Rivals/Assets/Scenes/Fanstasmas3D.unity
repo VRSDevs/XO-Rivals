@@ -19144,6 +19144,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1422603569 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1743640870112771972, guid: ae3095e677aa0c442b782badd7469b0c, type: 3}
+  m_PrefabInstance: {fileID: 112524577}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1422603570 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1743640870112771975, guid: ae3095e677aa0c442b782badd7469b0c, type: 3}
@@ -20417,6 +20422,7 @@ MonoBehaviour:
   seconds: 3
   textoSegundos: {fileID: 2037286823}
   textoCuentaAtras: {fileID: 1399082909}
+  crono: {fileID: 1422603569}
   enemigos:
   - {fileID: 961382801}
   - {fileID: 598204778}
@@ -23470,6 +23476,7 @@ MonoBehaviour:
   seconds: 3
   textoSegundos: {fileID: 2037286823}
   textoCuentaAtras: {fileID: 1399082909}
+  crono: {fileID: 0}
   enemigos:
   - {fileID: 961382801}
   - {fileID: 598204778}
