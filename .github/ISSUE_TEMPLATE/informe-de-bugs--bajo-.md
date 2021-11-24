@@ -1,8 +1,9 @@
 ---
-name: Informe de Bugs (Bajo)
-about: Crea informes de bugs para mejorar el producto
-title: "[BUG - LOW]"
-labels: bug, low-impact
+name: Informe de Bugs (Balanceo)
+about: 'Se busca que el juego sea justo y equilibrado, tanto para jugadores como para
+  la IA. '
+title: "[BUG - BAL][IMP]"
+labels: bug
 assignees: ''
 
 ---
@@ -11,7 +12,7 @@ assignees: ''
 Descripción del fallo del producto.
 
 **Impacto**
-- Bajo
+- 
 
 **Pasos**
 Pasos para reproducir el error:
