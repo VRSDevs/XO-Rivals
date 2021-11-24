@@ -1,9 +1,8 @@
 ---
-name: Informe de Bugs (Balanceo)
-about: 'Se busca que el juego sea justo y equilibrado, tanto para jugadores como para
-  la IA. '
-title: "[BUG/INV - BAL][IMP]"
-labels: balanceo
+name: Informe de Bugs (Jugabilidad)
+about: 'Errores basados en perspectivas: diversión y evaluación de mecánicas'
+title: "[BUG/INV - JUG][IMP]"
+labels: jugabilidad
 assignees: ''
 
 ---

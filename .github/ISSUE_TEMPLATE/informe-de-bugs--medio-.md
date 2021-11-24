@@ -1,8 +1,9 @@
 ---
 name: Informe de Bugs (Medio)
-about: Crea informes de bugs para mejorar el producto
-title: "[BUG - MED]"
-labels: bug, medium-impact
+about: Se realizan pruebas para ver si los juegos están adecuadamente adaptados a
+  una u otra región
+title: "[BUG/INV - LOC][IMP]"
+labels: localización
 assignees: ''
 
 ---
@@ -11,7 +12,7 @@ assignees: ''
 Descripción del fallo del producto.
 
 **Impacto**
-- Medio.
+- 
 
 **Pasos**
 Pasos para reproducir el error:

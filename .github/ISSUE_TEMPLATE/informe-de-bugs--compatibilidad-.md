@@ -1,9 +1,8 @@
 ---
-name: Informe de Bugs (Balanceo)
-about: 'Se busca que el juego sea justo y equilibrado, tanto para jugadores como para
-  la IA. '
-title: "[BUG/INV - BAL][IMP]"
-labels: balanceo
+name: Informe de Bugs (Compatibilidad)
+about: Pruebas con distinto hardware para garantizar la compatibilidad
+title: "[BUG/INV - CMP][IMP]"
+labels: compatibilidad
 assignees: ''
 
 ---
