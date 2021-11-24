@@ -2,7 +2,7 @@
 name: Informe de Bugs (Crítico)
 about: Crea informes de bugs para mejorar el producto
 title: "[BUG - CRT]"
-labels: bug, critical-impact
+labels: bug
 assignees: ''
 
 ---
