@@ -1,7 +1,7 @@
 ---
 name: Informe de Bugs (Jugabilidad)
 about: 'Errores basados en perspectivas: diversión y evaluación de mecánicas'
-title: "[BUG/INV - JUG][IMP]"
+title: "[BUG/INV/MEJ - JUG][IMP]"
 labels: jugabilidad
 assignees: ''
 
@@ -11,6 +11,9 @@ assignees: ''
 Descripción del fallo del producto.
 
 **Impacto**
+- 
+
+**Plataforma**
 - 
 
 **Pasos**

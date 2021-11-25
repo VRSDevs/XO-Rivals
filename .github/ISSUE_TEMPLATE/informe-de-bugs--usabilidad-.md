@@ -1,7 +1,7 @@
 ---
 name: Informe de Bugs (Usabilidad)
 about: Análisis de la facilidad de uso del juego, controles...
-title: "[BUG/INV - USB][IMP]"
+title: "[BUG/INV/MEJ - USB][IMP]"
 labels: usabilidad
 assignees: ''
 
@@ -11,6 +11,9 @@ assignees: ''
 Descripción del fallo del producto.
 
 **Impacto**
+- 
+
+**Plataforma**
 - 
 
 **Pasos**

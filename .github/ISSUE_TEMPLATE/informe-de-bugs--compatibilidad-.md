@@ -1,7 +1,7 @@
 ---
 name: Informe de Bugs (Compatibilidad)
 about: Pruebas con distinto hardware para garantizar la compatibilidad
-title: "[BUG/INV - CMP][IMP]"
+title: "[BUG/INV/MEJ - CMP][IMP]"
 labels: compatibilidad
 assignees: ''
 
@@ -11,6 +11,9 @@ assignees: ''
 Descripción del fallo del producto.
 
 **Impacto**
+- 
+
+**Plataforma**
 - 
 
 **Pasos**

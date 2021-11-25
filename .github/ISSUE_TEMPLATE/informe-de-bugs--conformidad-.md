@@ -1,7 +1,7 @@
 ---
 name: Informe de Bugs (Conformidad)
 about: Se trata de certificar el funcionamiento
-title: "[BUG/INV - CNF][IMP]"
+title: "[BUG/INV/MEJ - CNF][IMP]"
 labels: conformidad
 assignees: ''
 
@@ -11,6 +11,9 @@ assignees: ''
 Descripción del fallo del producto.
 
 **Impacto**
+- 
+
+**Plataforma**
 - 
 
 **Pasos**

@@ -1,7 +1,7 @@
 ---
 name: Informe de Bugs (Otros)
 about: Otros tipos de errores
-title: "[BUG/INV - OTR][IMP]"
+title: "[BUG/INV/MEJ - OTR][IMP]"
 labels: otros
 assignees: ''
 
@@ -11,6 +11,9 @@ assignees: ''
 Descripción del fallo del producto.
 
 **Impacto**
+- 
+
+**Plataforma**
 - 
 
 **Pasos**

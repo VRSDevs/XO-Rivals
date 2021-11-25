@@ -2,7 +2,7 @@
 name: Informe de Bugs (Balanceo)
 about: 'Se busca que el juego sea justo y equilibrado, tanto para jugadores como para
   la IA. '
-title: "[BUG/INV - BAL][IMP]"
+title: "[BUG/INV/MEJ - BAL][IMP]"
 labels: balanceo
 assignees: ''
 
@@ -12,6 +12,9 @@ assignees: ''
 Descripción del fallo del producto.
 
 **Impacto**
+- 
+
+**Plataforma**
 - 
 
 **Pasos**

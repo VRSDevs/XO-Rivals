@@ -2,7 +2,7 @@
 name: Informe de Bugs (Localización)
 about: Se realizan pruebas para ver si los juegos están adecuadamente adaptados a
   una u otra región
-title: "[BUG/INV - LOC][IMP]"
+title: "[BUG/INV/MEJ - LOC][IMP]"
 labels: localización
 assignees: ''
 
@@ -12,6 +12,9 @@ assignees: ''
 Descripción del fallo del producto.
 
 **Impacto**
+- 
+
+**Plataforma**
 - 
 
 **Pasos**
