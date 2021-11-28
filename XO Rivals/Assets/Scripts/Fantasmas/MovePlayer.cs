@@ -100,9 +100,18 @@ public class MovePlayer : MonoBehaviour
         }
 
 
+        //ARRIBA
+        if (vertical == 1 && horizontal == 0)
+        {
+            transform.rotation = quatT;
+        }
+        //ABAJO
+        if (vertical == -1 && horizontal == 0)
+        {
+            transform.rotation = quatB;
+        }
 
 
-        
 
     }
 
@@ -143,7 +152,17 @@ public class MovePlayer : MonoBehaviour
         {
             transform.rotation = quatTL;
         }
+        //DERECHA
+        if (horizontal == 1 && vertical == 0)
+        {
+            transform.rotation = quatR;
+        }
 
+        //IZQUIERDA
+        if (horizontal == -1 && vertical == 0)
+        {
+            transform.rotation = quatL;
+        }
     }
 
     public void MoveLeft()
