@@ -8,14 +8,21 @@ public class MovePlayer : MonoBehaviour
 
     //POSICION NEGRO = x:Plyaer +0.7    y:p�layer -0.87
     [SerializeField] private float speed = 8;
-    private float horizontal;
-    private float vertical;
+    public float horizontal;
+    public float vertical;
     private Rigidbody player;
 
+    //ROTACIONES NORMALES
     private Quaternion quatR = new Quaternion(0.7071068f,0,0, 0.7071068f);
     private Quaternion quatL = new Quaternion(0, -0.7071068f, 0.7071068f,0);
     private Quaternion quatT = new Quaternion(0.5000001f,-0.5000001f, 0.5000001f, 0.5000001f);
     private Quaternion quatB = new Quaternion(-0.5000001f, -0.5000001f, 0.5000001f, -0.5000001f);
+
+    //ROTACIONES DIAGONALES
+    private Quaternion quatBR = new Quaternion(0.6532816f, 0.2705981f, -0.2705981f, 0.6532816f);
+    private Quaternion quatTR = new Quaternion(0.6532816f, -0.2705981f, 0.2705981f, 0.6532816f);
+    private Quaternion quatBL = new Quaternion(-0.2705979f, -0.6532816f, 0.6532816f, -0.2705979f);
+    private Quaternion quatTL = new Quaternion(0.2705981f, -0.6532816f, 0.6532816f, 0.2705981f);
 
 
 
@@ -29,7 +36,7 @@ public class MovePlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+      
     }
 
     // Update is called once per frame
@@ -46,8 +53,8 @@ public class MovePlayer : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {   
-
+    {
+   
     }
 
 
@@ -55,28 +62,88 @@ public class MovePlayer : MonoBehaviour
     {
 
         horizontal = context.ReadValue<Vector2>().x;
-        if (horizontal == 1)
+
+        //DERECHA
+        if (horizontal == 1 && vertical == 0)
         {
             transform.rotation = quatR;
         }
-        if (horizontal == -1)
+
+        //IZQUIERDA
+        if (horizontal == -1 && vertical == 0)
         {
             transform.rotation = quatL;
         }
+
+        //ABAJO DERECHA
+        if (vertical == -0.707107f && horizontal == 0.707107f)
+        {
+            transform.rotation = quatBR;
+        }
+
+        //ABAJO IZQUIERDA
+        if (vertical == -0.707107f && horizontal == -0.707107f)
+        {
+            transform.rotation = quatBL;
+        }
+
+        //ARRIBA DERECHA
+        if (vertical == 0.707107f && horizontal == 0.707107f)
+        {
+            transform.rotation = quatTR;
+        }
+
+        //ARRIBA IZQUIERDA
+        if (vertical == 0.707107f && horizontal == -0.707107f)
+        {
+            transform.rotation = quatTL;
+        }
+
+
+
+
+        
 
     }
 
     public void MoveVertical(InputAction.CallbackContext context)
     {
         vertical = context.ReadValue<Vector2>().y;
-        if (vertical == 1)
+        //ARRIBA
+        if (vertical == 1 && horizontal == 0)
         {
             transform.rotation = quatT;
         }
-        if (vertical == -1)
+        //ABAJO
+        if (vertical == -1 && horizontal == 0)
         {
             transform.rotation = quatB;
         }
+
+        //ABAJO DERECHA
+        if (vertical == -0.707107f && horizontal == 0.707107f)
+        {
+            transform.rotation = quatBR;
+        }
+
+        //ABAJO IZQUIERDA
+        if (vertical == -0.707107f && horizontal == -0.707107f)
+        {
+            transform.rotation = quatBL;
+        }
+
+        //ARRIBA DERECHA
+        if (vertical == 0.707107f && horizontal == 0.707107f)
+        {
+            transform.rotation = quatTR;
+        }
+
+        //ARRIBA IZQUIERDA
+        if (vertical == 0.707107f && horizontal == -0.707107f)
+        {
+            transform.rotation = quatTL;
+        }
+
     }
 
     public void MoveLeft()
