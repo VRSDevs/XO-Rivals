@@ -12,6 +12,11 @@ public class MovePlayer : MonoBehaviour
     private float vertical;
     private Rigidbody player;
 
+    private Quaternion quatR = new Quaternion(0.7071068f,0,0, 0.7071068f);
+    private Quaternion quatL = new Quaternion(0, -0.7071068f, 0.7071068f,0);
+    private Quaternion quatT = new Quaternion(0.5000001f,-0.5000001f, 0.5000001f, 0.5000001f);
+    private Quaternion quatB = new Quaternion(-0.5000001f, -0.5000001f, 0.5000001f, -0.5000001f);
+
 
 
     private bool vivo = true;
@@ -60,11 +65,13 @@ public class MovePlayer : MonoBehaviour
     public void MoveLeft()
     {
         horizontal = -1;
+        transform.rotation = quatL;
     }
 
     public void MoveRight()
     {
         horizontal = 1;
+        transform.rotation = quatR;
     }
 
     public void Stop()
@@ -75,9 +82,11 @@ public class MovePlayer : MonoBehaviour
     public void MoveDown()
     {
         vertical = -1;
+        transform.rotation = quatB;
     }
     public void MoveUp()
     {
         vertical = 1;
+        transform.rotation = quatT;
     }
 }
