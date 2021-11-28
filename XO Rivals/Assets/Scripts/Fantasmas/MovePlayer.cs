@@ -62,55 +62,7 @@ public class MovePlayer : MonoBehaviour
     {
 
         horizontal = context.ReadValue<Vector2>().x;
-
-        //DERECHA
-        if (horizontal == 1 && vertical == 0)
-        {
-            transform.rotation = quatR;
-        }
-
-        //IZQUIERDA
-        if (horizontal == -1 && vertical == 0)
-        {
-            transform.rotation = quatL;
-        }
-
-        //ABAJO DERECHA
-        if (vertical == -0.707107f && horizontal == 0.707107f)
-        {
-            transform.rotation = quatBR;
-        }
-
-        //ABAJO IZQUIERDA
-        if (vertical == -0.707107f && horizontal == -0.707107f)
-        {
-            transform.rotation = quatBL;
-        }
-
-        //ARRIBA DERECHA
-        if (vertical == 0.707107f && horizontal == 0.707107f)
-        {
-            transform.rotation = quatTR;
-        }
-
-        //ARRIBA IZQUIERDA
-        if (vertical == 0.707107f && horizontal == -0.707107f)
-        {
-            transform.rotation = quatTL;
-        }
-
-
-        //ARRIBA
-        if (vertical == 1 && horizontal == 0)
-        {
-            transform.rotation = quatT;
-        }
-        //ABAJO
-        if (vertical == -1 && horizontal == 0)
-        {
-            transform.rotation = quatB;
-        }
-
+        rotarPersonaje();
 
 
     }
@@ -118,51 +70,8 @@ public class MovePlayer : MonoBehaviour
     public void MoveVertical(InputAction.CallbackContext context)
     {
         vertical = context.ReadValue<Vector2>().y;
-        //ARRIBA
-        if (vertical == 1 && horizontal == 0)
-        {
-            transform.rotation = quatT;
-        }
-        //ABAJO
-        if (vertical == -1 && horizontal == 0)
-        {
-            transform.rotation = quatB;
-        }
+        rotarPersonaje();
 
-        //ABAJO DERECHA
-        if (vertical == -0.707107f && horizontal == 0.707107f)
-        {
-            transform.rotation = quatBR;
-        }
-
-        //ABAJO IZQUIERDA
-        if (vertical == -0.707107f && horizontal == -0.707107f)
-        {
-            transform.rotation = quatBL;
-        }
-
-        //ARRIBA DERECHA
-        if (vertical == 0.707107f && horizontal == 0.707107f)
-        {
-            transform.rotation = quatTR;
-        }
-
-        //ARRIBA IZQUIERDA
-        if (vertical == 0.707107f && horizontal == -0.707107f)
-        {
-            transform.rotation = quatTL;
-        }
-        //DERECHA
-        if (horizontal == 1 && vertical == 0)
-        {
-            transform.rotation = quatR;
-        }
-
-        //IZQUIERDA
-        if (horizontal == -1 && vertical == 0)
-        {
-            transform.rotation = quatL;
-        }
     }
 
     public void MoveLeft()
@@ -192,4 +101,54 @@ public class MovePlayer : MonoBehaviour
         vertical = 1;
         transform.rotation = quatT;
     }
+
+    private void rotarPersonaje()
+    {
+        //ARRIBA
+        if (vertical == 1 && horizontal == 0)
+        {
+            transform.rotation = quatT;
+        }
+        //ABAJO
+        if (vertical == -1 && horizontal == 0)
+        {
+            transform.rotation = quatB;
+        }
+
+        //ABAJO DERECHA
+        if (vertical == -0.707107f && horizontal == 0.707107f)
+        {
+            transform.rotation = quatBR;
+        }
+
+        //ABAJO IZQUIERDA
+        if (vertical == -0.707107f && horizontal == -0.707107f)
+        {
+            transform.rotation = quatBL;
+        }
+
+        //ARRIBA DERECHA
+        if (vertical == 0.707107f && horizontal == 0.707107f)
+        {
+            transform.rotation = quatTR;
+        }
+
+        //ARRIBA IZQUIERDA
+        if (vertical == 0.707107f && horizontal == -0.707107f)
+        {
+            transform.rotation = quatTL;
+        }
+        //DERECHA
+        if (horizontal == 1 && vertical == 0)
+        {
+            transform.rotation = quatR;
+        }
+
+        //IZQUIERDA
+        if (horizontal == -1 && vertical == 0)
+        {
+            transform.rotation = quatL;
+        }
+    }
+
 }
