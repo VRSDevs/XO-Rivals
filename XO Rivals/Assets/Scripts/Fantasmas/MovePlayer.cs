@@ -55,11 +55,28 @@ public class MovePlayer : MonoBehaviour
     {
 
         horizontal = context.ReadValue<Vector2>().x;
+        if (horizontal == 1)
+        {
+            transform.rotation = quatR;
+        }
+        if (horizontal == -1)
+        {
+            transform.rotation = quatL;
+        }
+
     }
 
     public void MoveVertical(InputAction.CallbackContext context)
     {
         vertical = context.ReadValue<Vector2>().y;
+        if (vertical == 1)
+        {
+            transform.rotation = quatT;
+        }
+        if (vertical == -1)
+        {
+            transform.rotation = quatB;
+        }
     }
 
     public void MoveLeft()
