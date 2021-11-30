@@ -35,14 +35,11 @@ public class Generador : MonoBehaviour
 
     Quaternion quat = new Quaternion();
 
-    ComidaController controlador;
-
 
     // Start is called before the first frame update
     void Start()
     {
         //InvokeRepeating("generadorGlobal" ,spawnTime, spawnDelay);
-        controlador = FindObjectOfType<ComidaController>();
     }
 
     private void Update()
@@ -68,14 +65,14 @@ public class Generador : MonoBehaviour
         // Mandar panArriba
         if (!breadUp)
         {
-            if (controlador.orden == 5)
+            if (probability > 80)
             {
                 rand = 4;
             }
         }
 
         // Mandar lechuga
-        if (controlador.orden == 4)
+        if (!lettuce && !breadUp)
         {
             if (probability > 60)
             {
@@ -85,7 +82,7 @@ public class Generador : MonoBehaviour
 
 
         // Mandar carne
-        if (controlador.orden == 3)
+        if (!lettuce && !meat && !breadUp)
         {
             if (probability > 40)
             {
@@ -94,7 +91,7 @@ public class Generador : MonoBehaviour
         }
 
         // Mandar queso
-        if (controlador.orden == 2)
+        if (!cheese && !lettuce && !meat && !breadUp)
         {
             if (probability > 25)
             {
@@ -103,7 +100,7 @@ public class Generador : MonoBehaviour
         }
 
         // Mandar pan abajo
-        if (controlador.orden == 1)
+        if (!cheese && !bread && !lettuce && !meat && !breadUp)
         {
             if (probability > 10)
             {
