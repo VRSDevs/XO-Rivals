@@ -173,7 +173,7 @@ public class Login : MonoBehaviour
                         }else{
                             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
                                 Data = new Dictionary<string, string>() {
-                                    {"Lifes", "5"}
+                                    {"Lifes", "3"}
                                 }
                             },
                             result => Debug.Log("Successfully updated user lifes"),

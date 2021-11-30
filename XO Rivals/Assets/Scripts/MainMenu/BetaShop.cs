@@ -72,7 +72,7 @@ public class BetaShop : MonoBehaviour
             }
         );
         
-        if(_localPlayer.Lives >= 5)
+        if(_localPlayer.Lives >= 3)
             _mainController.lifesTime.text = "-:--";
     }
 }

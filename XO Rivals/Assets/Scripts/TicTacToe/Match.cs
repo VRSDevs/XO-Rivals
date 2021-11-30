@@ -64,9 +64,7 @@ public class Match
     /// ¿Te rendiste?
     /// </summary>
     private bool _youSurrended;
- 
-
-
+    
     #endregion
 
     #region Constructors
@@ -145,6 +143,4 @@ public class Match
     }
     
     #endregion
-    
-    
 }

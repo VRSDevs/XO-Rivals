@@ -1,8 +1,8 @@
 ---
-name: Informe de Bugs (Crítico)
-about: Crea informes de bugs para mejorar el producto
-title: "[BUG - CRT]"
-labels: bug, critical-impact
+name: Informe de Bugs (Conformidad)
+about: Se trata de certificar el funcionamiento
+title: "[BUG/INV/MEJ - CNF][IMP]"
+labels: conformidad
 assignees: ''
 
 ---
@@ -11,7 +11,10 @@ assignees: ''
 Descripción del fallo del producto.
 
 **Impacto**
-- Crítico.
+- 
+
+**Plataforma**
+- 
 
 **Pasos**
 Pasos para reproducir el error:

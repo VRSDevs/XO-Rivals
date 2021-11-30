@@ -1,8 +1,8 @@
 ---
-name: Informe de Bugs (Medio)
-about: Crea informes de bugs para mejorar el producto
-title: "[BUG - MED]"
-labels: bug, medium-impact
+name: Informe de Bugs (Jugabilidad)
+about: 'Errores basados en perspectivas: diversión y evaluación de mecánicas'
+title: "[BUG/INV/MEJ - JUG][IMP]"
+labels: jugabilidad
 assignees: ''
 
 ---
@@ -11,7 +11,10 @@ assignees: ''
 Descripción del fallo del producto.
 
 **Impacto**
-- Medio.
+- 
+
+**Plataforma**
+- 
 
 **Pasos**
 Pasos para reproducir el error:

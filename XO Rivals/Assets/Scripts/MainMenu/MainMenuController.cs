@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using PlayFab;
+using PlayFab.ClientModels;
 
 public struct MatchInfo
 {
@@ -83,7 +84,6 @@ public class MainMenuController : MonoBehaviour
 
         if (_localPlayer.Lives < MAXLIVES){
             recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
-            //recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(15);
             CheckLivesTime();
         }else
             lifesTime.text = "-:--";
@@ -122,8 +122,7 @@ public class MainMenuController : MonoBehaviour
                 }
             );
             //Restart timer
-            //recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
-            recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(10);
+            recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
             recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
             lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;            
         }else{
@@ -167,7 +166,6 @@ public class MainMenuController : MonoBehaviour
                 );
                 //Restart timer
                 recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
-                //recoverLifeTime = _localPlayer.LostLifeTime.AddSeconds(10);
                 recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
                 lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;            
             }else{
@@ -382,20 +380,7 @@ public class MainMenuController : MonoBehaviour
     public void SelectButton1()
     { 
         FindObjectOfType<AudioManager>().Play("SelecctionButton1");
-    }
-    public void SelectButton2()
-    { 
-        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
-    }
-    public void SelectButton3()
-    { 
-        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
-    }
-    public void SelectButton4()
-    { 
-        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
-    }
-    
+    }    
     
     private void CheckLivesTime(){
         recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);

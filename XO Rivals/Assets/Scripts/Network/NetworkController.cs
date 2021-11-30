@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using PlayFab;
+using PlayFab.ClientModels;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
@@ -380,6 +381,15 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
     #endregion
 
+    #region GetNetworkVars
+
+    public void GetMatchList()
+    {
+        
+    }
+
+    #endregion
+
     #region UpdateNetworkVars
 
     /// <summary>
@@ -405,6 +415,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public void UpdateCreatingStatus()
     {
         _creatingRoom = !_creatingRoom;
+    }
+
+    public void UpdateMatchListInServer()
+    {
+        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest(), result => {},error => {}, this, new Dictionary<string, string>());
     }
 
     #endregion

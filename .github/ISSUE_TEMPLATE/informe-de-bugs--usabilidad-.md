@@ -1,8 +1,8 @@
 ---
-name: Informe de Bugs (Alto)
-about: Crea informes de bugs para mejorar el producto
-title: "[BUG - HGH]"
-labels: bug, high-impact
+name: Informe de Bugs (Usabilidad)
+about: Análisis de la facilidad de uso del juego, controles...
+title: "[BUG/INV/MEJ - USB][IMP]"
+labels: usabilidad
 assignees: ''
 
 ---
@@ -11,7 +11,10 @@ assignees: ''
 Descripción del fallo del producto.
 
 **Impacto**
-- Alto.
+- 
+
+**Plataforma**
+- 
 
 **Pasos**
 Pasos para reproducir el error:
