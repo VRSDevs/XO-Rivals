@@ -60,7 +60,7 @@ public class ComidaController : MonoBehaviour
     // Minijuegos
     Generador generador;
     [SerializeField]
-    private int orden = 1;
+    public int orden = 1;
     [SerializeField]
     GameObject panAbajo;
     [SerializeField]
