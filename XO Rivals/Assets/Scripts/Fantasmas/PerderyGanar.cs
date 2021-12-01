@@ -10,7 +10,8 @@ public class PerderyGanar : MonoBehaviour
     // Sounds
     public SFXManagerFantasma sounds;
 
-    
+    private bool gameEnded = false;
+
     [SerializeField]
     private GameObject victory;
     [SerializeField]
@@ -45,7 +46,12 @@ public class PerderyGanar : MonoBehaviour
             if (seconds != 21)
             {
                 lost = true;
-                Invoke("DefeatCanvas", 0.2f);
+                if(!gameEnded)
+                {
+                    gameEnded = true;
+                    Invoke("DefeatCanvas", 0.2f);
+                }
+                
             }
             
 
@@ -62,7 +68,11 @@ public class PerderyGanar : MonoBehaviour
         if (seconds == 20 && !lost)//SI AGUANTAS 20 SEGUNDOS GANAS
         {
             seconds++;
-            Invoke("VictoryCanvas", 1f);
+            if (!gameEnded)
+            {
+                gameEnded = true;
+                Invoke("VictoryCanvas", 1f);
+            }
         }
         else
         {
