@@ -168,7 +168,6 @@ public class Login : MonoBehaviour
                         //Get lifes
                         if(result.Data.ContainsKey("Lifes")){
                             playerInfo.Lives = int.Parse(result.Data["Lifes"].Value);
-                            playerInfo.Lives = 3;
                             Debug.Log("Successfully got player lifes");
                         }else{
                             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
@@ -185,7 +184,6 @@ public class Login : MonoBehaviour
                         //Get level
                         if(result.Data.ContainsKey("Level")){
                             playerInfo.Level = float.Parse(result.Data["Level"].Value);
-                            playerInfo.Level += 3.82f;
                             Debug.Log("Successfully got player level");
                         }else{
                             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
@@ -206,10 +204,12 @@ public class Login : MonoBehaviour
                         }  
                         playerInfo.LostLifeTime = System.DateTime.Now;               
                     }else{
+                        playerInfo.Level = 0;
+                        playerInfo.Lives = 3;
                         //Setup all information
                         PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
                             Data = new Dictionary<string, string>() {
-                                {"Lifes", "5"},
+                                {"Lifes", "3"},
                                 {"Level", "0"}
                             }
                         },

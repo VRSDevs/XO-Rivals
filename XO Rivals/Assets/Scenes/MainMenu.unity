@@ -10107,7 +10107,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 416353111}
         m_TargetAssemblyTypeName: BetaShop, Assembly-CSharp
-        m_MethodName: OfferBought
+        m_MethodName: MinigamesBought
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
