@@ -199,8 +199,12 @@ public class Login : MonoBehaviour
 
                         //Get moment of life lost(if exists)
                         if(result.Data.ContainsKey("Life Lost") && result.Data["Life Lost"].Value != "" && result.Data["Life Lost"].Value != null){
-                            playerInfo.LostLifeTime = DateTime.ParseExact(result.Data["Life Lost"].Value, "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                            Debug.Log("Successfully got player life lost moment");
+                            try{
+                                playerInfo.LostLifeTime = DateTime.ParseExact(result.Data["Life Lost"].Value, "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                                Debug.Log("Successfully got player life lost moment");
+                            }catch{
+                                Debug.Log("Wrong dateTime");
+                            }
                         }  
                         playerInfo.LostLifeTime = System.DateTime.Now;               
                     }else{

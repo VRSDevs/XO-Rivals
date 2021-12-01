@@ -74,10 +74,11 @@ public class MainMenuController : MonoBehaviour
 
         JoinGameButton.interactable = false;
 
+        _localPlayer.Level = 3.99f;
         nameTxt.text = _localPlayer.Name;
         level.text = "Level: " + Math.Truncate(_localPlayer.Level);
         lvlSlider.value = _localPlayer.Level % 1;
-        lvlPrcntg.text = ((int)(_localPlayer.Level % 1) * 100) + "/100"; 
+        lvlPrcntg.text = (int)((_localPlayer.Level % 1) * 100) + "/100"; 
         lifesTxt.text = "Lives: " + _localPlayer.Lives;
         lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
         
