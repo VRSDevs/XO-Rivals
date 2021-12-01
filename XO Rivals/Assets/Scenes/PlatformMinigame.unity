@@ -392,8 +392,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JumpSound: {fileID: 8300000, guid: 9dbd6873ec606f443933f82d91a9d744, type: 3}
   WalkSound: {fileID: 8300000, guid: 7a9f6f7cf1f70ca469f90eb6784ea1cc, type: 3}
-  VictorySound: {fileID: 8300000, guid: d1010f461011d3b45ab0b83bad59cdc1, type: 3}
-  DefeatSound: {fileID: 8300000, guid: b50203cbfccbd7549a05e0a71838a2cd, type: 3}
+  VictorySound: {fileID: 8300000, guid: bf304a4fa55e7e245835d8ffb39688cd, type: 3}
+  DefeatSound: {fileID: 8300000, guid: 2d2e460d8c2b97948951a4b2b67c0440, type: 3}
   DeathSound: {fileID: 8300000, guid: 0cbcb6ea91b040640a4145684908e254, type: 3}
 --- !u!4 &44270560
 Transform:

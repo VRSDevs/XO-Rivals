@@ -1648,8 +1648,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ReloadSound: {fileID: 8300000, guid: 6217880113dcc434fb41467e75ef00cd, type: 3}
   ShotSound: {fileID: 8300000, guid: 36aecaec02d52134db1204409c5bcf87, type: 3}
-  VictorySound: {fileID: 8300000, guid: d1010f461011d3b45ab0b83bad59cdc1, type: 3}
-  DefeatSound: {fileID: 8300000, guid: b50203cbfccbd7549a05e0a71838a2cd, type: 3}
+  VictorySound: {fileID: 8300000, guid: bf304a4fa55e7e245835d8ffb39688cd, type: 3}
+  DefeatSound: {fileID: 8300000, guid: 2d2e460d8c2b97948951a4b2b67c0440, type: 3}
 --- !u!1001 &1619162988
 PrefabInstance:
   m_ObjectHideFlags: 0
