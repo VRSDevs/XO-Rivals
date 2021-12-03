@@ -111,6 +111,20 @@ public class ButtonsScript : MonoBehaviour
             circleTurn.SetActive(false);
         }
     }
+
+    public void Update()
+    {
+        if (nameO.text == "")
+        {
+            nameO.text = thisMatch.PlayerOName;
+        }
+        if (nameX.text == "")
+        {
+            nameX.text = thisMatch.PlayerXName;
+        }
+       
+    }
+
     public void Start(){
         
 
