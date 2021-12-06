@@ -85,6 +85,6 @@ public class BetaShop : MonoBehaviour
         );
         
         if(_localPlayer.Lives >= 3)
-            _mainController.lifesTime.text = "-:--";
+            _mainController.lifesTime.text = "MAX";
     }
 }

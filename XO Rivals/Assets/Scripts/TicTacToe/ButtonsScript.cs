@@ -111,19 +111,35 @@ public class ButtonsScript : MonoBehaviour
             circleTurn.SetActive(false);
         }
     }
+
+    public void Update()
+    {
+        if (nameO.text == "")
+        {
+            nameO.text = thisMatch.PlayerOName;
+        }
+        if (nameX.text == "")
+        {
+            nameX.text = thisMatch.PlayerXName;
+        }
+       
+    }
+
     public void Start(){
         
 
 
 
+
+
+        startGame();
+        updateIconTurn(false);
+        colocarFichas();
         //Set name to each player
         nameO.text = thisMatch.PlayerOName;
         nameX.text = thisMatch.PlayerXName;
 
-        startGame();
-        updateIconTurn(false);
 
-        colocarFichas();
 
         //SI VIENES DE UN MINIJUEGO SE HACE START Y SE ELIGE MINIJUEGO
         if (thisMatch.TurnMoment == 2)

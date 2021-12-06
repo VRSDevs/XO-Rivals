@@ -65,9 +65,9 @@ public class PerderyGanar : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        if (seconds == 20 && !lost)//SI AGUANTAS 20 SEGUNDOS GANAS
+        if (seconds == 0 && !lost)//SI AGUANTAS 30 SEGUNDOS GANAS
         {
-            seconds++;
+            seconds--;
             if (!gameEnded)
             {
                 gameEnded = true;
@@ -76,9 +76,13 @@ public class PerderyGanar : MonoBehaviour
         }
         else
         {
-            seconds++;
-            textoSegundos.text = "" + seconds;
-            StartCoroutine(contarSegundosParaGanar());
+            if(seconds != -1)
+            {
+                seconds--;
+                textoSegundos.text = "" + seconds;
+                StartCoroutine(contarSegundosParaGanar());
+            }
+          
         }
 
 
@@ -92,7 +96,7 @@ public class PerderyGanar : MonoBehaviour
         {
             textoSegundos.gameObject.SetActive(true);
             crono.SetActive(true);
-            seconds = 0;
+            seconds = 30;
             textoCuentaAtras.text = "";
             textoSegundos.text = "" + seconds;
             for (int i = 0; i < enemigos.Count; i++)

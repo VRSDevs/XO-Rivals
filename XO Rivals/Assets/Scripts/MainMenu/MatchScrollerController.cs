@@ -120,7 +120,7 @@ public class MatchScrollerController : MonoBehaviour
             matchesList[_totalMatches] = new MatchModel
             {
                 MatchId = "",
-                MatchName = "No matches found!",
+                MatchName = "You don´t have active matches!",
                 MatchStatus = ""
             };
         }

@@ -140,7 +140,7 @@ public class MainMenuController : MonoBehaviour
                 }
             );
             
-            lifesTime.text = "-:--";
+            lifesTime.text = "MAX";
         }
     }
 
