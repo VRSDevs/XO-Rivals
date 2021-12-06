@@ -18,44 +18,56 @@ public class BetaShop : MonoBehaviour
 
     public void OfferBought(int offer)
     {
-        switch (offer)
-        {
-            case 0:
-                shopText.text = "You bought 3 minigames";
-                break;
-            case 1:
-                shopText.text = "You bought " + offer + " lives";
-                _localPlayer.Lives++;
-                UpdateLives();
-                break;
-            case 3:
-                shopText.text = "You bought " + offer + " lives";
-                _localPlayer.Lives += 3;
-                UpdateLives();
-                break;
-            case 10:
-                shopText.text = "You bought " + offer + " lives";
-                _localPlayer.Lives += 10;
-                UpdateLives();
-                break;
-            case 20:
-                shopText.text = "You bought " + offer + " lives";
-                _localPlayer.Lives += 20;
-                UpdateLives();
-                break;
-            case 25:
-                shopText.text = "You bought " + offer + " lives";
-                _localPlayer.Lives += 25;
-                UpdateLives();
-                break;
-            case 999:
-                shopText.text = "You bought infinite lives";
-                _localPlayer.Lives = 999;
-                UpdateLives();
-                break;
+        if(_localPlayer.Lives != 999){
+            switch (offer)
+            {
+                case 1:
+                    shopText.text = "You bought " + offer + " lives";
+                    _localPlayer.Lives++;
+                    UpdateLives();
+                    break;
+                case 3:
+                    shopText.text = "You bought " + offer + " lives";
+                    _localPlayer.Lives += 3;
+                    UpdateLives();
+                    break;
+                case 10:
+                    shopText.text = "You bought " + offer + " lives";
+                    _localPlayer.Lives += 10;
+                    UpdateLives();
+                    break;
+                case 20:
+                    shopText.text = "You bought " + offer + " lives";
+                    _localPlayer.Lives += 20;
+                    UpdateLives();
+                    break;
+                case 25:
+                    shopText.text = "You bought " + offer + " lives";
+                    _localPlayer.Lives += 25;
+                    UpdateLives();
+                    break;
+                case 999:
+                    shopText.text = "You bought infinite lives";
+                    _localPlayer.Lives = 999;
+                    UpdateLives();
+                    break;
+            }
+        }else{
+            shopText.text = "You can´t buy more lives!";
         }
     }
 
+    public void MinigamesBought(int offer){
+        switch(offer){
+            
+            case 0:
+                shopText.text = "You bought 3 minigames";
+            break;
+
+            case 1:
+            break;
+        }
+    }
     private void UpdateLives(){
 
         _mainController.lifesTxt.text = "Lives: " + _localPlayer.Lives;
@@ -73,6 +85,6 @@ public class BetaShop : MonoBehaviour
         );
         
         if(_localPlayer.Lives >= 3)
-            _mainController.lifesTime.text = "-:--";
+            _mainController.lifesTime.text = "MAX";
     }
 }

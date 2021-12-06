@@ -74,11 +74,13 @@ public class MainMenuController : MonoBehaviour
 
         JoinGameButton.interactable = false;
 
+        _localPlayer.Level = 3.99f;
         nameTxt.text = _localPlayer.Name;
         level.text = "Level: " + Math.Truncate(_localPlayer.Level);
         lvlSlider.value = _localPlayer.Level % 1;
-        lvlPrcntg.text = ((int)(_localPlayer.Level % 1) * 100) + "/100"; 
+        lvlPrcntg.text = (int)((_localPlayer.Level % 1) * 100) + "/100"; 
         lifesTxt.text = "Lives: " + _localPlayer.Lives;
+        lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
         
         _matchToJoin = new MatchInfo();
 
@@ -114,7 +116,7 @@ public class MainMenuController : MonoBehaviour
             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
                     Data = new Dictionary<string, string>() {
                         {"Lifes", _localPlayer.Lives.ToString()},
-                        {"Life Lost", _localPlayer.LostLifeTime.ToString()}}
+                        {"Life Lost", _localPlayer.LostLifeTime.ToString("dd/MM/yyyy HH:mm:ss")}}
                 },
                 result => Debug.Log("Successfully updated user lifes"),
                 error => {
@@ -138,7 +140,7 @@ public class MainMenuController : MonoBehaviour
                 }
             );
             
-            lifesTime.text = "-:--";
+            lifesTime.text = "MAX";
         }
     }
 
@@ -157,7 +159,7 @@ public class MainMenuController : MonoBehaviour
                 PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
                         Data = new Dictionary<string, string>() {
                             {"Lifes", _localPlayer.Lives.ToString()},
-                            {"Life Lost", _localPlayer.LostLifeTime.ToString()}}
+                            {"Life Lost", _localPlayer.LostLifeTime.ToString("dd/MM/yyyy HH:mm:ss")}}
                     },
                     result => Debug.Log("Successfully reduced user lifes"),
                     error => {

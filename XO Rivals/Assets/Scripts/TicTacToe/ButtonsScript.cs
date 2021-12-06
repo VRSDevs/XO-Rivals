@@ -26,7 +26,7 @@ public class ButtonsScript : MonoBehaviour
 
     public List<Transform> botonesCuadricula;
     
-    public string TurnoPlayer;
+    //public string TurnoPlayer;
 
     //Screen manager
     private ScreenManager screenManager;
@@ -80,20 +80,25 @@ public class ButtonsScript : MonoBehaviour
     }
     public void updateIconTurn(bool change)
     {
-        if (change)
+        if (change)//CAMBIA A QUE ME TOCA A MI
         {
+            Debug.Log("LOCAL PLAYER " + localPlayer.Name);
+            Debug.Log("X PLAYER " + thisMatch.PlayerXName);
+            Debug.Log("O PLAYER " + thisMatch.PlayerOName);
+            Debug.Log("TurnoPlayerANTES " + thisMatch.WhosTurn);
+
             if (localPlayer.Name == thisMatch.PlayerXName)
-            {             
-                TurnoPlayer = thisMatch.PlayerXName;
+            {
+                thisMatch.WhosTurn = thisMatch.PlayerXName;
             }
             else
-            {                
-                TurnoPlayer = thisMatch.PlayerOName;
+            {
+                thisMatch.WhosTurn = thisMatch.PlayerOName;
             }
         }
-
+        Debug.Log("TurnoPlayerDSPS " + thisMatch.WhosTurn);
         //Activate player turn tile
-        if (TurnoPlayer == thisMatch.PlayerOName)
+        if (thisMatch.WhosTurn == thisMatch.PlayerOName)
         {
             circleTurn.SetActive(true);
             crossTurn.SetActive(false);
@@ -106,27 +111,35 @@ public class ButtonsScript : MonoBehaviour
             circleTurn.SetActive(false);
         }
     }
+
+    public void Update()
+    {
+        if (nameO.text == "")
+        {
+            nameO.text = thisMatch.PlayerOName;
+        }
+        if (nameX.text == "")
+        {
+            nameX.text = thisMatch.PlayerXName;
+        }
+       
+    }
+
     public void Start(){
         
-        Debug.Log("Player O name: " + thisMatch.PlayerOName);
-        Debug.Log("Player X name: " + thisMatch.PlayerXName);
-        Debug.Log("Turn: " + thisMatch.WhosTurn);
-        Debug.Log("Turn moment: " + thisMatch.TurnMoment);
-        Debug.Log("Numfilled: " + thisMatch.NumFilled);
-        Debug.Log(thisMatch.FilledPositions[0,0] + " " + thisMatch.FilledPositions[0,1] + " " + thisMatch.FilledPositions[0,2] + "\n" 
-        + thisMatch.FilledPositions[1,0] + " " + thisMatch.FilledPositions[1,1] + " " + thisMatch.FilledPositions[1,2] + "\n" 
-        + thisMatch.FilledPositions[2,0] + " " + thisMatch.FilledPositions[2,1] + " " + thisMatch.FilledPositions[2,2]);
-        Debug.Log("Minigame chosen: " + thisMatch.MiniGameChosen);
 
 
+
+
+
+        startGame();
+        updateIconTurn(false);
+        colocarFichas();
         //Set name to each player
         nameO.text = thisMatch.PlayerOName;
         nameX.text = thisMatch.PlayerXName;
 
-        startGame();
-        updateIconTurn(false);
 
-        colocarFichas();
 
         //SI VIENES DE UN MINIJUEGO SE HACE START Y SE ELIGE MINIJUEGO
         if (thisMatch.TurnMoment == 2)
@@ -172,18 +185,6 @@ public class ButtonsScript : MonoBehaviour
             }//Fin win
 
             Debug.Log("SE HACE MINIGAME SELECTION");
-            if (localPlayer.Name == thisMatch.PlayerXName)
-            {
-                TurnoPlayer = thisMatch.PlayerOName;
-              
-
-            }
-            else
-            {
-                TurnoPlayer = thisMatch.PlayerXName;
-                
-
-            }
             screenManager.MinigameSelectionActivation();
         }
         CheckVictory();
@@ -201,34 +202,13 @@ public class ButtonsScript : MonoBehaviour
             if (thisMatch.TurnMoment == 0)
             {
                 screenManager.EnableButtons();
-                if (localPlayer.Name == thisMatch.PlayerXName)
-                {
-                    TurnoPlayer = thisMatch.PlayerXName;
-                   
-                }
-                else
-                {
-                    TurnoPlayer = thisMatch.PlayerOName;
-                   
-                }
+                
             }
       
         }else{
             //Disable interaction with tictac cause its not your turn
             screenManager.DisableButtons();
-            if (localPlayer.Name == thisMatch.PlayerXName)
-            {
-              
-                TurnoPlayer = thisMatch.PlayerOName;
-
-            }
-            else
-            {
-          
-                TurnoPlayer = thisMatch.PlayerXName;
-            }
-            
-
+        
 
         }
     }
@@ -274,7 +254,7 @@ public class ButtonsScript : MonoBehaviour
             screenManager.showInstruction(thisMatch.MiniGameChosen);
 
         }else{
-            Debug.Log("Tile not empty");
+            Debug.Log("Tile not empty");Debug.Log("Tile not empty");
         }
     }
 
@@ -425,7 +405,7 @@ public class ButtonsScript : MonoBehaviour
             //Call endgame
             if (thisMatch.FilledPositions[col, row] == 0)
             {
-                Debug.Log("CIRCLE WIN");
+               
 
                 if (localPlayer.Name == thisMatch.PlayerOName)
                 {
@@ -445,7 +425,7 @@ public class ButtonsScript : MonoBehaviour
             }
             else
             {
-                Debug.Log("CROSS WINS");
+               
 
                 if (localPlayer.Name == thisMatch.PlayerXName)
                 {

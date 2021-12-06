@@ -48,6 +48,14 @@ public class Login : MonoBehaviour
     /// Referencia al log de información del login
     /// </summary>
     [SerializeField] public TMP_Text Log;
+    /// <summary>
+    /// Nombre de usuario
+    /// </summary>
+    private String _username;
+    /// <summary>
+    /// Contraseña
+    /// </summary>
+    private String _password;
     
     ////////////////// INICIO DE SESIÓN //////////////////
     /// <summary>
@@ -96,15 +104,25 @@ public class Login : MonoBehaviour
     /// </summary>
     public void OnConnect()
     {
-        if (!IsConnecting && ValidateInputs())
-        {
-            IsConnecting = true;
+        //Opcion 1: Avisar al jugador que no puede
+        if(UsernameInput.text.Contains(" ") || PasswordInput.text.Contains(" ")){
+            //Decirle al jugador que no puede
+            Log.text = "No whitespaces allowed";
+        }else{
+            //Opcion 2: Eliminarlos al meterlo en el servidor (habria que avisar al jugador)
+            _username = UsernameInput.text;
+            _username = _username.Replace(" ", "");
+            _password = PasswordInput.text;
+            _password = _password.Replace(" ", "");
 
-            string username = UsernameInput.text, password = PasswordInput.text;
-            
-            OnAuthentication(username, password);
-            StartCoroutine(OnEstablishConnection(username, password, Mode));
-        }
+            if (!IsConnecting && ValidateInputs())
+            {
+                IsConnecting = true;
+                
+                OnAuthentication(_username, _password);
+                StartCoroutine(OnEstablishConnection(_username, _password, Mode));
+            }
+        }        
     }
 
     /// <summary>
@@ -168,7 +186,6 @@ public class Login : MonoBehaviour
                         //Get lifes
                         if(result.Data.ContainsKey("Lifes")){
                             playerInfo.Lives = int.Parse(result.Data["Lifes"].Value);
-                            playerInfo.Lives = 3;
                             Debug.Log("Successfully got player lifes");
                         }else{
                             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
@@ -185,7 +202,6 @@ public class Login : MonoBehaviour
                         //Get level
                         if(result.Data.ContainsKey("Level")){
                             playerInfo.Level = float.Parse(result.Data["Level"].Value);
-                            playerInfo.Level += 3.82f;
                             Debug.Log("Successfully got player level");
                         }else{
                             PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
@@ -201,15 +217,21 @@ public class Login : MonoBehaviour
 
                         //Get moment of life lost(if exists)
                         if(result.Data.ContainsKey("Life Lost") && result.Data["Life Lost"].Value != "" && result.Data["Life Lost"].Value != null){
-                            playerInfo.LostLifeTime = DateTime.ParseExact(result.Data["Life Lost"].Value, "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                            Debug.Log("Successfully got player life lost moment");
+                            try{
+                                playerInfo.LostLifeTime = DateTime.ParseExact(result.Data["Life Lost"].Value, "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                                Debug.Log("Successfully got player life lost moment");
+                            }catch{
+                                Debug.Log("Wrong dateTime");
+                            }
                         }  
                         playerInfo.LostLifeTime = System.DateTime.Now;               
                     }else{
+                        playerInfo.Level = 0;
+                        playerInfo.Lives = 3;
                         //Setup all information
                         PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
                             Data = new Dictionary<string, string>() {
-                                {"Lifes", "5"},
+                                {"Lifes", "3"},
                                 {"Level", "0"}
                             }
                         },
@@ -262,11 +284,7 @@ public class Login : MonoBehaviour
     /// <returns>¿Inputs válidos?</returns>
     private bool ValidateInputs()
     {
-        // Eliminación de espacios en la cadena de caracteres
-        UsernameInput.text = UsernameInput.text.Trim();
-        PasswordInput.text = PasswordInput.text.Trim();
-                
-        if (UsernameInput.text.Length < MIN_CHARS || PasswordInput.text.Length < MIN_CHARS)
+        if (_username.Length < MIN_CHARS || _password.Length < MIN_CHARS)
         {
             Log.text = "Incorrect length. Minimum " + MIN_CHARS + " chars.";
             return false;

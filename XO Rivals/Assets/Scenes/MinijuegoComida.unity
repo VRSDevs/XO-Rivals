@@ -862,7 +862,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 500, y: -21}
-  m_SizeDelta: {x: 68, y: 71}
+  m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &915791123
 MonoBehaviour:
@@ -1337,7 +1337,7 @@ MonoBehaviour:
   startedSpawning: 0
   stopSpawning: 0
   spawnTime: 0
-  spawnDelay: 1.5
+  spawnDelay: 0.9
 --- !u!1 &1299412363
 GameObject:
   m_ObjectHideFlags: 0
@@ -2065,7 +2065,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -500, y: -21}
-  m_SizeDelta: {x: 68, y: 71}
+  m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1732832438
 MonoBehaviour:

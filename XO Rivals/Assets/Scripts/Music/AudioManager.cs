@@ -94,4 +94,12 @@ public class AudioManager : MonoBehaviour
             s.source.mute = !muteValue;
         }
     }
+
+    private void OnApplicationFocus(bool focusStatus) {
+        MuteSounds(focusStatus);    
+    }
+
+    private void OnApplicationPause(bool pauseStatus) {
+        MuteSounds(!pauseStatus);
+    }
 }
