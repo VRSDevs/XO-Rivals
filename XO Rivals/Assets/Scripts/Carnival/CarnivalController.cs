@@ -5,20 +5,23 @@ using UnityEngine;
 public class CarnivalController : MonoBehaviour
 {
 
+    public bool win = false;
+    public bool lost = false;
+
     [SerializeField]
     private Transform bottom;
     [SerializeField]
     private Transform top;
     [SerializeField]
+    private Transform bottomWin;
+    [SerializeField]
+    private Transform topWin;
+    [SerializeField]
     private GameObject indicator;
-
-    private float posY;
-
-    public bool pressed = false;
 
     public bool goingUp = true;
 
-    private float speed = 200;
+    private float speed = 300;
 
     // Start is called before the first frame update
     void Start()
@@ -57,8 +60,21 @@ public class CarnivalController : MonoBehaviour
         }
     }
 
-    void PressedButon()
+    public void PressedButon()
     {
-        pressed = true;
+        speed = 0;
+        CheckVictory();
+    }
+
+    public void CheckVictory()
+    {
+        if (indicator.transform.position.y < topWin.position.y && indicator.transform.position.y > bottomWin.position.y)
+        {
+            win = true;
+        }
+        else
+        {
+            lost = true;
+        }
     }
 }
