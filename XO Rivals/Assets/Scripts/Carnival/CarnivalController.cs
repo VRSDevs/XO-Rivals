@@ -21,7 +21,7 @@ public class CarnivalController : MonoBehaviour
 
     public bool goingUp = true;
 
-    private float speed = 300;
+    private float speed = 500;
 
     // Start is called before the first frame update
     void Start()
