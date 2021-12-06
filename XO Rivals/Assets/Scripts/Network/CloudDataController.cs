@@ -1,18 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CloudDataController : MonoBehaviour
+[Serializable]
+public enum DataType
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    Lives,
+    Level
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+public class CloudDataController
+{
+    
 }
