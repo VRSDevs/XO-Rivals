@@ -49,4 +49,13 @@ public class CloudDataController
     }
 
     #endregion
+
+    #region CBMethods
+
+    public void OnDataRecieved()
+    {
+        
+    }
+
+    #endregion
 }
