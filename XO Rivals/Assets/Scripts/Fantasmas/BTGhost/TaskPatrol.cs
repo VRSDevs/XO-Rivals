@@ -28,11 +28,16 @@ public class TaskPatrol : Node
             taskTarget = _enemyNav.movePositionTransform[random];
         }
 
-        _enemyNav.target = taskTarget;  
+        _enemyNav.target = taskTarget;
+
+        //SI LLEGAMOS A UN PUNTO DE PATRULLA DEBERIAMOS IR AL SIGUIENTE
+        if (Vector3.Distance(_enemyNav.transform.position, taskTarget.position) < 0.1f)
+        {
+            newTarget = true; //CAMBIAMOS DE TARGET
+        }
 
 
-
-       state = NodeState.RUNNING;
+        state = NodeState.RUNNING;
         return state;
 
     }
