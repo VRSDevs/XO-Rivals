@@ -7,11 +7,12 @@ public class EnemyNavMesh : MonoBehaviour
 {
 
     public NavMeshAgent navMeshAgent;
-    public List<Transform> movePositionTransform;
-    public Transform target;
+    public List<Transform> movePositionTransform; //Lista de targets
+    public Transform target; //Hacia donde se mueve
     public Transform player;
-    public bool persiguiendo = false;
+    //public bool persiguiendo = false; //Estoy persiguiendo un objetivo?
     int random = 0;
+    public bool move = false; //Debe moverse?
 
 
     // Start is called before the first frame update
@@ -19,58 +20,38 @@ public class EnemyNavMesh : MonoBehaviour
     {
 
         navMeshAgent = GetComponent<NavMeshAgent>();
+        /*
         int random = Random.Range(0, movePositionTransform.Count - 1);
         target = movePositionTransform[random];
+        */
+        target = transform; //Comienza quieto
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        
-        navMeshAgent.destination = target.position;
+
+            navMeshAgent.destination = target.position;
+
+      
         
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (persiguiendo == false)
-        {
-
+        /*
+    
             if (other.gameObject.name == target.name)
             {
                 random = Random.Range(0, movePositionTransform.Count - 1);
                 target = movePositionTransform[random];
             }
-
-
-
-        }
-
+        */
 
 
     }
 
-  public void playerDetectedLinternaNav(bool detected)
-    {
-        persiguiendo = detected;
-
-
-        if (detected)
-        {
-            target = player;
-        }
-        else
-        {
-            
-            target = movePositionTransform[random];
-        }
-
-
-
-
-
-    }
 
 
 
