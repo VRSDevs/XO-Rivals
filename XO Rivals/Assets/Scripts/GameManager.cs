@@ -19,6 +19,10 @@ public class GameManager : MonoBehaviour
     /// 
     /// </summary>
     public NetworkCommunications _networkCommunications;
+    /// <summary>
+    /// 
+    /// </summary>
+    private CloudDataController _cloudController;
     
     ////////////////// PARTIDA //////////////////
     /// <summary>
@@ -48,6 +52,7 @@ public class GameManager : MonoBehaviour
     {
         _networkController = gameObject.AddComponent<NetworkController>();
         _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
+        _cloudController = gameObject.AddComponent<CloudDataController>();
 
         PlayerMatches = new Dictionary<string, Match>();
         Matchmaking = false;
