@@ -6020,6 +6020,7 @@ MonoBehaviour:
   distanciaVision: 10
   veoPlayerRadio: 0
   veoPlayerDistance: 0
+  linernaDetect: 0
   prefabBala: {fileID: 3431209771459165765, guid: a5d06f078b1fc2c4096220bef96a46cf, type: 3}
   bala: {fileID: 0}
 --- !u!70 &405383478
@@ -8622,6 +8623,7 @@ GameObject:
   - component: {fileID: 598204781}
   - component: {fileID: 598204780}
   - component: {fileID: 598204779}
+  - component: {fileID: 598204786}
   m_Layer: 0
   m_Name: Enemy3D
   m_TagString: Untagged
@@ -8674,7 +8676,7 @@ MonoBehaviour:
   - {fileID: 1603574501}
   target: {fileID: 1515909418}
   player: {fileID: 1515909418}
-  persiguiendo: 0
+  move: 0
 --- !u!195 &598204781
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -8778,6 +8780,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &598204786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598204778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ecc7237e1c95e5419dc5dbeec64ea2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyNav: {fileID: 598204780}
 --- !u!1 &623913571
 GameObject:
   m_ObjectHideFlags: 0
@@ -9667,6 +9682,7 @@ GameObject:
   - component: {fileID: 693027842}
   - component: {fileID: 693027841}
   - component: {fileID: 693027840}
+  - component: {fileID: 693027847}
   m_Layer: 0
   m_Name: Enemy3D
   m_TagString: Untagged
@@ -9719,7 +9735,7 @@ MonoBehaviour:
   - {fileID: 1603574501}
   target: {fileID: 1515909418}
   player: {fileID: 1515909418}
-  persiguiendo: 0
+  move: 0
 --- !u!195 &693027842
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -9823,6 +9839,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &693027847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693027839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ecc7237e1c95e5419dc5dbeec64ea2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyNav: {fileID: 693027841}
 --- !u!1 &704841107
 GameObject:
   m_ObjectHideFlags: 0
@@ -14039,6 +14068,7 @@ GameObject:
   - component: {fileID: 961382803}
   - component: {fileID: 961382802}
   - component: {fileID: 961382808}
+  - component: {fileID: 961382809}
   m_Layer: 0
   m_Name: Enemy3D
   m_TagString: Untagged
@@ -14075,7 +14105,7 @@ MonoBehaviour:
   - {fileID: 1603574501}
   target: {fileID: 1515909418}
   player: {fileID: 1515909418}
-  persiguiendo: 0
+  move: 0
 --- !u!195 &961382803
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -14195,6 +14225,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &961382809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961382801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ecc7237e1c95e5419dc5dbeec64ea2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyNav: {fileID: 961382802}
 --- !u!1 &971916223
 GameObject:
   m_ObjectHideFlags: 0
@@ -22340,6 +22383,7 @@ MonoBehaviour:
   distanciaVision: 10
   veoPlayerRadio: 0
   veoPlayerDistance: 0
+  linernaDetect: 0
   prefabBala: {fileID: 3431209771459165765, guid: a5d06f078b1fc2c4096220bef96a46cf, type: 3}
   bala: {fileID: 0}
 --- !u!70 &1698231043
@@ -28930,6 +28974,7 @@ MonoBehaviour:
   distanciaVision: 10
   veoPlayerRadio: 0
   veoPlayerDistance: 0
+  linernaDetect: 0
   prefabBala: {fileID: 3431209771459165765, guid: a5d06f078b1fc2c4096220bef96a46cf, type: 3}
   bala: {fileID: 0}
 --- !u!70 &2145088380
