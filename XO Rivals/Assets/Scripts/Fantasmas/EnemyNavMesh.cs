@@ -7,7 +7,7 @@ public class EnemyNavMesh : MonoBehaviour
 {
 
     public NavMeshAgent navMeshAgent;
-    public List<Transform> movePositionTransform;
+    public List<Transform> movePositionTransform; //Lista de targets
     public Transform target; //Hacia donde se mueve
     public Transform player;
     //public bool persiguiendo = false; //Estoy persiguiendo un objetivo?
