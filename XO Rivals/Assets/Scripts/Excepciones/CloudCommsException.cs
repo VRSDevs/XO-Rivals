@@ -7,7 +7,7 @@ public class CloudCommsException : System.Exception
 {
     #region Vars
 
-    public PlayFabError Error;
+    public PlayFabError ErrorCode;
     
     #endregion
 
