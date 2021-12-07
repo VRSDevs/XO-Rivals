@@ -20,31 +20,34 @@ public class EnemyNavMesh : MonoBehaviour
     {
 
         navMeshAgent = GetComponent<NavMeshAgent>();
+        /*
         int random = Random.Range(0, movePositionTransform.Count - 1);
         target = movePositionTransform[random];
+        */
+        target = transform; //Comienza quieto
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (move) //Solo se mueve si tiene que estar en movimiento (siempre se mueve hacia un target)
-        {
+
             navMeshAgent.destination = target.position;
-        }
+
       
         
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        /*
     
             if (other.gameObject.name == target.name)
             {
                 random = Random.Range(0, movePositionTransform.Count - 1);
                 target = movePositionTransform[random];
             }
-
+        */
 
 
     }
