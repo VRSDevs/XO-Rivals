@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
 
@@ -16,7 +17,18 @@ public class CloudDataController
 
     #region ClouldMethods
 
-    public Dictionary<string, string> GetDataFromCloud(GetUserDataResult result, DataType type)
+    public Dictionary<string, string> GetDataFromCloud(DataType type)
+    {
+        PlayFabClientAPI.GetUserData();
+
+        return null;
+    }
+
+    #endregion
+
+    #region CBMethods
+
+    public Dictionary<string, string> OnDataRecieved(GetUserDataResult result, DataType type)
     {
         if (result == null) return null;
         
@@ -44,17 +56,6 @@ public class CloudDataController
         {
             // ignored
         }
-
-        return null;
-    }
-
-    #endregion
-
-    #region CBMethods
-
-    public void OnDataRecieved()
-    {
-        
     }
 
     #endregion

@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using PlayFab;
 using UnityEngine;
 
 public class CloudCommsException : System.Exception
 {
     #region Vars
 
+    public PlayFabError Error;
+    
     #endregion
 
     #region Constructors
