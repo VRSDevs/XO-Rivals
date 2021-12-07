@@ -28,20 +28,21 @@ public class LinternaColision : MonoBehaviour
         if (other.gameObject.name == "LinternaColision")
         {
 
-            enemigos[0].playerDetectedLinterna();
+            enemigos[0].playerDetectedLinterna(true);
         }else if (other.gameObject.name == "LinternaColision2")
         {
-            enemigos[1].playerDetectedLinterna();
+            enemigos[1].playerDetectedLinterna(true);
         }
         if (other.gameObject.name == "LinternaColision3")
         {
-            enemigos[2].playerDetectedLinterna();
+            enemigos[2].playerDetectedLinterna(true);
         }
 
 
 
 
     }
+    /*
     private void OnTriggerStay(Collider other)
     {
 
@@ -58,6 +59,26 @@ public class LinternaColision : MonoBehaviour
         {
             enemigos[2].playerDetectedLinterna();
         }
+    }
+    */
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.name == "LinternaColision")
+        {
+
+            enemigos[0].playerDetectedLinterna(false);
+        }
+        else if (other.gameObject.name == "LinternaColision2")
+        {
+            enemigos[1].playerDetectedLinterna(false);
+        }
+        if (other.gameObject.name == "LinternaColision3")
+        {
+            enemigos[2].playerDetectedLinterna(false);
+        }
+
+
     }
 
 
