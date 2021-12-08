@@ -20,6 +20,8 @@ public class TaskPatrol : Node
   
     public override NodeState Evaluate()
     {
+        Debug.Log("EXECUTE TASKPATROL");
+
         if (newTarget)
         {
             newTarget = false;
