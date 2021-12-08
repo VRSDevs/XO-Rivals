@@ -1465,6 +1465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   win: 0
   lost: 0
+  playinWithO: 0
   bottom: {fileID: 116467030}
   top: {fileID: 647705099}
   bottomWin: {fileID: 1557346292}
@@ -1474,6 +1475,10 @@ MonoBehaviour:
   playerX: {fileID: 1333766824}
   victory: {fileID: 664577985}
   defeat: {fileID: 1281075884}
+  playerXWin: {fileID: 21300000, guid: f8c813d2ad228154eb99dffe7dd5b4e9, type: 3}
+  playerXLost: {fileID: 21300000, guid: 3371d2c84d54c0f4ea86a7fe2752ebb2, type: 3}
+  playerOWin: {fileID: 21300000, guid: 2e5979055da91be43981d983c97b1320, type: 3}
+  playerOLost: {fileID: 21300000, guid: 162e8bfd97e610b43830c586a2370e81, type: 3}
   goingUp: 1
   localPlayer: {fileID: 0}
 --- !u!4 &1879265989
