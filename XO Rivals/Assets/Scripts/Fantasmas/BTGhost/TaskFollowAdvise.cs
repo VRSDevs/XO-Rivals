@@ -23,7 +23,7 @@ public class TaskFollowAdvise : Node
 
     public override NodeState Evaluate()
     {
-
+        Debug.Log("EXECUTE TASKFOLLOWADVISE");
 
         if (Vector3.Distance(_enemyNav.transform.position, _tree.adviseTransform.position) < 0.1f) //HASTA QUE NO LLEGUE A LA POSICION INDICADA NO PARA
         {
