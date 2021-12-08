@@ -7,6 +7,8 @@ public class EnemyBT : BehaviorTree.Tree
 {
     public EnemyNavMesh enemyNav;
     public DetectPlayer detectPlayer;
+    private bool advised = false;
+    private Transform adviseTransform;
 
     protected override Node SetupTree()
     {
@@ -36,6 +38,17 @@ public class EnemyBT : BehaviorTree.Tree
     public void wait(int seconds)
     {
         waitTime = 1;
+    }
+
+
+    public void setAdvise(Transform transformA)
+    {
+        adviseTransform = transformA;
+        advised = true;
+    }
+    public void setAdviseFalse()
+    {
+        advised = false;
     }
 
 }
