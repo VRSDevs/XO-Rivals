@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CarnivalController : MonoBehaviour
 {
 
     public bool win = false;
     public bool lost = false;
+
+    public bool playinWithO = false;
 
     [SerializeField]
     private Transform bottom;
@@ -28,6 +31,14 @@ public class CarnivalController : MonoBehaviour
     private GameObject victory;
     [SerializeField]
     private GameObject defeat;
+    [SerializeField]
+    private Sprite playerXWin;
+    [SerializeField]
+    private Sprite playerXLost;
+    [SerializeField]
+    private Sprite playerOWin;
+    [SerializeField]
+    private Sprite playerOLost;
 
     public bool goingUp = true;
 
@@ -51,10 +62,13 @@ public class CarnivalController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        speed = Random.Range(500,650);
         // Recoger de quien es el turno y activar los personajes necesarios
         if (thisMatch.PlayerOName == localPlayer.Name)
         {
             playerX.SetActive(false);
+            playinWithO = true;
         }
         else
         {
@@ -105,11 +119,29 @@ public class CarnivalController : MonoBehaviour
         {
             win = true;
             Invoke("VictoryCanvas", 1f);
+            if (playinWithO)
+            {
+                playerO.GetComponent<Image>().sprite = playerOWin;
+
+            } 
+            else
+            {
+                playerX.GetComponent<Image>().sprite = playerXWin;
+            }
         }
         else
         {
             lost = true;
             Invoke("DefeatCanvas", 1f);
+            if (playinWithO)
+            {
+                playerO.GetComponent<Image>().sprite = playerOLost;
+
+            }
+            else
+            {
+                playerX.GetComponent<Image>().sprite = playerXLost;
+            }
         }
     }
 
