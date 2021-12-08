@@ -23,7 +23,9 @@ public class TaskAdvise : Node
     {
         Debug.Log("EXECUTE TASKADVISE");
 
-        foreach(EnemyBT otherTree in _tree.otherEnemyBT)
+        _tree.following = false;
+
+        foreach (EnemyBT otherTree in _tree.otherEnemyBT)
         {
             otherTree.setAdvise(_tree.enemyNav.player);
         }

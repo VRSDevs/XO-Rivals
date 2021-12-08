@@ -25,6 +25,9 @@ public class TaskFollowAdvise : Node
     {
         Debug.Log("EXECUTE TASKFOLLOWADVISE");
 
+        _tree.following = false;
+
+
         if (Vector3.Distance(_enemyNav.transform.position, _tree.adviseTransform.position) < 0.1f) //HASTA QUE NO LLEGUE A LA POSICION INDICADA NO PARA
         {
             _tree.setAdviseFalse();

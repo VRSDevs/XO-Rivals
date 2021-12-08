@@ -8,11 +8,12 @@ public class TaskPatrol : Node
     private Transform taskTarget;
     private bool newTarget = true; //CAMBIAMOS DE OBJETIVO
     private EnemyNavMesh _enemyNav;
+    private EnemyBT _tree;
 
-    public TaskPatrol( EnemyNavMesh enemyNav)
+    public TaskPatrol( EnemyNavMesh enemyNav, EnemyBT tree)
     {
         _enemyNav = enemyNav;
-
+        _tree = tree;
     }
 
 
@@ -21,6 +22,8 @@ public class TaskPatrol : Node
     public override NodeState Evaluate()
     {
         Debug.Log("EXECUTE TASKPATROL");
+
+        _tree.following = false;
 
         if (newTarget)
         {
