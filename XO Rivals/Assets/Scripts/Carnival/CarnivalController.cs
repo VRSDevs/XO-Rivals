@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class CarnivalController : MonoBehaviour
 {
@@ -23,6 +24,10 @@ public class CarnivalController : MonoBehaviour
     private GameObject playerO;
     [SerializeField]
     private GameObject playerX;
+    [SerializeField]
+    private GameObject victory;
+    [SerializeField]
+    private GameObject defeat;
 
     public bool goingUp = true;
 
@@ -99,12 +104,42 @@ public class CarnivalController : MonoBehaviour
         if (indicator.transform.position.y < topWin.position.y && indicator.transform.position.y > bottomWin.position.y)
         {
             win = true;
+            VictoryCanvas();
         }
         else
         {
             lost = true;
+            DefeatCanvas();
         }
     }
 
+    public void DefeatCanvas()
+    {
+        defeat.SetActive(true);
+        Invoke("Defeat", 3f);
+        FindObjectOfType<AudioManager>().Play("Defeat");
 
+    }
+
+    public void VictoryCanvas()
+    {
+        victory.SetActive(true);
+        Invoke("Victory", 3f);
+        FindObjectOfType<AudioManager>().Play("Victory");
+
+    }
+
+    public void Defeat()
+    {
+        PlayerPrefs.SetInt("minigameWin", 0);
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        SceneManager.LoadScene("TicTacToe_Server");
+    }
+
+    public void Victory()
+    {
+        PlayerPrefs.SetInt("minigameWin", 1);
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        SceneManager.LoadScene("TicTacToe_Server");
+    }
 }
