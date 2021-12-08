@@ -8793,6 +8793,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyNav: {fileID: 598204780}
+  detectPlayer: {fileID: 2145088379}
+  adviseTransform: {fileID: 0}
+  otherEnemyBT:
+  - {fileID: 693027847}
+  - {fileID: 961382809}
 --- !u!1 &623913571
 GameObject:
   m_ObjectHideFlags: 0
@@ -9852,6 +9857,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyNav: {fileID: 693027841}
+  detectPlayer: {fileID: 1698231042}
+  adviseTransform: {fileID: 0}
+  otherEnemyBT:
+  - {fileID: 961382809}
+  - {fileID: 598204786}
 --- !u!1 &704841107
 GameObject:
   m_ObjectHideFlags: 0
@@ -14238,6 +14248,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyNav: {fileID: 961382802}
+  detectPlayer: {fileID: 405383477}
+  adviseTransform: {fileID: 0}
+  otherEnemyBT:
+  - {fileID: 693027847}
+  - {fileID: 598204786}
 --- !u!1 &971916223
 GameObject:
   m_ObjectHideFlags: 0
