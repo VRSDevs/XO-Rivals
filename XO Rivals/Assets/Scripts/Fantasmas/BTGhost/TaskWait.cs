@@ -7,7 +7,6 @@ public class TaskWait : Node
 {
 
     private EnemyBT _tree;
-    private float time = 0;
     private int _waitTime;
 
 
