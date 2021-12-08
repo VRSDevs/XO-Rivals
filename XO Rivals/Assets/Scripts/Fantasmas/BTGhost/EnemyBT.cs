@@ -12,6 +12,8 @@ public class EnemyBT : BehaviorTree.Tree
 
     public List<EnemyBT> otherEnemyBT;
 
+    public bool following = false;
+
     protected override Node SetupTree()
     {
 
