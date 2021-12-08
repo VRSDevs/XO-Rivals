@@ -20,13 +20,9 @@ public class EnemyBT : BehaviorTree.Tree
 
         Node root = new Selector(new List<Node>
         {
-            new Sequence(new List<Node>                      //PRIMERO COMPROBAMOS SI HEMOS SIDO AVISADOS
-            {
-                new CheckGetAdvise(this),
-                new TaskFollowAdvise(this,enemyNav),
-            }),
+          
 
-            new Sequence(new List<Node>                      // SEGUNDO COMPROBAMOS SI VEMOS AL ENEMIGO
+            new Sequence(new List<Node>                      // PRIMERO COMPROBAMOS SI VEMOS AL ENEMIGO
             {
                 //COMPROBACIONES PARA SABER SI LE "VEMOS" 
                 new Selector(new List<Node>         
@@ -50,7 +46,11 @@ public class EnemyBT : BehaviorTree.Tree
 
             }),
 
-
+             new Sequence(new List<Node>                      //SEGUNDO COMPROBAMOS SI HEMOS SIDO AVISADOS
+             {
+                 new CheckGetAdvise(this),
+                 new TaskFollowAdvise(this,enemyNav),
+             }),
 
             new TaskPatrol(enemyNav,this),                   //TERCERO DECIDIMOS PATRULLAR(Ultima opcion)
       

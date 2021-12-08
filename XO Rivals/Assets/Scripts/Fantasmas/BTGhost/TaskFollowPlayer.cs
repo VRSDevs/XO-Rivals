@@ -23,7 +23,7 @@ public class TaskFollowPlayer : Node
 
     public override NodeState Evaluate()
     {
-        Debug.Log("EXECUTE TASKFOLLOW");
+        Debug.Log("EXECUTE TASKFOLLOWPLAYER");
 
         _tree.following = true;
 
