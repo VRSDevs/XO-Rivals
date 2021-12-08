@@ -6,13 +6,13 @@ using BehaviorTree;
 public class TaskAdvise : Node
 {
 
-    private EnemyNavMesh _enemyNav;
-    private float time = 0;
+
+    private EnemyBT _tree;
 
 
-    public TaskAdvise(EnemyNavMesh enemyNav)
+    public TaskAdvise(EnemyBT tree)
     {
-        _enemyNav = enemyNav;
+        _tree = tree;
 
     }
 
@@ -23,6 +23,11 @@ public class TaskAdvise : Node
     {
         Debug.Log("EXECUTE TASKADVISE");
 
+        foreach(EnemyBT otherTree in _tree.otherEnemyBT)
+        {
+            otherTree.setAdvise(_tree.enemyNav.player);
+        }
+        
 
             state = NodeState.SUCCESS;
             return state;
