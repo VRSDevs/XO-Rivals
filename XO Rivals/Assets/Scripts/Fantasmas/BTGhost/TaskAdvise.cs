@@ -21,20 +21,11 @@ public class TaskAdvise : Node
 
     public override NodeState Evaluate()
     {
+        Debug.Log("EXECUTE TASKADVISE");
 
-        if (time > 3)
-        {
+
             state = NodeState.SUCCESS;
             return state;
-        }
-        else
-        {
-            time += Time.deltaTime;
-            state = NodeState.RUNNING;
-            return state;
-        }
-
-
 
 
     }
