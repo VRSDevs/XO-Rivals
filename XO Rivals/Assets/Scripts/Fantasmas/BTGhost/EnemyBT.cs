@@ -20,17 +20,39 @@ public class EnemyBT : BehaviorTree.Tree
 
         Node root = new Selector(new List<Node>
         {
-            //new Sequence(new List<Node>
-            //{
-            //    new CheckEnemyInAttackRange(transform),
-            //    new TaskAttack(transform),
-            //}),
-            new Sequence(new List<Node>
+            new Sequence(new List<Node>                      //PRIMERO COMPROBAMOS SI HEMOS SIDO AVISADOS
             {
-                new CheckLinterna(detectPlayer),
-                new TaskFollowPlayer(enemyNav),
+                new CheckGetAdvise(this),
+                new TaskFollowAdvise(this,enemyNav),
             }),
-            new TaskPatrol(enemyNav),
+
+            new Sequence(new List<Node>                      // SEGUNDO COMPROBAMOS SI VEMOS AL ENEMIGO
+            {
+                //COMPROBACIONES PARA SABER SI LE "VEMOS" 
+                new Selector(new List<Node>         
+                {
+
+                    new CheckLinterna(detectPlayer),
+
+                    new Sequence(new List<Node>                     
+                    {
+                        new CheckFollowingPlayer(this),
+                        new CheckNoObstacle(detectPlayer),
+                        new CheckRadio(detectPlayer),
+                    }),
+
+
+                }),
+
+                 new TaskFollowPlayer(enemyNav,this),
+                 new TaskAdvise(this),
+
+
+            }),
+
+
+
+            new TaskPatrol(enemyNav,this),                   //TERCERO DECIDIMOS PATRULLAR(Ultima opcion)
       
 
         });
