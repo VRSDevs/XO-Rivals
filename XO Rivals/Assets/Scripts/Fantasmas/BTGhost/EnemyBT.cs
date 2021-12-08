@@ -50,5 +50,9 @@ public class EnemyBT : BehaviorTree.Tree
     {
         advised = false;
     }
+    public bool getAdvise()
+    {
+        return advised;
+    }
 
 }
