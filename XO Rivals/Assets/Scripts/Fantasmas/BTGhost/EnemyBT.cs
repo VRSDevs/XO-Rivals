@@ -10,6 +10,8 @@ public class EnemyBT : BehaviorTree.Tree
     private bool advised = false;
     public Transform adviseTransform;
 
+    public List<EnemyBT> otherEnemyBT;
+
     protected override Node SetupTree()
     {
 
