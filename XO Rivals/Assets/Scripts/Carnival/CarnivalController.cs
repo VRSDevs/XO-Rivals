@@ -104,12 +104,12 @@ public class CarnivalController : MonoBehaviour
         if (indicator.transform.position.y < topWin.position.y && indicator.transform.position.y > bottomWin.position.y)
         {
             win = true;
-            VictoryCanvas();
+            Invoke("VictoryCanvas", 1f);
         }
         else
         {
             lost = true;
-            DefeatCanvas();
+            Invoke("DefeatCanvas", 1f);
         }
     }
 
