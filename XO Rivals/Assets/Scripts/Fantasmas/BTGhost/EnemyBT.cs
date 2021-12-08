@@ -8,7 +8,7 @@ public class EnemyBT : BehaviorTree.Tree
     public EnemyNavMesh enemyNav;
     public DetectPlayer detectPlayer;
     private bool advised = false;
-    private Transform adviseTransform;
+    public Transform adviseTransform;
 
     protected override Node SetupTree()
     {
