@@ -21,7 +21,7 @@ public class TaskFollowPlayer : Node
 
     public override NodeState Evaluate()
     {
-     
+        Debug.Log("EXECUTE TASKFOLLOW");
 
         _enemyNav.target = _enemyNav.player;
 
