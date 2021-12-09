@@ -28,7 +28,7 @@ public class TaskFollowPlayer : Node
         _tree.following = true;
 
 
-        _enemyNav.target = _enemyNav.player;
+        _enemyNav.target.position = _enemyNav.player.position;
 
 
 
