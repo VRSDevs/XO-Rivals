@@ -51,7 +51,7 @@ public class CloudDataController : MonoBehaviour
             data = OnDataRecieved(result, type);
         }, (error) =>
         {
-            
+            data = OnError(error);
         });
 
         return data;
@@ -98,6 +98,14 @@ public class CloudDataController : MonoBehaviour
         }
 
         return data;
+    }
+
+    private Dictionary<string, string> OnError(PlayFabError error)
+    {
+        return new Dictionary<string, string>()
+        {
+            { "ResultCode", "3" }
+        };
     }
 
     #endregion
