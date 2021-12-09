@@ -5,7 +5,7 @@ using Photon.Pun;
 //Enum of different states
 public enum droneState{WALKING, ATTACKING, RAGING, REROUTE}
 
-public class DroneStateMachine : MonoBehaviour{
+public class FollowDroneStateMachine : MonoBehaviour{
     
     //Character GameObject
     [SerializeField] private GameObject characterO;

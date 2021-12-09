@@ -1,0 +1,149 @@
+using UnityEngine;
+
+public class ShootDroneBehaviourTree : MonoBehaviour {
+
+    //Character GameObject
+    [SerializeField] private GameObject characterO;
+    [SerializeField] private GameObject characterX;
+    private GameObject character;
+
+    //GameObjects
+    [SerializeField] private GameObject visionCone;
+    [SerializeField] private GameObject bullet;
+
+    //Parameters
+    float timeBetweenShoots;
+    int shootsToDouble;
+
+    bool charDetected;
+
+    private float timePassed = 0f;
+
+    //Behaviour tree
+    private enemyFirstNode enemyTree;
+    private enemyConditionNode<bool> newConditionNode;
+    private enemyConditionNode<float> newConditionNode2;
+
+    void Start(){
+
+        //Choose character
+        character = characterO;
+        
+        //Start variables
+        timeBetweenShoots = Random.Range(0.5f, 1.25f);
+        shootsToDouble = (int) Random.Range(1f, 3f);
+        charDetected = false;
+
+        //Tree
+        enemyTree = new enemyFirstNode();
+
+        //Tree nodes
+        //Level 0
+        //Main node -> Selector node
+        enemySelectorNode newSelectorNode = new enemySelectorNode(enemyTree);
+        enemyTree.addChild(newSelectorNode);
+
+        //Level 1
+        //Left branch -> Sequence node
+        enemySequenceNode newSequenceNode = new enemySequenceNode(newSelectorNode);
+        newSelectorNode.addChild(newSequenceNode);
+        //Right branch -> Action node
+        enemyActionNode newActionNode = new enemyActionNode(newSelectorNode, new Action(RotateView));
+        newSelectorNode.addChild(newActionNode);
+
+        //Level 2
+        //Left Left branch -> Condition node
+        newConditionNode = new enemyConditionNode<bool>(newSequenceNode, simOperator.EQ, charDetected, true);
+        newSequenceNode.addChild(newConditionNode);
+        //Left Right branch -> Selector node
+        enemySelectorNode newSelectorNode2 = new enemySelectorNode(newSequenceNode);
+        newSequenceNode.addChild(newSelectorNode2);
+
+        //Level 3
+        //Left Right Left branch -> Sequence node
+        enemySequenceNode newSequenceNode2 = new enemySequenceNode(newSelectorNode2);
+        newSelectorNode2.addChild(newSequenceNode2);
+        //Left Right Right branch -> Action node
+        enemyActionNode newActionNode2 = new enemyActionNode(newSelectorNode2, new Action(Shoot));
+        newSelectorNode2.addChild(newActionNode2);
+
+        //Level 4
+        //Left Right Left Left -> Condition node
+        newConditionNode2 = new enemyConditionNode<float>(newSequenceNode2, simOperator.LTE, shootsToDouble, 0);
+        newSequenceNode2.addChild(newConditionNode2);
+        //Left Right Left Right -> Action node
+        enemyActionNode newActionNode3 = new enemyActionNode(newSequenceNode2, new Action(DoubleShoot));
+        newSequenceNode2.addChild(newActionNode3);
+    }
+
+    void Update(){
+
+        //Check character every second
+        timePassed += Time.deltaTime;
+
+        //Call tree update 
+        enemyTree.update();       
+    }
+
+    void RotateView(){
+        //Rotate cone around enemy
+        visionCone.transform.RotateAround(this.transform.position, Vector3.up, 20 * Time.deltaTime);
+    }
+
+    void Shoot(){
+
+        //Check last shot
+        timeBetweenShoots -= Time.deltaTime;
+    
+        if(timeBetweenShoots <= 0){
+            //Shoot a bullet
+            GameObject newBullet = (GameObject) Instantiate(bullet, transform.position, transform.rotation);
+            newBullet.SetActive(true);
+
+            //Restart shoot timer
+            timeBetweenShoots = Random.Range(0.5f, 1.25f);
+
+            //Reduce shoots to double shot
+            shootsToDouble--;        
+            newConditionNode2.updateValue(shootsToDouble);  
+        }else
+            RotateSelf(); 
+    }
+
+    void DoubleShoot(){
+        
+        //Check last shot
+        timeBetweenShoots -= Time.deltaTime;
+    
+        if(timeBetweenShoots <= 0){
+            //Shoot a bullet
+            GameObject newBullet1 = (GameObject) Instantiate(bullet, transform.position + new Vector3(-2f, -2f, transform.position.z), transform.rotation);
+            newBullet1.SetActive(true);
+            GameObject newBullet2 = (GameObject) Instantiate(bullet, transform.position + new Vector3(2f, 2f, transform.position.z), transform.rotation);
+            newBullet2.SetActive(true);
+
+            //Restart shoot timer
+            timeBetweenShoots = Random.Range(0.5f, 1.25f);
+
+            //Restart shoots to double shot
+            shootsToDouble = (int) Random.Range(1f, 3f);        
+            newConditionNode2.updateValue(shootsToDouble);  
+        }else
+            RotateSelf();
+    }
+
+    void RotateSelf(){
+
+        //Rotate towards character
+        Vector3 targetDirection = character.transform.position - transform.position;
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, Time.deltaTime, 0.0f);
+        transform.rotation = Quaternion.LookRotation(newDirection);        
+    }
+
+    public void CharacterDetected(){
+        //Update character detected
+        charDetected = true;
+        newConditionNode.updateValue(charDetected);
+    }
+
+}

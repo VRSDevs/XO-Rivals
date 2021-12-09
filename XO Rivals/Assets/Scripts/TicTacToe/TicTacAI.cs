@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TicTacAI : MonoBehaviour
@@ -63,6 +61,7 @@ public class TicTacAI : MonoBehaviour
         return score;
     }
 
+    
     #region TestMethods
 
     //Optimize this using last tile
