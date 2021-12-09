@@ -42,6 +42,8 @@ public static class DataTypeExtension
                 return "Lives";
             case DataType.Level:
                 return "Level";
+            case DataType.LifeLost:
+                return "LifeLost";
             default:
                 return "";
         }
