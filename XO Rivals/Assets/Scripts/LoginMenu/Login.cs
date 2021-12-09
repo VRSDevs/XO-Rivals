@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using PlayFab;
 using TMPro;
 using UnityEditor;
@@ -170,6 +171,7 @@ public class Login : MonoBehaviour
                 _gameManager.SetPhotonNick(username);
                 
                 GameObject myPlayer = new GameObject();
+                
                 PlayerInfo playerInfo = myPlayer.AddComponent<PlayerInfo>();
                 DontDestroyOnLoad(myPlayer);
                 playerInfo.name = "PlayerObject";
@@ -177,13 +179,34 @@ public class Login : MonoBehaviour
                 playerInfo.ID = Authenticator.playFabPlayerIdCache;
 
                 Dictionary<string, string> data = _gameManager.GetCloudData(DataType.Login);
+                Dictionary<string, string> result = new Dictionary<string, string>();
+                
                 switch (int.Parse(data["ResultCode"]))
                 {
+                    // 
                     case 1:
+                        playerInfo.Lives = int.Parse(data[DataType.Lives.GetString()]);
+                        playerInfo.Level = float.Parse(data[DataType.Level.GetString()]);
+                        playerInfo.LostLifeTime = DateTime.ParseExact(data[DataType.LifeLost.GetString()],
+                            "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+
+                        result = _gameManager.UpdateCloudData(data);
+                            
                         break;
                     case 2:
+                        playerInfo.Lives = 3;
+                        playerInfo.Level = 0.0f;
+
+                        result = _gameManager.UpdateCloudData(new Dictionary<string, string>()
+                        {
+                            {DataType.Lives.GetString(), playerInfo.Lives.ToString()},
+                            {DataType.Level.GetString(), playerInfo.Level.ToString(CultureInfo.InvariantCulture)}
+                        });
+                        
                         break;
                     case 3:
+                        Debug.Log("Got error retrieving user data:");
+                        
                         break;
                     default:
                         break;
