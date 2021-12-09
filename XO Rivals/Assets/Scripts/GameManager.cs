@@ -83,6 +83,20 @@ public class GameManager : MonoBehaviour
         return _cloudController.IsSynchronized();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<string, string> GetDataDictionary()
+    {
+        return _cloudController.GetDataDictionary();
+    }
+
+    public Dictionary<string, string> GetSendStatus()
+    {
+        return _cloudController.GetSendStatus();
+    }
+
     #endregion
     
     #region Setters
@@ -203,9 +217,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="type">Tipo de dato a obtener</param>
     /// <returns>Diccionario con los datos solicitados</returns>
-    public Dictionary<string, string> GetCloudData(DataType type)
+    public void GetCloudData(DataType type)
     {
-        return _cloudController.GetData(type);
+        _cloudController.GetData(type);
     }
 
     /// <summary>
@@ -213,9 +227,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="data">Datos a cargar</param>
     /// <returns>Estado de la operación</returns>
-    public Dictionary<string, string> UpdateCloudData(Dictionary<string, string> data)
+    public void UpdateCloudData(Dictionary<string, string> data)
     {
-        return _cloudController.SendData(data);
+        _cloudController.SendData(data);
     }
 
     #endregion
