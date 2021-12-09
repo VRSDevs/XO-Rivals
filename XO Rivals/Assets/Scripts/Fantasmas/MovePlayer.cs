@@ -24,7 +24,8 @@ public class MovePlayer : MonoBehaviour
     private Quaternion quatBL = new Quaternion(-0.2705979f, -0.6532816f, 0.6532816f, -0.2705979f);
     private Quaternion quatTL = new Quaternion(0.2705981f, -0.6532816f, 0.6532816f, 0.2705981f);
 
-
+    [SerializeField]
+    private Animator anim;
 
     private bool vivo = true;
 
@@ -47,6 +48,14 @@ public class MovePlayer : MonoBehaviour
         if (vivo)
         {
             player.velocity = new Vector3(horizontal * speed, 0, vertical * speed);
+
+            if (player.velocity.sqrMagnitude == 0)
+            {
+                anim.speed = 0;
+            } else
+            {
+                anim.speed = 1.3f;
+            }
         }
 
 
