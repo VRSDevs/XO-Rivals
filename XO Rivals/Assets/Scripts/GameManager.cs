@@ -198,7 +198,17 @@ public class GameManager : MonoBehaviour
     {
         return _cloudController.GetData(type);
     }
-    
+
+    /// <summary>
+    /// Método para cargar datos en la nube
+    /// </summary>
+    /// <param name="data">Datos a cargar</param>
+    /// <returns>Estado de la operación</returns>
+    public Dictionary<string, string> UpdateCloudData(Dictionary<string, string> data)
+    {
+        return _cloudController.SendData(data);
+    }
+
     #endregion
 
     #region ConversiontMethods
