@@ -58,7 +58,7 @@ public class CloudDataController : MonoBehaviour
     /// </summary>
     /// <param name="type">Tipo de dato a obtener</param>
     /// <returns>Diccionario con los datos solicitados</returns>
-    public Dictionary<string, string> GetLoginData(DataType type)
+    public Dictionary<string, string> GetData(DataType type)
     {
         Dictionary<string, string> data = new Dictionary<string, string>();
 

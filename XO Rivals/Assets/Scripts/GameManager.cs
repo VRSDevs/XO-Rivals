@@ -196,7 +196,7 @@ public class GameManager : MonoBehaviour
     /// <returns>Diccionario con los datos solicitados</returns>
     public Dictionary<string, string> GetCloudData(DataType type)
     {
-        return _cloudController.GetLoginData(type);
+        return _cloudController.GetData(type);
     }
     
     #endregion
