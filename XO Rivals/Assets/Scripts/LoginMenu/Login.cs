@@ -183,6 +183,8 @@ public class Login : MonoBehaviour
 
                 Dictionary<string, string> data = _gameManager.GetCloudData(DataType.Login);
                 Dictionary<string, string> result = new Dictionary<string, string>();
+                
+                Log.text = "Getting data...";
 
                 StartCoroutine(SynchronizePlayerData(data, result));
             }
@@ -253,6 +255,10 @@ public class Login : MonoBehaviour
             default:
                 break;
         }
+        
+        Log.text = "Connecting to lobby...";
+        
+        _gameManager.OnConnectToLobby();
     }
 
     #endregion
