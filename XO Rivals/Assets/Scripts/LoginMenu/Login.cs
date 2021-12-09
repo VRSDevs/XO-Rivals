@@ -185,6 +185,8 @@ public class Login : MonoBehaviour
                 {
                     // Datos obtenidos
                     case 1:
+                        Debug.Log("Caso 1");
+                        
                         playerInfo.Lives = int.Parse(data[DataType.Lives.GetString()]);
                         playerInfo.Level = float.Parse(data[DataType.Level.GetString()]);
                         playerInfo.LostLifeTime = DateTime.ParseExact(data[DataType.LifeLost.GetString()],
@@ -194,6 +196,7 @@ public class Login : MonoBehaviour
                             
                         break;
                     case 2:
+                        Debug.Log("Caso 2");
 
                         playerInfo.Lives = 3;
                         playerInfo.Level = 0.0f;
