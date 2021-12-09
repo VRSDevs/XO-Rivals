@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
@@ -8,54 +9,82 @@ using UnityEngine;
 [Serializable]
 public enum DataType
 {
-    Lives,
-    Level
+    Login,
+    LIVES,
+    LEVEL
 }
 
-public class CloudDataController
+public class CloudDataController : MonoBehaviour
 {
 
     #region ClouldMethods
 
-    public Dictionary<string, string> GetDataFromCloud(DataType type)
+    public Dictionary<string, string> GetLoginData(DataType type)
     {
-        PlayFabClientAPI.GetUserData();
+        Dictionary<string, string> data = new Dictionary<string, string>();
 
-        return null;
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest()
+        {
+            PlayFabId = FindObjectOfType<PlayerInfo>().ID,
+            Keys = null
+        }, (result) =>
+        {
+            data = OnDataRecieved(result, type);
+        }, (error) =>
+        {
+            
+        });
+
+        return data;
     }
 
     #endregion
 
     #region CBMethods
 
-    public Dictionary<string, string> OnDataRecieved(GetUserDataResult result, DataType type)
+    private Dictionary<string, string> OnDataRecieved(GetUserDataResult result, DataType type)
     {
-        if (result == null) return null;
-        
-        Debug.Log("Se han recibido datos");
-
-        try
+        if (result == null)
         {
-            switch (type)
+            return new Dictionary<string, string>()
             {
-                case DataType.Lives:
-
-                    if (!result.Data.ContainsKey("Lives")) throw new Exception();
-
-                    return new Dictionary<string, string>()
-                    {
-                        {"Lives", result.Data["Lives"].Value}
-                    };
-                
-                case DataType.Level:
-
-                    break;
-            }
+                {"ResultCode", "2"}
+            };
         }
-        catch (Exception e)
+
+        Debug.Log("Se han recibido datos");
+        
+        Dictionary<string, string> data = new Dictionary<string, string>()
         {
-            // ignored
+            {"ResultCode", "1"}
+        };
+        
+        switch (type)
+        {
+            case DataType.Login:
+
+                data.Add("Lives", !result.Data.ContainsKey("Lives") ? "3" : result.Data["Lives"].Value);
+                data.Add("Level", !result.Data.ContainsKey("Level") ? "0.0" : result.Data["Level"].Value);
+                data.Add("LifeLost", !result.Data.ContainsKey("LifeLost") ? System.DateTime.Now.ToString(CultureInfo.InvariantCulture) : result.Data["Life Lost"].Value);
+                
+                break;
+            /*
+            case DataType.LIVES:
+
+                 throw new Exception();
+
+                return new Dictionary<string, string>()
+                {
+                    {"Lives", result.Data["Lives"].Value}
+                };
+            
+            case DataType.LEVEL:
+
+                break;
+                */
         }
+
+        return data;
     }
 
     #endregion
