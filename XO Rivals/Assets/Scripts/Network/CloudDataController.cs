@@ -6,6 +6,13 @@ using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
 
+/// <summary>
+/// Tipos de datos que se pueden solicitar
+///     Login - Datos necesarios para el inicio de sesión
+///     Lives - Vidas del usuario
+///     Level - Nivel del usuario
+///     LifeLost - Tiempo de las vidas perdidas
+/// </summary>
 [Serializable]
 public enum DataType
 {
@@ -15,8 +22,16 @@ public enum DataType
     LifeLost
 }
 
+/// <summary>
+/// Clase auxiliar para el enumerador DataType
+/// </summary>
 public static class DataTypeExtension
 {
+    /// <summary>
+    /// Método para transformar un valor del enumerador en una cadena de texto
+    /// </summary>
+    /// <param name="type">Tipo de dato a transformar</param>
+    /// <returns>Cadena de texto equivalente al tipo de dato</returns>
     public static string GetString(this DataType type)
     {
         switch (type)
@@ -38,6 +53,11 @@ public class CloudDataController : MonoBehaviour
 
     #region ClouldMethods
 
+    /// <summary>
+    /// Método para la obtención de datos de la nube
+    /// </summary>
+    /// <param name="type">Tipo de dato a obtener</param>
+    /// <returns>Diccionario con los datos solicitados</returns>
     public Dictionary<string, string> GetLoginData(DataType type)
     {
         Dictionary<string, string> data = new Dictionary<string, string>();
@@ -107,6 +127,11 @@ public class CloudDataController : MonoBehaviour
         return data;
     }
 
+    /// <summary>
+    /// Método CB llamado cuando falla la petición de datos
+    /// </summary>
+    /// <param name="error">Error devuelto por el servidor</param>
+    /// <returns>Diccionario con un código de error</returns>
     private Dictionary<string, string> OnError(PlayFabError error)
     {
         return new Dictionary<string, string>()
