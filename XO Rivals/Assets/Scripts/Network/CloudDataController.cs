@@ -71,6 +71,7 @@ public class CloudDataController : MonoBehaviour
         }, (result) =>
         {
             data = OnDataRecieved(result, type);
+            
         }, (error) =>
         {
             data = OnError(error);
@@ -118,6 +119,8 @@ public class CloudDataController : MonoBehaviour
     {
         if (result == null)
         {
+            Debug.Log("Era nulo");
+            
             return new Dictionary<string, string>()
             {
                 {"ResultCode", "2"}
@@ -137,9 +140,10 @@ public class CloudDataController : MonoBehaviour
 
                 data.Add(DataType.Lives.GetString(), !result.Data.ContainsKey(DataType.Lives.GetString()) ? "3" : result.Data[DataType.Lives.GetString()].Value);
                 data.Add(DataType.Level.GetString(), !result.Data.ContainsKey(DataType.Level.GetString()) ? "0.0" : result.Data[DataType.Level.GetString()].Value);
+                /*
                 data.Add(DataType.LifeLost.GetString(), !result.Data.ContainsKey(DataType.LifeLost.GetString()) && !string.IsNullOrEmpty(result.Data[DataType.LifeLost.GetString()].Value)
                     ? System.DateTime.Now.ToString(CultureInfo.InvariantCulture) : result.Data[DataType.LifeLost.GetString()].Value);
-                
+                */
                 break;
             case DataType.Lives:
                 break;
@@ -150,6 +154,8 @@ public class CloudDataController : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
+        
+        Debug.Log(data.Keys);
 
         return data;
     }

@@ -105,7 +105,8 @@ public class MainMenuController : MonoBehaviour
     #region UpdateMethods
 
     private void IncreaseLifes(){
-
+        
+        /*
         _localPlayer.Lives++;
         lifesTxt.text = "Lives: " + _localPlayer.Lives;
         lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
@@ -141,6 +142,7 @@ public class MainMenuController : MonoBehaviour
             
             lifesTime.text = "MAX";
         }
+        */
     }
 
     public void ReduceLives(){
