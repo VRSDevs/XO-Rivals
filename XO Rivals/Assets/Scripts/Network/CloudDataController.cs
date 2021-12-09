@@ -52,6 +52,11 @@ public static class DataTypeExtension
 
 public class CloudDataController : MonoBehaviour
 {
+    #region Vars
+
+    private bool _synchronized = false;
+
+    #endregion
 
     #region ClouldMethods
 
