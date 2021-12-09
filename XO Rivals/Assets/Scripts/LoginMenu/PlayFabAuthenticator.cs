@@ -91,8 +91,6 @@ public class PlayFabAuthenticator : MonoBehaviour
                     },
                     OnError
                 );
-                
-                Debug.Log("Hola");
 
                 break;
             case LoginMode.LOGIN:

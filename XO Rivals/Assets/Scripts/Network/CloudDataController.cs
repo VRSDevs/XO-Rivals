@@ -154,6 +154,8 @@ public class CloudDataController : MonoBehaviour
         {
             Debug.Log("Era nulo");
             
+            UpdateSynchronizedStatus();
+            
             return new Dictionary<string, string>()
             {
                 {"ResultCode", "2"}
@@ -187,6 +189,8 @@ public class CloudDataController : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
+        
+        UpdateSynchronizedStatus();
 
         return data;
     }
