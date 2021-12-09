@@ -61,6 +61,13 @@ public class CloudDataController : MonoBehaviour
 
     #region CBMethods
 
+    /// <summary>
+    /// Método ejecutado tras recibir los datos del servidor
+    /// </summary>
+    /// <param name="result">Resultado de la consulta</param>
+    /// <param name="type">Tipo de dato buscado</param>
+    /// <returns>Diccionario con los datos solicitados</returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     private Dictionary<string, string> OnDataRecieved(GetUserDataResult result, DataType type)
     {
         if (result == null)
