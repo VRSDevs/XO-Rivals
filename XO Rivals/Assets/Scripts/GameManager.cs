@@ -74,6 +74,15 @@ public class GameManager : MonoBehaviour
         return _networkController.GetCreatingRoom();
     }
 
+    /// <summary>
+    /// Método para obtener el estado de sincronización
+    /// </summary>
+    /// <returns>Estado de sincronización</returns>
+    public bool GetSynchronizeStatus()
+    {
+        return _cloudController.IsSynchronized();
+    }
+
     #endregion
     
     #region Setters
