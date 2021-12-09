@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CarnivalController : MonoBehaviour
 {
 
     public bool win = false;
     public bool lost = false;
+
+    public bool playinWithO = false;
 
     [SerializeField]
     private Transform bottom;
@@ -18,21 +23,68 @@ public class CarnivalController : MonoBehaviour
     private Transform topWin;
     [SerializeField]
     private GameObject indicator;
+    [SerializeField]
+    private GameObject playerO;
+    [SerializeField]
+    private GameObject playerX;
+    [SerializeField]
+    private GameObject victory;
+    [SerializeField]
+    private GameObject defeat;
+    [SerializeField]
+    private Sprite playerXWin;
+    [SerializeField]
+    private Sprite playerXLost;
+    [SerializeField]
+    private Sprite playerOWin;
+    [SerializeField]
+    private Sprite playerOLost;
 
     public bool goingUp = true;
 
-    private float speed = 300;
+    private float speed = 500;
+
+    // Gamemanager
+    private GameManager _gameManager;
+
+    public Match thisMatch;
+
+    public PlayerInfo localPlayer;
+
+    private void Awake()
+    {
+        _gameManager = FindObjectOfType<GameManager>();
+        thisMatch = _gameManager.PlayerMatches[PhotonNetwork.CurrentRoom.Name];
+        localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
+
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
+        speed = Random.Range(700,850);
+        // Recoger de quien es el turno y activar los personajes necesarios
+        if (thisMatch.PlayerOName == localPlayer.Name)
+        {
+            playerX.SetActive(false);
+            playinWithO = true;
+        }
+        else
+        {
+            playerO.SetActive(false);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        BarMovement();
     }
 
     // Update is called once per frame
     void Update()
     {
-        BarMovement();
+ 
         if (indicator.transform.position.y > top.position.y - 10)
         {
             goingUp = false;
@@ -71,10 +123,60 @@ public class CarnivalController : MonoBehaviour
         if (indicator.transform.position.y < topWin.position.y && indicator.transform.position.y > bottomWin.position.y)
         {
             win = true;
+            Invoke("VictoryCanvas", 1f);
+            if (playinWithO)
+            {
+                playerO.GetComponent<Image>().sprite = playerOWin;
+
+            } 
+            else
+            {
+                playerX.GetComponent<Image>().sprite = playerXWin;
+            }
         }
         else
         {
             lost = true;
+            Invoke("DefeatCanvas", 1f);
+            if (playinWithO)
+            {
+                playerO.GetComponent<Image>().sprite = playerOLost;
+
+            }
+            else
+            {
+                playerX.GetComponent<Image>().sprite = playerXLost;
+            }
         }
+    }
+
+    public void DefeatCanvas()
+    {
+        defeat.SetActive(true);
+        Invoke("Defeat", 3f);
+        FindObjectOfType<AudioManager>().Play("Defeat");
+
+    }
+
+    public void VictoryCanvas()
+    {
+        victory.SetActive(true);
+        Invoke("Victory", 3f);
+        FindObjectOfType<AudioManager>().Play("Victory");
+
+    }
+
+    public void Defeat()
+    {
+        PlayerPrefs.SetInt("minigameWin", 0);
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        SceneManager.LoadScene("TicTacToe_Server");
+    }
+
+    public void Victory()
+    {
+        PlayerPrefs.SetInt("minigameWin", 1);
+        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        SceneManager.LoadScene("TicTacToe_Server");
     }
 }

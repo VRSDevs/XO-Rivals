@@ -10,6 +10,7 @@ public class DetectPlayer : MonoBehaviour
     public float distanciaVision = 7;
     public bool veoPlayerRadio = false;
     public bool veoPlayerDistance = false;
+    public bool linernaDetect = false;
 
     public GameObject prefabBala;
     public GameObject bala;
@@ -64,25 +65,13 @@ public class DetectPlayer : MonoBehaviour
     }
 
 
-    public void playerDetectedLinterna()//CUANDO ÑLA LINTERNA DETECTA AL JUGADOR
+    public void playerDetectedLinterna(bool detect)//CUANDO ÑLA LINTERNA DETECTA AL JUGADOR
     {
 
-        if (veoPlayerDistance)
-        {
-            GetComponentInParent<EnemyNavMesh>().playerDetectedLinternaNav(true);
-
-            StartCoroutine(repetirDetectedLinterna());
-        }
-        else
-        {
-
-            GetComponentInParent<EnemyNavMesh>().playerDetectedLinternaNav(false);
-            
-        }
-
+        linernaDetect = detect;
 
     }
-
+    /*
     IEnumerator repetirDetectedLinterna() //Solo tiene en cuenta si esta en el radio
     {
 
@@ -104,7 +93,7 @@ public class DetectPlayer : MonoBehaviour
 
 
     }
-
+    */
 
 
     }

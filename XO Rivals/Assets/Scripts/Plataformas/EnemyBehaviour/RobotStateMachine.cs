@@ -115,7 +115,7 @@ public class RobotStateMachine : MonoBehaviour{
                     //If timeToJump == 0, jump
                     if(timeToJump <= 0){
                         jumping = true;
-                        timeToJump = Random.Range(1f, 3f);
+                        timeToJump = Random.Range(0.5f, 1.5f);
                     //Else goToCharacter
                     }else{
                         GoToCharacter();
