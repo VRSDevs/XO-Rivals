@@ -183,7 +183,7 @@ public class Login : MonoBehaviour
                 
                 switch (int.Parse(data["ResultCode"]))
                 {
-                    // 
+                    // Datos obtenidos
                     case 1:
                         playerInfo.Lives = int.Parse(data[DataType.Lives.GetString()]);
                         playerInfo.Level = float.Parse(data[DataType.Level.GetString()]);
@@ -194,6 +194,7 @@ public class Login : MonoBehaviour
                             
                         break;
                     case 2:
+
                         playerInfo.Lives = 3;
                         playerInfo.Level = 0.0f;
 
@@ -212,74 +213,6 @@ public class Login : MonoBehaviour
                         break;
                 }
 
-                //Get client data from PlayFab
-                PlayFabClientAPI.GetUserData(new PlayFab.ClientModels.GetUserDataRequest() {
-                    PlayFabId = playerInfo.ID,
-                    Keys = null
-                }, result => {
-                    Debug.Log("Got user data:");
-                    if (result.Data != null){
-                        //Get lifes
-                        if(result.Data.ContainsKey("Lifes")){
-                            playerInfo.Lives = int.Parse(result.Data["Lifes"].Value);
-                            Debug.Log("Successfully got player lifes");
-                        }else{
-                            PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                                Data = new Dictionary<string, string>() {
-                                    {"Lifes", "3"}
-                                }
-                            },
-                            result => Debug.Log("Successfully updated user lifes"),
-                            error => {
-                                Debug.Log("Got error setting user lifes");
-                            });
-                        }
-
-                        //Get level
-                        if(result.Data.ContainsKey("Level")){
-                            playerInfo.Level = float.Parse(result.Data["Level"].Value);
-                            Debug.Log("Successfully got player level");
-                        }else{
-                            PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                                Data = new Dictionary<string, string>() {
-                                    {"Level", "0.0"}
-                                }
-                            },
-                            result => Debug.Log("Successfully updated user level"),
-                            error => {
-                                Debug.Log("Got error setting user level");
-                            });
-                        }
-
-                        //Get moment of life lost(if exists)
-                        if(result.Data.ContainsKey("Life Lost") && result.Data["Life Lost"].Value != "" && result.Data["Life Lost"].Value != null){
-                            try{
-                                playerInfo.LostLifeTime = DateTime.ParseExact(result.Data["Life Lost"].Value, "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                                Debug.Log("Successfully got player life lost moment");
-                            }catch{
-                                Debug.Log("Wrong dateTime");
-                            }
-                        }  
-                        playerInfo.LostLifeTime = System.DateTime.Now;               
-                    }else{
-                        playerInfo.Level = 0;
-                        playerInfo.Lives = 3;
-                        //Setup all information
-                        PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                            Data = new Dictionary<string, string>() {
-                                {"Lifes", "3"},
-                                {"Level", "0"}
-                            }
-                        },
-                        result => Debug.Log("Successfully updated user information"),
-                        error => {
-                            Debug.Log("Got error setting user information");
-                        });
-                    }
-                }, (error) => {
-                    Debug.Log("Got error retrieving user data:");
-                });
-                
             }
             else
             {
