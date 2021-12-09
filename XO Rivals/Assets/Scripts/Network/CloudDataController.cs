@@ -85,6 +85,7 @@ public class CloudDataController : MonoBehaviour
     public Dictionary<string, string> SendData(Dictionary<string, string> data)
     {
         Dictionary<string, string> status = new Dictionary<string, string>();
+        data.Remove("ResultCode");
         
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
         {
