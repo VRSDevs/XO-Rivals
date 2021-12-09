@@ -54,7 +54,23 @@ public class CloudDataController : MonoBehaviour
 {
     #region Vars
 
+    /// <summary>
+    /// ¿Se sincronizaron los datos?
+    /// </summary>
     private bool _synchronized = false;
+
+    #endregion
+
+    #region Getters
+
+    /// <summary>
+    /// Método para devolver el valor de control de sincronización
+    /// </summary>
+    /// <returns>Valor de la sincronización</returns>
+    public bool IsSynchronized()
+    {
+        return _synchronized;
+    }
 
     #endregion
 
