@@ -23,11 +23,12 @@ public class TaskAdvise : Node
     {
         Debug.Log("EXECUTE TASKADVISE");
 
-        _tree.following = false;
 
+
+        _tree.lastSeenPlayer = new Vector3(_tree.enemyNav.player.position.x, _tree.enemyNav.player.position.y, _tree.enemyNav.player.position.z);
         foreach (EnemyBT otherTree in _tree.otherEnemyBT)
         {
-            otherTree.setAdvise(_tree.enemyNav.player);
+            otherTree.setAdvise(_tree.lastSeenPlayer);
         }
         
 
