@@ -141,9 +141,16 @@ public class CloudDataController : MonoBehaviour
         return data;
     }
 
-    private void OnDataSend()
+    /// <summary>
+    /// Método ejecutado cuando se mandan los datos de manera correcta
+    /// </summary>
+    /// <returns>Diccionario con el resultado del envío</returns>
+    private Dictionary<string, string> OnDataSend()
     {
-        Debug.Log("Datos enviados");
+        return new Dictionary<string, string>()
+        {
+            { "ResultCode", "1" }
+        };
     }
 
     /// <summary>
