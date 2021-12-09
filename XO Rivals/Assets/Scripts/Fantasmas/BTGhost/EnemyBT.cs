@@ -7,12 +7,14 @@ public class EnemyBT : BehaviorTree.Tree
 {
     public EnemyNavMesh enemyNav;
     public DetectPlayer detectPlayer;
-    private bool advised = false;
-    public Transform adviseTransform;
+    public bool advised = false;
+    public Vector3 adviseVector;
 
     public List<EnemyBT> otherEnemyBT;
 
     public bool following = false;
+
+    public Vector3 lastSeenPlayer;
 
     protected override Node SetupTree()
     {
@@ -28,12 +30,16 @@ public class EnemyBT : BehaviorTree.Tree
                 new Selector(new List<Node>         
                 {
 
-                    new CheckLinterna(detectPlayer),
+
+                    new Sequence(new List<Node>
+                    {
+                        new CheckLinterna(detectPlayer),
+                        new CheckNoObstacle(detectPlayer),
+                    }),
 
                     new Sequence(new List<Node>                     
                     {
                         new CheckFollowingPlayer(this),
-                        new CheckNoObstacle(detectPlayer),
                         new CheckRadio(detectPlayer),
                     }),
 
@@ -67,9 +73,9 @@ public class EnemyBT : BehaviorTree.Tree
     }
 
 
-    public void setAdvise(Transform transformA)
+    public void setAdvise(Vector3 vectorA)
     {
-        adviseTransform = transformA;
+        adviseVector = vectorA;
         advised = true;
     }
     public void setAdviseFalse()
