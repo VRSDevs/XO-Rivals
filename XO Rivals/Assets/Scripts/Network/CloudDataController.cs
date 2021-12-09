@@ -59,6 +59,16 @@ public class CloudDataController : MonoBehaviour
     /// </summary>
     private bool _synchronized = false;
 
+    /// <summary>
+    /// Diccionario de datos de la nube
+    /// </summary>
+    private Dictionary<string, string> _cloudData;
+
+    /// <summary>
+    /// Diccionario con el estado de envío de datos
+    /// </summary>
+    private Dictionary<string, string> _sendDataStatus;
+
     #endregion
 
     #region Getters
@@ -72,6 +82,24 @@ public class CloudDataController : MonoBehaviour
         return _synchronized;
     }
 
+    /// <summary>
+    /// Método para obtener el diccionario de datos de la nube
+    /// </summary>
+    /// <returns>Diccionario de datos</returns>
+    public Dictionary<string, string> GetDataDictionary()
+    {
+        return _cloudData;
+    }
+
+    /// <summary>
+    /// Método para obtener el estado de la operación de envío
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<string, string> GetSendStatus()
+    {
+        return _sendDataStatus;
+    }
+
     #endregion
 
     #region UpdateMethods
@@ -81,6 +109,7 @@ public class CloudDataController : MonoBehaviour
     /// </summary>
     public void UpdateSynchronizedStatus()
     {
+        Debug.Log("Valor actualizado.");
         _synchronized = !_synchronized;
     }
 
@@ -93,24 +122,16 @@ public class CloudDataController : MonoBehaviour
     /// </summary>
     /// <param name="type">Tipo de dato a obtener</param>
     /// <returns>Diccionario con los datos solicitados</returns>
-    public Dictionary<string, string> GetData(DataType type)
+    public void GetData(DataType type)
     {
-        Dictionary<string, string> data = new Dictionary<string, string>();
-
         PlayFabClientAPI.GetUserData(new GetUserDataRequest()
         {
             PlayFabId = FindObjectOfType<PlayerInfo>().ID,
             Keys = null
         }, (result) =>
         {
-            data = OnDataRecieved(result, type);
-            
-        }, (error) =>
-        {
-            data = OnError(error);
-        });
-
-        return data;
+            OnDataRecieved(result, type);
+        }, OnRecieveError);
     }
 
     /// <summary>
@@ -118,9 +139,8 @@ public class CloudDataController : MonoBehaviour
     /// </summary>
     /// <param name="data">Diccionario de datos a enviar</param>
     /// <returns>Estado de la operación</returns>
-    public Dictionary<string, string> SendData(Dictionary<string, string> data)
+    public void SendData(Dictionary<string, string> data)
     {
-        Dictionary<string, string> status = new Dictionary<string, string>();
         data.Remove("ResultCode");
         
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
@@ -128,13 +148,8 @@ public class CloudDataController : MonoBehaviour
             Data = data
         }, (result) =>
         {
-            status = OnDataSend();
-        }, (error) =>
-        {
-            status = OnError(error);
-        });
-
-        return status;
+            OnDataSend();
+        }, OnSendError);
     }
 
     #endregion
@@ -148,7 +163,7 @@ public class CloudDataController : MonoBehaviour
     /// <param name="type">Tipo de dato buscado</param>
     /// <returns>Diccionario con los datos solicitados</returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    private Dictionary<string, string> OnDataRecieved(GetUserDataResult result, DataType type)
+    private void OnDataRecieved(GetUserDataResult result, DataType type)
     {
         if (result == null)
         {
@@ -156,15 +171,17 @@ public class CloudDataController : MonoBehaviour
             
             UpdateSynchronizedStatus();
             
-            return new Dictionary<string, string>()
+            _cloudData = new Dictionary<string, string>()
             {
                 {"ResultCode", "2"}
             };
+
+            return;
         }
 
         Debug.Log("Se han recibido datos");
         
-        Dictionary<string, string> data = new Dictionary<string, string>()
+        _cloudData = new Dictionary<string, string>()
         {
             {"ResultCode", "1"}
         };
@@ -173,8 +190,8 @@ public class CloudDataController : MonoBehaviour
         {
             case DataType.Login:
 
-                data.Add(DataType.Lives.GetString(), !result.Data.ContainsKey(DataType.Lives.GetString()) ? "3" : result.Data[DataType.Lives.GetString()].Value);
-                data.Add(DataType.Level.GetString(), !result.Data.ContainsKey(DataType.Level.GetString()) ? "0.0" : result.Data[DataType.Level.GetString()].Value);
+                _cloudData.Add(DataType.Lives.GetString(), !result.Data.ContainsKey(DataType.Lives.GetString()) ? "3" : result.Data[DataType.Lives.GetString()].Value);
+                _cloudData.Add(DataType.Level.GetString(), !result.Data.ContainsKey(DataType.Level.GetString()) ? "0.0" : result.Data[DataType.Level.GetString()].Value);
                 /*
                 data.Add(DataType.LifeLost.GetString(), !result.Data.ContainsKey(DataType.LifeLost.GetString()) && !string.IsNullOrEmpty(result.Data[DataType.LifeLost.GetString()].Value)
                     ? System.DateTime.Now.ToString(CultureInfo.InvariantCulture) : result.Data[DataType.LifeLost.GetString()].Value);
@@ -191,19 +208,17 @@ public class CloudDataController : MonoBehaviour
         }
         
         UpdateSynchronizedStatus();
-
-        return data;
     }
 
     /// <summary>
     /// Método ejecutado cuando se mandan los datos de manera correcta
     /// </summary>
     /// <returns>Diccionario con el resultado del envío</returns>
-    private Dictionary<string, string> OnDataSend()
+    private void OnDataSend()
     {
-        return new Dictionary<string, string>()
+        _sendDataStatus = new Dictionary<string, string>()
         {
-            { "ResultCode", "1" }
+            {"ResultCode", "1"}
         };
     }
 
@@ -212,11 +227,24 @@ public class CloudDataController : MonoBehaviour
     /// </summary>
     /// <param name="error">Error devuelto por el servidor</param>
     /// <returns>Diccionario con un código de error</returns>
-    private Dictionary<string, string> OnError(PlayFabError error)
+    private void OnRecieveError(PlayFabError error)
     {
-        return new Dictionary<string, string>()
+        _cloudData = new Dictionary<string, string>()
         {
-            { "ResultCode", "3" }
+            {"ResultCode", "3"}
+        };
+    }
+    
+    /// <summary>
+    /// Método CB llamado cuando falla la petición de datos
+    /// </summary>
+    /// <param name="error">Error devuelto por el servidor</param>
+    /// <returns>Diccionario con un código de error</returns>
+    private void OnSendError(PlayFabError error)
+    {
+        _sendDataStatus = new Dictionary<string, string>()
+        {
+            {"ResultCode", "3"}
         };
     }
 

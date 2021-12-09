@@ -169,8 +169,6 @@ public class Login : MonoBehaviour
             
             if (_gameManager.OnConnectToServer())
             {
-                Log.text = "Connected.";
-                
                 _gameManager.SetPhotonNick(username);
                 
                 GameObject myPlayer = new GameObject();
@@ -220,7 +218,7 @@ public class Login : MonoBehaviour
     private IEnumerator SynchronizePlayerData(Dictionary<string, string> data, Dictionary<string, string> result)
     {
         yield return new WaitUntil(_gameManager.GetSynchronizeStatus);
-        
+
         switch (int.Parse(data["ResultCode"]))
         {
             // Datos obtenidos
