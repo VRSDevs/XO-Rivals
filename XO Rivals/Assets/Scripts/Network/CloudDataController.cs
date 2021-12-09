@@ -74,6 +74,18 @@ public class CloudDataController : MonoBehaviour
 
     #endregion
 
+    #region UpdateMethods
+
+    /// <summary>
+    /// Método actualización del estado de sincronización
+    /// </summary>
+    public void UpdateSynchronizedStatus()
+    {
+        _synchronized = !_synchronized;
+    }
+
+    #endregion
+
     #region ClouldMethods
 
     /// <summary>
