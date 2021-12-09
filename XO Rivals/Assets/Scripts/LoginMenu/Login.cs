@@ -175,7 +175,20 @@ public class Login : MonoBehaviour
                 playerInfo.name = "PlayerObject";
                 playerInfo.Name = username;
                 playerInfo.ID = Authenticator.playFabPlayerIdCache;
-                
+
+                Dictionary<string, string> data = _gameManager.GetCloudData(DataType.Login);
+                switch (int.Parse(data["ResultCode"]))
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    default:
+                        break;
+                }
+
                 //Get client data from PlayFab
                 PlayFabClientAPI.GetUserData(new PlayFab.ClientModels.GetUserDataRequest() {
                     PlayFabId = playerInfo.ID,
