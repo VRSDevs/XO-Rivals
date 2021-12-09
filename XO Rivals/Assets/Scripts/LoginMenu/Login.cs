@@ -121,7 +121,7 @@ public class Login : MonoBehaviour
                 IsConnecting = true;
                 
                 OnAuthentication(_username, _password);
-                StartCoroutine(OnEstablishConnection(_username, _password, Mode));
+                StartCoroutine(EstablishConnection(_username, _password, Mode));
             }
         }        
     }
@@ -146,7 +146,7 @@ public class Login : MonoBehaviour
     /// <param name="mode">Modo de inicio de sesión</param>
     /// <returns></returns>
     /// <exception cref="LoginFailedException">Excepción producida por fallo al iniciar sesión</exception>
-    private IEnumerator OnEstablishConnection(string username, string password, LoginMode mode)
+    private IEnumerator EstablishConnection(string username, string password, LoginMode mode)
     {
         yield return new WaitUntil(Authenticator.IsAuthenticated);
 
