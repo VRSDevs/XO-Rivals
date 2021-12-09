@@ -89,9 +89,9 @@ public class CloudDataController : MonoBehaviour
         {
             case DataType.Login:
 
-                data.Add(type.GetString(), !result.Data.ContainsKey(type.GetString()) ? "3" : result.Data[type.GetString()].Value);
-                data.Add(type.GetString(), !result.Data.ContainsKey(type.GetString()) ? "0.0" : result.Data[type.GetString()].Value);
-                data.Add(type.GetString(), !result.Data.ContainsKey(type.GetString()) ? System.DateTime.Now.ToString(CultureInfo.InvariantCulture) : result.Data[type.GetString()].Value);
+                data.Add(DataType.Lives.GetString(), !result.Data.ContainsKey(DataType.Lives.GetString()) ? "3" : result.Data[DataType.Lives.GetString()].Value);
+                data.Add(DataType.Level.GetString(), !result.Data.ContainsKey(DataType.Level.GetString()) ? "0.0" : result.Data[DataType.Level.GetString()].Value);
+                data.Add(DataType.LifeLost.GetString(), !result.Data.ContainsKey(DataType.LifeLost.GetString()) ? System.DateTime.Now.ToString(CultureInfo.InvariantCulture) : result.Data[DataType.LifeLost.GetString()].Value);
                 
                 break;
             case DataType.Lives:
