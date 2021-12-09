@@ -10,8 +10,26 @@ using UnityEngine;
 public enum DataType
 {
     Login,
-    LIVES,
-    LEVEL
+    Lives,
+    Level
+}
+
+public static class DataTypeExtension
+{
+    public static string GetString(this DataType type)
+    {
+        switch (type)
+        {
+            case DataType.Login:
+                return "";
+            case DataType.Lives:
+                return "Lives";
+            case DataType.Level:
+                return "Level";
+            default:
+                return "";
+        }
+    }
 }
 
 public class CloudDataController : MonoBehaviour
