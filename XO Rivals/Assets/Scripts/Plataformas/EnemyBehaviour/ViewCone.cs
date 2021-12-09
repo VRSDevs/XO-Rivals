@@ -4,9 +4,13 @@ public class ViewCone : MonoBehaviour {
 
     [SerializeField] private ShootDroneBehaviourTree parent;
 
-    public void OnCollisionEnter(Collision other) {
-        if(other.gameObject.CompareTag("")){
-            parent.CharacterDetected();
-        }
+    private void OnCollisionEnter2D(Collision2D other) {
+        if(other.gameObject.CompareTag("Player"))
+            parent.CharacterDetected(true);
+    }
+
+    private void OnCollisionExit2D(Collision2D other) {
+        if(other.gameObject.CompareTag("Player"))
+            parent.CharacterDetected(false);
     }
 }
