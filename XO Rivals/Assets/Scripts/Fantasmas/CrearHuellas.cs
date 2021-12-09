@@ -21,11 +21,11 @@ public class CrearHuellas : MonoBehaviour
     }
     IEnumerator creaHuella()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         //INSTANCIAR PREFAB
-        huella = Instantiate(prefabHuella, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity);
-        huella.GetComponent<BalaDetectScript>().crear(this.gameObject);
+        huella = Instantiate(prefabHuella, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
+
 
 
         //CODE
