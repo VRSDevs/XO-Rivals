@@ -27,9 +27,8 @@ public class TaskFollowAdvise : Node
 
         _tree.following = false;
 
-        _enemyNav.target = _tree.adviseTransform;
-
-        if (Vector3.Distance(_enemyNav.transform.position, _tree.adviseTransform.position) < 0.1f) //HASTA QUE NO LLEGUE A LA POSICION INDICADA NO PARA
+        _enemyNav.target.position = _tree.adviseVector;
+        if (Vector3.Distance(_enemyNav.transform.position, _tree.adviseVector) < 2f) //HASTA QUE NO LLEGUE A LA POSICION INDICADA NO PARA
         {
             _tree.setAdviseFalse();
 
