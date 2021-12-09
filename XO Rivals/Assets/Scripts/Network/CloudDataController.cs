@@ -154,8 +154,6 @@ public class CloudDataController : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
-        
-        Debug.Log(data.Keys);
 
         return data;
     }
