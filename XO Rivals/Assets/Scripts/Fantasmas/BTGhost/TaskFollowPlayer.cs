@@ -8,11 +8,13 @@ public class TaskFollowPlayer : Node
 
     private Transform taskTarget;
     private EnemyNavMesh _enemyNav;
+    private EnemyBT _tree;
 
 
-    public TaskFollowPlayer(EnemyNavMesh enemyNav)
+    public TaskFollowPlayer(EnemyNavMesh enemyNav, EnemyBT tree)
     {
         _enemyNav = enemyNav;
+        _tree = tree;
 
     }
 
@@ -21,9 +23,12 @@ public class TaskFollowPlayer : Node
 
     public override NodeState Evaluate()
     {
-     
+        Debug.Log("EXECUTE TASKFOLLOWPLAYER");
 
-        _enemyNav.target = _enemyNav.player;
+        _tree.following = true;
+
+
+        _enemyNav.target.position = _enemyNav.player.position;
 
 
 

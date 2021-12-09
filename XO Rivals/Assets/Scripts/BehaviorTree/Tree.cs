@@ -8,6 +8,7 @@ namespace BehaviorTree
     {
 
         private Node _root = null;
+        protected float waitTime = -1;
 
         protected void Start()
         {
@@ -16,8 +17,17 @@ namespace BehaviorTree
 
         private void Update()
         {
-            if (_root != null)
-                _root.Evaluate();
+
+            waitTime -= Time.deltaTime;
+
+            if (waitTime < 0)//YA NO ESPERAMOS
+            {
+
+                if (_root != null)
+                    _root.Evaluate();
+            }
+        
+
         }
 
         protected abstract Node SetupTree();

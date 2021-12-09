@@ -24,7 +24,7 @@ public class EnemyNavMesh : MonoBehaviour
         int random = Random.Range(0, movePositionTransform.Count - 1);
         target = movePositionTransform[random];
         */
-        target = transform; //Comienza quieto
+       
     }
 
     // Update is called once per frame
