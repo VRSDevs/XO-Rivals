@@ -63,7 +63,7 @@ public class CarnivalController : MonoBehaviour
     void Start()
     {
 
-        speed = Random.Range(500,650);
+        speed = Random.Range(700,850);
         // Recoger de quien es el turno y activar los personajes necesarios
         if (thisMatch.PlayerOName == localPlayer.Name)
         {
@@ -76,10 +76,15 @@ public class CarnivalController : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        BarMovement();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        BarMovement();
+ 
         if (indicator.transform.position.y > top.position.y - 10)
         {
             goingUp = false;
