@@ -165,7 +165,7 @@ public class Login : MonoBehaviour
             
             Authenticator.Reset();
 
-            Log.text = "Connecting...";
+            Log.text = "Connecting to server...";
             
             if (_gameManager.OnConnectToServer())
             {
@@ -179,12 +179,10 @@ public class Login : MonoBehaviour
                 _playerInfo.Name = username;
                 _playerInfo.ID = Authenticator.playFabPlayerIdCache;
 
-                Dictionary<string, string> data = _gameManager.GetCloudData(DataType.Login);
-                Dictionary<string, string> result = new Dictionary<string, string>();
-                
+                _gameManager.GetCloudData(DataType.Login);
                 Log.text = "Getting data...";
 
-                StartCoroutine(SynchronizePlayerData(data, result));
+                StartCoroutine(SynchronizePlayerData());
             }
             else
             {
@@ -214,10 +212,15 @@ public class Login : MonoBehaviour
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
         }
     }
+    
+    
 
-    private IEnumerator SynchronizePlayerData(Dictionary<string, string> data, Dictionary<string, string> result)
+    private IEnumerator SynchronizePlayerData()
     {
         yield return new WaitUntil(_gameManager.GetSynchronizeStatus);
+
+        Dictionary<string, string> data = _gameManager.GetDataDictionary();
+        Dictionary<string, string> result = new Dictionary<string, string>();
 
         switch (int.Parse(data["ResultCode"]))
         {
@@ -227,10 +230,11 @@ public class Login : MonoBehaviour
                         
                 _playerInfo.Lives = int.Parse(data[DataType.Lives.GetString()]);
                 _playerInfo.Level = float.Parse(data[DataType.Level.GetString()]);
+                /*
                 _playerInfo.LostLifeTime = DateTime.ParseExact(data[DataType.LifeLost.GetString()],
                     "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-
-                result = _gameManager.UpdateCloudData(data);
+                */
+                _gameManager.UpdateCloudData(data);
                             
                 break;
             case 2:
@@ -239,7 +243,7 @@ public class Login : MonoBehaviour
                 _playerInfo.Lives = 3;
                 _playerInfo.Level = 0.0f;
 
-                result = _gameManager.UpdateCloudData(new Dictionary<string, string>()
+                _gameManager.UpdateCloudData(new Dictionary<string, string>()
                 {
                     {DataType.Lives.GetString(), _playerInfo.Lives.ToString()},
                     {DataType.Level.GetString(), _playerInfo.Level.ToString(CultureInfo.InvariantCulture)}
