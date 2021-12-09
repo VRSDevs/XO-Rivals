@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class ScriptHuella : MonoBehaviour
 {
+
+    public GameObject sigHuella;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
+        StartCoroutine(deleteHuella());
+
+
     }
 
     // Update is called once per frame
@@ -15,4 +21,14 @@ public class ScriptHuella : MonoBehaviour
     {
         
     }
+
+
+    IEnumerator deleteHuella()
+    {
+        yield return new WaitForSeconds(7f);
+
+        Destroy(this.gameObject);
+
+    }
+
 }
