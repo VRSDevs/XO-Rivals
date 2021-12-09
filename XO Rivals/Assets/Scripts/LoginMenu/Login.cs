@@ -67,6 +67,9 @@ public class Login : MonoBehaviour
     /// ¿Se está conectando el usuario?
     /// </summary>
     private bool IsConnecting;
+
+    private PlayerInfo _playerInfo;
+    
     /// <summary>
     /// Mínimo número de caracteres para nombre de usuario y contraseña
     /// </summary>
@@ -172,50 +175,15 @@ public class Login : MonoBehaviour
                 
                 GameObject myPlayer = new GameObject();
                 
-                PlayerInfo playerInfo = myPlayer.AddComponent<PlayerInfo>();
+                _playerInfo = myPlayer.AddComponent<PlayerInfo>();
                 DontDestroyOnLoad(myPlayer);
-                playerInfo.name = "PlayerObject";
-                playerInfo.Name = username;
-                playerInfo.ID = Authenticator.playFabPlayerIdCache;
+                _playerInfo.name = "PlayerObject";
+                _playerInfo.Name = username;
+                _playerInfo.ID = Authenticator.playFabPlayerIdCache;
 
                 Dictionary<string, string> data = _gameManager.GetCloudData(DataType.Login);
                 Dictionary<string, string> result = new Dictionary<string, string>();
                 
-                switch (int.Parse(data["ResultCode"]))
-                {
-                    // Datos obtenidos
-                    case 1:
-                        Debug.Log("Caso 1");
-                        
-                        playerInfo.Lives = int.Parse(data[DataType.Lives.GetString()]);
-                        playerInfo.Level = float.Parse(data[DataType.Level.GetString()]);
-                        playerInfo.LostLifeTime = DateTime.ParseExact(data[DataType.LifeLost.GetString()],
-                            "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-
-                        result = _gameManager.UpdateCloudData(data);
-                            
-                        break;
-                    case 2:
-                        Debug.Log("Caso 2");
-
-                        playerInfo.Lives = 3;
-                        playerInfo.Level = 0.0f;
-
-                        result = _gameManager.UpdateCloudData(new Dictionary<string, string>()
-                        {
-                            {DataType.Lives.GetString(), playerInfo.Lives.ToString()},
-                            {DataType.Level.GetString(), playerInfo.Level.ToString(CultureInfo.InvariantCulture)}
-                        });
-                        
-                        break;
-                    case 3:
-                        Debug.Log("Got error retrieving user data:");
-                        
-                        break;
-                    default:
-                        break;
-                }
-
             }
             else
             {
@@ -243,6 +211,46 @@ public class Login : MonoBehaviour
             Authenticator = new PlayFabAuthenticator();
 
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
+        }
+    }
+
+    private IEnumerator SynchronizePlayerData(Dictionary<string, string> data, Dictionary<string, string> result)
+    {
+        yield return new WaitUntil(_gameManager.GetSynchronizeStatus);
+        
+        switch (int.Parse(data["ResultCode"]))
+        {
+            // Datos obtenidos
+            case 1:
+                Debug.Log("Caso 1");
+                        
+                _playerInfo.Lives = int.Parse(data[DataType.Lives.GetString()]);
+                _playerInfo.Level = float.Parse(data[DataType.Level.GetString()]);
+                _playerInfo.LostLifeTime = DateTime.ParseExact(data[DataType.LifeLost.GetString()],
+                    "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+
+                result = _gameManager.UpdateCloudData(data);
+                            
+                break;
+            case 2:
+                Debug.Log("Caso 2");
+
+                _playerInfo.Lives = 3;
+                _playerInfo.Level = 0.0f;
+
+                result = _gameManager.UpdateCloudData(new Dictionary<string, string>()
+                {
+                    {DataType.Lives.GetString(), _playerInfo.Lives.ToString()},
+                    {DataType.Level.GetString(), _playerInfo.Level.ToString(CultureInfo.InvariantCulture)}
+                });
+                        
+                break;
+            case 3:
+                Debug.Log("Got error retrieving user data:");
+                        
+                break;
+            default:
+                break;
         }
     }
 
