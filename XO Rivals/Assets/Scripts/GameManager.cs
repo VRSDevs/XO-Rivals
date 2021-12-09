@@ -186,6 +186,20 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+    
+    #region CloudMethods
+
+    /// <summary>
+    /// Método para obtener datos de la nube
+    /// </summary>
+    /// <param name="type">Tipo de dato a obtener</param>
+    /// <returns>Diccionario con los datos solicitados</returns>
+    public Dictionary<string, string> GetCloudData(DataType type)
+    {
+        return _cloudController.GetLoginData(type);
+    }
+    
+    #endregion
 
     #region ConversiontMethods
     
