@@ -141,6 +141,11 @@ public class CloudDataController : MonoBehaviour
         return data;
     }
 
+    private void OnDataSend()
+    {
+        Debug.Log("Datos enviados");
+    }
+
     /// <summary>
     /// Método CB llamado cuando falla la petición de datos
     /// </summary>
