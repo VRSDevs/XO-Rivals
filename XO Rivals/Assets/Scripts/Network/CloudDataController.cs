@@ -77,18 +77,27 @@ public class CloudDataController : MonoBehaviour
         return data;
     }
 
-    public void SendData(Dictionary<string, string> data)
+    /// <summary>
+    /// Método para enviar datos
+    /// </summary>
+    /// <param name="data">Diccionario de datos a enviar</param>
+    /// <returns>Estado de la operación</returns>
+    public Dictionary<string, string> SendData(Dictionary<string, string> data)
     {
+        Dictionary<string, string> status = new Dictionary<string, string>();
+        
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
         {
             Data = data
         }, (result) =>
         {
-            OnDataSend();
+            status = OnDataSend();
         }, (error) =>
         {
-            OnError(error);
+            status = OnError(error);
         });
+
+        return status;
     }
 
     #endregion
