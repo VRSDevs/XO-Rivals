@@ -189,10 +189,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
         
         if (SceneManager.GetActiveScene().name.Equals("Login"))
         {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Connected to server. Connecting to lobby...";
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Connected to server.";
         }
-        
-        ConnectToLobby();
     }
 
     /// <summary>
