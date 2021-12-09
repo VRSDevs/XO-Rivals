@@ -183,7 +183,8 @@ public class Login : MonoBehaviour
 
                 Dictionary<string, string> data = _gameManager.GetCloudData(DataType.Login);
                 Dictionary<string, string> result = new Dictionary<string, string>();
-                
+
+                StartCoroutine(SynchronizePlayerData(data, result));
             }
             else
             {
