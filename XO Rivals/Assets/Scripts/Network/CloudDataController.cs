@@ -11,7 +11,8 @@ public enum DataType
 {
     Login,
     Lives,
-    Level
+    Level,
+    LifeLost
 }
 
 public static class DataTypeExtension
@@ -81,25 +82,19 @@ public class CloudDataController : MonoBehaviour
         {
             case DataType.Login:
 
-                data.Add("Lives", !result.Data.ContainsKey("Lives") ? "3" : result.Data["Lives"].Value);
-                data.Add("Level", !result.Data.ContainsKey("Level") ? "0.0" : result.Data["Level"].Value);
-                data.Add("LifeLost", !result.Data.ContainsKey("LifeLost") ? System.DateTime.Now.ToString(CultureInfo.InvariantCulture) : result.Data["Life Lost"].Value);
+                data.Add(type.GetString(), !result.Data.ContainsKey(type.GetString()) ? "3" : result.Data[type.GetString()].Value);
+                data.Add(type.GetString(), !result.Data.ContainsKey(type.GetString()) ? "0.0" : result.Data[type.GetString()].Value);
+                data.Add(type.GetString(), !result.Data.ContainsKey(type.GetString()) ? System.DateTime.Now.ToString(CultureInfo.InvariantCulture) : result.Data[type.GetString()].Value);
                 
                 break;
-            /*
-            case DataType.LIVES:
-
-                 throw new Exception();
-
-                return new Dictionary<string, string>()
-                {
-                    {"Lives", result.Data["Lives"].Value}
-                };
-            
-            case DataType.LEVEL:
-
+            case DataType.Lives:
                 break;
-                */
+            case DataType.Level:
+                break;
+            case DataType.LifeLost:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
 
         return data;
