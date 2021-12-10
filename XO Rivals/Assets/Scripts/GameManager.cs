@@ -66,6 +66,15 @@ public class GameManager : MonoBehaviour
     #region Getters
 
     /// <summary>
+    /// Método para obtener si se está conectado al servidor
+    /// </summary>
+    /// <returns>¿Está conectado al servidor?</returns>
+    public bool GetConnected()
+    {
+        return _networkController.IsConnected();
+    }
+
+    /// <summary>
     /// Método para obtener si se está creando una partida
     /// </summary>
     /// <returns>¿Se está creando la partida?</returns>
