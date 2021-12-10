@@ -38,6 +38,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// </summary>
     private const int MAX_PLAYERS_INROOM = 2;
     /// <summary>
+    /// Lista de códigos de salas
+    /// </summary>
+    private List<string> roomCodes = new List<string>();
+
+    /// <summary>
     /// ¿La partida está lista para comenzar?
     /// </summary>
     private bool _isReady = false;
@@ -360,7 +365,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
             // Caso 32760 - Ninguna sala disponible
             case 32760:
                 GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Couldn´t find any matches. Creating one...";
-
+                
                 StartCoroutine(CreateMatchRoom(GenerateRoomCode()));
                 break;
             default:
@@ -430,6 +435,20 @@ public class NetworkController : MonoBehaviourPunCallbacks
             StartCoroutine(LeaveInMatch());
         */
     }
+    
+    /// <summary>
+    /// CB ejecutado cuando se actualiza la lista de salas en el lobby
+    /// </summary>
+    /// <param name="roomList">Lista de salas</param>
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        base.OnRoomListUpdate(roomList);
+
+        foreach (var room in roomList)
+        {
+            roomCodes.Add(room.Name);
+        }
+    }
 
     #endregion
 
@@ -475,14 +494,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
         System.Random random = new System.Random();
         bool isUnique = false;
 
-        while (!isUnique)
+        while(!isUnique)
         {
             for (int i = 0; i < 6; i++)
             {
                 code += characters[random.Next(characters.Length)];
             }
             
-            Debug.Log(code);
         }
 
         return code;
