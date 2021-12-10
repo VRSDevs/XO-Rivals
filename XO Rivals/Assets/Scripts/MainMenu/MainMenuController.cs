@@ -75,7 +75,7 @@ public class MainMenuController : MonoBehaviour
         _gameManager = FindObjectOfType<GameManager>();
         _localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
 
-        JoinGameButton.interactable = false;
+        //JoinGameButton.interactable = false;
 
         NameTxt.text = _localPlayer.Name;
         LevelTxt.text = "Level: " + Math.Truncate(_localPlayer.Level);
