@@ -9568,14 +9568,14 @@ MonoBehaviour:
   CancelMatchmakingSprite: {fileID: 21300000, guid: 16fa84d7dadece1418ae26d682cb4212, type: 3}
   CreateMatchImage: {fileID: 1899014466}
   ViewContent: {fileID: 183733149}
-  nameTxt: {fileID: 553947641}
-  level: {fileID: 523620166}
-  lifesTxt: {fileID: 2367371}
-  lifesTxtShop: {fileID: 2012353256}
-  lifesTime: {fileID: 276693855}
-  lvlPrcntg: {fileID: 1676995134}
-  lvlSlider: {fileID: 1711821105}
-  musica: {fileID: 8300000, guid: 0b00eb9a3af602847b21be56fc5e2907, type: 3}
+  NameTxt: {fileID: 553947641}
+  LevelTxt: {fileID: 523620166}
+  LivesTxt: {fileID: 2367371}
+  LivesTxtShop: {fileID: 2012353256}
+  LivesTime: {fileID: 276693855}
+  LvlPrcntg: {fileID: 1676995134}
+  LvlSlider: {fileID: 1711821105}
+  MusicObject: {fileID: 8300000, guid: 0b00eb9a3af602847b21be56fc5e2907, type: 3}
 --- !u!4 &1544971430
 Transform:
   m_ObjectHideFlags: 0
