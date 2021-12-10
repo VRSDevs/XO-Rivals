@@ -6,15 +6,25 @@ using PlayFab;
 
 public class BetaShop : MonoBehaviour
 {
+    #region Vars
+
     [SerializeField]
     private TextMeshProUGUI shopText;
 
     [SerializeField] private MainMenuController _mainController;
     private PlayerInfo _localPlayer;
 
+    #endregion
+
+    #region UnityCB
+
     private void Start(){
         _localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
     }
+
+    #endregion
+
+    #region PurchaseMethods
 
     public void OfferBought(int offer)
     {
@@ -62,13 +72,19 @@ public class BetaShop : MonoBehaviour
             
             case 0:
                 shopText.text = "You bought 3 minigames";
-            break;
+                break;
 
             case 1:
-            break;
+                break;
         }
     }
+
+    #endregion
+
+    
     private void UpdateLives(){
+        
+        /*
 
         _mainController.LivesTxt.text = "Lives: " + _localPlayer.Lives;
         _mainController.LivesTxtShop.text = "Lives: " + _localPlayer.Lives;
@@ -86,5 +102,6 @@ public class BetaShop : MonoBehaviour
         
         if(_localPlayer.Lives >= 3)
             _mainController.LivesTime.text = "MAX";
+            */
     }
 }
