@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PlayFab;
+using PlayFab.ClientModels;
 using UnityEngine;
 
 public enum ShopItem
@@ -86,9 +88,29 @@ public class PurchasesController : MonoBehaviour
     #endregion
 
     #region PurchaseMethods
-    
-    
+
+    /// <summary>
+    /// Método para iniciar la compra de un item
+    /// </summary>
+    /// <param name="item">Item a comprar</param>
+    public void StartPurchase(ShopItem item)
+    {
+        PlayFabClientAPI.StartPurchase(new StartPurchaseRequest() {
+            CatalogVersion = item.GetCatalog(),
+            Items = new List<ItemPurchaseRequest>() {
+                new ItemPurchaseRequest() {
+                    ItemId = item.GetString(),
+                    Quantity = 1,
+                    Annotation = "Purchased via in-game store"
+                }
+            }
+        }, result => {
+            // Handle success
+        }, error => {
+            // Handle error
+        });
+    }
 
     #endregion
-    
+
 }
