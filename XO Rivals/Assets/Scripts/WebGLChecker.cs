@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using System;
-using UnityEngine;
 
 public class WebGLChecker : MonoBehaviour
 {

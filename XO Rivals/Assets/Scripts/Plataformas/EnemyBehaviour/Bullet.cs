@@ -4,7 +4,7 @@ public class Bullet : MonoBehaviour {
 
     //GameObject that shoots
     [SerializeField] private GameObject parent;
-    [SerializeField] private GameObject character;
+    public GameObject character;
 
     //Distance to shooter
     private float distanceToParent = 0f;
@@ -23,5 +23,10 @@ public class Bullet : MonoBehaviour {
         if(distanceToParent >= MAXDISTTOPARENT){
             this.gameObject.SetActive(false);
         }
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        if(other.gameObject.CompareTag(""))
+            Debug.Log("Muerto");
     }
 }
