@@ -360,7 +360,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
             case 32760:
                 GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Couldn´t find any matches. Creating one...";
 
-                StartCoroutine(CreateMatchRoom(GetHashValue("Sala " + PhotonNetwork.CountOfRooms)));
+                StartCoroutine(CreateMatchRoom(GenerateRoomCode("Sala " + PhotonNetwork.CountOfRooms)));
                 break;
             default:
                 Debug.Log("Error " + returnCode + ": " + message);
@@ -459,26 +459,18 @@ public class NetworkController : MonoBehaviourPunCallbacks
         _creatingRoom = !_creatingRoom;
     }
 
-    public void UpdateMatchListInServer()
-    {
-        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest(), result => {},error => {}, this, new Dictionary<string, string>());
-    }
-
     #endregion
 
     #region OtherMethods
     
     /// <summary>
-    /// Método para transformar un dato en un valor hash
+    /// Método para generar una clave de sala
     /// </summary>
-    /// <param name="data">Dato a transformar</param>
-    /// <returns>Valor hash del dato introducido</returns>
-    private string GetHashValue(string data)
+    /// <returns>Clave de sala</returns>
+    private string GenerateRoomCode()
     {
-        var hash = new Hash128();
-        hash.Append(data);
-        
-        return hash.ToString();
+        System.Random random = new System.Random();
+
     }
 
     #endregion
