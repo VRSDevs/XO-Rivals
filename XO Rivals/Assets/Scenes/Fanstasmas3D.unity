@@ -13281,6 +13281,7 @@ MonoBehaviour:
   otherEnemyBT:
   - {fileID: 693027847}
   - {fileID: 961382809}
+  - {fileID: 1492331040}
   following: 0
   lastSeenPlayer: {x: 0, y: 0, z: 0}
   lastHuella: {fileID: 0}
@@ -14911,6 +14912,7 @@ MonoBehaviour:
   otherEnemyBT:
   - {fileID: 961382809}
   - {fileID: 598204786}
+  - {fileID: 1492331040}
   following: 0
   lastSeenPlayer: {x: 0, y: 0, z: 0}
   lastHuella: {fileID: 0}
@@ -20481,7 +20483,8 @@ MonoBehaviour:
   adviseVector: {x: 0, y: 0, z: 0}
   otherEnemyBT:
   - {fileID: 693027847}
-  - {fileID: 598204786}
+  - {fileID: 1492331040}
+  - {fileID: 1492331040}
   following: 0
   lastSeenPlayer: {x: 0, y: 0, z: 0}
   lastHuella: {fileID: 0}
@@ -30238,6 +30241,7 @@ MonoBehaviour:
   otherEnemyBT:
   - {fileID: 693027847}
   - {fileID: 961382809}
+  - {fileID: 598204786}
   following: 0
   lastSeenPlayer: {x: 0, y: 0, z: 0}
   lastHuella: {fileID: 0}
