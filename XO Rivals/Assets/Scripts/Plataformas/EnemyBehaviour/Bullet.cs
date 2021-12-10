@@ -21,12 +21,13 @@ public class Bullet : MonoBehaviour {
 
         //If distance is greater than max, hide
         if(distanceToParent >= MAXDISTTOPARENT){
-            this.gameObject.SetActive(false);
+            Destroy(this);
         }
     }
 
     private void OnCollisionEnter(Collision other) {
-        if(other.gameObject.CompareTag(""))
-            Debug.Log("Muerto");
+        if(other.gameObject.CompareTag("Player")){
+            Destroy(this);
+        }
     }
 }

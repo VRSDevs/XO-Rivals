@@ -25,7 +25,7 @@ public class RobotStateMachine : MonoBehaviour{
     private const float MAXTIMEATTACKING = 2f;
     private float timeToJump;
     private const float speed = 2.5f;
-    private const float jumpSpeed = 2f;
+    private const float jumpSpeed = 5f;
     private bool characterNear = false;
     private bool jumping = false;
 
@@ -49,7 +49,7 @@ public class RobotStateMachine : MonoBehaviour{
         //}else{
         //    characterPlaying = characterX;
         //}
-        timeToJump = Random.Range(1f, 3f);
+        timeToJump = Random.Range(0.25f, 0.75f);
         characterPlaying = characterO;
         originalY = this.transform.position.y;
         maxY = originalY + 2f;
@@ -115,7 +115,7 @@ public class RobotStateMachine : MonoBehaviour{
                     //If timeToJump == 0, jump
                     if(timeToJump <= 0){
                         jumping = true;
-                        timeToJump = Random.Range(0.5f, 1.5f);
+                        timeToJump = Random.Range(0.25f, 0.75f);
                     //Else goToCharacter
                     }else{
                         GoToCharacter();
