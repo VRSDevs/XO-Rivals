@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class OpenDoor : MonoBehaviour
 {
+
+    public List<EnemyBT> enemyTree;
+    public float distanciaAviso = 100f;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +31,17 @@ public class OpenDoor : MonoBehaviour
 
             collision.gameObject.transform.GetChild(0).gameObject.SetActive(false);
 
+            //Avisamos a los fantasmas cercanos
+            foreach (EnemyBT tree in enemyTree)
+            {
+                if (Vector3.Distance(collision.gameObject.transform.position, tree.gameObject.transform.position) < distanciaAviso)
+                {
 
+                    tree.setAdvise(collision.gameObject.transform.position);
+                }
+
+
+            }
         }
 
     }
@@ -37,10 +52,10 @@ public class OpenDoor : MonoBehaviour
 
         if (collision.gameObject.name == "ColliderPuerta")
         {
-
+            //EL muro se abre
             collision.gameObject.transform.GetChild(0).gameObject.SetActive(true);
 
-
+                
         }
 
     }
