@@ -212,8 +212,6 @@ public class Login : MonoBehaviour
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
         }
     }
-    
-    
 
     private IEnumerator SynchronizePlayerData()
     {
