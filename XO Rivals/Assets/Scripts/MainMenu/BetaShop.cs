@@ -33,6 +33,7 @@ public class BetaShop : MonoBehaviour
             {
                 case 1:
                     shopText.text = "You bought " + offer + " lives";
+                    FindObjectOfType<GameManager>().PurchaseItem(ShopItem.Life1);
                     _localPlayer.Lives++;
                     UpdateLives();
                     break;

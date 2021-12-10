@@ -105,7 +105,8 @@ public class PurchasesController : MonoBehaviour
                 }
             }
         }, result => {
-            // Handle success
+            Debug.Log("Compra iniciada");
+            Debug.Log("Item: " + result.Contents[0].DisplayName);
         }, error => {
             // Handle error
         });
