@@ -111,20 +111,16 @@ public class Login : MonoBehaviour
     /// </summary>
     public void OnConnect()
     {
-        //Opcion 1: Avisar al jugador que no puede
-        if(UsernameInput.text.Contains(" ") || PasswordInput.text.Contains(" ")){
-            //Decirle al jugador que no puede
-            Log.text = "No whitespaces allowed";
-        }else{
-
-            if (!IsConnecting && ValidateInputs())
-            {
-                IsConnecting = true;
+        _username = UsernameInput.text;
+        _password = PasswordInput.text;
+        
+        if (!IsConnecting && ValidateInputs())
+        {
+            IsConnecting = true;
                 
-                OnAuthentication(_username, _password);
-                StartCoroutine(EstablishConnection());
-            }
-        }        
+            OnAuthentication(_username, _password);
+            StartCoroutine(EstablishConnection());
+        }
     }
 
     /// <summary>
@@ -280,11 +276,12 @@ public class Login : MonoBehaviour
     private bool ValidateInputs()
     {
         // Sin espacios
-        if (UsernameInput.text.Contains(" ") || PasswordInput.text.Contains(" "))
+        if (_username.Contains(" ") || _password.Contains(" "))
         {
             //Decirle al jugador que no puede
             Log.text = "No whitespaces allowed";
 
+            IsConnecting = false;
             return false;
         }
 
@@ -292,6 +289,8 @@ public class Login : MonoBehaviour
         if (_password.Length < MIN_CHARS)
         {
             Log.text = "Incorrect length. Minimum " + MIN_CHARS + " chars.";
+            
+            IsConnecting = false;
             return false;
         }
         
