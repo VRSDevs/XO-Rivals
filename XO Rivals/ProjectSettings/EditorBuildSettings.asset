@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Fanstasmas3D.unity
     guid: f594e3e9a76eb564eabc6b9f84efa143
+  - enabled: 1
+    path: Assets/Scenes/CarnivalMinigame.unity
+    guid: 142ed5f8f6f771e46a19b58626b6eb4f
   m_configObjects: {}
