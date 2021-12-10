@@ -44,9 +44,25 @@ public static class ShopItemExtension
         }
     }
 
+    /// <summary>
+    /// Método para obtener el catálogo correspondiente al item
+    /// </summary>
+    /// <param name="item">Item del cual obtener el catálogo</param>
+    /// <returns>Catálogo del item</returns>
     public static string GetCatalog(this ShopItem item)
     {
-        
+        switch (item)
+        {
+            case ShopItem.Life1:
+            case ShopItem.Lives3:
+            case ShopItem.Lives5:
+            case ShopItem.Lives10:
+            case ShopItem.Lives30:
+            case ShopItem.LivesInf:
+                return "LivesCatalog";
+            default:
+                return "";
+        }
     }
 }
 
