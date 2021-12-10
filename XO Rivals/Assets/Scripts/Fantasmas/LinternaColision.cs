@@ -77,6 +77,10 @@ public class LinternaColision : MonoBehaviour
         {
             enemigos[2].playerDetectedLinterna(false);
         }
+        if (other.gameObject.name == "LinternaColision4")
+        {
+            enemigos[3].playerDetectedLinterna(false);
+        }
 
 
     }
