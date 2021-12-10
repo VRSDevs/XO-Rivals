@@ -443,6 +443,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         base.OnRoomListUpdate(roomList);
+        
+        Debug.Log("Cambio");
 
         foreach (var room in roomList)
         {
@@ -501,7 +503,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 code += characters[random.Next(characters.Length)];
             }
 
-            if (roomCodes.Contains(code))
+            if (!roomCodes.Contains(code))
             {
                 isUnique = true;
             }
