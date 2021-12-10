@@ -192,7 +192,7 @@ public class CloudDataController : MonoBehaviour
 
                 _cloudData.Add(DataType.Lives.GetString(), !result.Data.ContainsKey(DataType.Lives.GetString()) ? "3" : result.Data[DataType.Lives.GetString()].Value);
                 _cloudData.Add(DataType.Level.GetString(), !result.Data.ContainsKey(DataType.Level.GetString()) ? "0.0" : result.Data[DataType.Level.GetString()].Value);
-                _cloudData.Add(DataType.LifeLost.GetString(), !result.Data.ContainsKey(DataType.LifeLost.GetString()) && !string.IsNullOrEmpty(result.Data[DataType.LifeLost.GetString()].Value)
+                _cloudData.Add(DataType.LifeLost.GetString(), !result.Data.ContainsKey(DataType.LifeLost.GetString()) || string.IsNullOrEmpty(result.Data[DataType.LifeLost.GetString()].Value)
                     ? System.DateTime.Now.ToString(CultureInfo.InvariantCulture) : result.Data[DataType.LifeLost.GetString()].Value);
 
                 break;
