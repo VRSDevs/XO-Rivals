@@ -4001,7 +4001,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 172064388}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -55.73, y: -306.04, z: -117.06}
+  m_LocalPosition: {x: -55.73, y: -306.04, z: -116.5}
   m_LocalScale: {x: 0.61586, y: 0.61586, z: 1.0813886}
   m_Children:
   - {fileID: 1515909418}
@@ -13104,6 +13104,7 @@ GameObject:
   - component: {fileID: 598204780}
   - component: {fileID: 598204779}
   - component: {fileID: 598204786}
+  - component: {fileID: 598204787}
   m_Layer: 0
   m_Name: Enemy3D
   m_TagString: Untagged
@@ -13282,6 +13283,20 @@ MonoBehaviour:
   - {fileID: 961382809}
   following: 0
   lastSeenPlayer: {x: 0, y: 0, z: 0}
+  lastHuella: {fileID: 0}
+  perseguirHuella: 0
+--- !u!114 &598204787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598204778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701b15f3f96a6b840ae14bc7b988a095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &623913571
 GameObject:
   m_ObjectHideFlags: 0
@@ -14719,6 +14734,7 @@ GameObject:
   - component: {fileID: 693027841}
   - component: {fileID: 693027840}
   - component: {fileID: 693027847}
+  - component: {fileID: 693027848}
   m_Layer: 0
   m_Name: Enemy3D
   m_TagString: Untagged
@@ -14897,6 +14913,20 @@ MonoBehaviour:
   - {fileID: 598204786}
   following: 0
   lastSeenPlayer: {x: 0, y: 0, z: 0}
+  lastHuella: {fileID: 0}
+  perseguirHuella: 0
+--- !u!114 &693027848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693027839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701b15f3f96a6b840ae14bc7b988a095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &704841107
 GameObject:
   m_ObjectHideFlags: 0
@@ -20275,6 +20305,7 @@ GameObject:
   - component: {fileID: 961382802}
   - component: {fileID: 961382808}
   - component: {fileID: 961382809}
+  - component: {fileID: 961382810}
   m_Layer: 0
   m_Name: Enemy3D
   m_TagString: Untagged
@@ -20453,6 +20484,20 @@ MonoBehaviour:
   - {fileID: 598204786}
   following: 0
   lastSeenPlayer: {x: 0, y: 0, z: 0}
+  lastHuella: {fileID: 0}
+  perseguirHuella: 0
+--- !u!114 &961382810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961382801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701b15f3f96a6b840ae14bc7b988a095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &971916223
 GameObject:
   m_ObjectHideFlags: 0
@@ -30166,6 +30211,7 @@ GameObject:
   - component: {fileID: 1492331042}
   - component: {fileID: 1492331041}
   - component: {fileID: 1492331040}
+  - component: {fileID: 1492331048}
   m_Layer: 0
   m_Name: Enemy3D
   m_TagString: Untagged
@@ -30194,6 +30240,8 @@ MonoBehaviour:
   - {fileID: 961382809}
   following: 0
   lastSeenPlayer: {x: 0, y: 0, z: 0}
+  lastHuella: {fileID: 0}
+  perseguirHuella: 0
 --- !u!54 &1492331041
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -30333,7 +30381,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1492331039}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -46.99, y: -310.68, z: -104.23}
+  m_LocalPosition: {x: -59.04, y: -310.68, z: -113.71}
   m_LocalScale: {x: 0.73, y: 0.73, z: 0.73}
   m_Children:
   - {fileID: 761693038}
@@ -30344,6 +30392,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1492331048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492331039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701b15f3f96a6b840ae14bc7b988a095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1515909411
 GameObject:
   m_ObjectHideFlags: 0
@@ -30504,6 +30564,7 @@ MonoBehaviour:
   speed: 6
   horizontal: 0
   vertical: 0
+  anim: {fileID: 0}
 --- !u!114 &1515909415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35723,6 +35784,7 @@ MonoBehaviour:
   speed: 6
   horizontal: 0
   vertical: 0
+  anim: {fileID: 0}
 --- !u!114 &1791572622
 MonoBehaviour:
   m_ObjectHideFlags: 0
