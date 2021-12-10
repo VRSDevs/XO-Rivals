@@ -491,11 +491,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <returns>Clave de sala</returns>
     private string GenerateRoomCode()
     {
-        string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        string code = "";
+        // Variables //
+        string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";   // Posibles caracteres
+        string code = "";                                   // Código
         System.Random random = new System.Random();
         bool isUnique = false;
 
+        // Búsqueda clave //
         while (!isUnique)
         {
             for (int i = 0; i < 6; i++)
