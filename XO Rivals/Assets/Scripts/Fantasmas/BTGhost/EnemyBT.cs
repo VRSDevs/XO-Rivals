@@ -16,6 +16,9 @@ public class EnemyBT : BehaviorTree.Tree
 
     public Vector3 lastSeenPlayer;
 
+    public GameObject lastHuella;
+    public bool perseguirHuella = false;
+
     protected override Node SetupTree()
     {
 
@@ -56,6 +59,12 @@ public class EnemyBT : BehaviorTree.Tree
              {
                  new CheckGetAdvise(this),
                  new TaskFollowAdvise(this,enemyNav),
+             }),
+
+               new Sequence(new List<Node>                      //SEGUNDO COMPROBAMOS SI HEMOS SIDO AVISADOS
+             {
+                 new CheckPerseguirHuella(this),
+                 new TaskPerseguirHuella(this,enemyNav),
              }),
 
             new TaskPatrol(enemyNav,this),                   //TERCERO DECIDIMOS PATRULLAR(Ultima opcion)

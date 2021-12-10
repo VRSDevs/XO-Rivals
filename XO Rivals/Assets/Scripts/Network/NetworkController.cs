@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
@@ -36,6 +37,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// Jugadores máximos en la sala
     /// </summary>
     private const int MAX_PLAYERS_INROOM = 2;
+    /// <summary>
+    /// Lista de códigos de salas
+    /// </summary>
+    private List<string> roomCodes = new List<string>();
+
     /// <summary>
     /// ¿La partida está lista para comenzar?
     /// </summary>
@@ -359,8 +365,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
             // Caso 32760 - Ninguna sala disponible
             case 32760:
                 GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Couldn´t find any matches. Creating one...";
-
-                StartCoroutine(CreateMatchRoom(GetHashValue("Sala " + PhotonNetwork.CountOfRooms)));
+                
+                StartCoroutine(CreateMatchRoom(GenerateRoomCode()));
                 break;
             default:
                 Debug.Log("Error " + returnCode + ": " + message);
@@ -429,6 +435,22 @@ public class NetworkController : MonoBehaviourPunCallbacks
             StartCoroutine(LeaveInMatch());
         */
     }
+    
+    /// <summary>
+    /// CB ejecutado cuando se actualiza la lista de salas en el lobby
+    /// </summary>
+    /// <param name="roomList">Lista de salas</param>
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        base.OnRoomListUpdate(roomList);
+        
+        Debug.Log("Cambio");
+
+        foreach (var room in roomList)
+        {
+            roomCodes.Add(room.Name);
+        }
+    }
 
     #endregion
 
@@ -459,26 +481,37 @@ public class NetworkController : MonoBehaviourPunCallbacks
         _creatingRoom = !_creatingRoom;
     }
 
-    public void UpdateMatchListInServer()
-    {
-        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest(), result => {},error => {}, this, new Dictionary<string, string>());
-    }
-
     #endregion
 
     #region OtherMethods
     
     /// <summary>
-    /// Método para transformar un dato en un valor hash
+    /// Método para generar una clave de sala
     /// </summary>
-    /// <param name="data">Dato a transformar</param>
-    /// <returns>Valor hash del dato introducido</returns>
-    private string GetHashValue(string data)
+    /// <returns>Clave de sala</returns>
+    private string GenerateRoomCode()
     {
-        var hash = new Hash128();
-        hash.Append(data);
-        
-        return hash.ToString();
+        // Variables //
+        string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";   // Posibles caracteres
+        string code = "";                                   // Código
+        System.Random random = new System.Random();
+        bool isUnique = false;
+
+        // Búsqueda clave //
+        while (!isUnique)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                code += characters[random.Next(characters.Length)];
+            }
+
+            if (!roomCodes.Contains(code))
+            {
+                isUnique = true;
+            }
+        }
+
+        return code;
     }
 
     #endregion
