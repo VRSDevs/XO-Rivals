@@ -95,7 +95,7 @@ public class ScreenManager : MonoBehaviour
         int num;
         List<int> selected = new List<int>();
         while(located < 3){
-            num = Random.Range(0,4);
+            num = Random.Range(0,5);
             if(!selected.Contains(num)){
                 selected.Add(num);
                 located++;

@@ -87,7 +87,7 @@ public class MainMenuController : MonoBehaviour
         _matchToJoin = new MatchInfo();
 
         if (_localPlayer.Lives < MAXLIVES){
-            recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
+            recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(30);
             CheckLivesTime();
         }else
             LivesTime.text = "-:--";
@@ -126,7 +126,7 @@ public class MainMenuController : MonoBehaviour
             });
             
             //Restart timer
-            recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
+            recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(30);
             recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
             LivesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds; 
         } else
@@ -164,7 +164,7 @@ public class MainMenuController : MonoBehaviour
             });
             
             //Restart timer
-            recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
+            recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(30);
             recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
             LivesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds; 
             
