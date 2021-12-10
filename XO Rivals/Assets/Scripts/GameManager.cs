@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
     /// 
     /// </summary>
     private CloudDataController _cloudController;
+    /// <summary>
+    /// 
+    /// </summary>
+    private PurchasesController _purchasesController;
     
     ////////////////// PARTIDA //////////////////
     /// <summary>
@@ -53,6 +57,7 @@ public class GameManager : MonoBehaviour
         _networkController = gameObject.AddComponent<NetworkController>();
         _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
         _cloudController = gameObject.AddComponent<CloudDataController>();
+        _purchasesController = gameObject.AddComponent<PurchasesController>();
 
         PlayerMatches = new Dictionary<string, Match>();
         Matchmaking = false;
@@ -241,6 +246,19 @@ public class GameManager : MonoBehaviour
     public void UpdateCloudData(Dictionary<string, string> data)
     {
         _cloudController.SendData(data);
+    }
+
+    #endregion
+
+    #region PurchaseMethods
+
+    /// <summary>
+    /// Método para realizar la compra de un item de la tienda
+    /// </summary>
+    /// <param name="item">Item a comprar</param>
+    public void PurchaseItem(ShopItem item)
+    {
+        _purchasesController.StartPurchase(item);
     }
 
     #endregion
