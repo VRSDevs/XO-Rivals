@@ -288,7 +288,7 @@ public class Login : MonoBehaviour
         // Contraseña con mínimo de caractéres
         if (_password.Length < MIN_CHARS)
         {
-            Log.text = "Incorrect length. Minimum " + MIN_CHARS + " chars.";
+            Log.text = "Incorrect length. Password has a minimum of " + MIN_CHARS + " chars.";
             
             IsConnecting = false;
             return false;
