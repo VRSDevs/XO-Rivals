@@ -282,7 +282,7 @@ public class ButtonsScript : MonoBehaviour
                 break;
                 
                 case 3:
-                    SceneManager.LoadScene("Fantasmas3D");
+                    SceneManager.LoadScene("Fanstasmas3D");
                     //SceneManager.LoadScene("PlatformMinigame", LoadSceneMode.Additive);
                 break;
 
