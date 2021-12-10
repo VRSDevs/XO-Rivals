@@ -105,10 +105,30 @@ public class PurchasesController : MonoBehaviour
                 }
             }
         }, result => {
-            Debug.Log("Compra iniciada");
+            Debug.Log("Compra iniciada con código: " + result.OrderId);
             Debug.Log("Item: " + result.Contents[0].DisplayName);
+            
+            ProcessPurchase(result.OrderId);
         }, error => {
-            // Handle error
+            Debug.Log("No se pudo obtener el item correspondiente");
+        });
+    }
+
+    /// <summary>
+    /// Método para procesar la compra inicializada
+    /// </summary>
+    /// <param name="order">Código del pedido</param>
+    private void ProcessPurchase(string order)
+    {
+        Debug.Log("Pedido: " + order);
+        PlayFabClientAPI.PayForPurchase(new PayForPurchaseRequest() {
+            OrderId = order,
+            ProviderName = "PayPal",
+            Currency = "CN"
+        }, result => {
+            Debug.Log("Compra procesada");
+        }, error => {
+            Debug.Log("Error " + error.Error + ": " + error.ErrorMessage);
         });
     }
 
