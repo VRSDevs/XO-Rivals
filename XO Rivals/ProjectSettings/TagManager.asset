@@ -26,6 +26,10 @@ TagManager:
   - panArriba
   - pan
   - CameraColider
+  - Win1
+  - Win2
+  - Win3
+  - Win4
   layers:
   - Default
   - TransparentFX
