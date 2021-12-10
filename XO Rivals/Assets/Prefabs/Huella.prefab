@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4232749556006671276}
   - component: {fileID: 7651004851527364053}
   - component: {fileID: 1862139686101868667}
+  - component: {fileID: 18749046126125368}
   m_Layer: 0
   m_Name: Huella
   m_TagString: Untagged
@@ -95,3 +96,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d3e69b235735af409d87a1a3bfd5d96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sigHuella: {fileID: 0}
+--- !u!65 &18749046126125368
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476279811035513209}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.0000002, z: 0.20000005}
+  m_Center: {x: 0, y: 0, z: 0}
