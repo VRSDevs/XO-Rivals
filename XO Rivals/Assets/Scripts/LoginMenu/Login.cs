@@ -58,7 +58,7 @@ public class Login : MonoBehaviour
     /// <summary>
     /// ¿Se está conectando el usuario?
     /// </summary>
-    private bool IsConnecting;
+    private bool _isConnecting;
     /// <summary>
     /// 
     /// </summary>
@@ -114,9 +114,9 @@ public class Login : MonoBehaviour
         _username = UsernameInput.text;
         _password = PasswordInput.text;
         
-        if (!IsConnecting && ValidateInputs())
+        if (!_isConnecting && ValidateInputs())
         {
-            IsConnecting = true;
+            _isConnecting = true;
                 
             OnAuthentication(_username, _password);
             StartCoroutine(EstablishConnection());
@@ -167,7 +167,7 @@ public class Login : MonoBehaviour
             else
             {
                 Log.text = "Oops! Something went wrong.";
-                IsConnecting = false;
+                _isConnecting = false;
                 Authenticator = new PlayFabAuthenticator();
             }
         }
@@ -186,7 +186,7 @@ public class Login : MonoBehaviour
                     break;
             }
 
-            IsConnecting = false;
+            _isConnecting = false;
 
             Authenticator = new PlayFabAuthenticator();
 
@@ -281,7 +281,7 @@ public class Login : MonoBehaviour
             //Decirle al jugador que no puede
             Log.text = "No whitespaces allowed";
 
-            IsConnecting = false;
+            _isConnecting = false;
             return false;
         }
 
@@ -290,7 +290,7 @@ public class Login : MonoBehaviour
         {
             Log.text = "Incorrect length. Password has a minimum of " + MIN_CHARS + " chars.";
             
-            IsConnecting = false;
+            _isConnecting = false;
             return false;
         }
         
