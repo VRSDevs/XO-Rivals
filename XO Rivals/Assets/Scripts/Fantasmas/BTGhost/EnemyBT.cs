@@ -61,6 +61,12 @@ public class EnemyBT : BehaviorTree.Tree
                  new TaskFollowAdvise(this,enemyNav),
              }),
 
+               new Sequence(new List<Node>                      //SEGUNDO COMPROBAMOS SI HEMOS SIDO AVISADOS
+             {
+                 new CheckPerseguirHuella(this),
+                 new TaskPerseguirHuella(this,enemyNav),
+             }),
+
             new TaskPatrol(enemyNav,this),                   //TERCERO DECIDIMOS PATRULLAR(Ultima opcion)
       
 

@@ -23,7 +23,7 @@ public class DetectHuella : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         
-        Debug.Log("COLISIONO CON : " + collision.gameObject.name);
+      
 
         if (collision.gameObject.name == "Huella(Clone)")
         {

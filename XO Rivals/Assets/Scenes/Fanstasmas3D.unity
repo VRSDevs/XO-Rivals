@@ -3419,7 +3419,7 @@ GameObject:
   - component: {fileID: 142658498}
   - component: {fileID: 142658497}
   m_Layer: 0
-  m_Name: LinternaColision2
+  m_Name: LinternaColision4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30597,6 +30597,7 @@ MonoBehaviour:
   - {fileID: 405383477}
   - {fileID: 2145088379}
   - {fileID: 1698231042}
+  - {fileID: 761693034}
 --- !u!212 &1515909417
 SpriteRenderer:
   m_ObjectHideFlags: 0
