@@ -30568,7 +30568,7 @@ MonoBehaviour:
   speed: 6
   horizontal: 0
   vertical: 0
-  anim: {fileID: 0}
+  anim: {fileID: 1515909421}
 --- !u!114 &1515909415
 MonoBehaviour:
   m_ObjectHideFlags: 0
