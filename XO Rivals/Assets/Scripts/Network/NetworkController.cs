@@ -23,7 +23,11 @@ public enum JoinType
 public class NetworkController : MonoBehaviourPunCallbacks
 {
     #region Variables
-
+    
+    ////////////////// CONEXIÓN //////////////////
+    private bool _connected = false;
+    
+    ////////////////// SALAS //////////////////
     /// <summary>
     /// Jugadores mínimos en la sala
     /// </summary>
@@ -49,6 +53,51 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// </summary>
     private JoinType _joinType;
 
+    #endregion
+
+    #region Getters
+
+    /// <summary>
+    /// Método para obtener si está conectado al servidor
+    /// </summary>
+    /// <returns>Valor de la conexión</returns>
+    public bool IsConnected()
+    {
+        return _connected;
+    }
+
+    /// <summary>
+    /// Método para obtener si la partida está lista para comenzar
+    /// </summary>
+    /// <returns>Estado de la partida</returns>
+    private bool GetReadyStatus()
+    {
+        return _isReady;
+    }
+
+    /// <summary>
+    /// Método para obtener si se está creando la partida o no
+    /// </summary>
+    /// <returns></returns>
+    public bool GetCreatingRoom()
+    {
+        return _creatingRoom;
+    }
+
+    #endregion
+    
+    #region UnityCB
+
+    void Awake()
+    {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    
     #endregion
     
     #region ConnectionMethods
@@ -186,11 +235,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
-        
+
         if (SceneManager.GetActiveScene().name.Equals("Login"))
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Connected to server.";
         }
+
+        _connected = true;
     }
 
     /// <summary>
@@ -200,6 +251,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
+
+        _connected = false;
 
         switch (cause)
         {
@@ -379,15 +432,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
     #endregion
 
-    #region GetNetworkVars
-
-    public void GetMatchList()
-    {
-        
-    }
-
-    #endregion
-
     #region UpdateNetworkVars
 
     /// <summary>
@@ -421,41 +465,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
 
     #endregion
-    
-    #region UnityCB
-
-    void Awake()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
-    #endregion
 
     #region OtherMethods
-
-    /// <summary>
-    /// Método para obtener si la partida está lista para comenzar
-    /// </summary>
-    /// <returns>Estado de la partida</returns>
-    private bool GetReadyStatus()
-    {
-        return _isReady;
-    }
-
-    /// <summary>
-    /// Método para obtener si se está creando la partida o no
-    /// </summary>
-    /// <returns></returns>
-    public bool GetCreatingRoom()
-    {
-        return _creatingRoom;
-    }
-
+    
     /// <summary>
     /// Método para transformar un dato en un valor hash
     /// </summary>
