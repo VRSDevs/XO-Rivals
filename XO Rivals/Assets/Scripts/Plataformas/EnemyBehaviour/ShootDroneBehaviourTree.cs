@@ -79,8 +79,14 @@ public class ShootDroneBehaviourTree : MonoBehaviour {
 
     void Update(){
 
-        //Check character every second
-        timePassed += Time.deltaTime;
+        //Check character if it has been detected
+        if(charDetected){
+            timePassed += Time.deltaTime;
+            if(timePassed >= 1f){
+                timePassed = 0f;
+                CheckCharacter();
+            }
+        }
 
         //Call tree update 
         enemyTree.update();       
@@ -90,7 +96,8 @@ public class ShootDroneBehaviourTree : MonoBehaviour {
 
         Debug.Log("Vigilando...");
         //Rotate cone around enemy
-        visionCone.transform.RotateAround(this.transform.position, Vector3.back, 20 * Time.deltaTime);
+        if(visionCone.activeSelf)
+            visionCone.transform.RotateAround(this.transform.position, Vector3.back, 20 * Time.deltaTime);
     }
 
     void Shoot(){
@@ -106,7 +113,7 @@ public class ShootDroneBehaviourTree : MonoBehaviour {
             newBullet.SetActive(true);
 
             //Restart shoot timer
-            timeBetweenShoots = Random.Range(0.5f, 1.25f);
+            timeBetweenShoots = Random.Range(1f, 1.75f);
 
             //Reduce shoots to double shot
             shootsToDouble--;        
@@ -124,9 +131,9 @@ public class ShootDroneBehaviourTree : MonoBehaviour {
             Debug.Log("Doble pium pium");
 
             //Shoot a bullet
-            GameObject newBullet1 = (GameObject) Instantiate(bulletScript.gameObject, transform.position + new Vector3(-2f, -2f, transform.position.z), transform.rotation);
+            GameObject newBullet1 = (GameObject) Instantiate(bulletScript.gameObject, transform.position + new Vector3(-1f, 0f, 0f), transform.rotation);
             newBullet1.SetActive(true);
-            GameObject newBullet2 = (GameObject) Instantiate(bulletScript.gameObject, transform.position + new Vector3(2f, 2f, transform.position.z), transform.rotation);
+            GameObject newBullet2 = (GameObject) Instantiate(bulletScript.gameObject, transform.position + new Vector3(1f, 0f, 0f), transform.rotation);
             newBullet2.SetActive(true);
 
             //Restart shoot timer
@@ -143,10 +150,7 @@ public class ShootDroneBehaviourTree : MonoBehaviour {
 
         Debug.Log("Croqueteo");
 
-        //Rotate towards character
-        Vector3 targetDirection = character.transform.position - transform.position;
-        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, Time.deltaTime, 0.0f);
-        transform.rotation = Quaternion.LookRotation(newDirection);        
+        //Rotate towards character    
     }
 
     public void CharacterDetected(bool b){
@@ -161,6 +165,11 @@ public class ShootDroneBehaviourTree : MonoBehaviour {
         visionCone.SetActive(!b);
         charDetected = b;
         newConditionNode.updateValue(charDetected);
+    }
+
+    void CheckCharacter(){
+        if(Vector3.Distance(this.transform.position, character.transform.position) > 10)
+            CharacterDetected(false);
     }
 
 }

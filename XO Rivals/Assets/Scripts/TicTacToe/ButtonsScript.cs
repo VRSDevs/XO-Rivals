@@ -265,6 +265,7 @@ public class ButtonsScript : MonoBehaviour
             miniWin = false;
             PlayerPrefs.SetInt("minigameWin", 0);
             switch(thisMatch.MiniGameChosen){
+
                 case 0:
                     SceneManager.LoadScene("Pistolero");
                     //SceneManager.LoadScene("Pistolero", LoadSceneMode.Additive);
@@ -279,10 +280,16 @@ public class ButtonsScript : MonoBehaviour
                     SceneManager.LoadScene("PlatformMinigame");
                     //SceneManager.LoadScene("PlatformMinigame", LoadSceneMode.Additive);
                 break;
+                
                 case 3:
-                    SceneManager.LoadScene(7);
+                    SceneManager.LoadScene("Fantasmas3D");
                     //SceneManager.LoadScene("PlatformMinigame", LoadSceneMode.Additive);
-                    break;
+                break;
+
+                case 4:
+                    SceneManager.LoadScene("CarnivalMinigame");
+                    //SceneManager.LoadScene("PlatformMinigame", LoadSceneMode.Additive);
+                break;
             }
         }
 
@@ -404,8 +411,7 @@ public class ButtonsScript : MonoBehaviour
         {  
             //Call endgame
             if (thisMatch.FilledPositions[col, row] == 0)
-            {
-               
+            {            
 
                 if (localPlayer.Name == thisMatch.PlayerOName)
                 {
@@ -417,7 +423,7 @@ public class ButtonsScript : MonoBehaviour
                 }
                 else
                 {
-                    localPlayer.Level += 0.75f;
+                    localPlayer.Level += 0.45f;
                     UpdateLevel();
                     FindObjectOfType<EndGameScript>().ShowMatchDefeat();
                     gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
@@ -425,16 +431,18 @@ public class ButtonsScript : MonoBehaviour
             }
             else
             {
-               
-
                 if (localPlayer.Name == thisMatch.PlayerXName)
                 {
+                    localPlayer.Level += 0.75f;
+                    UpdateLevel();
                     FindObjectOfType<EndGameScript>().ShowMatchVictory();
                     FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
                     gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                 }
                 else
                 {
+                    localPlayer.Level += 0.45f;
+                    UpdateLevel();
                     FindObjectOfType<EndGameScript>().ShowMatchDefeat();
                     gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                 }

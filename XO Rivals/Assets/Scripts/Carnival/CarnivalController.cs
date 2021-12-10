@@ -7,12 +7,14 @@ using UnityEngine.UI;
 
 public class CarnivalController : MonoBehaviour
 {
-
+    // Variables de victoria y derrota
     public bool win = false;
     public bool lost = false;
 
+    // Control del personaje
     public bool playinWithO = false;
 
+    // Gameobjects y transforms necesarios
     [SerializeField]
     private Transform bottom;
     [SerializeField]
@@ -39,9 +41,11 @@ public class CarnivalController : MonoBehaviour
     private Sprite playerOWin;
     [SerializeField]
     private Sprite playerOLost;
+    [SerializeField]
+    private Animator glassAnim;
 
+    // Control del indicador
     public bool goingUp = true;
-
     private float speed = 500;
 
     // Gamemanager
@@ -96,6 +100,7 @@ public class CarnivalController : MonoBehaviour
         }
     }
 
+    // Movimiento del indicador
     private void BarMovement()
     {
         if (goingUp)
@@ -112,12 +117,14 @@ public class CarnivalController : MonoBehaviour
         }
     }
 
+    // Pulsar botón
     public void PressedButon()
     {
         speed = 0;
         CheckVictory();
     }
 
+    // Comprobar victoria o derrota
     public void CheckVictory()
     {
         if (indicator.transform.position.y < topWin.position.y && indicator.transform.position.y > bottomWin.position.y)
@@ -150,6 +157,7 @@ public class CarnivalController : MonoBehaviour
         }
     }
 
+    // Animaciones de victoria y derrota
     public void DefeatCanvas()
     {
         defeat.SetActive(true);
