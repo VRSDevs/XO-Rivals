@@ -361,7 +361,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
             case 32760:
                 GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Couldn´t find any matches. Creating one...";
 
-                StartCoroutine(CreateMatchRoom(GenerateRoomCode("Sala " + PhotonNetwork.CountOfRooms)));
+                StartCoroutine(CreateMatchRoom(GenerateRoomCode()));
                 break;
             default:
                 Debug.Log("Error " + returnCode + ": " + message);
@@ -482,6 +482,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 code += characters[random.Next(characters.Length)];
             }
             
+            Debug.Log(code);
         }
 
         return code;
