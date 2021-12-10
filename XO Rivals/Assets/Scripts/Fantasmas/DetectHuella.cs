@@ -20,8 +20,11 @@ public class DetectHuella : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
+        
+        Debug.Log("COLISIONO CON : " + collision.gameObject.name);
+
         if (collision.gameObject.name == "Huella(Clone)")
         {
             enemyBT.lastHuella = collision.gameObject;
