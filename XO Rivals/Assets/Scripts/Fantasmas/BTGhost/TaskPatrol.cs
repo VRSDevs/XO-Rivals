@@ -17,8 +17,7 @@ public class TaskPatrol : Node
     }
 
 
-      
-  
+
     public override NodeState Evaluate()
     {
         Debug.Log("EXECUTE TASKPATROL");
@@ -36,7 +35,7 @@ public class TaskPatrol : Node
         _enemyNav.target.position = taskTarget.position;
 
         //SI LLEGAMOS A UN PUNTO DE PATRULLA DEBERIAMOS IR AL SIGUIENTE
-        if (Vector3.Distance(_enemyNav.transform.position, taskTarget.position) < 0.1f)
+        if (Vector3.Distance(_enemyNav.transform.position, taskTarget.position) <1f)
         {
             newTarget = true; //CAMBIAMOS DE TARGET
         }
