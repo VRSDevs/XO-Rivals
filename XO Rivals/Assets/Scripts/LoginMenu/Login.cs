@@ -116,11 +116,6 @@ public class Login : MonoBehaviour
             //Decirle al jugador que no puede
             Log.text = "No whitespaces allowed";
         }else{
-            //Opcion 2: Eliminarlos al meterlo en el servidor (habria que avisar al jugador)
-            _username = UsernameInput.text;
-            _username = _username.Replace(" ", "");
-            _password = PasswordInput.text;
-            _password = _password.Replace(" ", "");
 
             if (!IsConnecting && ValidateInputs())
             {
@@ -284,12 +279,22 @@ public class Login : MonoBehaviour
     /// <returns>¿Inputs válidos?</returns>
     private bool ValidateInputs()
     {
+        // Sin espacios
+        if (UsernameInput.text.Contains(" ") || PasswordInput.text.Contains(" "))
+        {
+            //Decirle al jugador que no puede
+            Log.text = "No whitespaces allowed";
+
+            return false;
+        }
+
+        // Contraseña con mínimo de caractéres
         if (_password.Length < MIN_CHARS)
         {
             Log.text = "Incorrect length. Minimum " + MIN_CHARS + " chars.";
             return false;
         }
-
+        
         return true;
     }
     
@@ -303,7 +308,6 @@ public class Login : MonoBehaviour
     /// <param name="mode">Código del modo</param>
     public void UpdateLoginMode(int mode)
     {
-
         switch (mode)
         {
             case 0:
