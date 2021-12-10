@@ -3,26 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviorTree;
 
-public class TaskPatrol : Node
+public class TaskPatrolLuc : Node
 {
+
     private Transform taskTarget;
     private bool newTarget = true; //CAMBIAMOS DE OBJETIVO
     private EnemyNavMesh _enemyNav;
-    private EnemyBT _tree;
 
-    public TaskPatrol( EnemyNavMesh enemyNav, EnemyBT tree)
+    public TaskPatrolLuc(EnemyNavMesh enemyNav)
     {
         _enemyNav = enemyNav;
-        _tree = tree;
     }
 
 
 
     public override NodeState Evaluate()
     {
-        Debug.Log("EXECUTE TASKPATROL");
 
-        _tree.following = false;
+
 
         if (newTarget)
         {
@@ -45,5 +43,6 @@ public class TaskPatrol : Node
         return state;
 
     }
+
 
 }
