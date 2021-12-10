@@ -234,10 +234,9 @@ public class Login : MonoBehaviour
                         
                 _playerInfo.Lives = int.Parse(data[DataType.Lives.GetString()]);
                 _playerInfo.Level = float.Parse(data[DataType.Level.GetString()]);
-                /*
                 _playerInfo.LostLifeTime = DateTime.ParseExact(data[DataType.LifeLost.GetString()],
                     "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                */
+                
                 _gameManager.UpdateCloudData(data);
                             
                 break;
