@@ -2802,9 +2802,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 692649458}
-        m_TargetAssemblyTypeName: SFXManager, Assembly-CSharp
-        m_MethodName: playSelectionButton2Sound
+      - m_Target: {fileID: 1544971429}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: SelectButton1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12723,9 +12723,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 692649458}
-        m_TargetAssemblyTypeName: SFXManager, Assembly-CSharp
-        m_MethodName: playSelectionButton3Sound
+      - m_Target: {fileID: 1544971429}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: SelectButton1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15318,7 +15318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6798205998141208536, guid: 3476a4bc1833a9c499944315b3cc4e18, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: SelectButton4
+      value: SelectButton1
       objectReference: {fileID: 0}
     - target: {fileID: 6798205998141208536, guid: 3476a4bc1833a9c499944315b3cc4e18, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
