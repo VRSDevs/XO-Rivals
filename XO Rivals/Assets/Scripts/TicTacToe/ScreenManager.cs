@@ -36,6 +36,10 @@ public class ScreenManager : MonoBehaviour
     [SerializeField] private GameObject instructionsPlataformasLore;
     [SerializeField] private GameObject instructionsPlataformasInstr;
 
+    [SerializeField] private GameObject instructionsCarnival;
+    [SerializeField] private GameObject instructionsCarnivalLore;
+    [SerializeField] private GameObject instructionsCarnivalInstr;
+
     [SerializeField] private ButtonsScript buttonsScript;
     public static int minigame = -1;
 
@@ -187,6 +191,10 @@ public class ScreenManager : MonoBehaviour
                 instructionsLaberinto.SetActive(true);
                 instructionsLaberintoInstr.SetActive(true);
                 break;
+            case 4://Feria
+                instructionsCarnival.SetActive(true);
+                instructionsCarnivalInstr.SetActive(true);
+                break;
         }
     }
 
@@ -210,6 +218,10 @@ public class ScreenManager : MonoBehaviour
         instructionsLaberinto.SetActive(false);
         instructionsLaberintoInstr.SetActive(false);
         instructionsLaberintoLore.SetActive(false);
+
+        instructionsCarnival.SetActive(false);
+        instructionsCarnivalInstr.SetActive(false);
+        instructionsCarnivalLore.SetActive(false);
 
 
 
@@ -249,6 +261,12 @@ public class ScreenManager : MonoBehaviour
                 instructionsLaberintoLore.SetActive(true);
 
                 break;
+            case 4://Feria
+
+                instructionsCarnivalInstr.SetActive(false);
+                instructionsCarnivalLore.SetActive(true);
+
+                break;
         }
 
 
@@ -284,6 +302,12 @@ public class ScreenManager : MonoBehaviour
 
                 instructionsLaberintoInstr.SetActive(true);
                 instructionsLaberintoLore.SetActive(false);
+
+                break;
+            case 4://Carnival
+
+                instructionsCarnivalInstr.SetActive(true);
+                instructionsCarnivalLore.SetActive(false);
 
                 break;
         }
