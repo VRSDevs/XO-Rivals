@@ -1619,7 +1619,7 @@ MonoBehaviour:
   playerXLost: {fileID: 21300000, guid: f8c813d2ad228154eb99dffe7dd5b4e9, type: 3}
   playerOWin: {fileID: 21300000, guid: 2e5979055da91be43981d983c97b1320, type: 3}
   playerOLost: {fileID: 21300000, guid: 162e8bfd97e610b43830c586a2370e81, type: 3}
-  glassAnim: {fileID: 0}
+  glassAnim: {fileID: 823230684}
   goingUp: 1
   localPlayer: {fileID: 0}
 --- !u!4 &1879265989
