@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
@@ -469,8 +470,21 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <returns>Clave de sala</returns>
     private string GenerateRoomCode()
     {
+        string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        string code = "";
         System.Random random = new System.Random();
+        bool isUnique = false;
 
+        while (!isUnique)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                code += characters[random.Next(characters.Length)];
+            }
+            
+        }
+
+        return code;
     }
 
     #endregion
