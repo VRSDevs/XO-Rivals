@@ -49,14 +49,6 @@ public class Login : MonoBehaviour
     /// Referencia al log de información del login
     /// </summary>
     [SerializeField] public TMP_Text Log;
-    /// <summary>
-    /// Nombre de usuario
-    /// </summary>
-    private String _username;
-    /// <summary>
-    /// Contraseña
-    /// </summary>
-    private String _password;
     
     ////////////////// INICIO DE SESIÓN //////////////////
     /// <summary>
@@ -67,8 +59,19 @@ public class Login : MonoBehaviour
     /// ¿Se está conectando el usuario?
     /// </summary>
     private bool IsConnecting;
-
+    /// <summary>
+    /// 
+    /// </summary>
     private PlayerInfo _playerInfo;
+    /// <summary>
+    /// Nombre de usuario
+    /// </summary>
+    private string _username;
+    /// <summary>
+    /// Contraseña
+    /// </summary>
+    private string _password;
+
     
     /// <summary>
     /// Mínimo número de caracteres para nombre de usuario y contraseña
@@ -124,7 +127,7 @@ public class Login : MonoBehaviour
                 IsConnecting = true;
                 
                 OnAuthentication(_username, _password);
-                StartCoroutine(EstablishConnection(_username, _password, Mode));
+                StartCoroutine(EstablishConnection());
             }
         }        
     }
@@ -149,7 +152,7 @@ public class Login : MonoBehaviour
     /// <param name="mode">Modo de inicio de sesión</param>
     /// <returns></returns>
     /// <exception cref="LoginFailedException">Excepción producida por fallo al iniciar sesión</exception>
-    private IEnumerator EstablishConnection(string username, string password, LoginMode mode)
+    private IEnumerator EstablishConnection()
     {
         yield return new WaitUntil(Authenticator.IsAuthenticated);
 
@@ -166,28 +169,15 @@ public class Login : MonoBehaviour
             Authenticator.Reset();
 
             Log.text = "Connecting to server...";
-            
             if (_gameManager.OnConnectToServer())
             {
-                _gameManager.SetPhotonNick(username);
-                
-                GameObject myPlayer = new GameObject();
-                
-                _playerInfo = myPlayer.AddComponent<PlayerInfo>();
-                DontDestroyOnLoad(myPlayer);
-                _playerInfo.name = "PlayerObject";
-                _playerInfo.Name = username;
-                _playerInfo.ID = Authenticator.playFabPlayerIdCache;
-
-                _gameManager.GetCloudData(DataType.Login);
-                Log.text = "Getting data...";
-
-                StartCoroutine(SynchronizePlayerData());
+                StartCoroutine(OnEstablishedConnection());
             }
             else
             {
                 Log.text = "Oops! Something went wrong.";
                 IsConnecting = false;
+                Authenticator = new PlayFabAuthenticator();
             }
         }
         catch (LoginFailedException e)
@@ -213,12 +203,31 @@ public class Login : MonoBehaviour
         }
     }
 
+    private IEnumerator OnEstablishedConnection()
+    {
+        yield return new WaitUntil(_gameManager.GetConnected);
+        
+        _gameManager.SetPhotonNick(_username);
+                
+        GameObject myPlayer = new GameObject();
+                
+        _playerInfo = myPlayer.AddComponent<PlayerInfo>();
+        DontDestroyOnLoad(myPlayer);
+        _playerInfo.name = "PlayerObject";
+        _playerInfo.Name = _username;
+        _playerInfo.ID = Authenticator.playFabPlayerIdCache;
+
+        _gameManager.GetCloudData(DataType.Login);
+        Log.text = "Getting data...";
+
+        StartCoroutine(SynchronizePlayerData());
+    }
+
     private IEnumerator SynchronizePlayerData()
     {
         yield return new WaitUntil(_gameManager.GetSynchronizeStatus);
 
         Dictionary<string, string> data = _gameManager.GetDataDictionary();
-        Dictionary<string, string> result = new Dictionary<string, string>();
 
         switch (int.Parse(data["ResultCode"]))
         {
@@ -255,9 +264,8 @@ public class Login : MonoBehaviour
             default:
                 break;
         }
-        
+
         Log.text = "Connecting to lobby...";
-        
         _gameManager.OnConnectToLobby();
     }
 
