@@ -30975,6 +30975,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469654120ff3ef3408e12e76a43fbc56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyTree:
+  - {fileID: 693027847}
+  - {fileID: 961382809}
+  - {fileID: 598204786}
+  - {fileID: 1492331040}
+  distanciaAviso: 100
 --- !u!1 &1515954397
 GameObject:
   m_ObjectHideFlags: 0
