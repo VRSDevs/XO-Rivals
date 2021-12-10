@@ -407,7 +407,6 @@ GameObject:
   - component: {fileID: 895182164}
   - component: {fileID: 895182163}
   - component: {fileID: 895182165}
-  - component: {fileID: 895182166}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -489,34 +488,13 @@ CircleCollider2D:
   m_GameObject: {fileID: 895182162}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_Material: {fileID: 6200000, guid: 44a3424ee05032941a6aa1631a17abb4, type: 2}
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.36965275, y: 0}
   serializedVersion: 2
   m_Radius: 0.8253474
---- !u!50 &895182166
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 895182162}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1001 &1864710030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -581,8 +559,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 895182162}
     - target: {fileID: 5868364097701553776, guid: 8d00b6bb4396b0f44b58597956aa1cf5, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 44a3424ee05032941a6aa1631a17abb4, type: 2}
+    - target: {fileID: 5868364097701553776, guid: 8d00b6bb4396b0f44b58597956aa1cf5, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d00b6bb4396b0f44b58597956aa1cf5, type: 3}
