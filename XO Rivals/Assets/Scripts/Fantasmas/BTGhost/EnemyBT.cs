@@ -16,6 +16,9 @@ public class EnemyBT : BehaviorTree.Tree
 
     public Vector3 lastSeenPlayer;
 
+    public GameObject lastHuella;
+    public bool perseguirHuella = false;
+
     protected override Node SetupTree()
     {
 
