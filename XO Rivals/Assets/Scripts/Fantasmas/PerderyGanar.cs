@@ -65,13 +65,14 @@ public class PerderyGanar : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        if (seconds == 0 && !lost)//SI AGUANTAS 30 SEGUNDOS GANAS
+        if (seconds == 0)//SI AGUANTAS 30 SEGUNDOS GANAS
         {
             seconds--;
             if (!gameEnded)
             {
+                lost = true;
                 gameEnded = true;
-                Invoke("VictoryCanvas", 1f);
+                Invoke("DefeatCanvas", 1f); //SI ACABA EL TIEMPO PIERDES
             }
         }
         else
