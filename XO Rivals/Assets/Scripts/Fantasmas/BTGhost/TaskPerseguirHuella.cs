@@ -27,9 +27,17 @@ public class TaskPerseguirHuella : Node
 
         _tree.following = false;
 
-        ScriptHuella huella = _tree.lastHuella.GetComponent<ScriptHuella>();
+        if (_tree.lastHuella == null)//SI ha desaparecido la huella deja de perseguirlas
+        {
+            _tree.perseguirHuella = false;
+        }
+        else
+        {
+            ScriptHuella huella = _tree.lastHuella.GetComponent<ScriptHuella>();
 
-        _enemyNav.target.position = huella.sigHuella.transform.position;
+            _enemyNav.target.position = huella.sigHuella.transform.position;
+        }
+       
       
 
         state = NodeState.RUNNING;
