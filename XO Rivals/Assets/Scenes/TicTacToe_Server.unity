@@ -5375,6 +5375,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6299495709463213680, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
   m_PrefabInstance: {fileID: 1254751701}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1254751703 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6299495708482457880, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+  m_PrefabInstance: {fileID: 1254751701}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1254751704 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6299495709463213681, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+  m_PrefabInstance: {fileID: 1254751701}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1288534600
 GameObject:
   m_ObjectHideFlags: 0
@@ -9266,6 +9276,9 @@ MonoBehaviour:
   instructionsPlataformas: {fileID: 1579495259}
   instructionsPlataformasLore: {fileID: 1241172770}
   instructionsPlataformasInstr: {fileID: 1579495258}
+  instructionsCarnival: {fileID: 1254751704}
+  instructionsCarnivalLore: {fileID: 927484144}
+  instructionsCarnivalInstr: {fileID: 1254751703}
   buttonsScript: {fileID: 8973622830952278642}
   buttonsReference:
   - {fileID: 8973622832333863753}
