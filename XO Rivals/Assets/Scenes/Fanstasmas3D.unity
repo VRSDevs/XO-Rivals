@@ -1254,6 +1254,51 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &33613487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 33613488}
+  - component: {fileID: 33613489}
+  m_Layer: 0
+  m_Name: ColliderPuerta
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &33613488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33613487}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -30.76, y: -52.950012, z: 310.41806}
+  m_LocalScale: {x: 3.80476, y: 4.7105, z: 1}
+  m_Children:
+  - {fileID: 1669512026}
+  m_Father: {fileID: 1775621108}
+  m_RootOrder: 87
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &33613489
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33613487}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &35931083
 GameObject:
   m_ObjectHideFlags: 0
@@ -3791,7 +3836,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &156845393
 Light:
   m_ObjectHideFlags: 0
@@ -5715,6 +5760,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &256219767
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 256219768}
+  - component: {fileID: 256219769}
+  m_Layer: 0
+  m_Name: ColliderPuerta
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &256219768
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256219767}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -20.98, y: -61.339996, z: 310.41806}
+  m_LocalScale: {x: 3.80476, y: 4.3603, z: 1}
+  m_Children:
+  - {fileID: 1545197018}
+  m_Father: {fileID: 1775621108}
+  m_RootOrder: 86
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &256219769
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256219767}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &257287519
 GameObject:
   m_ObjectHideFlags: 0
@@ -6819,6 +6909,7 @@ GameObject:
   - component: {fileID: 304186785}
   - component: {fileID: 304186787}
   - component: {fileID: 304186786}
+  - component: {fileID: 304186788}
   m_Layer: 0
   m_Name: PUERTA5
   m_TagString: Untagged
@@ -6833,12 +6924,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 304186784}
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -44.76, y: -45.9, z: 310.418}
-  m_LocalScale: {x: 3.0248342, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 0.2771388, z: 1}
   m_Children: []
-  m_Father: {fileID: 1775621108}
-  m_RootOrder: 89
+  m_Father: {fileID: 1833095629}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &304186786
 MeshFilter:
@@ -6889,6 +6980,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &304186788
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304186784}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9765631, y: 0.95300317, z: 0.5107184}
+  m_Center: {x: -0.000005722046, y: 0.0000038146973, z: 0.25542024}
 --- !u!1 &311640936
 GameObject:
   m_ObjectHideFlags: 0
@@ -8708,6 +8812,7 @@ GameObject:
   - component: {fileID: 395811348}
   - component: {fileID: 395811350}
   - component: {fileID: 395811349}
+  - component: {fileID: 395811351}
   m_Layer: 0
   m_Name: PUERTA4
   m_TagString: Untagged
@@ -8722,12 +8827,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 395811347}
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -64.1, y: -72.97, z: 310.418}
-  m_LocalScale: {x: 3.9663708, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 0.23640662, z: 1}
   m_Children: []
-  m_Father: {fileID: 1775621108}
-  m_RootOrder: 88
+  m_Father: {fileID: 973032541}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &395811349
 MeshFilter:
@@ -8778,6 +8883,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &395811351
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395811347}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.976563, y: 0.95300317, z: 0.5107184}
+  m_Center: {x: -0.000005722046, y: 0, z: 0.25542024}
 --- !u!1 &405383476
 GameObject:
   m_ObjectHideFlags: 0
@@ -20705,6 +20823,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &973032540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 973032541}
+  - component: {fileID: 973032542}
+  m_Layer: 0
+  m_Name: ColliderPuerta
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &973032541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973032540}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -64.1, y: -72.97, z: 310.41806}
+  m_LocalScale: {x: 3.9663708, y: 4.23, z: 1}
+  m_Children:
+  - {fileID: 395811348}
+  m_Father: {fileID: 1775621108}
+  m_RootOrder: 88
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &973032542
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973032540}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &988848146
 GameObject:
   m_ObjectHideFlags: 0
@@ -26734,6 +26897,51 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0000005, y: 1.0000002, z: 1.0000001}
   m_Center: {x: 0.0000009536743, y: 0, z: 0.000015258789}
+--- !u!1 &1335921964
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1335921965}
+  - component: {fileID: 1335921966}
+  m_Layer: 0
+  m_Name: ColliderPuerta
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1335921965
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335921964}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -32.74, y: -86.563126, z: 310.41806}
+  m_LocalScale: {x: 4.791954, y: 4.326826, z: 1}
+  m_Children:
+  - {fileID: 1446335089}
+  m_Father: {fileID: 1775621108}
+  m_RootOrder: 85
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1335921966
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335921964}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1344598782
 GameObject:
   m_ObjectHideFlags: 0
@@ -29471,6 +29679,7 @@ GameObject:
   - component: {fileID: 1446335089}
   - component: {fileID: 1446335091}
   - component: {fileID: 1446335090}
+  - component: {fileID: 1446335092}
   m_Layer: 0
   m_Name: PUERTA1
   m_TagString: Untagged
@@ -29485,12 +29694,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1446335088}
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -32.74, y: -86.5631, z: 310.418}
-  m_LocalScale: {x: 3.8599544, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.8055075, y: 0.2311163, z: 1}
   m_Children: []
-  m_Father: {fileID: 1775621108}
-  m_RootOrder: 85
+  m_Father: {fileID: 1335921965}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &1446335090
 MeshFilter:
@@ -29541,6 +29750,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1446335092
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446335088}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.976563, y: 0.95300317, z: 0.5107184}
+  m_Center: {x: -0.0000038146973, y: 0, z: 0.25545076}
 --- !u!1 &1449136666
 GameObject:
   m_ObjectHideFlags: 0
@@ -30427,6 +30649,7 @@ GameObject:
   - component: {fileID: 1515909420}
   - component: {fileID: 1515909421}
   - component: {fileID: 1515909422}
+  - component: {fileID: 1515909423}
   m_Layer: 0
   m_Name: Player
   m_TagString: PlayerFantasma
@@ -30740,6 +30963,18 @@ MonoBehaviour:
   prefabHuella: {fileID: 476279811035513209, guid: d2ecfa18946165447819c33fd75e481c, type: 3}
   huella: {fileID: 0}
   huellaAnt: {fileID: 0}
+--- !u!114 &1515909423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515909411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469654120ff3ef3408e12e76a43fbc56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1515954397
 GameObject:
   m_ObjectHideFlags: 0
@@ -31361,6 +31596,7 @@ GameObject:
   - component: {fileID: 1545197018}
   - component: {fileID: 1545197020}
   - component: {fileID: 1545197019}
+  - component: {fileID: 1545197021}
   m_Layer: 0
   m_Name: PUERTA2
   m_TagString: Untagged
@@ -31376,11 +31612,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1545197017}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20.98, y: -61.34, z: 310.418}
-  m_LocalScale: {x: 3.80476, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 0.22934203, z: 1}
   m_Children: []
-  m_Father: {fileID: 1775621108}
-  m_RootOrder: 86
+  m_Father: {fileID: 256219768}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1545197019
 MeshFilter:
@@ -31431,6 +31667,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1545197021
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545197017}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9765625, y: 0.95300317, z: 0.5107184}
+  m_Center: {x: 0, y: -0.000022888184, z: 0.25542024}
 --- !u!1 &1548167728
 GameObject:
   m_ObjectHideFlags: 0
@@ -33305,6 +33554,7 @@ GameObject:
   - component: {fileID: 1669512026}
   - component: {fileID: 1669512028}
   - component: {fileID: 1669512027}
+  - component: {fileID: 1669512029}
   m_Layer: 0
   m_Name: PUERTA3
   m_TagString: Untagged
@@ -33320,11 +33570,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1669512025}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -30.76, y: -52.95, z: 310.418}
-  m_LocalScale: {x: 3.80476, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 0.2122917, z: 1}
   m_Children: []
-  m_Father: {fileID: 1775621108}
-  m_RootOrder: 87
+  m_Father: {fileID: 33613488}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1669512027
 MeshFilter:
@@ -33375,6 +33625,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1669512029
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669512025}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9765625, y: 0.95300317, z: 0.5107184}
+  m_Center: {x: 0, y: -0.000015258789, z: 0.25542024}
 --- !u!1 &1675101620
 GameObject:
   m_ObjectHideFlags: 0
@@ -35105,11 +35368,11 @@ Transform:
   - {fileID: 660500647}
   - {fileID: 413099753}
   - {fileID: 533678536}
-  - {fileID: 1446335089}
-  - {fileID: 1545197018}
-  - {fileID: 1669512026}
-  - {fileID: 395811348}
-  - {fileID: 304186785}
+  - {fileID: 1335921965}
+  - {fileID: 256219768}
+  - {fileID: 33613488}
+  - {fileID: 973032541}
+  - {fileID: 1833095629}
   - {fileID: 528902426}
   - {fileID: 819197693}
   - {fileID: 1027159666}
@@ -36347,6 +36610,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1827472548}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1833095628
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1833095629}
+  - component: {fileID: 1833095630}
+  m_Layer: 0
+  m_Name: ColliderPuerta
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1833095629
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833095628}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -44.76, y: -45.899994, z: 310.41806}
+  m_LocalScale: {x: 3.0248344, y: 3.6083002, z: 1}
+  m_Children:
+  - {fileID: 304186785}
+  m_Father: {fileID: 1775621108}
+  m_RootOrder: 89
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1833095630
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833095628}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1833917938
 GameObject:
   m_ObjectHideFlags: 0
