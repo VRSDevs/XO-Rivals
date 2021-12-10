@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ShopItem
+{
+    Life1,
+    Lives3,
+    Lives5,
+    Lives10,
+    Lives30,
+    LivesInf
+}
+
 public class PurchasesController : MonoBehaviour
 {
     // Start is called before the first frame update
