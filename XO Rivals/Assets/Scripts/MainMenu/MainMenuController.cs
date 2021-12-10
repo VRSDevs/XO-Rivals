@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using PlayFab;
 using PlayFab.ClientModels;
+using UnityEngine.Serialization;
 
 public struct MatchInfo
 {
@@ -41,13 +42,13 @@ public class MainMenuController : MonoBehaviour
 
     [SerializeField] public GameObject ViewContent;
 
-    [SerializeField] public TextMeshProUGUI nameTxt;
-    [SerializeField] public TextMeshProUGUI level;
-    [SerializeField] public TextMeshProUGUI lifesTxt;
-    [SerializeField] public TextMeshProUGUI lifesTxtShop;
-    [SerializeField] public TextMeshProUGUI lifesTime;
-    [SerializeField] public TextMeshProUGUI lvlPrcntg;
-    [SerializeField] public Slider lvlSlider;
+    [SerializeField] public TextMeshProUGUI NameTxt;
+    [SerializeField] public TextMeshProUGUI LevelTxt;
+    [SerializeField] public TextMeshProUGUI LivesTxt;
+    [SerializeField] public TextMeshProUGUI LivesTxtShop;
+    [SerializeField] public TextMeshProUGUI LivesTime;
+    [SerializeField] public TextMeshProUGUI LvlPrcntg;
+    [SerializeField] public Slider LvlSlider;
     
     ////////////////// CLASES //////////////////
     private GameManager _gameManager;
@@ -62,9 +63,11 @@ public class MainMenuController : MonoBehaviour
     ////////////////// PARTIDA //////////////////
     private MatchInfo _matchToJoin;
     
+    ////////////////// MÚSICA //////////////////
+    public AudioClip MusicObject;
+    
     #endregion
-
-    public AudioClip musica;
+    
     #region UnityCB
 
     private void Start()
@@ -74,12 +77,12 @@ public class MainMenuController : MonoBehaviour
 
         JoinGameButton.interactable = false;
 
-        nameTxt.text = _localPlayer.Name;
-        level.text = "Level: " + Math.Truncate(_localPlayer.Level);
-        lvlSlider.value = _localPlayer.Level % 1;
-        lvlPrcntg.text = (int)((_localPlayer.Level % 1) * 100) + "/100"; 
-        lifesTxt.text = "Lives: " + _localPlayer.Lives;
-        lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
+        NameTxt.text = _localPlayer.Name;
+        LevelTxt.text = "Level: " + Math.Truncate(_localPlayer.Level);
+        LvlSlider.value = _localPlayer.Level % 1;
+        LvlPrcntg.text = (int)((_localPlayer.Level % 1) * 100) + "/100"; 
+        LivesTxt.text = "Lives: " + _localPlayer.Lives;
+        LivesTxtShop.text = "Lives: " + _localPlayer.Lives;
         
         _matchToJoin = new MatchInfo();
 
@@ -87,7 +90,7 @@ public class MainMenuController : MonoBehaviour
             recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
             CheckLivesTime();
         }else
-            lifesTime.text = "-:--";
+            LivesTime.text = "-:--";
     }
 
     private void Update(){
@@ -104,87 +107,75 @@ public class MainMenuController : MonoBehaviour
 
     #region UpdateMethods
 
-    private void IncreaseLifes(){
+    /// <summary>
+    /// Método para aumentar las vidas
+    /// </summary>
+    private void IncreaseLives(){
         
-        /*
         _localPlayer.Lives++;
-        lifesTxt.text = "Lives: " + _localPlayer.Lives;
-        lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
-        if (_localPlayer.Lives < MAXLIVES){
+        LivesTxt.text = "Lives: " + _localPlayer.Lives;
+        LivesTxtShop.text = "Lives: " + _localPlayer.Lives;
+
+        if (_localPlayer.Lives < MAXLIVES)
+        {
             _localPlayer.LostLifeTime = System.DateTime.Now;
-            //Upload lifes to server
-            PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                    Data = new Dictionary<string, string>() {
-                        {"Lifes", _localPlayer.Lives.ToString()},
-                        {"Life Lost", _localPlayer.LostLifeTime.ToString("dd/MM/yyyy HH:mm:ss")}}
-                },
-                result => Debug.Log("Successfully updated user lifes"),
-                error => {
-                    Debug.Log("Got error setting user lifes");
-                }
-            );
+            
+            _gameManager.UpdateCloudData(new Dictionary<string, string>() {
+                {DataType.Lives.GetString(), _localPlayer.Lives.ToString()},
+                /*{DataType.LifeLost.GetString(), _localPlayer.LostLifeTime.ToString("dd/MM/yyyy HH:mm:ss")}*/
+            });
+            
             //Restart timer
             recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
             recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
-            lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;            
-        }else{
-            //Upload lifes to server
-            PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                    Data = new Dictionary<string, string>() {
-                        {"Lifes", _localPlayer.Lives.ToString()},
-                        {"Life Lost", ""}}
-                },
-                result => Debug.Log("Successfully updated user lifes"),
-                error => {
-                    Debug.Log("Got error setting user lifes");
-                }
-            );
+            LivesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds; 
+        } else
+        {
+            _gameManager.UpdateCloudData(new Dictionary<string, string>() {
+                {DataType.Lives.GetString(), _localPlayer.Lives.ToString()},
+                /*{DataType.LifeLost.GetString(), "")}*/
+            });
             
-            lifesTime.text = "MAX";
+            LivesTime.text = "MAX";
         }
-        */
     }
 
-    public void ReduceLives(){
-    
-        //Reduce only if it doesnt have infinite (999) lifes
-        if(_localPlayer.Lives != 999){
-
-            _localPlayer.Lives--;
-            lifesTxt.text = "Lives: " + _localPlayer.Lives;
-            lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
-            //If it has MAXLIVES - 1 lives, update timer
-            if(_localPlayer.Lives == MAXLIVES - 1){
-                _localPlayer.LostLifeTime = System.DateTime.Now;
-                //Upload lifes to server
-                PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                        Data = new Dictionary<string, string>() {
-                            {"Lifes", _localPlayer.Lives.ToString()},
-                            {"Life Lost", _localPlayer.LostLifeTime.ToString("dd/MM/yyyy HH:mm:ss")}}
-                    },
-                    result => Debug.Log("Successfully reduced user lifes"),
-                    error => {
-                        Debug.Log("Got error reducing user lifes");
-                    }
-                );
-                //Restart timer
-                recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
-                recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
-                lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;            
-            }else{
-                //Upload lifes to server
-                PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                        Data = new Dictionary<string, string>() {
-                            {"Lifes", _localPlayer.Lives.ToString()}}
-                    },
-                    result => Debug.Log("Successfully reduced user lifes"),
-                    error => {
-                        Debug.Log("Got error reducing user lifes");
-                    }
-                );
+    /// <summary>
+    /// Método para reducir el número de vidas
+    /// </summary>
+    public void ReduceLives()
+    {
+        //Reduce only if it doesnt have infinite (999) lives
+        if (_localPlayer.Lives == 999) return;
+        
+        _localPlayer.Lives--;
+        LivesTxt.text = "Lives: " + _localPlayer.Lives;
+        LivesTxtShop.text = "Lives: " + _localPlayer.Lives;
+            
+        //If it has MAXLIVES - 1 lives, update timer
+        if (_localPlayer.Lives == MAXLIVES - 1){
+            
+            _localPlayer.LostLifeTime = System.DateTime.Now;
+            
+            //Upload lives to server
+            _gameManager.UpdateCloudData(new Dictionary<string, string>() {
+                {DataType.Lives.GetString(), _localPlayer.Lives.ToString()},
+                /*{DataType.LifeLost.GetString(), _localPlayer.LostLifeTime.ToString("dd/MM/yyyy HH:mm:ss")}*/
+            });
+            
+            //Restart timer
+            recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(3);
+            recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
+            LivesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds; 
+            
+        } else
+        {
+            //Upload lives to server
+            _gameManager.UpdateCloudData(new Dictionary<string, string>() {
+                {DataType.Lives.GetString(), _localPlayer.Lives.ToString()},
+            });
                 
-                lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;
-            }
+            LivesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;
         }
     }
 
@@ -390,9 +381,9 @@ public class MainMenuController : MonoBehaviour
         //Check remainingTime
         if(recoverRemainingTime < TimeSpan.Zero){
             //Recover one life
-            IncreaseLifes();
+            IncreaseLives();
         }else{
-            lifesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;  
+            LivesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;  
         }
     }
 
