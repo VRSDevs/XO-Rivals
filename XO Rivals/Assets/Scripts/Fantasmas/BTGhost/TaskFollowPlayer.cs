@@ -26,7 +26,7 @@ public class TaskFollowPlayer : Node
         Debug.Log("EXECUTE TASKFOLLOWPLAYER");
 
         _tree.following = true;
-
+        _tree.perseguirHuella = false;
 
         _enemyNav.target.position = _enemyNav.player.position;
 
