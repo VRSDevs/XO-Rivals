@@ -203,6 +203,10 @@ public class Login : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Corutina ejecutada tras establecer conexión con el servidor
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator OnEstablishedConnection()
     {
         yield return new WaitUntil(_gameManager.GetConnected);
@@ -214,16 +218,20 @@ public class Login : MonoBehaviour
         _playerInfo = myPlayer.AddComponent<PlayerInfo>();
         DontDestroyOnLoad(myPlayer);
         _playerInfo.name = "PlayerObject";
-        _playerInfo.Name = _username;
         _playerInfo.ID = Authenticator.playFabPlayerIdCache;
+        _playerInfo.Name = _username;
 
         _gameManager.GetCloudData(DataType.Login);
         Log.text = "Getting data...";
 
-        StartCoroutine(SynchronizePlayerData());
+        StartCoroutine(OnGetPlayerData());
     }
 
-    private IEnumerator SynchronizePlayerData()
+    /// <summary>
+    /// Corutina ejecutada tras obtener datos de la nube
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator OnGetPlayerData()
     {
         yield return new WaitUntil(_gameManager.GetSynchronizeStatus);
 
@@ -231,9 +239,7 @@ public class Login : MonoBehaviour
 
         switch (int.Parse(data["ResultCode"]))
         {
-            // Datos obtenidos
             case 1:
-                Debug.Log("Caso 1");
                         
                 _playerInfo.Lives = int.Parse(data[DataType.Lives.GetString()]);
                 _playerInfo.Level = float.Parse(data[DataType.Level.GetString()]);
@@ -245,7 +251,6 @@ public class Login : MonoBehaviour
                             
                 break;
             case 2:
-                Debug.Log("Caso 2");
 
                 _playerInfo.Lives = 3;
                 _playerInfo.Level = 0.0f;
@@ -279,7 +284,7 @@ public class Login : MonoBehaviour
     /// <returns>¿Inputs válidos?</returns>
     private bool ValidateInputs()
     {
-        if (_username.Length < MIN_CHARS || _password.Length < MIN_CHARS)
+        if (_password.Length < MIN_CHARS)
         {
             Log.text = "Incorrect length. Minimum " + MIN_CHARS + " chars.";
             return false;
