@@ -2,74 +2,19 @@ using UnityEngine;
 
 public class TicTacAI : MonoBehaviour
 {
+
     int[,] board;
-
-    //Behaviour tree
-    private enemyFirstNode ticTacTree;
-    private enemyConditionNode<bool> newConditionNode, newConditionNode2;
-
-    bool canWin, canLose;
-    int winner, chosenCol, chosenRow;
 
     // Start is called before the first frame update
     void Start()
     {
         board = new int[3,3];
-
-        //Tree
-        ticTacTree = new enemyFirstNode();
-
-        //Tree nodes
-        //Level 0
-        //Main node -> Selector node
-        enemySelectorNode newSelectorNode = new enemySelectorNode(ticTacTree);
-        ticTacTree.addChild(newSelectorNode);
-
-        //Level 1
-        //Left branch -> Sequence node
-        enemySequenceNode newSequenceNode = new enemySequenceNode(newSelectorNode);
-        newSelectorNode.addChild(newSequenceNode);
-        //Mid branch -> Sequence node
-        enemySequenceNode newSequenceNode2 = new enemySequenceNode(newSelectorNode);
-        newSelectorNode.addChild(newSequenceNode2);
-        //Right branch -> Action node
-        enemyActionNode newActionNode = new enemyActionNode(newSelectorNode, new Action(StateMachine));
-        newSelectorNode.addChild(newActionNode);
-
-        //Level 2
-        //Left Left branch -> Condition node
-        newConditionNode = new enemyConditionNode<bool>(newSequenceNode, simOperator.EQ, canWin, true);
-        newSequenceNode.addChild(newConditionNode);
-        //Left Right branch -> Action node
-        enemyActionNode newActionNode2 = new enemyActionNode(newSequenceNode, new Action(PlaceWin));
-
-        //Mid Left branch -> Condition node
-        newConditionNode2 = new enemyConditionNode<bool>(newSequenceNode2, simOperator.EQ, canLose, true);
-        //Mid Right branch -> Action node
-        enemyActionNode newActionNode3 = new enemyActionNode(newSequenceNode2, new Action(PlaceLose));
     }
 
     // Update is called once per frame
-    void UpdateTurn()
+    void Update()
     {
-        winner = CheckVictory(board, ref chosenCol, ref chosenRow);
-        canWin = canLose = false;
-
-        switch(winner){
-            //X wins
-            case -1:
-                canWin = true;
-            break;
-
-            //O wins
-            case 1:
-                canLose = true;
-            break;
-        }
-        newConditionNode.updateValue(canWin);
-        newConditionNode2.updateValue(canLose);
-
-        ticTacTree.update();
+        
     }
 
     /*private int MiniMax(int[,] board, int originalTurn, int turn, int numFilled, int lastCol, int lastRow){
@@ -115,85 +60,86 @@ public class TicTacAI : MonoBehaviour
 
         return score;
     }*/
-
+    
     #region TestMethods
 
     //Optimize this using last tile
-    int CheckVictory(int[,] board, ref int col, ref int row){
+    bool CheckVictory(int[,] board, int player, ref int row, ref int col){
 
         for(int i = 0; i < 3; i++){
-            if(TestCol(i, ref row) == true){
-                col = i;
-                return board[row, col] == 0 ? -1 : 1;
-            }
+            if(TestCol(i, player, ref row) == true)
+                return true;
         }
 
         for(int i = 0; i < 3; i++){
-            if(TestRow(i, ref col) == true){
-                row = i;
-                return board[row, col] == 0 ? -1 : 1;
-            }
+            if(TestRow(i, player, ref col) == true)
+                return true;
         }
 
         for(int i = 0; i < 2; i++){
-            if(TestDiag(i, ref col, ref row) == true)
-               return board[1,1] == 0 ? -1 : 1;
+            if(TestDiag(i, player, ref row, ref col) == true)
+               return true;
         }
 
-        return 0;
+        return false;
     }
 
-    bool TestCol(int col, ref int row){
-        int type = -1;
+    bool TestCol(int col, int player, ref int row){
+
+        bool found = false;
         int j = -1;
 
-        //Pick first tile in column that its not empty
-        do{     
-
+        //Pick first tile in column that is not empty
+        do{
+            //If its the last tile, its imposible to win
             j++;
-            //If first two are empty, there is no need to continue
-            if(j == 2)
+            if(j == 2){
                 return false;
-
-            if(board[j,col] != 3){
-                type = board[j,col];
             }
-        }while(type == -1);
 
-        //Check other positions in col
+            //If its not empty
+            if(board[j,col] != 3){
+                //Check if its same as player
+                if(board[j,col] == player){
+                    found = true;
+                }else{
+                    return false;
+                }
+            }
+            
+        }while(!found);
+
+        //Check rest of the tiles
         j++;
         switch(j){
-            
-            //We have two chances to have victory
+
+            //If found on first, there are two options 
             case 1:
-                //If mid is empty, check third
+                //If mid is empty, third must be player
                 if(board[j,col] == 3){
-                    //Cant make that line if other is not mine (empty or enemy)
                     j++;
-                    if(board[j,col] != type){
-                        return false;
-                    }else{
-                        //If its mine, mid place is win
+                    if(board[j,col] == player){
                         row = 1;
                         return true;
-                    }
-                //If mine, check if third is empty
-                }else if(board[j,col] == type){
-                    j++;
-                    if(board[j,col] != 3)
+                    }else{
                         return false;
-                    else{
+                    }
+                //If mid is player, third must be empty
+                }else if(board[j,col] == player){
+                    j++;
+                    if(board[j,col] == 3){
                         row = j;
                         return true;
+                    }else{
+                        return false;
                     }
-                //If mid is of opponent, cant win
                 }else{
                     return false;
                 }
 
-            //If first one was empty, this must match prev
+            //If found on mid, last must match
             case 2:
-                if(board[col,j] == type){
+                if(board[j,col] == player){
                     row = 0;
                     return true;
                 }else{
@@ -204,57 +150,62 @@ public class TicTacAI : MonoBehaviour
         return false;
     }
     
-    bool TestRow(int row, ref int col){
-        int type = -1;
+    bool TestRow(int row, int player, ref int col){
+
+        bool found = false;
         int j = -1;
 
-        //Pick first tile in column that its not empty
-        do{     
-
+        //Pick first tile in column that is not empty
+        do{
+            //If its the last tile, its imposible to win
             j++;
-            //If first two are empty, there is no need to continue
-            if(j == 2)
+            if(j == 2){
                 return false;
-
-            if(board[row,j] != 3){
-                type = board[row,j];
             }
-        }while(type == -1);
 
-        //Check other positions in col
+            //If its not empty
+            if(board[row,j] != 3){
+                //Check if its same as player
+                if(board[row,j] == player){
+                    found = true;
+                }else{
+                    return false;
+                }
+            }
+            
+        }while(!found);
+
+        //Check rest of the tiles
         j++;
         switch(j){
-            
-            //We have two chances to have victory
+
+            //If found on first, there are two options 
             case 1:
-                //If mid is empty, check third
+                //If mid is empty, third must be player
                 if(board[row,j] == 3){
-                    //Cant make that line if other is not mine (empty or enemy)
                     j++;
-                    if(board[row,j] != type){
-                        return false;
-                    }else{
-                        //If its mine, mid place is win
+                    if(board[row,j] == player){
                         col = 1;
                         return true;
-                    }
-                //If mine, check if third is empty
-                }else if(board[row,j] == type){
-                    j++;
-                    if(board[row,j] != 3)
+                    }else{
                         return false;
-                    else{
+                    }
+                //If mid is player, third must be empty
+                }else if(board[row,j] == player){
+                    j++;
+                    if(board[row,j] == 3){
                         col = j;
                         return true;
+                    }else{
+                        return false;
                     }
-                //If mid is of opponent, cant win
                 }else{
                     return false;
                 }
 
-            //If first one was empty, this must match prev
+            //If found on mid, last must match
             case 2:
-                if(board[row,j] == type){
+                if(board[row,j] == player){
                     col = 0;
                     return true;
                 }else{
@@ -265,145 +216,146 @@ public class TicTacAI : MonoBehaviour
         return false;
     }
 
-    bool TestDiag(int diag, ref int col, ref int row){
-        int type = -1;
+    bool TestDiag(int diag, int player, ref int row, ref int col){
+
+        bool found = false;
         int j = -1;
 
         //First diagonal
         if(diag == 0){
 
-            //Pick first tile in diagonal that its not empty
-            do{            
+            //Pick first tile in diagonal that is not empty
+            do{
+                //If its the last tile, its imposible to win
                 j++;
-                //If first two are empty, there is no need to continue
-                if(j == 2)
+                if(j == 2){
                     return false;
-
-                if(board[j,j] != 3){
-                    type = board[j,j];
                 }
 
-            }while(type == -1);
+                //If its not empty
+                if(board[j,j] != 3){
+                    //Check if its same as player
+                    if(board[j,j] == player){
+                        found = true;
+                    }else{
+                        return false;
+                    }
+                }
+            }while(!found);
 
-            //Check other positions in diag
+            //Check rest of the tiles
             j++;
             switch(j){
-                
-                //We have two chances to have victory
+
+                //If found on first, there are two options 
                 case 1:
-                    //If mid is empty
+                    //If mid is empty, third must be player
                     if(board[j,j] == 3){
-                        //You got to check the other one
                         j++;
-                        if(board[j, j] != type){
-                            return false;
-                        }else{
-                            row = col = j;
+                        if(board[j,j] == player){
+                            col = row = 1;
                             return true;
+                        }else{
+                            return false;
                         }
-                    //If mid is mine
-                    }else if(board[j,j] == type){
+                    //If mid is player, third must be empty
+                    }else if(board[j,j] == player){
                         j++;
-                        //If last is not empty, cant win
-                        if(board[j,j] != 3){
-                            return false;
-                        }else{
-                            row = col = j;
+                        if(board[j,j] == 3){
+                            col = row = j;
                             return true;
+                        }else{
+                            return false;
                         }
-                    //If mid is opponent, cant win
                     }else{
                         return false;
                     }
 
-                //If first one was empty, this must match prev
+                //If found on mid, last must match
                 case 2:
-                    if(board[j,j] == type){
-                        row = col = 0;
+                    if(board[j,j] == player){
+                        col = row = 0;
                         return true;
                     }else{
                         return false;
                     }
             }
+
+            return false;
+
+        //Second diagonal
         }else{
-            
+
             j = 3;
             int k = -1;
-            //Pick first tile in diagonal that its not empty
-            do{            
+
+            //Pick first tile in column that is not empty
+            do{
+                //If its the last tile, its imposible to win
                 j--;
                 k++;
-                //If first two are empty, there is no need to continue
-                if(k == 2)
+                if(k == 2){
                     return false;
-
-                if(board[k,j] != 3){
-                    type = board[j,j];
                 }
 
-            }while(type == -1);
+                //If its not empty
+                if(board[k,j] != 3){
+                    //Check if its same as player
+                    if(board[k,j] == player){
+                        found = true;
+                    }else{
+                        return false;
+                    }
+                }
+                
+            }while(!found);
 
-            //Check other positions in diag
+            //Check rest of the tiles
             j--;
             k++;
             switch(k){
-                
-                //We have two chances to have victory
+
+                //If found on first, there are two options 
                 case 1:
-                    //If mid is empty
+                    //If mid is empty, third must be player
                     if(board[k,j] == 3){
-                        //You got to check the other one
-                        k++;
                         j--;
-                        if(board[k, j] != type){
-                            return false;
-                        }else{
-                            row = col = 1;
+                        k++;
+                        if(board[k,j] == player){
+                            col = row = 1;
                             return true;
-                        }
-                    //If mid is mine
-                    }else if(board[k,j] == type){
-                        k++;
-                        j--;
-                        //If last is not empty, cant win
-                        if(board[k,j] != 3){
-                            return false;
                         }else{
+                            return false;
+                        }
+                    //If mid is player, third must be empty
+                    }else if(board[k,j] == player){
+                        j--;
+                        k++;
+                        if(board[k,j] == 3){
                             row = k;
                             col = j;
                             return true;
+                        }else{
+                            return false;
                         }
-                    //If mid is opponent, cant win
                     }else{
                         return false;
                     }
 
-                //If first one was empty, this must match prev
+                //If found on mid, last must match
                 case 2:
-                    if(board[k,j] == type){
-                        row = 0;
-                        col = 2;
+                    if(board[k,j] == player){
+                        row = j;
+                        col = k;
                         return true;
                     }else{
                         return false;
                     }
             }
-        }
 
-        return false;
+            return false;
+        }
     }
 
     #endregion
-
-    void StateMachine(){
-
-    }
-
-    void PlaceWin(){
-
-    }
-
-    void PlaceLose(){
-
-    }
 }
