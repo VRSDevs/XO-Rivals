@@ -9,7 +9,7 @@ public class ShootDroneBehaviourTree : MonoBehaviour {
 
     //GameObjects
     [SerializeField] private GameObject visionCone;
-    [SerializeField] private GameObject bullet;
+    [SerializeField] private Bullet bulletScript;
 
     //Parameters
     float timeBetweenShoots;
@@ -28,7 +28,8 @@ public class ShootDroneBehaviourTree : MonoBehaviour {
 
         //Choose character
         character = characterO;
-        
+        bulletScript.character = character;
+
         //Start variables
         timeBetweenShoots = Random.Range(0.5f, 1.25f);
         shootsToDouble = (int) Random.Range(1f, 3f);
@@ -86,8 +87,10 @@ public class ShootDroneBehaviourTree : MonoBehaviour {
     }
 
     void RotateView(){
+
+        Debug.Log("Vigilando...");
         //Rotate cone around enemy
-        visionCone.transform.RotateAround(this.transform.position, Vector3.up, 20 * Time.deltaTime);
+        visionCone.transform.RotateAround(this.transform.position, Vector3.back, 20 * Time.deltaTime);
     }
 
     void Shoot(){
@@ -96,8 +99,10 @@ public class ShootDroneBehaviourTree : MonoBehaviour {
         timeBetweenShoots -= Time.deltaTime;
     
         if(timeBetweenShoots <= 0){
+            Debug.Log("Pium pium");
+
             //Shoot a bullet
-            GameObject newBullet = (GameObject) Instantiate(bullet, transform.position, transform.rotation);
+            GameObject newBullet = (GameObject) Instantiate(bulletScript.gameObject, transform.position, transform.rotation);
             newBullet.SetActive(true);
 
             //Restart shoot timer
@@ -116,10 +121,12 @@ public class ShootDroneBehaviourTree : MonoBehaviour {
         timeBetweenShoots -= Time.deltaTime;
     
         if(timeBetweenShoots <= 0){
+            Debug.Log("Doble pium pium");
+
             //Shoot a bullet
-            GameObject newBullet1 = (GameObject) Instantiate(bullet, transform.position + new Vector3(-2f, -2f, transform.position.z), transform.rotation);
+            GameObject newBullet1 = (GameObject) Instantiate(bulletScript.gameObject, transform.position + new Vector3(-2f, -2f, transform.position.z), transform.rotation);
             newBullet1.SetActive(true);
-            GameObject newBullet2 = (GameObject) Instantiate(bullet, transform.position + new Vector3(2f, 2f, transform.position.z), transform.rotation);
+            GameObject newBullet2 = (GameObject) Instantiate(bulletScript.gameObject, transform.position + new Vector3(2f, 2f, transform.position.z), transform.rotation);
             newBullet2.SetActive(true);
 
             //Restart shoot timer
@@ -134,15 +141,25 @@ public class ShootDroneBehaviourTree : MonoBehaviour {
 
     void RotateSelf(){
 
+        Debug.Log("Croqueteo");
+
         //Rotate towards character
         Vector3 targetDirection = character.transform.position - transform.position;
         Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, Time.deltaTime, 0.0f);
         transform.rotation = Quaternion.LookRotation(newDirection);        
     }
 
-    public void CharacterDetected(){
+    public void CharacterDetected(bool b){
+
+        if(b){
+            Debug.Log("Te he visto");
+        }else{
+            Debug.Log("Pos adios");
+        }
+
         //Update character detected
-        charDetected = true;
+        visionCone.SetActive(!b);
+        charDetected = b;
         newConditionNode.updateValue(charDetected);
     }
 

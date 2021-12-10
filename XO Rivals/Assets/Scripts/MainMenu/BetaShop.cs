@@ -70,8 +70,8 @@ public class BetaShop : MonoBehaviour
     }
     private void UpdateLives(){
 
-        _mainController.lifesTxt.text = "Lives: " + _localPlayer.Lives;
-        _mainController.lifesTxtShop.text = "Lives: " + _localPlayer.Lives;
+        _mainController.LivesTxt.text = "Lives: " + _localPlayer.Lives;
+        _mainController.LivesTxtShop.text = "Lives: " + _localPlayer.Lives;
 
         //Upload lifes to server
         PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
@@ -85,6 +85,6 @@ public class BetaShop : MonoBehaviour
         );
         
         if(_localPlayer.Lives >= 3)
-            _mainController.lifesTime.text = "MAX";
+            _mainController.LivesTime.text = "MAX";
     }
 }

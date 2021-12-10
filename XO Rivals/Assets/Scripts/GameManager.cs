@@ -19,6 +19,10 @@ public class GameManager : MonoBehaviour
     /// 
     /// </summary>
     public NetworkCommunications _networkCommunications;
+    /// <summary>
+    /// 
+    /// </summary>
+    private CloudDataController _cloudController;
     
     ////////////////// PARTIDA //////////////////
     /// <summary>
@@ -48,6 +52,7 @@ public class GameManager : MonoBehaviour
     {
         _networkController = gameObject.AddComponent<NetworkController>();
         _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
+        _cloudController = gameObject.AddComponent<CloudDataController>();
 
         PlayerMatches = new Dictionary<string, Match>();
         Matchmaking = false;
@@ -61,12 +66,44 @@ public class GameManager : MonoBehaviour
     #region Getters
 
     /// <summary>
+    /// Método para obtener si se está conectado al servidor
+    /// </summary>
+    /// <returns>¿Está conectado al servidor?</returns>
+    public bool GetConnected()
+    {
+        return _networkController.IsConnected();
+    }
+
+    /// <summary>
     /// Método para obtener si se está creando una partida
     /// </summary>
     /// <returns>¿Se está creando la partida?</returns>
     public bool GetIsCreatingMatch()
     {
         return _networkController.GetCreatingRoom();
+    }
+
+    /// <summary>
+    /// Método para obtener el estado de sincronización
+    /// </summary>
+    /// <returns>Estado de sincronización</returns>
+    public bool GetSynchronizeStatus()
+    {
+        return _cloudController.IsSynchronized();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<string, string> GetDataDictionary()
+    {
+        return _cloudController.GetDataDictionary();
+    }
+
+    public Dictionary<string, string> GetSendStatus()
+    {
+        return _cloudController.GetSendStatus();
     }
 
     #endregion
@@ -120,6 +157,14 @@ public class GameManager : MonoBehaviour
     }
     
     /// <summary>
+    /// Método para conectarse a la lobby general
+    /// </summary>
+    public void OnConnectToLobby()
+    {
+        _networkController.ConnectToLobby();
+    }
+    
+    /// <summary>
     /// Método para conectarse a una sala en Photon
     /// </summary>
     public void OnConnectToRoom()
@@ -137,20 +182,14 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Método para conectarse a la lobby general
-    /// </summary>
-    public void OnConnectToLobby()
-    {
-        _networkController.ConnectToLobby();
-    }
-
-    /// <summary>
     /// Método para abandonar una sala en Photon
     /// </summary>
     public void OnLeaveRoom()
     {
         _networkController.DisconnectFromRoom();
     }
+    
+    
     
     #endregion
 
@@ -178,6 +217,30 @@ public class GameManager : MonoBehaviour
         }
         
         _networkCommunications.SendPlayerInfoPackage(playerType);
+    }
+
+    #endregion
+    
+    #region CloudMethods
+
+    /// <summary>
+    /// Método para obtener datos de la nube
+    /// </summary>
+    /// <param name="type">Tipo de dato a obtener</param>
+    /// <returns>Diccionario con los datos solicitados</returns>
+    public void GetCloudData(DataType type)
+    {
+        _cloudController.GetData(type);
+    }
+
+    /// <summary>
+    /// Método para cargar datos en la nube
+    /// </summary>
+    /// <param name="data">Datos a cargar</param>
+    /// <returns>Estado de la operación</returns>
+    public void UpdateCloudData(Dictionary<string, string> data)
+    {
+        _cloudController.SendData(data);
     }
 
     #endregion
