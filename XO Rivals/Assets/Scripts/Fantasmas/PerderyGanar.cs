@@ -60,6 +60,26 @@ public class PerderyGanar : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+       
+            if (other.gameObject.name == "WINtarget")
+            {
+               
+                    if (!gameEnded)
+                    {
+                        gameEnded = true;
+                        Invoke("VictoryCanvas", 0.2f);
+                    }
+
+
+            }
+
+
+        
+    }
+
+
     IEnumerator contarSegundosParaGanar()
     {
 
