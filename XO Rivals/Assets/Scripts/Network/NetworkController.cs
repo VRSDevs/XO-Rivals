@@ -494,13 +494,17 @@ public class NetworkController : MonoBehaviourPunCallbacks
         System.Random random = new System.Random();
         bool isUnique = false;
 
-        while(!isUnique)
+        while (!isUnique)
         {
             for (int i = 0; i < 6; i++)
             {
                 code += characters[random.Next(characters.Length)];
             }
-            
+
+            if (roomCodes.Contains(code))
+            {
+                isUnique = true;
+            }
         }
 
         return code;
