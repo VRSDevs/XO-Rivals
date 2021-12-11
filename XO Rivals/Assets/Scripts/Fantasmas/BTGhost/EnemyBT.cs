@@ -19,58 +19,185 @@ public class EnemyBT : BehaviorTree.Tree
     public GameObject lastHuella;
     public bool perseguirHuella = false;
 
+    public bool clever = false;
+    public bool medium = false;
+    public bool silly = false;
+
+
+
+
     protected override Node SetupTree()
     {
+        Node root = null;
 
-
-        Node root = new Selector(new List<Node>
+        //ARBOL LISTO -----------------------------------------------------------
+        if (clever)
         {
-          
 
-            new Sequence(new List<Node>                      // PRIMERO COMPROBAMOS SI VEMOS AL ENEMIGO
+            root = new Selector(new List<Node>
             {
-                //COMPROBACIONES PARA SABER SI LE "VEMOS" 
-                new Selector(new List<Node>         
+
+
+                new Sequence(new List<Node>                      // PRIMERO COMPROBAMOS SI VEMOS AL ENEMIGO
                 {
-
-
-                    new Sequence(new List<Node>
+                    //COMPROBACIONES PARA SABER SI LE "VEMOS" 
+                    new Selector(new List<Node>
                     {
-                        new CheckLinterna(detectPlayer),
-                        new CheckNoObstacle(detectPlayer),
+
+
+                        new Sequence(new List<Node>
+                        {
+                            new CheckLinterna(detectPlayer),
+                            new CheckNoObstacle(detectPlayer),
+                        }),
+
+                        new Sequence(new List<Node>
+                        {
+                            new CheckFollowingPlayer(this),
+                            new CheckRadio(detectPlayer),
+                        }),
+
+
                     }),
 
-                    new Sequence(new List<Node>                     
-                    {
-                        new CheckFollowingPlayer(this),
-                        new CheckRadio(detectPlayer),
-                    }),
+                     new TaskFollowPlayer(enemyNav,this),
+                     new TaskAdvise(this),
 
 
                 }),
 
-                 new TaskFollowPlayer(enemyNav,this),
-                 new TaskAdvise(this),
+                 new Sequence(new List<Node>                      //SEGUNDO COMPROBAMOS SI HEMOS SIDO AVISADOS
+                 {
+                     new CheckGetAdvise(this),
+                     new TaskFollowAdvise(this,enemyNav),
+                 }),
 
+                   new Sequence(new List<Node>                      //SEGUNDO COMPROBAMOS SI HEMOS SIDO AVISADOS
+                 {
+                     new CheckPerseguirHuella(this),
+                     new TaskPerseguirHuella(this,enemyNav),
+                 }),
 
-            }),
-
-             new Sequence(new List<Node>                      //SEGUNDO COMPROBAMOS SI HEMOS SIDO AVISADOS
-             {
-                 new CheckGetAdvise(this),
-                 new TaskFollowAdvise(this,enemyNav),
-             }),
-
-               new Sequence(new List<Node>                      //SEGUNDO COMPROBAMOS SI HEMOS SIDO AVISADOS
-             {
-                 new CheckPerseguirHuella(this),
-                 new TaskPerseguirHuella(this,enemyNav),
-             }),
-
-            new TaskPatrol(enemyNav,this),                   //TERCERO DECIDIMOS PATRULLAR(Ultima opcion)
+                new TaskPatrol(enemyNav,this),                   //TERCERO DECIDIMOS PATRULLAR(Ultima opcion)
       
 
-        });
+            });
+        }
+        //FIN ARBOL LISTO---------------------------------
+
+
+        //ARBOL MEDIO -----------------------------------------------------------
+        if (medium)
+        {
+
+            root = new Selector(new List<Node>
+            {
+
+
+                new Sequence(new List<Node>                      // PRIMERO COMPROBAMOS SI VEMOS AL ENEMIGO
+                {
+                    //COMPROBACIONES PARA SABER SI LE "VEMOS" 
+                    new Selector(new List<Node>
+                    {
+
+
+                        new Sequence(new List<Node>
+                        {
+                            new CheckLinterna(detectPlayer),
+                            new CheckNoObstacle(detectPlayer),
+                        }),
+
+                        new Sequence(new List<Node>
+                        {
+                            new CheckFollowingPlayer(this),
+                            new CheckRadio(detectPlayer),
+                        }),
+
+
+                    }),
+
+                     new TaskFollowPlayer(enemyNav,this),
+                     new TaskAdvise(this),
+
+
+                }),
+
+                 new Sequence(new List<Node>                      //SEGUNDO COMPROBAMOS SI HEMOS SIDO AVISADOS
+                 {
+                     new CheckGetAdvise(this),
+                     new TaskFollowAdvise(this,enemyNav),
+                 }),
+
+                   //new Sequence(new List<Node>                      //SEGUNDO COMPROBAMOS SI HEMOS SIDO AVISADOS
+                   // {                                                 EL MEDIUM NO PERSIGUE HUELLAS
+                   //  new CheckPerseguirHuella(this),
+                   //  new TaskPerseguirHuella(this,enemyNav),
+                   //  }),
+
+                new TaskPatrol(enemyNav,this),                   //TERCERO DECIDIMOS PATRULLAR(Ultima opcion)
+      
+
+            });
+        }
+        //FIN ARBOL MEDIUM---------------------------------
+
+
+
+        //ARBOL SILLY -----------------------------------------------------------
+        if (silly)
+        {
+
+            root = new Selector(new List<Node>
+            {
+
+
+                new Sequence(new List<Node>                      // PRIMERO COMPROBAMOS SI VEMOS AL ENEMIGO
+                {
+                    //COMPROBACIONES PARA SABER SI LE "VEMOS" 
+                    new Selector(new List<Node>
+                    {
+
+
+                        new Sequence(new List<Node>
+                        {
+                            new CheckLinterna(detectPlayer),
+                            new CheckNoObstacle(detectPlayer),
+                        }),
+
+                        new Sequence(new List<Node>
+                        {
+                            new CheckFollowingPlayer(this),
+                            new CheckRadio(detectPlayer),
+                        }),
+
+
+                    }),
+
+                     new TaskFollowPlayer(enemyNav,this),
+                     //new TaskAdvise(this), EL SILLY NO AVISA
+
+
+                }),
+
+                 new Sequence(new List<Node>                      //SEGUNDO COMPROBAMOS SI HEMOS SIDO AVISADOS
+                 {
+                     new CheckGetAdvise(this),
+                     new TaskFollowAdvise(this,enemyNav),
+                 }),
+
+                          //new Sequence(new List<Node>                      //SEGUNDO COMPROBAMOS SI HEMOS SIDO AVISADOS
+                   // {                                                 EL SILLY NO PERSIGUE HUELLAS
+                   //  new CheckPerseguirHuella(this),
+                   //  new TaskPerseguirHuella(this,enemyNav),
+                   //  }),
+
+                new TaskPatrol(enemyNav,this),                   //TERCERO DECIDIMOS PATRULLAR(Ultima opcion)
+      
+
+            });
+        }
+        //FIN ARBOL SILLI---------------------------------
+
 
         return root;
 
