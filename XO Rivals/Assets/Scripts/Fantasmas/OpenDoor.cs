@@ -37,7 +37,11 @@ public class OpenDoor : MonoBehaviour
                 if (Vector3.Distance(collision.gameObject.transform.position, tree.gameObject.transform.position) < distanciaAviso)
                 {
 
-                    tree.setAdvise(collision.gameObject.transform.position);
+                    if (tree.medium || tree.clever)//SOLO AVISA A MEIDO E INTELIGENTE
+                    {
+                        tree.setAdvise(collision.gameObject.transform.position);
+                    }
+                   
                 }
 
 

@@ -24,6 +24,9 @@ public class PerderyGanar : MonoBehaviour
     public List<GameObject> enemigos;
     private bool lost = false;
 
+    public Camera mainCamera;
+    public bool acercarCamBool =  false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +39,10 @@ public class PerderyGanar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (acercarCamBool)
+        {
+            acercarCam();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)//SI CHOCAS CON FANTASMA PIERDES
@@ -49,7 +55,7 @@ public class PerderyGanar : MonoBehaviour
                 if(!gameEnded)
                 {
                     gameEnded = true;
-                    Invoke("DefeatCanvas", 0.2f);
+                    Invoke("DefeatCanvas", 0.1f);
                 }
                 
             }
@@ -117,13 +123,15 @@ public class PerderyGanar : MonoBehaviour
         {
             textoSegundos.gameObject.SetActive(true);
             crono.SetActive(true);
-            seconds = 30;
+            seconds = 40;
             textoCuentaAtras.text = "";
             textoSegundos.text = "" + seconds;
-            for (int i = 0; i < enemigos.Count; i++)
-            {
-                enemigos[i].SetActive(true);
-            }
+
+            //Se acerca la camara al jugador
+            acercarCamBool = true;
+
+            //en un segundo se spawnean los enemigos
+            StartCoroutine(spawnEnemys());
             StartCoroutine(contarSegundosParaGanar()); //PRIMERO HACEMOS LA CUENTA ATRAS
 
         }
@@ -136,13 +144,37 @@ public class PerderyGanar : MonoBehaviour
 
 
     }
+    IEnumerator spawnEnemys()
+    {
+        yield return new WaitForSeconds(3);
 
+        for (int i = 0; i < enemigos.Count; i++)
+        {
+            enemigos[i].SetActive(true);
+        }
+    }
 
     IEnumerator victoria()
     {
         yield return new WaitForSeconds(2);
         PlayerPrefs.SetInt("minigameWin", 1);
         SceneManager.UnloadSceneAsync("Fantasmas3D");
+    }
+
+    public void acercarCam()
+    {
+       //MOVER HACIA JUGADOR
+        float step = 30f * Time.deltaTime;
+        mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, new Vector3(this.transform.position.x, mainCamera.transform.position.y, this.transform.position.z), step);
+
+
+        //ACERCAR VISION
+        if (mainCamera.orthographicSize > 13.5)
+        {
+            mainCamera.orthographicSize -= 0.1f;
+        }
+
+
     }
 
     public void DefeatCanvas()
