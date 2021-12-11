@@ -17,6 +17,9 @@ public class ButtonsScript : MonoBehaviour
     public GameObject circleGO;
     public GameObject crossGO;
 
+    [SerializeField] private GameObject circleTurnRival;
+    [SerializeField] private GameObject crossTurnRival;
+
     [SerializeField] private GameObject circleTurn;
     [SerializeField] private GameObject crossTurn;
 
