@@ -108,7 +108,7 @@ public class PurchasesController : MonoBehaviour
             Debug.Log("Compra iniciada con código: " + result.OrderId);
             Debug.Log("Item: " + result.Contents[0].DisplayName);
             
-            ProcessPurchase(result.OrderId);
+            ProcessPurchase(result.OrderId, item);
         }, error => {
             Debug.Log("No se pudo obtener el item correspondiente");
         });
@@ -118,7 +118,7 @@ public class PurchasesController : MonoBehaviour
     /// Método para procesar la compra inicializada
     /// </summary>
     /// <param name="order">Código del pedido</param>
-    private void ProcessPurchase(string order)
+    private void ProcessPurchase(string order, ShopItem item)
     {
         Debug.Log("Pedido: " + order);
         PlayFabClientAPI.PayForPurchase(new PayForPurchaseRequest() {
@@ -127,7 +127,7 @@ public class PurchasesController : MonoBehaviour
             Currency = "RM"
         }, result => {
             Debug.Log("Compra procesada");
-            Application.OpenURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AXD63Q84BGUVQ");
+            
             ConfirmPurchase(order);
 
         }, error => {
@@ -148,6 +148,41 @@ public class PurchasesController : MonoBehaviour
         }, error => {
             Debug.Log("Error " + error.Error + ": " + error.ErrorMessage);
         });
+    }
+
+    #endregion
+
+    #region OtherMethods
+
+    /// <summary>
+    /// Método para llamar a un checkout en función del item a comprar
+    /// </summary>
+    /// <param name="item">Item a comprar</param>
+    private void FilterCheckout(ShopItem item)
+    {
+        switch (item)
+        {
+            case ShopItem.Life1:
+                Application.OpenURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AXD63Q84BGUVQ");
+                break;
+            case ShopItem.Lives3:
+                Application.OpenURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TD8L8CUL7EUMS");
+                break;
+            case ShopItem.Lives5:
+                Application.OpenURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5224MUUBASLDS");
+                break;
+            case ShopItem.Lives10:
+                Application.OpenURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BNQVGGLCAALU4");
+                break;
+            case ShopItem.Lives30:
+                Application.OpenURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9VBQRUY2YAYKU");
+                break;
+            case ShopItem.LivesInf:
+                Application.OpenURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HCB7WWEJ87FCW");
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(item), item, null);
+        }
     }
 
     #endregion
