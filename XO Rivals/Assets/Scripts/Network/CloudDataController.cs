@@ -58,6 +58,7 @@ public class CloudDataController : MonoBehaviour
 {
     #region Vars
 
+    private bool _checkedOnline = false;
     /// <summary>
     /// ¿Se sincronizaron los datos?
     /// </summary>
@@ -76,6 +77,15 @@ public class CloudDataController : MonoBehaviour
     #endregion
 
     #region Getters
+
+    /// <summary>
+    /// Método para devolver el valor de la comprobación de estado en línea
+    /// </summary>
+    /// <returns>Valor de la comrpobación</returns>
+    public bool IsOnlineChecked()
+    {
+        return _checkedOnline;
+    }
 
     /// <summary>
     /// Método para devolver el valor de control de sincronización
@@ -109,11 +119,18 @@ public class CloudDataController : MonoBehaviour
     #region UpdateMethods
 
     /// <summary>
+    /// Método actualización del estado de comprobación de si el jugador está en línea
+    /// </summary>
+    public void UpdateOnlineChecked()
+    {
+        _checkedOnline = !_checkedOnline;
+    }
+
+    /// <summary>
     /// Método actualización del estado de sincronización
     /// </summary>
     public void UpdateSynchronizedStatus()
     {
-        Debug.Log("Valor actualizado.");
         _synchronized = !_synchronized;
     }
 

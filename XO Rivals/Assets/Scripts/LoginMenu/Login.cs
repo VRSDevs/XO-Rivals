@@ -182,9 +182,6 @@ public class Login : MonoBehaviour
                 case PlayFabErrorCode.InvalidUsernameOrPassword:
                     Log.text = "Invalid username or password.";
                     break;
-                case PlayFabErrorCode.ConnectionError:
-                    Log.text = "This user is already connected.";
-                    break;
             }
 
             _isConnecting = false;
@@ -202,20 +199,41 @@ public class Login : MonoBehaviour
     {
         yield return new WaitUntil(_gameManager.GetConnected);
         
-        _gameManager.SetPhotonNick(_username);
-                
-        GameObject myPlayer = new GameObject();
-                
-        _playerInfo = myPlayer.AddComponent<PlayerInfo>();
-        DontDestroyOnLoad(myPlayer);
-        _playerInfo.name = "PlayerObject";
-        _playerInfo.ID = Authenticator.playFabPlayerIdCache;
-        _playerInfo.Name = _username;
+        try
+        {
+            _gameManager.SetPhotonNick(_username);
 
-        _gameManager.GetCloudData(DataType.Login);
-        Log.text = "Getting data...";
+            GameObject myPlayer = new GameObject();
 
-        StartCoroutine(OnGetPlayerData());
+            _playerInfo = myPlayer.AddComponent<PlayerInfo>();
+            DontDestroyOnLoad(myPlayer);
+            _playerInfo.name = "PlayerObject";
+            _playerInfo.ID = Authenticator.playFabPlayerIdCache;
+            _playerInfo.Name = _username;
+
+            _gameManager.GetCloudData(DataType.Login);
+            Log.text = "Getting data...";
+
+            StartCoroutine(OnGetPlayerData());
+
+        }
+        catch (LoginFailedException e)
+        {
+            switch (e.ErrorCode)
+            {
+                case PlayFabErrorCode.ConnectionError:
+                    Log.text = "This user is already connected.";
+                    break;
+            }
+            
+            StopCoroutine(OnGetPlayerData());
+            
+            _gameManager.OnDisconnectToServer();
+            _isConnecting = false;
+            Authenticator = new PlayFabAuthenticator();
+
+            Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
+        }
     }
 
     /// <summary>
