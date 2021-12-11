@@ -27,6 +27,12 @@ public class MinigameFantasmasController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Los enemigos comienzan desactivados
+        foreach (GameObject enem in enemigos)
+        {
+            enem.SetActive(false);
+        }
+
         _gameManager = FindObjectOfType<GameManager>();
 
         if (!_gameManager.IsWebGLMobile)
@@ -41,12 +47,7 @@ public class MinigameFantasmasController : MonoBehaviour
         FindObjectOfType<AudioManager>().ChangeMusic(MusicaBosque,"Tic-Tac-Toe");
 
 
-        //Los enemigos comienzan desactivados
-        foreach (GameObject enem in enemigos)
-        {
-            enem.SetActive(false);
-        }
-
+    
     }
 
     // Update is called once per frame

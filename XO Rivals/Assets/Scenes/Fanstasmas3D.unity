@@ -43198,6 +43198,30 @@ PrefabInstance:
       propertyPath: MusicaBosque
       value: 
       objectReference: {fileID: 8300000, guid: 96c8795bac58a87419b06f87c4c2d479, type: 3}
+    - target: {fileID: 1399310660195000072, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: enemigos.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399310660195000072, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: enemigos.Array.data[0]
+      value: 
+      objectReference: {fileID: 693027839}
+    - target: {fileID: 1399310660195000072, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: enemigos.Array.data[1]
+      value: 
+      objectReference: {fileID: 961382801}
+    - target: {fileID: 1399310660195000072, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: enemigos.Array.data[2]
+      value: 
+      objectReference: {fileID: 598204778}
+    - target: {fileID: 1399310660195000072, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: enemigos.Array.data[3]
+      value: 
+      objectReference: {fileID: 1492331039}
+    - target: {fileID: 1399310660195000072, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
+      propertyPath: enemigos.Array.data[4]
+      value: 
+      objectReference: {fileID: 893686478}
     - target: {fileID: 1399310660195000073, guid: f0834cada4a65da4289e29c404e58dd8, type: 3}
       propertyPath: m_Name
       value: Minigame Manager
