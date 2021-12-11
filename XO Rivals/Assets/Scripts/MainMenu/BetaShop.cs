@@ -28,7 +28,7 @@ public class BetaShop : MonoBehaviour
 
     public void OfferBought(int offer)
     {
-        if(_localPlayer.Lives != 999){
+        if(_localPlayer.Lives < 999){
             switch (offer)
             {
                 case 1:
