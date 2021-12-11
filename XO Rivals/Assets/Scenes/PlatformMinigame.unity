@@ -7029,6 +7029,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1245188514}
+        m_TargetAssemblyTypeName: PlatformMinigameController, Assembly-CSharp
+        m_MethodName: playJumpSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: e0199d52-69b8-4b2a-90e2-b04fbd586e00
     m_ActionName: Player/Jump[/Keyboard/space]
   - m_PersistentCalls:
