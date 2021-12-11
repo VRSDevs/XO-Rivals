@@ -17,9 +17,9 @@ using Photon.Pun;
 [Serializable]
 public enum LoginMode
 {
-    NONE,
-    REGISTER,
-    LOGIN
+    None,
+    Register,
+    Login
 }
 
 public class Login : MonoBehaviour
@@ -175,7 +175,7 @@ public class Login : MonoBehaviour
             switch (e.ErrorCode)
             {
                 case PlayFabErrorCode.UsernameNotAvailable:
-                    Log.text = "Username not available.";
+                    Log.text = "Username not available. Already exists!";
                     break;
                 case PlayFabErrorCode.AccountNotFound:
                     Log.text = "Account not found.";
@@ -276,14 +276,13 @@ public class Login : MonoBehaviour
         // Sin espacios
         if (_username.Contains(" ") || _password.Contains(" "))
         {
-            //Decirle al jugador que no puede
             Log.text = "No whitespaces allowed";
 
             _isConnecting = false;
             return false;
         }
 
-        // Contraseña con mínimo de caractéres
+        // Contraseña con mínimo de caracteres
         if (_password.Length < MIN_CHARS)
         {
             Log.text = "Incorrect length. Password has a minimum of " + MIN_CHARS + " chars.";
@@ -308,13 +307,13 @@ public class Login : MonoBehaviour
         switch (mode)
         {
             case 0:
-                Mode = LoginMode.NONE;
+                Mode = LoginMode.None;
                 break;
             case 1:
-                Mode = LoginMode.REGISTER;
+                Mode = LoginMode.Register;
                 break;
             case 2:
-                Mode = LoginMode.LOGIN;
+                Mode = LoginMode.Login;
                 break;
         }
     }

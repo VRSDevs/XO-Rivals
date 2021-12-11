@@ -75,7 +75,7 @@ public class PlayFabAuthenticator : MonoBehaviour
     {
         switch (mode)
         {
-            case LoginMode.REGISTER:
+            case LoginMode.Register:
                 RegisterPlayFabUserRequest registerRequest = new RegisterPlayFabUserRequest
                 {
                     Username = username,
@@ -93,7 +93,7 @@ public class PlayFabAuthenticator : MonoBehaviour
                 );
 
                 break;
-            case LoginMode.LOGIN:
+            case LoginMode.Login:
                 LoginWithPlayFabRequest loginRequest = new LoginWithPlayFabRequest();
                 loginRequest.Username = username;
                 loginRequest.Password = password;
