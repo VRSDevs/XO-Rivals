@@ -127,6 +127,7 @@ public class PurchasesController : MonoBehaviour
             Currency = "RM"
         }, result => {
             Debug.Log("Compra procesada");
+            Application.OpenURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AXD63Q84BGUVQ");
             ConfirmPurchase(order);
 
         }, error => {
