@@ -23,7 +23,16 @@ public class TaskAdvise : Node
     {
         Debug.Log("EXECUTE TASKADVISE");
 
+        foreach (Transform t in _tree.transform.GetComponentsInChildren<Transform>())
+        {
+            if (t.name == "Enemy2D")
+            {
+                //Cosas que hacer
+                Debug.Log(t.name);
+                t.GetComponent<SpriteRenderer>().sprite = _tree.spriteAlertaClever;
 
+            }
+        }
 
         _tree.lastSeenPlayer = new Vector3(_tree.enemyNav.player.position.x, _tree.enemyNav.player.position.y, _tree.enemyNav.player.position.z);
         foreach (EnemyBT otherTree in _tree.otherEnemyBT)

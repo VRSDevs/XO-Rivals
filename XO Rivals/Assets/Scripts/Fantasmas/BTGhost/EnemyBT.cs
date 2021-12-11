@@ -25,6 +25,19 @@ public class EnemyBT : BehaviorTree.Tree
 
 
 
+    //SPRITES
+    public Sprite spriteClever;
+    public Sprite spriteAlertaClever;
+    public Sprite spritePreguntaClever;
+
+    public Sprite spriteMedium;
+    public Sprite spriteAlertaMedium;
+    public Sprite spritePreguntaMedium;
+
+    public Sprite spriteSilly;
+    public Sprite spriteAlertaSilly;
+    public Sprite spritePreguntaSilly;
+
 
     protected override Node SetupTree()
     {
