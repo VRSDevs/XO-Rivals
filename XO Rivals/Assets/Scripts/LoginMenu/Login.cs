@@ -183,6 +183,9 @@ public class Login : MonoBehaviour
                 case PlayFabErrorCode.InvalidUsernameOrPassword:
                     Log.text = "Invalid username or password.";
                     break;
+                case PlayFabErrorCode.ConnectionError:
+                    Log.text = "This user is already connected.";
+                    break;
             }
 
             _isConnecting = false;
