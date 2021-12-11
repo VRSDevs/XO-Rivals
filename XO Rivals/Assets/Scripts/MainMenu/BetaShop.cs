@@ -85,7 +85,8 @@ public class BetaShop : MonoBehaviour
     /// <param name="amount">Cantidad de vidas compradas</param>
     private IEnumerator UpdateLives(int amount)
     {
-        yield return new WaitForSeconds(50000000);
+        yield return new WaitUntil(FindObjectOfType<GameManager>().IsPurchaseCompleted);
+        Debug.Log("Actualizando vidas");
         
         _localPlayer.Lives = (_localPlayer.Lives + amount) > 999 ? 999 : _localPlayer.Lives + amount;
         _mainController.LivesTxt.text = "Lives: " + _localPlayer.Lives;
