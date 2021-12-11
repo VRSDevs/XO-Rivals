@@ -32019,6 +32019,10 @@ MonoBehaviour:
   - {fileID: 961382801}
   - {fileID: 598204778}
   - {fileID: 693027839}
+  - {fileID: 1492331039}
+  - {fileID: 893686478}
+  mainCamera: {fileID: 1753971727}
+  acercarCamBool: 0
 --- !u!95 &1515909421
 Animator:
   serializedVersion: 3
@@ -37076,6 +37080,8 @@ MonoBehaviour:
   - {fileID: 961382801}
   - {fileID: 598204778}
   - {fileID: 693027839}
+  mainCamera: {fileID: 0}
+  acercarCamBool: 0
 --- !u!114 &1791572617
 MonoBehaviour:
   m_ObjectHideFlags: 0
