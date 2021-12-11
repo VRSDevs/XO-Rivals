@@ -253,6 +253,15 @@ public class GameManager : MonoBehaviour
     #region PurchaseMethods
 
     /// <summary>
+    /// ¿Completó la compra?
+    /// </summary>
+    /// <returns>Estado de la compra</returns>
+    public bool IsPurchaseCompleted()
+    {
+        return _purchasesController.HasPurchased();
+    }
+    
+    /// <summary>
     /// Método para realizar la compra de un item de la tienda
     /// </summary>
     /// <param name="item">Item a comprar</param>
