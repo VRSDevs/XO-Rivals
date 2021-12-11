@@ -13537,6 +13537,9 @@ MonoBehaviour:
   lastSeenPlayer: {x: 0, y: 0, z: 0}
   lastHuella: {fileID: 0}
   perseguirHuella: 0
+  clever: 0
+  medium: 0
+  silly: 1
 --- !u!114 &598204787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15168,6 +15171,9 @@ MonoBehaviour:
   lastSeenPlayer: {x: 0, y: 0, z: 0}
   lastHuella: {fileID: 0}
   perseguirHuella: 0
+  clever: 1
+  medium: 0
+  silly: 0
 --- !u!114 &693027848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20950,6 +20956,9 @@ MonoBehaviour:
   lastSeenPlayer: {x: 0, y: 0, z: 0}
   lastHuella: {fileID: 0}
   perseguirHuella: 0
+  clever: 0
+  medium: 1
+  silly: 0
 --- !u!114 &961382810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31418,6 +31427,9 @@ MonoBehaviour:
   lastSeenPlayer: {x: 0, y: 0, z: 0}
   lastHuella: {fileID: 0}
   perseguirHuella: 0
+  clever: 0
+  medium: 0
+  silly: 1
 --- !u!54 &1492331041
 Rigidbody:
   m_ObjectHideFlags: 0
