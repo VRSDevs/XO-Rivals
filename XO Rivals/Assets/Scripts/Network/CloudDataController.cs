@@ -9,6 +9,7 @@ using UnityEngine;
 /// <summary>
 /// Tipos de datos que se pueden solicitar
 ///     Login - Datos necesarios para el inicio de sesión
+///     Online - ¿Está conectado el usuario?
 ///     Lives - Vidas del usuario
 ///     Level - Nivel del usuario
 ///     LifeLost - Tiempo de las vidas perdidas
@@ -17,6 +18,7 @@ using UnityEngine;
 public enum DataType
 {
     Login,
+    Online,
     Lives,
     Level,
     LifeLost
@@ -38,6 +40,8 @@ public static class DataTypeExtension
         {
             case DataType.Login:
                 return "";
+            case DataType.Online:
+                return "Online";
             case DataType.Lives:
                 return "Lives";
             case DataType.Level:
