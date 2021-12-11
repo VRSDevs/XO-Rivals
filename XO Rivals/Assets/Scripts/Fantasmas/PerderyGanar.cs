@@ -123,7 +123,7 @@ public class PerderyGanar : MonoBehaviour
         {
             textoSegundos.gameObject.SetActive(true);
             crono.SetActive(true);
-            seconds = 30;
+            seconds = 40;
             textoCuentaAtras.text = "";
             textoSegundos.text = "" + seconds;
 
