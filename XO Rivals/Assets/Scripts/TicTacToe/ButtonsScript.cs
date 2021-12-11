@@ -466,15 +466,6 @@ public class ButtonsScript : MonoBehaviour
             
         }
 
-
-
-
-
-
-
-
-
-
         /*
 
         //Fill array with true every loop

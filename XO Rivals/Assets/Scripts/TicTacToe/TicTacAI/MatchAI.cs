@@ -1,12 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
-using Photon.Pun;
 using UnityEngine;
 
-public class Match
+public class MatchAI : MonoBehaviour
 {
     #region Vars
-
     
     /// <summary>
     /// ID de la partida
@@ -69,15 +66,12 @@ public class Match
 
     #region Constructors
 
-    /// <summary>
-    /// Constructor vacío.
-    /// </summary>
-    public Match()
+    private void Awake()
     {
-        MatchId = PhotonNetwork.CurrentRoom.Name;
+        MatchId = "Training";
         //OwnerId = "";
         PlayerOName = "";
-        PlayerXName = "";
+        PlayerXName = "AI";
         WhosTurn = "";
         TurnMoment = 0;
         MiniGameChosen = Random.Range(0,5);
@@ -97,48 +91,6 @@ public class Match
 
         _ended = false;
         _youSurrended = false;
-    }
-    
-    #endregion
-
-    #region Getters
-
-    /// <summary>
-    /// Método para obtener si la partida ha finalizado o no
-    /// </summary>
-    /// <returns></returns>
-    public bool IsEnded()
-    {
-        return _ended;
-    }
-
-    /// <summary>
-    /// Método para obtener si el jugador local se rindió o no
-    /// </summary>
-    /// <returns></returns>
-    public bool SurrenderStatus()
-    {
-        return _youSurrended;
-    }
-
-    #endregion
-
-    #region Setters
-
-    /// <summary>
-    /// Método para establecer el valor de si la partida ha terminado o no
-    /// </summary>
-    public void SetIsEnded()
-    {
-        _ended = !_ended;
-    }
-
-    /// <summary>
-    /// Método para establecer el valor de si el jugador local se ha rendido o no
-    /// </summary>
-    public void SetSurrenderStatus()
-    {
-        _youSurrended = !_youSurrended;
     }
     
     #endregion
