@@ -120,6 +120,7 @@ public class CarnivalController : MonoBehaviour
     // Pulsar botón
     public void PressedButon()
     {
+        glassAnim.SetTrigger("pressed");
         speed = 0;
         CheckVictory();
     }
