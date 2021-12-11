@@ -95,9 +95,14 @@ public class MovePlayer : MonoBehaviour
         transform.rotation = quatR;
     }
 
-    public void Stop()
+    public void StopHor()
     {
         horizontal = 0;
+        
+    }
+
+    public void StopVer()
+    {
         vertical = 0;
     }
     public void MoveDown()
