@@ -17,6 +17,9 @@ public class ButtonsScript : MonoBehaviour
     public GameObject circleGO;
     public GameObject crossGO;
 
+    [SerializeField] private GameObject circleTurnRival;
+    [SerializeField] private GameObject crossTurnRival;
+
     [SerializeField] private GameObject circleTurn;
     [SerializeField] private GameObject crossTurn;
 
@@ -202,13 +205,23 @@ public class ButtonsScript : MonoBehaviour
             if (thisMatch.TurnMoment == 0)
             {
                 screenManager.EnableButtons();
-                
+                circleTurnRival.SetActive(false);
+                crossTurnRival.SetActive(false);
             }
       
         }else{
             //Disable interaction with tictac cause its not your turn
             screenManager.DisableButtons();
-        
+            if (thisMatch.WhosTurn == thisMatch.PlayerOName)
+            {
+                circleTurnRival.SetActive(true);
+                crossTurnRival.SetActive(false);
+            }
+            else
+            {
+                circleTurnRival.SetActive(false);
+                crossTurnRival.SetActive(true);
+            }
 
         }
     }
