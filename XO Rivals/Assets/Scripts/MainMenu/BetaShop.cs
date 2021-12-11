@@ -34,43 +34,38 @@ public class BetaShop : MonoBehaviour
                 case 1:
                     shopText.text = "You bought " + offer + " lives";
                     FindObjectOfType<GameManager>().PurchaseItem(ShopItem.Life1);
-                    _localPlayer.Lives++;
-                    UpdateLives();
+                    
+                    UpdateLives(offer);
                     break;
                 case 3:
                     shopText.text = "You bought " + offer + " lives";
                     FindObjectOfType<GameManager>().PurchaseItem(ShopItem.Lives3);
                     
-                    _localPlayer.Lives += 3;
-                    UpdateLives();
+                    UpdateLives(offer);
                     break;
                 case 5:
                     shopText.text = "You bought " + offer + " lives";
                     FindObjectOfType<GameManager>().PurchaseItem(ShopItem.Lives5);
                     
-                    _localPlayer.Lives += 5;
-                    UpdateLives();
+                    UpdateLives(offer);
                     break;
                 case 10:
                     shopText.text = "You bought " + offer + " lives";
                     FindObjectOfType<GameManager>().PurchaseItem(ShopItem.Lives10);
                     
-                    _localPlayer.Lives += 10;
-                    UpdateLives();
+                    UpdateLives(offer);
                     break;
                 case 30:
                     shopText.text = "You bought " + offer + " lives";
                     FindObjectOfType<GameManager>().PurchaseItem(ShopItem.Lives30);
                     
-                    _localPlayer.Lives += 30;
-                    UpdateLives();
+                    UpdateLives(offer);
                     break;
                 case 999:
                     shopText.text = "You bought infinite lives";
                     FindObjectOfType<GameManager>().PurchaseItem(ShopItem.LivesInf);
                     
-                    _localPlayer.Lives = 999;
-                    UpdateLives();
+                    UpdateLives(offer);
                     break;
             }
         }else{
@@ -92,8 +87,14 @@ public class BetaShop : MonoBehaviour
 
     #endregion
 
-    
-    private void UpdateLives(){
+    /// <summary>
+    /// Método para actualizar las vidas del jugador
+    /// </summary>
+    /// <param name="amount">Cantidad de vidas compradas</param>
+    private void UpdateLives(int amount)
+    {
+        
+        _localPlayer.Lives = (_localPlayer.Lives + amount) > 999 ? 999 : _localPlayer.Lives + amount;
         
         _mainController.LivesTxt.text = "Lives: " + _localPlayer.Lives;
         _mainController.LivesTxtShop.text = "Lives: " + _localPlayer.Lives;
