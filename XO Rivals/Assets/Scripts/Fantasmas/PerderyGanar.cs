@@ -164,7 +164,7 @@ public class PerderyGanar : MonoBehaviour
     public void acercarCam()
     {
        //MOVER HACIA JUGADOR
-        float step = 20f * Time.deltaTime;
+        float step = 30f * Time.deltaTime;
         mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, new Vector3(this.transform.position.x, mainCamera.transform.position.y, this.transform.position.z), step);
 
 
