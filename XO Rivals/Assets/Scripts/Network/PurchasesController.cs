@@ -180,6 +180,9 @@ public class PurchasesController : MonoBehaviour
             
         }, error => {
             Debug.Log("Error " + error.Error + ": " + error.ErrorMessage);
+            
+            UpdatePurchaseStatus();
+            UpdatePurchaseStatus();
         });
     }
 
