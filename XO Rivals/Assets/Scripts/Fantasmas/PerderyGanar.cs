@@ -55,7 +55,7 @@ public class PerderyGanar : MonoBehaviour
                 if(!gameEnded)
                 {
                     gameEnded = true;
-                    Invoke("DefeatCanvas", 0.2f);
+                    Invoke("DefeatCanvas", 0.1f);
                 }
                 
             }
