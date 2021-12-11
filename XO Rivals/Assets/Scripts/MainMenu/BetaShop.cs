@@ -39,26 +39,36 @@ public class BetaShop : MonoBehaviour
                     break;
                 case 3:
                     shopText.text = "You bought " + offer + " lives";
+                    FindObjectOfType<GameManager>().PurchaseItem(ShopItem.Lives3);
+                    
                     _localPlayer.Lives += 3;
+                    UpdateLives();
+                    break;
+                case 5:
+                    shopText.text = "You bought " + offer + " lives";
+                    FindObjectOfType<GameManager>().PurchaseItem(ShopItem.Lives5);
+                    
+                    _localPlayer.Lives += 5;
                     UpdateLives();
                     break;
                 case 10:
                     shopText.text = "You bought " + offer + " lives";
+                    FindObjectOfType<GameManager>().PurchaseItem(ShopItem.Lives10);
+                    
                     _localPlayer.Lives += 10;
                     UpdateLives();
                     break;
-                case 20:
+                case 30:
                     shopText.text = "You bought " + offer + " lives";
-                    _localPlayer.Lives += 20;
-                    UpdateLives();
-                    break;
-                case 25:
-                    shopText.text = "You bought " + offer + " lives";
-                    _localPlayer.Lives += 25;
+                    FindObjectOfType<GameManager>().PurchaseItem(ShopItem.Lives30);
+                    
+                    _localPlayer.Lives += 30;
                     UpdateLives();
                     break;
                 case 999:
                     shopText.text = "You bought infinite lives";
+                    FindObjectOfType<GameManager>().PurchaseItem(ShopItem.LivesInf);
+                    
                     _localPlayer.Lives = 999;
                     UpdateLives();
                     break;
@@ -85,11 +95,9 @@ public class BetaShop : MonoBehaviour
     
     private void UpdateLives(){
         
-        /*
-
         _mainController.LivesTxt.text = "Lives: " + _localPlayer.Lives;
         _mainController.LivesTxtShop.text = "Lives: " + _localPlayer.Lives;
-
+/*
         //Upload lifes to server
         PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
                 Data = new Dictionary<string, string>() {
