@@ -89,6 +89,15 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Método para obtener si se está creando una partida
+    /// </summary>
+    /// <returns>¿Se está creando la partida?</returns>
+    public bool GetCheckedOnline()
+    {
+        return _cloudController.IsOnlineChecked();
+    }
+
+    /// <summary>
     /// Método para obtener el estado de sincronización
     /// </summary>
     /// <returns>Estado de sincronización</returns>
