@@ -70,6 +70,39 @@ public static class ShopItemExtension
 
 public class PurchasesController : MonoBehaviour
 {
+    #region Vars
+
+    /// <summary>
+    /// ¿Se realizó la compra?
+    /// </summary>
+    private bool _purchaseCompleted = false;
+
+    #endregion
+
+    #region Getters
+
+    /// <summary>
+    /// Método para devolver el valor de _purchaseCompleted
+    /// </summary>
+    /// <returns>Valor de _purchaseCompleted</returns>
+    public bool HasPurchased()
+    {
+        return _purchaseCompleted;
+    }
+
+    #endregion
+
+    #region Setters
+
+    /// <summary>
+    /// Método para actualizar el valor
+    /// </summary>
+    public void UpdatePurchaseStatus()
+    {
+        _purchaseCompleted = !_purchaseCompleted;
+    }
+
+    #endregion
 
     #region UnityCB
 
