@@ -292,7 +292,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1515909414}
           m_TargetAssemblyTypeName: MovePlayer, Assembly-CSharp
-          m_MethodName: Stop
+          m_MethodName: StopHor
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4618,7 +4618,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1515909414}
           m_TargetAssemblyTypeName: MovePlayer, Assembly-CSharp
-          m_MethodName: Stop
+          m_MethodName: StopHor
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -20367,7 +20367,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1515909414}
           m_TargetAssemblyTypeName: MovePlayer, Assembly-CSharp
-          m_MethodName: Stop
+          m_MethodName: StopVer
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -28999,7 +28999,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1515909414}
           m_TargetAssemblyTypeName: MovePlayer, Assembly-CSharp
-          m_MethodName: Stop
+          m_MethodName: StopVer
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
