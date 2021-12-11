@@ -188,7 +188,6 @@ public class Login : MonoBehaviour
             }
 
             _isConnecting = false;
-
             Authenticator = new PlayFabAuthenticator();
 
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
@@ -232,7 +231,9 @@ public class Login : MonoBehaviour
         switch (int.Parse(data["ResultCode"]))
         {
             case 1:
-                        
+
+                data[DataType.Online.GetString()] = "true";
+                _playerInfo.Online = bool.Parse(data[DataType.Online.GetString()]);
                 _playerInfo.Lives = int.Parse(data[DataType.Lives.GetString()]);
                 _playerInfo.Level = float.Parse(data[DataType.Level.GetString()]);
                 _playerInfo.LostLifeTime = DateTime.ParseExact(data[DataType.LifeLost.GetString()],
@@ -243,11 +244,13 @@ public class Login : MonoBehaviour
                 break;
             case 2:
 
+                _playerInfo.Online = true;
                 _playerInfo.Lives = 3;
                 _playerInfo.Level = 0.0f;
 
                 _gameManager.UpdateCloudData(new Dictionary<string, string>()
                 {
+                    {DataType.Online.GetString(), _playerInfo.Online.ToString()},
                     {DataType.Lives.GetString(), _playerInfo.Lives.ToString()},
                     {DataType.Level.GetString(), _playerInfo.Level.ToString(CultureInfo.InvariantCulture)}
                 });
