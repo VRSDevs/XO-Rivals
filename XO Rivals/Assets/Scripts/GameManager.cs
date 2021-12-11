@@ -89,6 +89,15 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Método para obtener el autentificador de usuario conectado
+    /// </summary>
+    /// <returns>Objeto de autentificación de usuario conectado</returns>
+    public AuthObject GetOnlineAuth()
+    {
+        return _cloudController.Obj;
+    }
+
+    /// <summary>
     /// Método para obtener si se está creando una partida
     /// </summary>
     /// <returns>¿Se está creando la partida?</returns>
