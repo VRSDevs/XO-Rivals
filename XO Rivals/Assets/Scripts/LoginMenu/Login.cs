@@ -155,7 +155,6 @@ public class Login : MonoBehaviour
                     ErrorCode = Authenticator.Obj.ErrorCode
                 };
             }
-            
             Authenticator.Reset();
 
             Log.text = "Connecting to server...";

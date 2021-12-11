@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 public class PlayerInfo : MonoBehaviour {
         
-    #region Variables
+    #region Vars
 
     /// <summary>
     /// Id de usuario
@@ -14,6 +14,10 @@ public class PlayerInfo : MonoBehaviour {
     /// Nombre de usuario
     /// </summary>
     public string Name = "";
+    /// <summary>
+    /// ¿Está en línea el jugador?
+    /// </summary>
+    public bool Online = false;
     /// <summary>
     /// ID del jugador en partida
     /// </summary>
