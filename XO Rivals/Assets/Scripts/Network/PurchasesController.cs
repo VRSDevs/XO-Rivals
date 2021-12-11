@@ -127,7 +127,7 @@ public class PurchasesController : MonoBehaviour
             Currency = "RM"
         }, result => {
             Debug.Log("Compra procesada");
-            
+            FilterCheckout(item);
             ConfirmPurchase(order);
 
         }, error => {
