@@ -129,12 +129,7 @@ public class ButtonsScript : MonoBehaviour
     }
 
     public void Start(){
-        
-
-
-
-
-
+    
         startGame();
         updateIconTurn(false);
         colocarFichas();
@@ -142,12 +137,9 @@ public class ButtonsScript : MonoBehaviour
         nameO.text = thisMatch.PlayerOName;
         nameX.text = thisMatch.PlayerXName;
 
-
-
         //SI VIENES DE UN MINIJUEGO SE HACE START Y SE ELIGE MINIJUEGO
         if (thisMatch.TurnMoment == 2)
         {
-            Debug.Log("AAAAAAAA");
 
             miniWin = (PlayerPrefs.GetInt("minigameWin") == 1);
             Debug.Log(miniWin);
@@ -201,6 +193,8 @@ public class ButtonsScript : MonoBehaviour
         //If its your turn, play, if its not, only can see
         if(thisMatch.WhosTurn == localPlayer.Name){
 
+            crossTurnRival.SetActive(false);
+            circleTurnRival.SetActive(false);
             //Depending of turn moment, player will encounter a "different scene"
             if (thisMatch.TurnMoment == 0)
             {
@@ -212,7 +206,7 @@ public class ButtonsScript : MonoBehaviour
         }else{
             //Disable interaction with tictac cause its not your turn
             screenManager.DisableButtons();
-            if (thisMatch.WhosTurn == thisMatch.PlayerOName)
+            /*if (thisMatch.WhosTurn == thisMatch.PlayerOName)
             {
                 circleTurnRival.SetActive(true);
                 crossTurnRival.SetActive(false);
@@ -221,7 +215,14 @@ public class ButtonsScript : MonoBehaviour
             {
                 circleTurnRival.SetActive(false);
                 crossTurnRival.SetActive(true);
+            }*/
+
+            if(localPlayer.Name == thisMatch.PlayerOName){
+                crossTurnRival.SetActive(true);
+            }else{
+                circleTurnRival.SetActive(true);
             }
+
 
         }
     }
