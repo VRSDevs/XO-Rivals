@@ -58,6 +58,9 @@ public class CloudDataController : MonoBehaviour
 {
     #region Vars
 
+    /// <summary>
+    /// ¿Se comprobó si está en línea?
+    /// </summary>
     private bool _checkedOnline = false;
     /// <summary>
     /// ¿Se sincronizaron los datos?
@@ -65,10 +68,14 @@ public class CloudDataController : MonoBehaviour
     private bool _synchronized = false;
 
     /// <summary>
+    /// Objeto de autentificación
+    /// </summary>
+    public AuthObject Obj;
+
+    /// <summary>
     /// Diccionario de datos de la nube
     /// </summary>
     private Dictionary<string, string> _cloudData;
-
     /// <summary>
     /// Diccionario con el estado de envío de datos
     /// </summary>
