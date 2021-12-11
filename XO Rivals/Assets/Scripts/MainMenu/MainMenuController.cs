@@ -74,7 +74,11 @@ public class MainMenuController : MonoBehaviour
     {
         _gameManager = FindObjectOfType<GameManager>();
         _localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
+        
+        FindObjectOfType<AudioManager>().StopAllSongs();
 
+        FindObjectOfType<AudioManager>().Play("Main_menu");
+        
         //JoinGameButton.interactable = false;
 
         NameTxt.text = _localPlayer.Name;
