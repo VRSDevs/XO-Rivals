@@ -85,26 +85,15 @@ public class BetaShop : MonoBehaviour
     /// <param name="amount">Cantidad de vidas compradas</param>
     private IEnumerator UpdateLives(int amount)
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(50000000);
         
         _localPlayer.Lives = (_localPlayer.Lives + amount) > 999 ? 999 : _localPlayer.Lives + amount;
-        
         _mainController.LivesTxt.text = "Lives: " + _localPlayer.Lives;
         _mainController.LivesTxtShop.text = "Lives: " + _localPlayer.Lives;
-/*
-        //Upload lifes to server
-        PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                Data = new Dictionary<string, string>() {
-                    {"Lifes", _localPlayer.Lives.ToString()}}
-            },
-            result => Debug.Log("Successfully bought user lifes"),
-            error => {
-                Debug.Log("Got error buying user lifes");
-            }
-        );
         
-        if(_localPlayer.Lives >= 3)
-            _mainController.LivesTime.text = "MAX";
-            */
+        FindObjectOfType<GameManager>().UpdateCloudData(new Dictionary<string, string>()
+        {
+            {DataType.Lives.GetString(), _localPlayer.Lives.ToString()}
+        });
     }
 }
