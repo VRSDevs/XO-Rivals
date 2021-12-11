@@ -21,6 +21,8 @@ public class MinigameFantasmasController : MonoBehaviour
     //Musica
     public AudioClip MusicaBosque;
 
+    public List<GameObject> enemigos;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +39,14 @@ public class MinigameFantasmasController : MonoBehaviour
         
         FindObjectOfType<AudioManager>().StopAllSongs();
         FindObjectOfType<AudioManager>().ChangeMusic(MusicaBosque,"Tic-Tac-Toe");
+
+
+        //Los enemigos comienzan desactivados
+        foreach (GameObject enem in enemigos)
+        {
+            enem.SetActive(false);
+        }
+
     }
 
     // Update is called once per frame
