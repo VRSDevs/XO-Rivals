@@ -260,6 +260,14 @@ public class GameManager : MonoBehaviour
     {
         return _purchasesController.HasPurchased();
     }
+
+    /// <summary>
+    /// Método para actualizar el estado de compra
+    /// </summary>
+    public void UpdatePurchaseStatus()
+    {
+        _purchasesController.UpdatePurchaseStatus();
+    }
     
     /// <summary>
     /// Método para realizar la compra de un item de la tienda

@@ -160,8 +160,6 @@ public class NetworkCommunications : MonoBehaviourPun
     [PunRPC]
     public void RPCEndMatch(object[] obj)
     {
-
-
         switch (obj[0] as string)
         {
             case "WN":

@@ -96,5 +96,7 @@ public class BetaShop : MonoBehaviour
         {
             {DataType.Lives.GetString(), _localPlayer.Lives.ToString()}
         });
+        
+        FindObjectOfType<GameManager>().UpdatePurchaseStatus();
     }
 }
