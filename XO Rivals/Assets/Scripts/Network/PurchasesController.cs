@@ -124,9 +124,26 @@ public class PurchasesController : MonoBehaviour
         PlayFabClientAPI.PayForPurchase(new PayForPurchaseRequest() {
             OrderId = order,
             ProviderName = "PayPal",
-            Currency = "CN"
+            Currency = "RM"
         }, result => {
             Debug.Log("Compra procesada");
+            ConfirmPurchase(order);
+
+        }, error => {
+            Debug.Log("Error " + error.Error + ": " + error.ErrorMessage);
+        });
+    }
+
+    /// <summary>
+    /// Método de confirmación de compra
+    /// </summary>
+    private void ConfirmPurchase(string order)
+    {
+        PlayFabClientAPI.ConfirmPurchase(new ConfirmPurchaseRequest() {
+            OrderId = order
+        }, result => {
+            Debug.Log("Compra realizada. Gracias!");
+            
         }, error => {
             Debug.Log("Error " + error.Error + ": " + error.ErrorMessage);
         });
