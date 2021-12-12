@@ -278,7 +278,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
             {DataType.Lives.GetString(), FindObjectOfType<PlayerInfo>().Lives.ToString()},
             {DataType.Level.GetString(), FindObjectOfType<PlayerInfo>().Level.ToString(CultureInfo.InvariantCulture)},
             {DataType.LifeLost.GetString(), FindObjectOfType<PlayerInfo>().LostLifeTime.ToString(CultureInfo.InvariantCulture)}
-        });
+        },
+            DataType.Logout);
 
         // Destrucción de GameObjects
         DestroyImmediate(FindObjectOfType<GameManager>());
