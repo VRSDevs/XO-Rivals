@@ -212,7 +212,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(roomName, new Photon.Realtime.RoomOptions()
         {
             MaxPlayers = MAX_PLAYERS_INROOM,
-            EmptyRoomTtl = -1,
             PlayerTtl = -1
         });
     }
@@ -283,10 +282,12 @@ public class NetworkController : MonoBehaviourPunCallbacks
         },
             DataType.Logout);
 
+        if (SceneManager.GetActiveScene().name == "Login") return;
+        
         // Destrucción de GameObjects
         Destroy(GameObject.Find("PlayerObject"));
         FindObjectOfType<GameManager>().ResetObject();
-
+            
         SceneManager.LoadScene("Login");
     }
 
