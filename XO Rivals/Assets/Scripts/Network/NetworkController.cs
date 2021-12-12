@@ -171,6 +171,16 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
+    /// Método de unión a partida privada
+    /// </summary>
+    /// <param name="code">Código de la sala</param>
+    public void ConnectToPrivateRoom(string code)
+    {
+        _joinType = JoinType.PrivateRoom;
+        PhotonNetwork.JoinRoom(code);
+    }
+
+    /// <summary>
     /// Corutina para tratar de unirse a una sala
     /// </summary>
     /// <returns></returns>
@@ -454,6 +464,12 @@ public class NetworkController : MonoBehaviourPunCallbacks
         {
             // Caso 32758 - No existe ninguna partida con ese ID
             case 32758:
+                if (_joinType == JoinType.PrivateRoom)
+                {
+                    GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No matches found.";
+                    return;
+                }
+                
                 StartCoroutine(RecreateMatchRoom(_nameRoom));
                 break;
             // Caso 32748 - No existe el usuario en la partida

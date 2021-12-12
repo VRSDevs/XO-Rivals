@@ -221,9 +221,9 @@ public class MainMenuController : MonoBehaviour
     }
 
     /// <summary>
-    /// Método para conectarse a una sala privada
+    /// Método para crear y conectarse a una sala privada
     /// </summary>
-    private void ConnectPrivateMatch()
+    private void CreateAndConnectPrivateMatch()
     {
         _gameManager.CreatePrivateRoom(_privateRoomCode);
     }
@@ -234,6 +234,14 @@ public class MainMenuController : MonoBehaviour
     private void ConnectToMatch()
     {
         _gameManager.OnConnectToSpecificRoom(_matchToJoin.MatchId);
+    }
+    
+    /// <summary>
+    /// Método para conectarse a una sala privada
+    /// </summary>
+    private void ConnectPrivateMatch()
+    {
+        _gameManager.ConnectToPrivateRoom(_inputCode);
     }
 
     /// <summary>
@@ -305,6 +313,18 @@ public class MainMenuController : MonoBehaviour
         PrivateMatchButton.interactable = false;
         
         ConnectToMatch();
+    }
+
+    /// <summary>
+    /// Método de evento ejecutado al pulsar el botón de unirse a partida privada
+    /// </summary>
+    private void OnJoinPrivateMatchClick()
+    {
+        _inputCode = InputPrivateMatchCode.text;
+        
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joining " + _inputCode + "...";
+        
+        ConnectPrivateMatch();
     }
 
     /// <summary>
@@ -418,7 +438,7 @@ public class MainMenuController : MonoBehaviour
         }
         else
         {
-            ConnectPrivateMatch();
+            CreateAndConnectPrivateMatch();
         }
     }
     

@@ -234,6 +234,15 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Método para conectarse a una sala privada
+    /// </summary>
+    /// <param name="code">Código de la sala</param>
+    public void ConnectToPrivateRoom(string code)
+    {
+        _networkController.ConnectToPrivateRoom(code);
+    }
+
+    /// <summary>
     /// Método para abandonar una sala en Photon
     /// </summary>
     public void OnLeaveRoom()
