@@ -32,7 +32,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public GameObject PlayMenuObject;
     
     [SerializeField] public Button PublicMatchButton;
-    [SerializeField] public Button JoinGameButton;
+    [SerializeField] public Button PrivateMatchButton;
     [SerializeField] public Button BackButton;
 
     [SerializeField] public Sprite CreateMatchSprite;
@@ -239,7 +239,7 @@ public class MainMenuController : MonoBehaviour
         PublicMatchButton.onClick.RemoveAllListeners();
 
         PublicMatchButton.interactable = false;
-        JoinGameButton.interactable = false;
+        PrivateMatchButton.interactable = false;
         ChangeMatchListInteractions(false);
         BackButton.interactable = false;
 
@@ -265,7 +265,7 @@ public class MainMenuController : MonoBehaviour
         StartCoroutine(ChangeInteractionAfterJm());
         
         PublicMatchButton.interactable = false;
-        JoinGameButton.interactable = false;
+        PrivateMatchButton.interactable = false;
         
         ConnectToMatch();
     }
@@ -337,7 +337,7 @@ public class MainMenuController : MonoBehaviour
                         " You don´t have enough lives.";
                     
                     PublicMatchButton.interactable = true;
-                    JoinGameButton.interactable = true;
+                    PrivateMatchButton.interactable = true;
                     ChangeMatchListInteractions(true);
                     BackButton.interactable = true;
                     
@@ -356,7 +356,7 @@ public class MainMenuController : MonoBehaviour
                 ChangePublicMatchSprite(mode);
                 
                 PublicMatchButton.interactable = true;
-                JoinGameButton.interactable = true;
+                PrivateMatchButton.interactable = true;
                 ChangeMatchListInteractions(true);
                 BackButton.interactable = true;
                 

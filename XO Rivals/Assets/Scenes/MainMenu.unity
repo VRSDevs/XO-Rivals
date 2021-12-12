@@ -10024,7 +10024,7 @@ MonoBehaviour:
   MainMenuObject: {fileID: 1170877623}
   PlayMenuObject: {fileID: 2061418249}
   PublicMatchButton: {fileID: 1899014464}
-  JoinGameButton: {fileID: 1945171675}
+  PrivateMatchButton: {fileID: 1945171675}
   BackButton: {fileID: 657236873}
   CreateMatchSprite: {fileID: 21300000, guid: 4410fa14671e5074ea055b03ade0e55f, type: 3}
   CancelMatchmakingSprite: {fileID: 21300000, guid: 16fa84d7dadece1418ae26d682cb4212, type: 3}
