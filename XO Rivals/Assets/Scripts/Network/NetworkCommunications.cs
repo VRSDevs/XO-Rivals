@@ -16,8 +16,7 @@ public class NetworkCommunications : MonoBehaviourPun
 
     private void Start()
     {
-        _View = gameObject.AddComponent<PhotonView>();
-        _View.ViewID = 1;
+        _View = PhotonView.Get(this);
     }
 
     #endregion
