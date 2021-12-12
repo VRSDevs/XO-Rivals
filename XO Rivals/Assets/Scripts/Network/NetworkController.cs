@@ -95,8 +95,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
     
     #region UnityCB
 
-    void Awake()
+    void Start()
     {
+        InitObject();
     }
 
     // Update is called once per frame
@@ -497,6 +498,20 @@ public class NetworkController : MonoBehaviourPunCallbacks
     #endregion
 
     #region OtherMethods
+
+    /// <summary>
+    /// Método para inicializar las variables del objeto
+    /// </summary>
+    private void InitObject()
+    {
+        _connected = false;
+        
+        roomCodes = new List<string>();
+
+        _isReady = false;
+        _creatingRoom = false;
+        _nameRoom = "";
+    }
     
     /// <summary>
     /// Método para generar una clave de sala
