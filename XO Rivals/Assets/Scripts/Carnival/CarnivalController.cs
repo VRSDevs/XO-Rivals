@@ -54,6 +54,9 @@ public class CarnivalController : MonoBehaviour
     public Match thisMatch;
 
     public PlayerInfo localPlayer;
+    
+    public AudioClip feriaMusic;
+
 
     private void Awake()
     {
@@ -78,6 +81,8 @@ public class CarnivalController : MonoBehaviour
         {
             playerO.SetActive(false);
         }
+        FindObjectOfType<AudioManager>().StopAllSongs();
+        FindObjectOfType<AudioManager>().ChangeMusic(feriaMusic,"Tic-Tac-Toe");
     }
 
     private void FixedUpdate()

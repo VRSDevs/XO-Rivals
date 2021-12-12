@@ -1650,7 +1650,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 779e873e17459f1438d8c6db68888a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameManager: {fileID: 60405592}
   Authenticator: {fileID: 64042871}
   UsernameInput: {fileID: 159621185}
   PasswordInput: {fileID: 133569156}
@@ -3100,6 +3099,13 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: e2ce841c4f41b4e4b822011e40e2a8ab, type: 3}
     source: {fileID: 0}
     name: Main_Menu
+    type: 0
+    volume: 1
+    pitch: 1
+    loop: 1
+  - clip: {fileID: 8300000, guid: 3f5f447f3ea9c1f47b4de1a54e10d8c4, type: 3}
+    source: {fileID: 0}
+    name: feria
     type: 0
     volume: 1
     pitch: 1
