@@ -86,23 +86,21 @@ public class MovePlayer : MonoBehaviour
 
     public void MoveLeft()
     {
-        if (!botonPulsado)
-        {
+     
             botonPulsado = true;
             horizontal = -1;
             transform.rotation = quatL;
-        }
+        
        
     }
 
     public void MoveRight()
     {
-        if (!botonPulsado)
-        {
+       
             botonPulsado = true;
             horizontal = 1;
             transform.rotation = quatR;
-        }
+        
        
     }
 
@@ -126,22 +124,20 @@ public class MovePlayer : MonoBehaviour
     }
     public void MoveDown()
     {
-        if (!botonPulsado)
-        {
+        
             botonPulsado = true;
             vertical = -1;
             transform.rotation = quatB;
-        }
+        
        
     }
     public void MoveUp()
     {
-        if (!botonPulsado)
-        {
+        
             botonPulsado = true;
             vertical = 1;
             transform.rotation = quatT;
-        }
+        
         
     }
 
