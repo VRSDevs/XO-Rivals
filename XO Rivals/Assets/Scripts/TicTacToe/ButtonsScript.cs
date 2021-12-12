@@ -17,8 +17,8 @@ public class ButtonsScript : MonoBehaviour
     public GameObject circleGO;
     public GameObject crossGO;
 
-    [SerializeField] private GameObject circleTurnRival;
-    [SerializeField] private GameObject crossTurnRival;
+    public GameObject circleTurnRival;
+    public GameObject crossTurnRival;
 
     [SerializeField] private GameObject circleTurn;
     [SerializeField] private GameObject crossTurn;
@@ -190,11 +190,11 @@ public class ButtonsScript : MonoBehaviour
     /// </summary>
     public void startGame()
     {
+        crossTurnRival.SetActive(false);
+        circleTurnRival.SetActive(false);
         //If its your turn, play, if its not, only can see
         if(thisMatch.WhosTurn == localPlayer.Name){
 
-            crossTurnRival.SetActive(false);
-            circleTurnRival.SetActive(false);
             //Depending of turn moment, player will encounter a "different scene"
             if (thisMatch.TurnMoment == 0)
             {
@@ -216,14 +216,6 @@ public class ButtonsScript : MonoBehaviour
                 circleTurnRival.SetActive(false);
                 crossTurnRival.SetActive(true);
             }*/
-
-            if(localPlayer.Name == thisMatch.PlayerOName){
-                crossTurnRival.SetActive(true);
-            }else{
-                circleTurnRival.SetActive(true);
-            }
-
-
         }
     }
 

@@ -169,7 +169,7 @@ public class PerderyGanar : MonoBehaviour
 
 
         //ACERCAR VISION
-        if (mainCamera.orthographicSize > 13.5)
+        if (mainCamera.orthographicSize > 15.5)
         {
             mainCamera.orthographicSize -= 0.1f;
         }

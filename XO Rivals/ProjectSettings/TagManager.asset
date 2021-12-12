@@ -41,9 +41,9 @@ TagManager:
   - CameraCollider
   - Puerta
   - Fantasma
-  - 
-  - 
-  - 
+  - Vision
+  - Black
+  - NORENDER
   - 
   - 
   - 

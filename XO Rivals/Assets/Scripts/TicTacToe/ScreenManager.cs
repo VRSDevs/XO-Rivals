@@ -76,6 +76,12 @@ public class ScreenManager : MonoBehaviour
            
             buttonsScript.gameState._networkCommunications.SendMatchInfo("OppLost");
         }
+
+        if(buttonsScript.localPlayer.Name == buttonsScript.thisMatch.PlayerOName){
+            buttonsScript.crossTurnRival.SetActive(true);
+        }else{
+            buttonsScript.circleTurnRival.SetActive(true);
+        }
     }
     
     public IEnumerator txtTimer(string txt){
