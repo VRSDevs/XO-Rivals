@@ -64,10 +64,9 @@ public class GameManager : MonoBehaviour
             GetComponent<PhotonView>().ViewID = 1;
             _cloudController = gameObject.AddComponent<CloudDataController>();
             _purchasesController = gameObject.AddComponent<PurchasesController>();
-        
-
+            
             PlayerMatches = new Dictionary<string, Match>();
-            Matchmaking = false;
+            Matchmaking = true;
             IsPlaying = false;
 
             DontDestroyOnLoad(this);

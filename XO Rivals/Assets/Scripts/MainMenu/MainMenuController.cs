@@ -236,7 +236,6 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void OnCreateMatchClick()
     {
-        _gameManager.Matchmaking = !_gameManager.Matchmaking;
         CreateGameButton.onClick.RemoveAllListeners();
 
         CreateGameButton.interactable = false;
@@ -345,12 +344,15 @@ public class MainMenuController : MonoBehaviour
                 }
                 else
                 {
+                    _gameManager.Matchmaking = !_gameManager.Matchmaking;
                     ConnectRandomMatch();
                     CreateMatchImage.sprite = CancelMatchmakingSprite;
                 }
                 
                 break;
             case "cancel":
+                _gameManager.Matchmaking = !_gameManager.Matchmaking;
+                
                 LeaveMatchmaking();
                 CreateMatchImage.sprite = CreateMatchSprite;
                 
