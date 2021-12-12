@@ -355,6 +355,8 @@ public class MainMenuController : MonoBehaviour
                 LeaveMatchmaking();
                 ChangePublicMatchSprite(mode);
                 
+                CreateGameButton.interactable = true;
+                JoinGameButton.interactable = true;
                 ChangeMatchListInteractions(true);
                 BackButton.interactable = true;
                 
@@ -387,7 +389,7 @@ public class MainMenuController : MonoBehaviour
     /// <summary>
     /// Método para cambiar la interacción con las partidas de la lista de partidas del jugador
     /// </summary>
-    /// <param name="interactable"></param>
+    /// <param name="interactable">¿Es interaccionable?</param>
     private void ChangeMatchListInteractions(bool interactable)
     {
         if (_gameManager.PlayerMatches.Count == 0)
