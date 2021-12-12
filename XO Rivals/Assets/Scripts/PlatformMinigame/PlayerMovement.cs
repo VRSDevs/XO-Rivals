@@ -112,7 +112,6 @@ public class PlayerMovement : MonoBehaviour
         {
             player.velocity = new Vector2(player.velocity.x, jumpingPower);
             anim.SetBool("isJumping", true);
-            FindObjectOfType<AudioManager>().Play("Jump");
         }
 
         
