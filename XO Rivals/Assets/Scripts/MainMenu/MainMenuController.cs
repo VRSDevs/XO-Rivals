@@ -346,7 +346,6 @@ public class MainMenuController : MonoBehaviour
                 {
                     _gameManager.Matchmaking = !_gameManager.Matchmaking;
                     ConnectRandomMatch();
-                    CreateMatchImage.sprite = CancelMatchmakingSprite;
                 }
                 
                 break;
@@ -354,7 +353,7 @@ public class MainMenuController : MonoBehaviour
                 _gameManager.Matchmaking = !_gameManager.Matchmaking;
                 
                 LeaveMatchmaking();
-                CreateMatchImage.sprite = CreateMatchSprite;
+                ChangePublicMatchSprite(mode);
                 
                 ChangeMatchListInteractions(true);
                 BackButton.interactable = true;
@@ -387,6 +386,27 @@ public class MainMenuController : MonoBehaviour
             GameObject child = ViewContent.transform.GetChild(i).gameObject;
 
             child.GetComponent<Button>().interactable = interactable;
+        }
+    }
+
+    #endregion
+
+    #region ChangeSpritesMethods
+
+    /// <summary>
+    /// Método para cambiar el sprite del botón de Partida pública
+    /// </summary>
+    /// <param name="mode">Modo en el que se solicita el cambio</param>
+    public void ChangePublicMatchSprite(string mode)
+    {
+        switch (mode)
+        {
+            case "connect":
+                CreateMatchImage.sprite = CancelMatchmakingSprite;
+                break;
+            case "cancel":
+                CreateMatchImage.sprite = CreateMatchSprite;
+                break;
         }
     }
 

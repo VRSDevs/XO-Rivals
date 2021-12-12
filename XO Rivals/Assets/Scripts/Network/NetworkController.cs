@@ -404,6 +404,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         {
             // Caso 32760 - Ninguna sala disponible
             case 32760:
+                FindObjectOfType<MainMenuController>().ChangePublicMatchSprite("connect");
                 GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Couldn´t find any matches. Creating one...";
                 
                 StartCoroutine(CreateMatchRoom(GenerateRoomCode()));
