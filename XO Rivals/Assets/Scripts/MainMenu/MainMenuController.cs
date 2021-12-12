@@ -266,7 +266,10 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void OnCreatePrivateMatchClick()
     {
+        CreatePrivateMatchButton.interactable = false;
         
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Creating private game...";
+        StartCoroutine(CreatePrivateMatch());
     }
 
     /// <summary>
@@ -333,10 +336,11 @@ public class MainMenuController : MonoBehaviour
     #endregion
 
     #region ButtonInteractionsMethods
-
+    
     /// <summary>
-    /// Corutina ejecutada tras crear una partida o buscarla
+    /// Corutina ejecutada tras pulsar el botón de crear partida pública
     /// </summary>
+    /// <param name="mode"></param>
     /// <returns></returns>
     private IEnumerator CreateOrCancelPublicMatch(string mode)
     {
@@ -354,7 +358,6 @@ public class MainMenuController : MonoBehaviour
                     PrivateMatchButton.interactable = true;
                     ChangeMatchListInteractions(true);
                     BackButton.interactable = true;
-                    
                 }
                 else
                 {
@@ -375,6 +378,27 @@ public class MainMenuController : MonoBehaviour
                 BackButton.interactable = true;
                 
                 break;
+        }
+    }
+
+    /// <summary>
+    /// Corutina ejecutada tras pulsar el botón de crear partida privada
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator CreatePrivateMatch()
+    {
+        yield return new WaitForSeconds(2);
+        
+        if (_localPlayer.Lives < 1)
+        {
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "You can´t look for a match." +
+                " You don´t have enough lives.";
+                    
+            CreatePrivateMatchButton.interactable = false;
+        }
+        else
+        {
+            
         }
     }
     
