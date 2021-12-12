@@ -141,7 +141,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// </summary>
     public void ConnectToRandomRoom()
     {
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Searching games...";
         StartCoroutine(JoinRoom());
     }
 

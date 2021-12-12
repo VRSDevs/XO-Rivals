@@ -237,7 +237,6 @@ public class MainMenuController : MonoBehaviour
     public void OnCreateMatchClick()
     {
         _gameManager.Matchmaking = !_gameManager.Matchmaking;
-        
         CreateGameButton.onClick.RemoveAllListeners();
 
         CreateGameButton.interactable = false;
@@ -247,10 +246,12 @@ public class MainMenuController : MonoBehaviour
 
         if (_gameManager.Matchmaking)
         {
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Searching games...";
             StartCoroutine(CreateOrCancelPMatch("connect"));
         }
         else
         {
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Cancelling matchmaking...";
             StartCoroutine(CreateOrCancelPMatch("cancel"));
             LeaveMatchmaking();
             CreateMatchImage.sprite = CreateMatchSprite;
@@ -328,7 +329,6 @@ public class MainMenuController : MonoBehaviour
     /// <returns></returns>
     private IEnumerator CreateOrCancelPMatch(string mode)
     {
-        //yield return new WaitUntil(_gameManager.GetIsCreatingMatch);
         yield return new WaitForSeconds(2);
         
         switch (mode)
