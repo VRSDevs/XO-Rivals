@@ -248,8 +248,6 @@ public class MainMenuController : MonoBehaviour
         if (_gameManager.Matchmaking)
         {
             StartCoroutine(ChangeInteractionAfterCm("connect"));
-            ConnectRandomMatch();
-            CreateMatchImage.sprite = CancelMatchmakingSprite;
         }
         else
         {
@@ -330,17 +328,34 @@ public class MainMenuController : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ChangeInteractionAfterCm(string mode)
     {
-        yield return new WaitUntil(_gameManager.GetIsCreatingMatch);
-
-        CreateGameButton.interactable = true;
-
-        if (mode.Equals("cancel"))
-        {
-            ChangeMatchListInteractions(true);
-            BackButton.interactable = true;
-        }
+        //yield return new WaitUntil(_gameManager.GetIsCreatingMatch);
+        yield return new WaitForSeconds(2);
         
-        _gameManager.SetCreatingRoomStatus();
+        switch (mode)
+        {
+            case "connect":
+                if (_localPlayer.Lives < 0)
+                {
+                    GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "You can´t look for a match." +
+                        " You don´t have enough lives.";
+                    
+                    CreateGameButton.interactable = true;
+                    _gameManager.SetCreatingRoomStatus();
+                }
+                else
+                {
+                    ConnectRandomMatch();
+                    CreateMatchImage.sprite = CancelMatchmakingSprite;
+                }
+                
+                break;
+            case "cancel":
+                ChangeMatchListInteractions(true);
+                BackButton.interactable = true;
+                
+                _gameManager.SetCreatingRoomStatus();
+                break;
+        }
     }
     
     /// <summary>
