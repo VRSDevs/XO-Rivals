@@ -10,9 +10,9 @@ using Photon.Pun;
 
 /// <summary>
 /// Modo de inicio de sesión activo
-///     NONE - Ninguno
-///     REGISTER - Registrarse
-///     LOGIN - Iniciar sesión
+///     None - Ninguno
+///     Register - Registrarse
+///     Login - Iniciar sesión
 /// </summary>
 [Serializable]
 public enum LoginMode
@@ -30,7 +30,7 @@ public class Login : MonoBehaviour
     /// <summary>
     /// Referencia a la clase GameManager
     /// </summary>
-    [SerializeField] public GameManager _gameManager;
+    private GameManager _gameManager;
     /// <summary>
     /// Referencia a la clase de autentificación de inicio de sesión
     /// </summary>
@@ -91,6 +91,8 @@ public class Login : MonoBehaviour
 
     private void Start()
     {
+        _gameManager = FindObjectOfType<GameManager>();
+        
         // Generación objeto de PlayerInfo
         GameObject myPlayer = new GameObject();
         _playerInfo = myPlayer.AddComponent<PlayerInfo>();

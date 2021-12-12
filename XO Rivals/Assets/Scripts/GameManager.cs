@@ -444,7 +444,7 @@ public class GameManager : MonoBehaviour
     {
         _networkController.ResetObject();
         _cloudController.ResetObject();
-        _purchasesController = new PurchasesController();
+        _purchasesController.ResetObject();
 
         PlayerMatches.Clear();
         Matchmaking = false;
