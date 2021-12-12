@@ -440,7 +440,7 @@ public class GameManager : MonoBehaviour
         _purchasesController.ResetObject();
 
         PlayerMatches.Clear();
-        Matchmaking = false;
+        Matchmaking = true;
         IsPlaying = false;
     }
 
