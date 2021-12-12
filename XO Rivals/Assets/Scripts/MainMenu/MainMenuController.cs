@@ -198,6 +198,14 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Método para actualizar el texto del código de la partida privada
+    /// </summary>
+    public void UpdatePrivateRoomCode()
+    {
+        PrivateMatchCode.text = _privateRoomCode;
+    }
+
     #endregion
 
     #region MatchMethods
