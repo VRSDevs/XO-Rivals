@@ -176,7 +176,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1);
 
         _joinType = JoinType.SPECIFIC_ROOM;
-        PhotonNetwork.RejoinRoom(_nameRoom);
+        PhotonNetwork.JoinRoom(_nameRoom);
     }
 
     /// <summary>
@@ -190,7 +190,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded())
             {
                 FindObjectOfType<GameManager>().PlayerMatches.Remove(PhotonNetwork.CurrentRoom.Name);
-                PhotonNetwork.LeaveRoom(false);
+                PhotonNetwork.LeaveRoom(true);
             }
         }
         
@@ -398,8 +398,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnJoinRoomFailed(returnCode, message);
         
         Debug.Log("Error " + returnCode + ": " + message);
-        
-        StartCoroutine(CreateMatchRoom(_nameRoom));
+        //StartCoroutine(CreateMatchRoom(_nameRoom));
     }
 
     /// <summary>
