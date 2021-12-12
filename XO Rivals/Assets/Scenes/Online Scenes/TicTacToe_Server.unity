@@ -3242,6 +3242,8 @@ RectTransform:
   - {fileID: 445435586}
   - {fileID: 466364322}
   - {fileID: 424387434}
+  - {fileID: 1125983194}
+  - {fileID: 2137580222}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4085,7 +4087,7 @@ RectTransform:
   m_LocalScale: {x: 0.65, y: 0.65, z: 1}
   m_Children: []
   m_Father: {fileID: 1420576802}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5774,18 +5776,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1125983193}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalScale: {x: 0.013888889, y: 0.013888889, z: 0.013888889}
   m_Children:
   - {fileID: 1610981431}
   - {fileID: 812288083}
-  m_Father: {fileID: 1420576802}
-  m_RootOrder: 2
+  m_Father: {fileID: 761732804}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -640, y: -360}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1186476295
@@ -7279,8 +7281,6 @@ RectTransform:
   m_Children:
   - {fileID: 1288534601}
   - {fileID: 1862349899}
-  - {fileID: 1125983194}
-  - {fileID: 2137580222}
   - {fileID: 1502975253}
   - {fileID: 815351773}
   m_Father: {fileID: 8973622830577669330}
@@ -7471,7 +7471,7 @@ RectTransform:
   m_LocalScale: {x: 0.65, y: 0.65, z: 1}
   m_Children: []
   m_Father: {fileID: 1420576802}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10405,18 +10405,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2137580221}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalScale: {x: 0.013888889, y: 0.013888889, z: 0.013888889}
   m_Children:
   - {fileID: 1778754491}
   - {fileID: 178897780}
-  m_Father: {fileID: 1420576802}
-  m_RootOrder: 3
+  m_Father: {fileID: 761732804}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -640, y: -360}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &6299495709025673007
@@ -10429,11 +10429,20 @@ PrefabInstance:
     - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_text
       value: Move through the maze with the controls displayed on the screen and
-        avoid the field of vision of the ghosts for the indicated time.
+        looking for the exit. But be careful and avoid the field of vision of the
+        ghosts for the indicated time.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+      propertyPath: m_fontSize
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_margin.z
       value: -13.26062
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 6299495708482457880, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_IsActive
