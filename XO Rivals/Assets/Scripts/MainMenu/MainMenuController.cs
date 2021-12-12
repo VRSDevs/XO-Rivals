@@ -37,6 +37,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public Button PrivateMatchButton;
     [SerializeField] public TextMeshProUGUI PrivateMatchCode;
     [SerializeField] public Button CreatePrivateMatchButton;
+    [SerializeField] public TMP_InputField InputPrivateMatchCode;
     
     // BOTONES //
     [SerializeField] public Button BackButton;
@@ -71,6 +72,7 @@ public class MainMenuController : MonoBehaviour
     ////////////////// PARTIDA //////////////////
     private MatchInfo _matchToJoin;
     private string _privateRoomCode;
+    private string _inputCode;
     
     ////////////////// MÚSICA //////////////////
     public AudioClip MusicObject;
@@ -416,7 +418,7 @@ public class MainMenuController : MonoBehaviour
         }
         else
         {
-            
+            ConnectPrivateMatch();
         }
     }
     
