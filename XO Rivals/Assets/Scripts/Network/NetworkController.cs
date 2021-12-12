@@ -27,7 +27,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     #region Variables
     
     ////////////////// CONEXIÓN //////////////////
-    private bool _connected = false;
+    private bool _connected;
     
     ////////////////// SALAS //////////////////
     /// <summary>
@@ -41,20 +41,20 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <summary>
     /// Lista de códigos de salas
     /// </summary>
-    private List<string> roomCodes = new List<string>();
+    private List<string> roomCodes;
 
     /// <summary>
     /// ¿La partida está lista para comenzar?
     /// </summary>
-    private bool _isReady = false;
+    private bool _isReady;
     /// <summary>
     /// ¿Se está creando una partida?
     /// </summary>
-    private bool _creatingRoom = false;
+    private bool _creatingRoom;
     /// <summary>
     /// Nombre de la sala específica
     /// </summary>
-    private string _nameRoom = "";
+    private string _nameRoom;
     /// <summary>
     /// Tipo de unión a sala
     /// </summary>
