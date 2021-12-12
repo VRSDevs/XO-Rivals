@@ -18,6 +18,7 @@ using UnityEngine;
 public enum DataType
 {
     Login,
+    Logout,
     Online,
     Lives,
     Level,
@@ -38,8 +39,6 @@ public static class DataTypeExtension
     {
         switch (type)
         {
-            case DataType.Login:
-                return "";
             case DataType.Online:
                 return "Online";
             case DataType.Lives:
