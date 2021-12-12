@@ -221,11 +221,17 @@ public class CloudDataController : MonoBehaviour
                 if (result.Data.ContainsKey(DataType.Online.GetString()) && bool.Parse(result.Data[DataType.Online.GetString()].Value))
                 {
                     Debug.Log("Usuario ya conectado");
-                    throw new LoginFailedException("Account already online")
-                    {
-                        ErrorCode = PlayFabErrorCode.ConnectionError
-                    };
+                    
+                    Obj.Failed = true;
+                    Obj.ErrorCode = PlayFabErrorCode.ConnectionError;
+                    Obj.Message = "Account already online";
+                    
+                    UpdateOnlineChecked();
+
+                    return;
                 }
+                
+                UpdateOnlineChecked();
 
                 _cloudData.Add(DataType.Online.GetString(), !result.Data.ContainsKey(DataType.Online.GetString()) ? "false" : result.Data[DataType.Online.GetString()].Value);
                 _cloudData.Add(DataType.Lives.GetString(), !result.Data.ContainsKey(DataType.Lives.GetString()) ? "3" : result.Data[DataType.Lives.GetString()].Value);

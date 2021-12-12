@@ -166,7 +166,7 @@ public class Login : MonoBehaviour
             {
                 Log.text = "Oops! Something went wrong.";
                 _isConnecting = false;
-                Authenticator = new PlayFabAuthenticator();
+                Authenticator = gameObject.AddComponent<PlayFabAuthenticator>();
             }
         }
         catch (LoginFailedException e)
@@ -185,7 +185,7 @@ public class Login : MonoBehaviour
             }
 
             _isConnecting = false;
-            Authenticator = new PlayFabAuthenticator();
+            Authenticator = gameObject.AddComponent<PlayFabAuthenticator>();
 
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
         }
@@ -199,23 +199,42 @@ public class Login : MonoBehaviour
     {
         yield return new WaitUntil(_gameManager.GetConnected);
         
+        _gameManager.SetPhotonNick(_username);
+
+        GameObject myPlayer = new GameObject();
+
+        _playerInfo = myPlayer.AddComponent<PlayerInfo>();
+        DontDestroyOnLoad(myPlayer);
+        _playerInfo.name = "PlayerObject";
+        _playerInfo.ID = Authenticator.playFabPlayerIdCache;
+        _playerInfo.Name = _username;
+
+        _gameManager.GetCloudData(DataType.Login);
+        Log.text = "Getting data...";
+
+        StartCoroutine(OnOnlineChecked()); 
+    }
+
+    /// <summary>
+    /// Corutina ejecutada tras comprobar si el usuario está conectado
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator OnOnlineChecked()
+    {
+        yield return new WaitUntil(_gameManager.GetCheckedOnline);
+
         try
         {
-            _gameManager.SetPhotonNick(_username);
-
-            GameObject myPlayer = new GameObject();
-
-            _playerInfo = myPlayer.AddComponent<PlayerInfo>();
-            DontDestroyOnLoad(myPlayer);
-            _playerInfo.name = "PlayerObject";
-            _playerInfo.ID = Authenticator.playFabPlayerIdCache;
-            _playerInfo.Name = _username;
-
-            _gameManager.GetCloudData(DataType.Login);
-            Log.text = "Getting data...";
-
-            StartCoroutine(OnGetPlayerData());
-
+            if (_gameManager.GetOnlineAuth().Failed)
+            {
+                throw new LoginFailedException(_gameManager.GetOnlineAuth().Message)
+                {
+                    ErrorCode = _gameManager.GetOnlineAuth().ErrorCode
+                };
+                
+            }
+            
+            StartCoroutine(OnGetPlayerData()); 
         }
         catch (LoginFailedException e)
         {
@@ -225,15 +244,13 @@ public class Login : MonoBehaviour
                     Log.text = "This user is already connected.";
                     break;
             }
-            
-            StopCoroutine(OnGetPlayerData());
-            
+
             _gameManager.OnDisconnectToServer();
             _isConnecting = false;
-            Authenticator = new PlayFabAuthenticator();
 
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
         }
+        
     }
 
     /// <summary>
