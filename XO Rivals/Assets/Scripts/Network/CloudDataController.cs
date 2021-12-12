@@ -165,8 +165,9 @@ public class CloudDataController : MonoBehaviour
     /// Método para enviar datos
     /// </summary>
     /// <param name="data">Diccionario de datos a enviar</param>
+    /// /// <param name="type">Tipo de dato a enviar</param>
     /// <returns>Estado de la operación</returns>
-    public void SendData(Dictionary<string, string> data)
+    public void SendData(Dictionary<string, string> data, DataType type)
     {
         data.Remove("ResultCode");
         
@@ -175,7 +176,7 @@ public class CloudDataController : MonoBehaviour
             Data = data
         }, (result) =>
         {
-            OnDataSend();
+            OnDataSend(type);
         }, OnSendError);
     }
 
@@ -255,13 +256,23 @@ public class CloudDataController : MonoBehaviour
     /// <summary>
     /// Método ejecutado cuando se mandan los datos de manera correcta
     /// </summary>
+    /// <param name="type">Tipo de dato a obtener</param>
     /// <returns>Diccionario con el resultado del envío</returns>
-    private void OnDataSend()
+    private void OnDataSend(DataType type)
     {
         _sendDataStatus = new Dictionary<string, string>()
         {
             {"ResultCode", "1"}
         };
+
+        switch (type)
+        {
+            // Caso Logout -> Procedimiento tras enviar datos de cierre de sesión
+            case DataType.Logout:
+                PlayFabClientAPI.ForgetAllCredentials();
+                
+                break;
+        }
     }
 
     /// <summary>

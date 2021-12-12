@@ -279,9 +279,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
             {DataType.Level.GetString(), FindObjectOfType<PlayerInfo>().Level.ToString(CultureInfo.InvariantCulture)},
             {DataType.LifeLost.GetString(), FindObjectOfType<PlayerInfo>().LostLifeTime.ToString(CultureInfo.InvariantCulture)}
         });
-        
-        PlayFabClientAPI.ForgetAllCredentials();
-        
+
         // Destrucción de GameObjects
         DestroyImmediate(FindObjectOfType<GameManager>());
         DestroyImmediate(GameObject.Find("PlayerObject"));
