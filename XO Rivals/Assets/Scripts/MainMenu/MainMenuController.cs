@@ -127,7 +127,8 @@ public class MainMenuController : MonoBehaviour
             _gameManager.UpdateCloudData(new Dictionary<string, string>() {
                 {DataType.Lives.GetString(), _localPlayer.Lives.ToString()},
                 {DataType.LifeLost.GetString(), _localPlayer.LostLifeTime.ToString("dd/MM/yyyy HH:mm:ss")}
-            });
+            },
+                DataType.Lives);
             
             //Restart timer
             recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(30);
@@ -138,7 +139,8 @@ public class MainMenuController : MonoBehaviour
             _gameManager.UpdateCloudData(new Dictionary<string, string>() {
                 {DataType.Lives.GetString(), _localPlayer.Lives.ToString()},
                 {DataType.LifeLost.GetString(), ""}
-            });
+            },
+                DataType.Lives);
             
             LivesTime.text = "MAX";
         }
@@ -165,7 +167,8 @@ public class MainMenuController : MonoBehaviour
             _gameManager.UpdateCloudData(new Dictionary<string, string>() {
                 {DataType.Lives.GetString(), _localPlayer.Lives.ToString()},
                 {DataType.LifeLost.GetString(), _localPlayer.LostLifeTime.ToString("dd/MM/yyyy HH:mm:ss")}
-            });
+            },
+                DataType.Lives);
             
             //Restart timer
             recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(30);
@@ -177,7 +180,8 @@ public class MainMenuController : MonoBehaviour
             //Upload lives to server
             _gameManager.UpdateCloudData(new Dictionary<string, string>() {
                 {DataType.Lives.GetString(), _localPlayer.Lives.ToString()},
-            });
+            },
+                DataType.Lives);
                 
             LivesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;
         }
