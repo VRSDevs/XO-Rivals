@@ -13,13 +13,13 @@ using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Tipos de salas a las que unirse
-///     RANDOM_ROON - Sala aleatoria
-///     SPECIFIC_ROOM - Sala específica
+///     RandomRoom - Sala aleatoria (pública)
+///     SpecificRoom - Sala específica (pública)
 /// </summary>
 public enum JoinType
 {
-    RANDOM_ROON,
-    SPECIFIC_ROOM
+    RandomRoom,
+    SpecificRoom
 }
 
 public class NetworkController : MonoBehaviourPunCallbacks
@@ -175,7 +175,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(1);
 
-        _joinType = JoinType.RANDOM_ROON;
+        _joinType = JoinType.RandomRoom;
         PhotonNetwork.JoinRandomRoom();
     }
 
@@ -187,7 +187,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(1);
 
-        _joinType = JoinType.SPECIFIC_ROOM;
+        _joinType = JoinType.SpecificRoom;
         PhotonNetwork.RejoinRoom(_nameRoom);
     }
 
@@ -375,7 +375,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
         switch (_joinType)
         {
-            case JoinType.RANDOM_ROON:
+            case JoinType.RandomRoom:
 
                 if (PhotonNetwork.CurrentRoom.PlayerCount < MAX_PLAYERS_INROOM)
                 {
@@ -392,7 +392,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 }
                 
                 break;
-            case JoinType.SPECIFIC_ROOM:
+            case JoinType.SpecificRoom:
                 GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joined the match.";
                 
                 FindObjectOfType<GameManager>().IsPlaying = true;
