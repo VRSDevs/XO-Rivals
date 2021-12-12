@@ -275,8 +275,8 @@ public class CloudDataController : MonoBehaviour
                 
                 // Destrucción de GameObjects
                 FindObjectOfType<GameManager>().ResetObject();
-                PhotonNetwork.Destroy(GameObject.Find("PlayerObject"));
-                PhotonNetwork.Destroy(GameObject.Find("@SoundManager"));
+                Destroy(GameObject.Find("PlayerObject"));
+                Destroy(GameObject.Find("@SoundManager"));
 
                 SceneManager.LoadScene("Login");
                 break;
