@@ -442,15 +442,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetObject()
     {
-        Destroy(GetComponent<NetworkController>());
-        Destroy(GetComponent<NetworkCommunications>());
-        Destroy(GetComponent<CloudDataController>());
-        Destroy(GetComponent<PurchasesController>());
-        
-        _networkController = gameObject.AddComponent<NetworkController>();
-        _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
-        _cloudController = gameObject.AddComponent<CloudDataController>();
-        _purchasesController = gameObject.AddComponent<PurchasesController>();
+        _networkController = new NetworkController();
+        _networkCommunications = new NetworkCommunications();
+        _cloudController = new CloudDataController();
+        _purchasesController = new PurchasesController();
 
         PlayerMatches.Clear();
         Matchmaking = false;
