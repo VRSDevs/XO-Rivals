@@ -92,13 +92,18 @@ public class Login : MonoBehaviour
 
     private void Start()
     {
+        // Generación objeto de PlayerInfo
+        GameObject myPlayer = new GameObject();
+        _playerInfo = myPlayer.AddComponent<PlayerInfo>();
+        DontDestroyOnLoad(myPlayer);
+        _playerInfo.name = "PlayerObject";
+        
         // Limitación de caracteres máximos de los inputs
         UsernameInput.characterLimit = MAX_CHARS;
         PasswordInput.characterLimit = MAX_CHARS;
 
         // Limpieza del log
         Log.text = "";
-        
     }
 
     #endregion
@@ -200,12 +205,7 @@ public class Login : MonoBehaviour
         yield return new WaitUntil(_gameManager.GetConnected);
         
         _gameManager.SetPhotonNick(_username);
-
-        GameObject myPlayer = new GameObject();
-
-        _playerInfo = myPlayer.AddComponent<PlayerInfo>();
-        DontDestroyOnLoad(myPlayer);
-        _playerInfo.name = "PlayerObject";
+        
         _playerInfo.ID = Authenticator.playFabPlayerIdCache;
         _playerInfo.Name = _username;
 
@@ -231,9 +231,9 @@ public class Login : MonoBehaviour
                 {
                     ErrorCode = _gameManager.GetOnlineAuth().ErrorCode
                 };
-                
             }
             
+            _gameManager.ResetOnlineAuth();
             StartCoroutine(OnGetPlayerData()); 
         }
         catch (LoginFailedException e)
@@ -245,12 +245,13 @@ public class Login : MonoBehaviour
                     break;
             }
 
+            _gameManager.ResetOnlineAuth();
+
             _gameManager.OnDisconnectToServer();
             _isConnecting = false;
 
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
         }
-        
     }
 
     /// <summary>

@@ -98,6 +98,14 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Método para reiniciar el objeto de validación de estado de conexión
+    /// </summary>
+    public void ResetOnlineAuth()
+    {
+        _cloudController.Obj = new AuthObject();
+    }
+
+    /// <summary>
     /// Método para obtener si se está creando una partida
     /// </summary>
     /// <returns>¿Se está creando la partida?</returns>
