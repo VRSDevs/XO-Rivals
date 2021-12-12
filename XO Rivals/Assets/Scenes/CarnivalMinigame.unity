@@ -1640,6 +1640,7 @@ MonoBehaviour:
   glassAnim: {fileID: 823230684}
   goingUp: 1
   localPlayer: {fileID: 0}
+  feriaMusic: {fileID: 8300000, guid: 3f5f447f3ea9c1f47b4de1a54e10d8c4, type: 3}
 --- !u!4 &1879265989
 Transform:
   m_ObjectHideFlags: 0
