@@ -31,8 +31,8 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public GameObject MainMenuObject;
     [SerializeField] public GameObject PlayMenuObject;
     
-    [SerializeField] public Button CreateGameButton;
-    [SerializeField] public Button JoinGameButton;
+    [SerializeField] public Button PublicMatchButton;
+    [SerializeField] public Button PrivateMatchButton;
     [SerializeField] public Button BackButton;
 
     [SerializeField] public Sprite CreateMatchSprite;
@@ -236,10 +236,10 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void OnCreateMatchClick()
     {
-        CreateGameButton.onClick.RemoveAllListeners();
+        PublicMatchButton.onClick.RemoveAllListeners();
 
-        CreateGameButton.interactable = false;
-        JoinGameButton.interactable = false;
+        PublicMatchButton.interactable = false;
+        PrivateMatchButton.interactable = false;
         ChangeMatchListInteractions(false);
         BackButton.interactable = false;
 
@@ -264,8 +264,8 @@ public class MainMenuController : MonoBehaviour
         
         StartCoroutine(ChangeInteractionAfterJm());
         
-        CreateGameButton.interactable = false;
-        JoinGameButton.interactable = false;
+        PublicMatchButton.interactable = false;
+        PrivateMatchButton.interactable = false;
         
         ConnectToMatch();
     }
@@ -336,8 +336,8 @@ public class MainMenuController : MonoBehaviour
                     GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "You can´t look for a match." +
                         " You don´t have enough lives.";
                     
-                    CreateGameButton.interactable = true;
-                    JoinGameButton.interactable = true;
+                    PublicMatchButton.interactable = true;
+                    PrivateMatchButton.interactable = true;
                     ChangeMatchListInteractions(true);
                     BackButton.interactable = true;
                     
@@ -355,8 +355,8 @@ public class MainMenuController : MonoBehaviour
                 LeaveMatchmaking();
                 ChangePublicMatchSprite(mode);
                 
-                CreateGameButton.interactable = true;
-                JoinGameButton.interactable = true;
+                PublicMatchButton.interactable = true;
+                PrivateMatchButton.interactable = true;
                 ChangeMatchListInteractions(true);
                 BackButton.interactable = true;
                 
@@ -372,7 +372,7 @@ public class MainMenuController : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
 
-        CreateGameButton.interactable = true;
+        PublicMatchButton.interactable = true;
 
         ChangeMatchListInteractions(true);
     }
@@ -383,7 +383,7 @@ public class MainMenuController : MonoBehaviour
     /// <param name="interactable">¿Es interaccionable?</param>
     public void ChangePublicMatchInteraction(bool interactable)
     {
-        CreateGameButton.interactable = interactable;
+        PublicMatchButton.interactable = interactable;
     }
 
     /// <summary>
