@@ -3026,6 +3026,10 @@ PrefabInstance:
       value: Keep the button pressed with the controls indicated below and release
         it at the moment closest to zero to defeat your enemy.
       objectReference: {fileID: 0}
+    - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+      propertyPath: m_margin.z
+      value: -23.14685
+      objectReference: {fileID: 0}
     - target: {fileID: 6299495709169872984, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -4185,6 +4189,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Move with the indicated controls and collect the ingredients following
         the indicated recipe to complete the burger.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+      propertyPath: m_margin.z
+      value: -23.14685
       objectReference: {fileID: 0}
     - target: {fileID: 6299495708482457880, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_IsActive
@@ -5743,6 +5751,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Press the button just when the arrow is in the green zone to win.
       objectReference: {fileID: 0}
+    - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+      propertyPath: m_margin.z
+      value: 13.926575
+      objectReference: {fileID: 0}
     - target: {fileID: 6299495709169872984, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -7082,6 +7094,18 @@ PrefabInstance:
       propertyPath: m_text
       value: Move around the platforms with these controls and dodge the enemies
         to the flag and to achieve victory. But be careful, you can't go back.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+      propertyPath: m_fontSize
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+      propertyPath: m_margin.z
+      value: -37.976196
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 6299495709463213680, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_RootOrder
@@ -9506,6 +9530,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Move through the maze with the controls displayed on the screen and
         avoid the field of vision of the ghosts for the indicated time.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+      propertyPath: m_margin.z
+      value: -13.26062
       objectReference: {fileID: 0}
     - target: {fileID: 6299495708482457880, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_IsActive
