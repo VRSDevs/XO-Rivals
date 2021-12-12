@@ -215,6 +215,25 @@ public class NetworkController : MonoBehaviourPunCallbacks
             PlayerTtl = -1,
         });
     }
+    
+    /// <summary>
+    /// Método para crear una sala con un nombre en específico
+    /// </summary>
+    /// <param name="roomName">Nombre de la sala</param>
+    private IEnumerator RecreateMatchRoom(string roomName)
+    {
+        yield return new WaitForSeconds(1);
+        
+        PhotonNetwork.CreateRoom(roomName, new Photon.Realtime.RoomOptions()
+        {
+            MaxPlayers = MAX_PLAYERS_INROOM,
+            PlayerTtl = -1,
+        }, null, new []
+        {
+            FindObjectOfType<PlayerInfo>().UserID,
+            FindObjectOfType<GameManager>().PlayerMatches[roomName].OpponentId
+        });
+    }
 
     /// <summary>
     /// Corutina para empezar la partida que es ejecutada tras la preparación del jugador
@@ -400,7 +419,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnJoinRoomFailed(returnCode, message);
         
         Debug.Log("Error " + returnCode + ": " + message);
-        StartCoroutine(CreateMatchRoom(_nameRoom));
+        StartCoroutine(RecreateMatchRoom(_nameRoom));
     }
 
     /// <summary>
