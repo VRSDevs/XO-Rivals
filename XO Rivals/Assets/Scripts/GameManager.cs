@@ -56,8 +56,10 @@ public class GameManager : MonoBehaviour
     {
         _networkController = gameObject.AddComponent<NetworkController>();
         _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
+        gameObject.AddComponent<PhotonView>();
         _cloudController = gameObject.AddComponent<CloudDataController>();
         _purchasesController = gameObject.AddComponent<PurchasesController>();
+        
 
         PlayerMatches = new Dictionary<string, Match>();
         Matchmaking = false;
