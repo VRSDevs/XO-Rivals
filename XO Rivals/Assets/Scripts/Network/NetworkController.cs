@@ -282,7 +282,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
             DataType.Logout);
 
         // Destrucción de GameObjects
-        PhotonNetwork.Destroy(GameObject.Find("@GameManager"));
+        FindObjectOfType<GameManager>().ResetObject();
         PhotonNetwork.Destroy(GameObject.Find("PlayerObject"));
         PhotonNetwork.Destroy(GameObject.Find("@SoundManager"));
 

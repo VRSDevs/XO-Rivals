@@ -432,7 +432,9 @@ public class GameManager : MonoBehaviour
     {
         _networkController = gameObject.AddComponent<NetworkController>();
         _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
-        
+        _cloudController = gameObject.AddComponent<CloudDataController>();
+        _purchasesController = gameObject.AddComponent<PurchasesController>();
+
         PlayerMatches.Clear();
         Matchmaking = false;
         IsPlaying = false;
