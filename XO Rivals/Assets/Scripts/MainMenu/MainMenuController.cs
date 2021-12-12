@@ -70,6 +70,7 @@ public class MainMenuController : MonoBehaviour
     
     ////////////////// PARTIDA //////////////////
     private MatchInfo _matchToJoin;
+    private string _privateRoomCode;
     
     ////////////////// MÚSICA //////////////////
     public AudioClip MusicObject;
@@ -97,6 +98,7 @@ public class MainMenuController : MonoBehaviour
         LivesTxtShop.text = "Lives: " + _localPlayer.Lives;
         
         _matchToJoin = new MatchInfo();
+        _privateRoomCode = "";
 
         if (_localPlayer.Lives < MAXLIVES){
             recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(30);
@@ -484,9 +486,12 @@ public class MainMenuController : MonoBehaviour
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "";
     }
 
+    /// <summary>
+    /// Método para obtener la clave de la partida privada
+    /// </summary>
     public void GeneratePrivateCode()
     {
-        
+        _privateRoomCode = _gameManager.GetRoomCode();
     }
 
     public void SelectButton1()
