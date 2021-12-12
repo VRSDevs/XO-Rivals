@@ -136,7 +136,7 @@ public class MatchScrollerController : MonoBehaviour
                 {
                     MatchId = match.MatchId,
                     MatchName = "Match against " + opponent,
-                    MatchStatus = match.WhosTurn + "'s turn"
+                    MatchStatus = "Original"
                 };
                 i++;
             }
