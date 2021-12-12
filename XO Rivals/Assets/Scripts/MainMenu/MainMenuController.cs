@@ -78,8 +78,6 @@ public class MainMenuController : MonoBehaviour
         FindObjectOfType<AudioManager>().StopAllSongs();
 
         FindObjectOfType<AudioManager>().Play("Main_menu");
-        
-        //JoinGameButton.interactable = false;
 
         NameTxt.text = _localPlayer.Name;
         LevelTxt.text = "Level: " + Math.Truncate(_localPlayer.Level);
@@ -301,6 +299,7 @@ public class MainMenuController : MonoBehaviour
             {
                 _matchToJoin.MatchId = selectedChildren["MatchID"].GetComponent<TextMeshProUGUI>().text;
                 _matchToJoin.MatchName = selectedChildren["MatchName"].GetComponent<TextMeshProUGUI>().text;
+                OnJoinMatchClick();
                 continue;
             }
             
