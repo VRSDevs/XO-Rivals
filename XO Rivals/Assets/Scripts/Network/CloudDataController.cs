@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using Photon.Pun;
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Tipos de datos que se pueden solicitar
@@ -271,6 +273,12 @@ public class CloudDataController : MonoBehaviour
             case DataType.Logout:
                 PlayFabClientAPI.ForgetAllCredentials();
                 
+                // Destrucción de GameObjects
+                FindObjectOfType<GameManager>().ResetObject();
+                PhotonNetwork.Destroy(GameObject.Find("PlayerObject"));
+                PhotonNetwork.Destroy(GameObject.Find("@SoundManager"));
+
+                SceneManager.LoadScene("Login");
                 break;
         }
     }

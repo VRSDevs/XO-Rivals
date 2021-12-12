@@ -54,9 +54,14 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
+        if (FindObjectOfType<GameManager>() == null)
+        {
+            Debug.Log("No hay GameManager");
+        }
         _networkController = gameObject.AddComponent<NetworkController>();
         _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
         gameObject.AddComponent<PhotonView>();
+        GetComponent<PhotonView>().ViewID = 1;
         _cloudController = gameObject.AddComponent<CloudDataController>();
         _purchasesController = gameObject.AddComponent<PurchasesController>();
         
