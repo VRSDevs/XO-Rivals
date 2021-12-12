@@ -12,11 +12,10 @@ public class Match
     /// ID de la partida
     /// </summary>
     public string MatchId { get; set; }
-    /*
     /// <summary>
-    /// ID del dueño de la partida
+    /// ID del oponente
     /// </summary>
-    public string OwnerId { get; set; }*/
+    public string OpponentId { get; set; }
     /// <summary>
     /// Nombre del jugador O
     /// </summary>
@@ -75,7 +74,7 @@ public class Match
     public Match()
     {
         MatchId = PhotonNetwork.CurrentRoom.Name;
-        //OwnerId = "";
+        OpponentId = "";
         PlayerOName = "";
         PlayerXName = "";
         WhosTurn = "";
