@@ -109,13 +109,7 @@ public class PurchasesController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        InitObject();
     }
 
     #endregion
@@ -218,6 +212,18 @@ public class PurchasesController : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException(nameof(item), item, null);
         }
+    }
+
+    #endregion
+
+    #region OtherMethods
+
+    /// <summary>
+    /// Método para inicializar las variables del objeto
+    /// </summary>
+    private void InitObject()
+    {
+        _purchaseCompleted = false;
     }
 
     #endregion

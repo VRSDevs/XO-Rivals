@@ -443,7 +443,7 @@ public class GameManager : MonoBehaviour
     public void ResetObject()
     {
         _networkController.ResetObject();
-        _cloudController = new CloudDataController();
+        _cloudController.ResetObject();
         _purchasesController = new PurchasesController();
 
         PlayerMatches.Clear();
