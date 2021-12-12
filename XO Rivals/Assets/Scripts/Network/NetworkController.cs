@@ -212,7 +212,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(roomName, new Photon.Realtime.RoomOptions()
         {
             MaxPlayers = MAX_PLAYERS_INROOM,
-            PlayerTtl = -1
+            PlayerTtl = -1,
         });
     }
 
@@ -301,7 +301,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         if (!SceneManager.GetActiveScene().name.Equals("Login")) return;
         
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Connected to the lobby.";
-        Debug.Log("Hola, " + PhotonNetwork.NickName);
+        Debug.Log("Hola, " + PhotonNetwork.LocalPlayer.NickName);
 
         SceneManager.LoadScene("MainMenu");
     }
@@ -400,7 +400,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnJoinRoomFailed(returnCode, message);
         
         Debug.Log("Error " + returnCode + ": " + message);
-        //StartCoroutine(CreateMatchRoom(_nameRoom));
+        StartCoroutine(CreateMatchRoom(_nameRoom));
     }
 
     /// <summary>
