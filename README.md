@@ -10,17 +10,16 @@ Una vez colocadas las fichas de manera correcta, los resultados se enviarán a a
 
 ## Instrucciones del juego
   1. Inicia el juego
-	2. Crea una cuenta y registrate con tu usuario y contraseña pulsando el botón de "Register".
-	3. Pulsa el botón "Play" en el menú principal.
-	4a. Crea una nueva partida seleccionando el botón "Public Game".
-	4b. Crea una partida privada seleccionado el botón "Private Game"
-	5. Espera a que otro jugador se una a tu partida para comenzar.
-	6. Una vez hayas encontrado partida se te mostrará el tablero del tres en raya y podrás colocar una ficha.
-	7. Al colocar una ficha deberás jugar a un minijuego.
-	8. Antes de jugar el minijuego aparecerá una pantalla con las instrucciones donde deberás pulsar "Play" para iniciar el juego.
-	9. Juega el minijuego (si vences tu ficha se colocará, si pierdes no podrás colocarla).
-	10. Selecciona el minijuego que jugará el rival en su turno.
-	11. Espera a que tu rival acabe su turno para volver a colocar ficha y jugar tu minijuego.
+  2. Crea una cuenta y registrate con tu usuario y contraseña pulsando el botón de "Register"
+  3. Pulsa el botón "Play" en el menú principal.
+  4. Crea una nueva partida seleccionando el botón "Public Game" /// Crea una partida privada seleccionado el botón "Private Game"
+  5. Espera a que otro jugador se una a tu partida para comenzar.
+  6. Una vez hayas encontrado partida se te mostrará el tablero del tres en raya y podrás colocar una ficha.
+  7. Al colocar una ficha deberás jugar a un minijuego.
+  8. Antes de jugar el minijuego aparecerá una pantalla con las instrucciones donde deberás pulsar "Play" para iniciar el juego.
+  9. Juega el minijuego (si vences tu ficha se colocará, si pierdes no podrás colocarla).
+  10. Selecciona el minijuego que jugará el rival en su turno.
+  11. Espera a que tu rival acabe su turno para volver a colocar ficha y jugar tu minijuego.
 
 ## Instalación y Uso
 El juego no requiere instalación, para poder jugarlo será necesario acceder a la pagina de Itch.io donde se encuentra [XO Rivals](https://vrsdevs.itch.io/xo-rivals).
@@ -44,7 +43,8 @@ Felipe Bermejo | Diseñador de audio | [Haz click aquí](https://linktr.ee/Felip
 
 
 ## Licencia
--
+- Code --> all rights reserved
+- Art -->CCAtribution_NoComercial_NoDerivatesv4.0International
 
 
 
