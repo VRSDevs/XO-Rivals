@@ -25,6 +25,21 @@ public class TaskPerseguirHuella : Node
     {
         Debug.Log("EXECUTE TASKPERSEGUIRHUELLA");
 
+        foreach (Transform t in _tree.transform.GetComponentsInChildren<Transform>())
+        {
+            if (t.name == "Enemy2D")
+            {
+                //Cosas que hacer
+                Debug.Log(t.name);
+                t.GetComponent<Animator>().SetTrigger("Ask");
+                t.GetComponent<Animator>().ResetTrigger("Normal");
+                t.GetComponent<Animator>().ResetTrigger("Alert");
+
+            }
+        }
+
+
+
         _tree.following = false;
 
         if (_tree.lastHuella == null)//SI ha desaparecido la huella deja de perseguirlas
