@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using Photon.Pun;
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Tipos de datos que se pueden solicitar
@@ -57,20 +59,21 @@ public class CloudDataController : MonoBehaviour
 {
     #region Vars
 
+    ////////////////// VARIABLES DE CONTROL //////////////////
     /// <summary>
     /// ¿Se comprobó si está en línea?
     /// </summary>
-    private bool _checkedOnline = false;
+    private bool _checkedOnline;
     /// <summary>
     /// ¿Se sincronizaron los datos?
     /// </summary>
-    private bool _synchronized = false;
-
+    private bool _synchronized;
     /// <summary>
     /// Objeto de autentificación
     /// </summary>
     public AuthObject Obj;
 
+    ////////////////// DICCIONARIOS DE DATOS //////////////////
     /// <summary>
     /// Diccionario de datos de la nube
     /// </summary>
@@ -127,7 +130,7 @@ public class CloudDataController : MonoBehaviour
     /// <summary>
     /// Método actualización del estado de comprobación de si el jugador está en línea
     /// </summary>
-    public void UpdateOnlineChecked()
+    private void UpdateOnlineChecked()
     {
         _checkedOnline = !_checkedOnline;
     }
@@ -135,9 +138,18 @@ public class CloudDataController : MonoBehaviour
     /// <summary>
     /// Método actualización del estado de sincronización
     /// </summary>
-    public void UpdateSynchronizedStatus()
+    private void UpdateSynchronizedStatus()
     {
         _synchronized = !_synchronized;
+    }
+
+    #endregion
+
+    #region UnityCB
+
+    private void Start()
+    {
+        InitObject();
     }
 
     #endregion
@@ -299,6 +311,27 @@ public class CloudDataController : MonoBehaviour
         {
             {"ResultCode", "3"}
         };
+    }
+
+    #endregion
+
+    #region OtherMethods
+
+    /// <summary>
+    /// Método para inicializar las variables del objeto
+    /// </summary>
+    private void InitObject()
+    {
+        _checkedOnline = false;
+        _synchronized = false;
+    }
+
+    /// <summary>
+    /// Método para resetear las variables del objeto
+    /// </summary>
+    public void ResetObject()
+    {
+        InitObject();
     }
 
     #endregion

@@ -54,16 +54,28 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
-        _networkController = gameObject.AddComponent<NetworkController>();
-        _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
-        _cloudController = gameObject.AddComponent<CloudDataController>();
-        _purchasesController = gameObject.AddComponent<PurchasesController>();
+        if (FindObjectsOfType<GameManager>().Length < 2)
+        {
+            Debug.Log("No hay GameManager duplicado");
+            
+            _networkController = gameObject.AddComponent<NetworkController>();
+            _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
+            gameObject.AddComponent<PhotonView>();
+            GetComponent<PhotonView>().ViewID = 1;
+            _cloudController = gameObject.AddComponent<CloudDataController>();
+            _purchasesController = gameObject.AddComponent<PurchasesController>();
+        
 
-        PlayerMatches = new Dictionary<string, Match>();
-        Matchmaking = false;
-        IsPlaying = false;
+            PlayerMatches = new Dictionary<string, Match>();
+            Matchmaking = false;
+            IsPlaying = false;
 
-        DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     #endregion
@@ -430,9 +442,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetObject()
     {
-        _networkController = gameObject.AddComponent<NetworkController>();
-        _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
-        
+        _networkController.ResetObject();
+        _cloudController.ResetObject();
+        _purchasesController.ResetObject();
+
         PlayerMatches.Clear();
         Matchmaking = false;
         IsPlaying = false;
