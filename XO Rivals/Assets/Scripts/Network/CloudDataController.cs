@@ -326,5 +326,13 @@ public class CloudDataController : MonoBehaviour
         _synchronized = false;
     }
 
+    /// <summary>
+    /// Método para resetear las variables del objeto
+    /// </summary>
+    public void ResetObject()
+    {
+        InitObject();
+    }
+
     #endregion
 }
