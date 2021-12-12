@@ -328,18 +328,20 @@ public class GameManager : MonoBehaviour
         switch (playerType)
         {
             case "O":
-                object[] objO = new object[3];
+                object[] objO = new object[4];
 
                 objO[0] = playerType;
-                objO[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName;
-                objO[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
+                objO[1] = FindObjectOfType<PlayerInfo>().UserID;
+                objO[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName;
+                objO[3] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
 
                 return objO;
             case "X":
-                object[] objX = new object[2];
+                object[] objX = new object[3];
 
                 objX[0] = playerType;
-                objX[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName;
+                objX[1] = FindObjectOfType<PlayerInfo>().UserID;
+                objX[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName;
 
                 return objX;
         }
