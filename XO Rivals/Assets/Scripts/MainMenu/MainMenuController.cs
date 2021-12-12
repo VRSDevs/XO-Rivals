@@ -316,11 +316,6 @@ public class MainMenuController : MonoBehaviour
     public void OnExitClick()
     {
         _gameManager.OnDisconnectToServer();
-
-        _gameManager.ResetObject();
-        Destroy(GameObject.Find("PlayerObject"));
-
-        SceneManager.LoadScene("Login");
     }
 
     #endregion
