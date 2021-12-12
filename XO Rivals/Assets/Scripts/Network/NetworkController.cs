@@ -15,11 +15,13 @@ using UnityEngine.SceneManagement;
 /// Tipos de salas a las que unirse
 ///     RandomRoom - Sala aleatoria (pública)
 ///     SpecificRoom - Sala específica (pública)
+///     PrivateRoom - Sala privada
 /// </summary>
 public enum JoinType
 {
     RandomRoom,
-    SpecificRoom
+    SpecificRoom,
+    PrivateRoom
 }
 
 public class NetworkController : MonoBehaviourPunCallbacks
@@ -160,6 +162,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <param name="name">Nombre de la sala</param>
     public void CreatePrivateRoom(string name)
     {
+        _joinType = JoinType.RandomRoom;
         PhotonNetwork.CreateRoom(name, new Photon.Realtime.RoomOptions()
         {
             MaxPlayers = MAX_PLAYERS_INROOM,
