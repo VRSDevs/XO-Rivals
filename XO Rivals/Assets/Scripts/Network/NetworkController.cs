@@ -359,8 +359,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
 
         FindObjectOfType<PlayerInfo>().MatchId = PhotonNetwork.LocalPlayer.ActorNumber;
-        
-        Debug.Log("a");
 
         switch (_joinType)
         {
@@ -370,12 +368,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
                 if (PhotonNetwork.CurrentRoom.PlayerCount < MAX_PLAYERS_INROOM)
                 {
+                    FindObjectOfType<MainMenuController>().ChangePublicMatchInteraction(true);
                     GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Waiting for players (" + 
                         PhotonNetwork.CurrentRoom.Players.Count + "/" + MAX_PLAYERS_INROOM + ")...";
                 }
                 else
                 {
-                    FindObjectOfType<GameManager>().Matchmaking = false;
+                    FindObjectOfType<GameManager>().Matchmaking = true;
                     GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Player found! Starting match...";
                     FindObjectOfType<GameManager>().SetupMatch("X");
                     StartCoroutine(StartMatch());
@@ -467,7 +466,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
    
         if (PhotonNetwork.CurrentRoom.PlayerCount != MAX_PLAYERS_INROOM) return;
 
-        FindObjectOfType<GameManager>().Matchmaking = false;
+        FindObjectOfType<GameManager>().Matchmaking = true;
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Player found! Starting match...";
         FindObjectOfType<GameManager>().SetupMatch("O");
         StartCoroutine(StartMatch());

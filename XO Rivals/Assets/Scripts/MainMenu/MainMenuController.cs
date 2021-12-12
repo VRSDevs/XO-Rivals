@@ -376,6 +376,15 @@ public class MainMenuController : MonoBehaviour
     }
 
     /// <summary>
+    /// Método para cambiar la interacción del botón de Partida pública
+    /// </summary>
+    /// <param name="interactable">¿Es interaccionable?</param>
+    public void ChangePublicMatchInteraction(bool interactable)
+    {
+        CreateGameButton.interactable = interactable;
+    }
+
+    /// <summary>
     /// Método para cambiar la interacción con las partidas de la lista de partidas del jugador
     /// </summary>
     /// <param name="interactable"></param>
