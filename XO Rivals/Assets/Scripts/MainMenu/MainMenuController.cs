@@ -28,20 +28,27 @@ public class MainMenuController : MonoBehaviour
     #region Vars
 
     ////////////////// REFERENCIAS //////////////////
+    // OBJETOS //
     [SerializeField] public GameObject MainMenuObject;
     [SerializeField] public GameObject PlayMenuObject;
     
+    // TIPOS DE PARTIDAS //
     [SerializeField] public Button PublicMatchButton;
     [SerializeField] public Button PrivateMatchButton;
+    [SerializeField] public TextMeshProUGUI PrivateMatchCode;
+    
+    // BOTONES //
     [SerializeField] public Button BackButton;
 
+    // SPRITES //
     [SerializeField] public Sprite CreateMatchSprite;
     [SerializeField] public Sprite CancelMatchmakingSprite;
-
     [SerializeField] public Image CreateMatchImage;
 
+    // VIEW PARTIDAS //
     [SerializeField] public GameObject ViewContent;
 
+    // TEXTOS - VIDA //
     [SerializeField] public TextMeshProUGUI NameTxt;
     [SerializeField] public TextMeshProUGUI LevelTxt;
     [SerializeField] public TextMeshProUGUI LivesTxt;
@@ -80,8 +87,6 @@ public class MainMenuController : MonoBehaviour
         //FindObjectOfType<AudioManager>().Play("Main_menu");
         FindObjectOfType<AudioManager>().Stop("Main_menu");
         FindObjectOfType<AudioManager>().Play("Main_Menu");
-
-        //JoinGameButton.interactable = false;
 
         NameTxt.text = _localPlayer.Name;
         LevelTxt.text = "Level: " + Math.Truncate(_localPlayer.Level);
@@ -232,7 +237,7 @@ public class MainMenuController : MonoBehaviour
     }
 
     /// <summary>
-    /// Método para actualizar el comportamiento del botón de crear partida
+    /// Método ejecutado para crear una partida pública
     /// </summary>
     public void OnCreateMatchClick()
     {
@@ -246,13 +251,21 @@ public class MainMenuController : MonoBehaviour
         if (_gameManager.Matchmaking)
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Searching games...";
-            StartCoroutine(CreateOrCancelPMatch("connect"));
+            StartCoroutine(CreateOrCancelPublicMatch("connect"));
         }
         else
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Stopping matchmaking...";
-            StartCoroutine(CreateOrCancelPMatch("cancel"));
+            StartCoroutine(CreateOrCancelPublicMatch("cancel"));
         }
+    }
+
+    /// <summary>
+    /// Método ejecutado para crear una partida privada
+    /// </summary>
+    public void OnCreatePrivateMatchClick()
+    {
+        
     }
 
     /// <summary>
@@ -324,7 +337,7 @@ public class MainMenuController : MonoBehaviour
     /// Corutina ejecutada tras crear una partida o buscarla
     /// </summary>
     /// <returns></returns>
-    private IEnumerator CreateOrCancelPMatch(string mode)
+    private IEnumerator CreateOrCancelPublicMatch(string mode)
     {
         yield return new WaitForSeconds(2);
         
