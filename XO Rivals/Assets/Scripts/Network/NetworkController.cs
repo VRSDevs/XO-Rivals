@@ -162,7 +162,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <param name="name">Nombre de la sala</param>
     public void CreatePrivateRoom(string name)
     {
-        _joinType = JoinType.RandomRoom;
+        _joinType = JoinType.PrivateRoom;
         PhotonNetwork.CreateRoom(name, new Photon.Realtime.RoomOptions()
         {
             MaxPlayers = MAX_PLAYERS_INROOM,
@@ -400,6 +400,19 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 
                 FindObjectOfType<GameManager>().IsPlaying = true;
                 SceneManager.LoadScene("TicTacToe_Server");
+                break;
+            case JoinType.PrivateRoom:
+                if (PhotonNetwork.CurrentRoom.PlayerCount < MAX_PLAYERS_INROOM)
+                {
+                    GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Waiting for opponent...";
+                }
+                else
+                {
+                    GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Starting match...";
+                    FindObjectOfType<GameManager>().SetupMatch("X");
+                    StartCoroutine(StartMatch());
+                }
+                
                 break;
         }
     }
