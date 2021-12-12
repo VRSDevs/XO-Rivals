@@ -247,11 +247,11 @@ public class MainMenuController : MonoBehaviour
 
         if (_gameManager.Matchmaking)
         {
-            StartCoroutine(ChangeInteractionAfterCm("connect"));
+            StartCoroutine(CreateOrCancelPMatch("connect"));
         }
         else
         {
-            StartCoroutine(ChangeInteractionAfterCm("cancel"));
+            StartCoroutine(CreateOrCancelPMatch("cancel"));
             LeaveMatchmaking();
             CreateMatchImage.sprite = CreateMatchSprite;
         }
@@ -326,7 +326,7 @@ public class MainMenuController : MonoBehaviour
     /// Corutina ejecutada tras crear una partida o buscarla
     /// </summary>
     /// <returns></returns>
-    private IEnumerator ChangeInteractionAfterCm(string mode)
+    private IEnumerator CreateOrCancelPMatch(string mode)
     {
         //yield return new WaitUntil(_gameManager.GetIsCreatingMatch);
         yield return new WaitForSeconds(2);
@@ -334,7 +334,7 @@ public class MainMenuController : MonoBehaviour
         switch (mode)
         {
             case "connect":
-                if (_localPlayer.Lives < 0)
+                if (_localPlayer.Lives < 1)
                 {
                     GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "You can´t look for a match." +
                         " You don´t have enough lives.";
