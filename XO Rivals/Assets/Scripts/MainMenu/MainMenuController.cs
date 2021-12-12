@@ -253,8 +253,6 @@ public class MainMenuController : MonoBehaviour
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Cancelling matchmaking...";
             StartCoroutine(CreateOrCancelPMatch("cancel"));
-            LeaveMatchmaking();
-            CreateMatchImage.sprite = CreateMatchSprite;
         }
     }
 
@@ -354,6 +352,9 @@ public class MainMenuController : MonoBehaviour
                 
                 break;
             case "cancel":
+                LeaveMatchmaking();
+                CreateMatchImage.sprite = CreateMatchSprite;
+                
                 ChangeMatchListInteractions(true);
                 BackButton.interactable = true;
                 
