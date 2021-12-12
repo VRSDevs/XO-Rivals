@@ -430,6 +430,14 @@ public class MainMenuController : MonoBehaviour
 
     #region OtherMethods
 
+    /// <summary>
+    /// Método para limpiar el log del menú jugar
+    /// </summary>
+    public void ClearLog()
+    {
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "";
+    }
+
     public void SelectButton1()
     { 
         FindObjectOfType<AudioManager>().Play("SelecctionButton1");

@@ -4958,9 +4958,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonScaler, Assembly-CSharp
-        m_MethodName: ResizeBut
+      - m_Target: {fileID: 1544971429}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: ClearLog
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
