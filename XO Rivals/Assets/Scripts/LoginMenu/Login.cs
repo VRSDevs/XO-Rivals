@@ -274,7 +274,7 @@ public class Login : MonoBehaviour
                 _playerInfo.LostLifeTime = DateTime.ParseExact(data[DataType.LifeLost.GetString()],
                     "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                 
-                _gameManager.UpdateCloudData(data);
+                _gameManager.UpdateCloudData(data, DataType.Login);
                             
                 break;
             case 2:
@@ -288,7 +288,8 @@ public class Login : MonoBehaviour
                     {DataType.Online.GetString(), _playerInfo.Online.ToString()},
                     {DataType.Lives.GetString(), _playerInfo.Lives.ToString()},
                     {DataType.Level.GetString(), _playerInfo.Level.ToString(CultureInfo.InvariantCulture)}
-                });
+                },
+                    DataType.Login);
                         
                 break;
             case 3:
