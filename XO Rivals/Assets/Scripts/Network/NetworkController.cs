@@ -417,9 +417,20 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         base.OnJoinRoomFailed(returnCode, message);
-        
-        Debug.Log("Error " + returnCode + ": " + message);
-        StartCoroutine(RecreateMatchRoom(_nameRoom));
+
+        switch (returnCode)
+        {
+            // Caso 32758 - No existe ninguna partida con ese ID
+            case 32758:
+                StartCoroutine(RecreateMatchRoom(_nameRoom));
+                break;
+            // Caso 32748 - No existe ninguna partida con ese ID
+            case 32748:
+                break;
+            default:
+                Debug.Log("Error " + returnCode + ": " + message);
+                break;
+        }
     }
 
     /// <summary>
