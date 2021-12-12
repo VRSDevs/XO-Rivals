@@ -30,6 +30,9 @@ TagManager:
   - Win2
   - Win3
   - Win4
+  - ground
+  - SurrenderVictory
+  - EndingUI
   layers:
   - Default
   - TransparentFX
@@ -44,7 +47,7 @@ TagManager:
   - Vision
   - Black
   - NORENDER
-  - 
+  - Bala
   - 
   - 
   - 

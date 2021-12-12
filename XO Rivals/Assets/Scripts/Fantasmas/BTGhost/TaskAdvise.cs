@@ -30,9 +30,9 @@ public class TaskAdvise : Node
             {
                 //Cosas que hacer
                 Debug.Log(t.name);
-                t.GetComponent<Animator>().SetTrigger("Alert");
-                t.GetComponent<Animator>().ResetTrigger("Normal");
-                t.GetComponent<Animator>().ResetTrigger("Ask");
+                t.GetComponent<Animator>().SetBool("Alert", true);
+                t.GetComponent<Animator>().SetBool("Normal", false);
+                t.GetComponent<Animator>().SetBool("Ask", false);
 
             }
         }

@@ -25,7 +25,7 @@ public class ScriptHuella : MonoBehaviour
 
     IEnumerator deleteHuella()
     {
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(15f);
 
         Destroy(this.gameObject);
 

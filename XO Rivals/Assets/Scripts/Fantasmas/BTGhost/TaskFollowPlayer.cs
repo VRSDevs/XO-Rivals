@@ -25,6 +25,20 @@ public class TaskFollowPlayer : Node
     {
         Debug.Log("EXECUTE TASKFOLLOWPLAYER");
 
+        //CAMBIO ANIMACION
+        foreach (Transform t in _tree.transform.GetComponentsInChildren<Transform>())
+        {
+            if (t.name == "Enemy2D")
+            {
+                //Cosas que hacer
+                Debug.Log(t.name);
+                t.GetComponent<Animator>().SetBool("Alert", true);
+                t.GetComponent<Animator>().SetBool("Normal", false);
+                t.GetComponent<Animator>().SetBool("Ask", false);
+
+            }
+        }
+
         _tree.following = true;
         _tree.perseguirHuella = false;
 

@@ -27,11 +27,10 @@ public class TaskPatrol : Node
         {
             if (t.name == "Enemy2D")
             {
-                //Cosas que hacer
-                Debug.Log(t.name);
-                t.GetComponent<Animator>().SetTrigger("Normal");
-                t.GetComponent<Animator>().ResetTrigger("Alert");
-                t.GetComponent<Animator>().ResetTrigger("Ask");
+
+                t.GetComponent<Animator>().SetBool("Normal", true);
+                t.GetComponent<Animator>().SetBool("Alert", false);
+                t.GetComponent<Animator>().SetBool("Ask", false);
 
             }
         }

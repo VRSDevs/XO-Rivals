@@ -22,7 +22,7 @@ public class CrearHuellas : MonoBehaviour
     }
     IEnumerator creaHuella()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         //INSTANCIAR PREFAB
         huella = Instantiate(prefabHuella, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.transform.rotation);
