@@ -38,14 +38,14 @@ public class FollowDroneStateMachine : MonoBehaviour{
         nextPoint = points[0];
         speed = BASESPEED;
 
-        //gameState = FindObjectOfType<GameManager>();
-        //thisMatch = gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name];
-        //localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
-        //if(localPlayer.Name == thisMatch.PlayerOName){
-        //    characterPlaying = characterO;
-        //}else{
-        //    characterPlaying = characterX;
-        //}
+        gameState = FindObjectOfType<GameManager>();
+        thisMatch = gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name];
+        localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
+        if(localPlayer.Name == thisMatch.PlayerOName){
+            characterPlaying = characterO;
+        }else{
+            characterPlaying = characterX;
+        }
         characterPlaying = characterO;
     }
 
