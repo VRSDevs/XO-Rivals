@@ -283,9 +283,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
         PlayFabClientAPI.ForgetAllCredentials();
         
         // Destrucción de GameObjects
-        Destroy(FindObjectOfType<GameManager>());
-        Destroy(GameObject.Find("PlayerObject"));
-        Destroy(FindObjectOfType<AudioManager>());
+        DestroyImmediate(FindObjectOfType<GameManager>());
+        DestroyImmediate(GameObject.Find("PlayerObject"));
+        DestroyImmediate(FindObjectOfType<AudioManager>());
 
         SceneManager.LoadScene("Login");
     }
