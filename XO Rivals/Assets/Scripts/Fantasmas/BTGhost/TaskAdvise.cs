@@ -23,13 +23,16 @@ public class TaskAdvise : Node
     {
         Debug.Log("EXECUTE TASKADVISE");
 
+        //CAMBIO ANIMACION
         foreach (Transform t in _tree.transform.GetComponentsInChildren<Transform>())
         {
             if (t.name == "Enemy2D")
             {
                 //Cosas que hacer
                 Debug.Log(t.name);
-                t.GetComponent<SpriteRenderer>().sprite = _tree.spriteAlertaClever;
+                t.GetComponent<Animator>().SetTrigger("Alert");
+                t.GetComponent<Animator>().ResetTrigger("Normal");
+                t.GetComponent<Animator>().ResetTrigger("Ask");
 
             }
         }

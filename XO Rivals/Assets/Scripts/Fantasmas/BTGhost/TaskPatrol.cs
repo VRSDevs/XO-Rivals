@@ -22,6 +22,20 @@ public class TaskPatrol : Node
     {
         Debug.Log("EXECUTE TASKPATROL");
 
+
+        foreach (Transform t in _tree.transform.GetComponentsInChildren<Transform>())
+        {
+            if (t.name == "Enemy2D")
+            {
+                //Cosas que hacer
+                Debug.Log(t.name);
+                t.GetComponent<Animator>().SetTrigger("Normal");
+                t.GetComponent<Animator>().ResetTrigger("Alert");
+                t.GetComponent<Animator>().ResetTrigger("Ask");
+
+            }
+        }
+
         _tree.following = false;
 
         if (newTarget)
