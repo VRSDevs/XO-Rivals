@@ -10429,11 +10429,20 @@ PrefabInstance:
     - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_text
       value: Move through the maze with the controls displayed on the screen and
-        avoid the field of vision of the ghosts for the indicated time.
+        looking for the exit. But be careful and avoid the field of vision of the
+        ghosts for the indicated time.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+      propertyPath: m_fontSize
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_margin.z
       value: -13.26062
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299495708482457878, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 6299495708482457880, guid: 37da59f5c88386249b4f381a8ccce4a4, type: 3}
       propertyPath: m_IsActive
