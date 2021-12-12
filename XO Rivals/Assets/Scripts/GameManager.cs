@@ -135,6 +135,15 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Método para obtener el código de la sala
+    /// </summary>
+    /// <returns>Estado de sincronización</returns>
+    public string GetRoomCode()
+    {
+        return _networkController.GenerateRoomCode();
+    }
+
+    /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>

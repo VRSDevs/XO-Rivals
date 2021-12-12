@@ -209,6 +209,14 @@ public class MainMenuController : MonoBehaviour
     }
 
     /// <summary>
+    /// Método para conectarse a una sala privada
+    /// </summary>
+    private void ConnectPrivateMatch()
+    {
+        
+    }
+
+    /// <summary>
     /// Método para conectarse a una sala en específico
     /// </summary>
     private void ConnectToMatch()
@@ -474,6 +482,11 @@ public class MainMenuController : MonoBehaviour
     public void ClearLog()
     {
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "";
+    }
+
+    public void GeneratePrivateCode()
+    {
+        
     }
 
     public void SelectButton1()

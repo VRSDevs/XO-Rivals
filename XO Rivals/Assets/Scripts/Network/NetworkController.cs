@@ -553,7 +553,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// Método para generar una clave de sala
     /// </summary>
     /// <returns>Clave de sala</returns>
-    private string GenerateRoomCode()
+    public string GenerateRoomCode()
     {
         // Variables //
         string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";   // Posibles caracteres
