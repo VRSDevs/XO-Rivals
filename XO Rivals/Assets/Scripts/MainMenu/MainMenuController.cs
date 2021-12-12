@@ -259,7 +259,7 @@ public class MainMenuController : MonoBehaviour
     /// <summary>
     /// Método de evento ejecutado al pulsar el botón de unirse a partida
     /// </summary>
-    public void OnJoinMatchClick()
+    private void OnJoinMatchClick()
     {
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joining " + _matchToJoin.MatchName + "...";
         
@@ -299,14 +299,12 @@ public class MainMenuController : MonoBehaviour
 
             if (grandChildren["MatchName"].GetComponent<TextMeshProUGUI>().text.Equals(selectedChildren["MatchName"].GetComponent<TextMeshProUGUI>().text))
             {
-                child.GetComponent<Button>().interactable = false;
-                JoinGameButton.interactable = true;
                 _matchToJoin.MatchId = selectedChildren["MatchID"].GetComponent<TextMeshProUGUI>().text;
                 _matchToJoin.MatchName = selectedChildren["MatchName"].GetComponent<TextMeshProUGUI>().text;
                 continue;
             }
             
-            child.GetComponent<Button>().interactable = true;
+            child.GetComponent<Button>().interactable = false;
         }
     }
     
