@@ -58,7 +58,6 @@ public class ScreenManagerAI : MonoBehaviour
         else
             buttonsScript.thisMatch.WhosTurn = buttonsScript.thisMatch.PlayerOName;
 
-        buttonsScript.updateIconTurn(false);
         buttonsScript.thisMatch.TurnMoment = 0;
 
         //Display turn in screen
@@ -69,7 +68,9 @@ public class ScreenManagerAI : MonoBehaviour
         }
         
         if(buttonsScript.thisMatch.WhosTurn == buttonsScript.thisMatch.PlayerXName)
-            ticTacAI.UpdateAI();        
+            ticTacAI.UpdateAI();
+        else
+            buttonsScript.startGame(); 
     }
     
     public IEnumerator txtTimer(string txt){
@@ -107,14 +108,16 @@ public class ScreenManagerAI : MonoBehaviour
 
     public void MinigameSelection(int n){
 
-        buttonsScript.thisMatch.MiniGameChosen = n;
+        //buttonsScript.thisMatch.MiniGameChosen = n;
+        buttonsScript.thisMatch.MiniGameChosen = 0;
         miniGameChoosing.SetActive(false);
         ticTacScreen.SetActive(true);
 
-        //Update turn data and send it to opponent
-        UpdateTurn();
         //Disable interaction with tictac
         DisableButtons();
+        
+        //Update turn data and send it to opponent
+        UpdateTurn();
     }
 
     public void EnableButtons()
