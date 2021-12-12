@@ -3120,6 +3120,13 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
+  - clip: {fileID: 8300000, guid: e2ce841c4f41b4e4b822011e40e2a8ab, type: 3}
+    source: {fileID: 0}
+    name: Main_Menu
+    type: 0
+    volume: 1
+    pitch: 1
+    loop: 1
 --- !u!1001 &90542957107960787
 PrefabInstance:
   m_ObjectHideFlags: 0

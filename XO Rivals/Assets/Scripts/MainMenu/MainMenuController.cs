@@ -65,7 +65,8 @@ public class MainMenuController : MonoBehaviour
     
     ////////////////// MÚSICA //////////////////
     public AudioClip MusicObject;
-    
+    public AudioClip Main_menu;
+    public AudioClip Tic_Tac_toe_Music;
     #endregion
     
     #region UnityCB
@@ -74,11 +75,12 @@ public class MainMenuController : MonoBehaviour
     {
         _gameManager = FindObjectOfType<GameManager>();
         _localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
-        
-        FindObjectOfType<AudioManager>().StopAllSongs();
 
-        FindObjectOfType<AudioManager>().Play("Main_menu");
-        
+        FindObjectOfType<AudioManager>().ChangeMusic(Main_menu,"Tic-Tac-Toe");
+        //FindObjectOfType<AudioManager>().Play("Main_menu");
+        FindObjectOfType<AudioManager>().Stop("Main_menu");
+        FindObjectOfType<AudioManager>().Play("Main_Menu");
+
         //JoinGameButton.interactable = false;
 
         NameTxt.text = _localPlayer.Name;
@@ -98,6 +100,7 @@ public class MainMenuController : MonoBehaviour
     }
 
     private void Update(){
+
         if(_localPlayer.Lives < MAXLIVES){
             timePassed += Time.deltaTime;
             if(timePassed >= 1.0f){ 
