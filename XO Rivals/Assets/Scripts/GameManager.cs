@@ -135,6 +135,15 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Método para obtener el código de la sala
+    /// </summary>
+    /// <returns>Estado de sincronización</returns>
+    public string GetRoomCode()
+    {
+        return _networkController.GenerateRoomCode();
+    }
+
+    /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
@@ -207,12 +216,30 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Método para crear la sala privada
+    /// </summary>
+    /// <param name="code">Código de la sala</param>
+    public void CreatePrivateRoom(string code)
+    {
+        _networkController.CreatePrivateRoom(code);
+    }
+
+    /// <summary>
     /// Método para conectarse a una sala específica en Photon
     /// </summary>
     /// <param name="name"></param>
     public void OnConnectToSpecificRoom(string name)
     {
         _networkController.ConnectToSpecificRoom(name);
+    }
+
+    /// <summary>
+    /// Método para conectarse a una sala privada
+    /// </summary>
+    /// <param name="code">Código de la sala</param>
+    public void ConnectToPrivateRoom(string code)
+    {
+        _networkController.ConnectToPrivateRoom(code);
     }
 
     /// <summary>

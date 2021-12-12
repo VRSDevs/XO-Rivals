@@ -28,20 +28,29 @@ public class MainMenuController : MonoBehaviour
     #region Vars
 
     ////////////////// REFERENCIAS //////////////////
+    // OBJETOS //
     [SerializeField] public GameObject MainMenuObject;
     [SerializeField] public GameObject PlayMenuObject;
     
+    // TIPOS DE PARTIDAS //
     [SerializeField] public Button PublicMatchButton;
     [SerializeField] public Button PrivateMatchButton;
+    [SerializeField] public TextMeshProUGUI PrivateMatchCode;
+    [SerializeField] public Button CreatePrivateMatchButton;
+    [SerializeField] public TMP_InputField InputPrivateMatchCode;
+    
+    // BOTONES //
     [SerializeField] public Button BackButton;
 
+    // SPRITES //
     [SerializeField] public Sprite CreateMatchSprite;
     [SerializeField] public Sprite CancelMatchmakingSprite;
-
     [SerializeField] public Image CreateMatchImage;
 
+    // VIEW PARTIDAS //
     [SerializeField] public GameObject ViewContent;
 
+    // TEXTOS - VIDA //
     [SerializeField] public TextMeshProUGUI NameTxt;
     [SerializeField] public TextMeshProUGUI LevelTxt;
     [SerializeField] public TextMeshProUGUI LivesTxt;
@@ -62,6 +71,8 @@ public class MainMenuController : MonoBehaviour
     
     ////////////////// PARTIDA //////////////////
     private MatchInfo _matchToJoin;
+    private string _privateRoomCode;
+    private string _inputCode;
     
     ////////////////// MÚSICA //////////////////
     public AudioClip MusicObject;
@@ -81,8 +92,6 @@ public class MainMenuController : MonoBehaviour
         FindObjectOfType<AudioManager>().Stop("Main_menu");
         FindObjectOfType<AudioManager>().Play("Main_Menu");
 
-        //JoinGameButton.interactable = false;
-
         NameTxt.text = _localPlayer.Name;
         LevelTxt.text = "Level: " + Math.Truncate(_localPlayer.Level);
         LvlSlider.value = _localPlayer.Level % 1;
@@ -91,6 +100,7 @@ public class MainMenuController : MonoBehaviour
         LivesTxtShop.text = "Lives: " + _localPlayer.Lives;
         
         _matchToJoin = new MatchInfo();
+        _privateRoomCode = "";
 
         if (_localPlayer.Lives < MAXLIVES){
             recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(30);
@@ -190,6 +200,14 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Método para actualizar el texto del código de la partida privada
+    /// </summary>
+    public void UpdatePrivateRoomCode()
+    {
+        PrivateMatchCode.text = _privateRoomCode;
+    }
+
     #endregion
 
     #region MatchMethods
@@ -203,11 +221,27 @@ public class MainMenuController : MonoBehaviour
     }
 
     /// <summary>
+    /// Método para crear y conectarse a una sala privada
+    /// </summary>
+    private void CreateAndConnectPrivateMatch()
+    {
+        _gameManager.CreatePrivateRoom(_privateRoomCode);
+    }
+
+    /// <summary>
     /// Método para conectarse a una sala en específico
     /// </summary>
     private void ConnectToMatch()
     {
         _gameManager.OnConnectToSpecificRoom(_matchToJoin.MatchId);
+    }
+    
+    /// <summary>
+    /// Método para conectarse a una sala privada
+    /// </summary>
+    private void ConnectPrivateMatch()
+    {
+        _gameManager.ConnectToPrivateRoom(_inputCode);
     }
 
     /// <summary>
@@ -232,7 +266,7 @@ public class MainMenuController : MonoBehaviour
     }
 
     /// <summary>
-    /// Método para actualizar el comportamiento del botón de crear partida
+    /// Método ejecutado para crear una partida pública
     /// </summary>
     public void OnCreateMatchClick()
     {
@@ -246,13 +280,24 @@ public class MainMenuController : MonoBehaviour
         if (_gameManager.Matchmaking)
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Searching games...";
-            StartCoroutine(CreateOrCancelPMatch("connect"));
+            StartCoroutine(CreateOrCancelPublicMatch("connect"));
         }
         else
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Stopping matchmaking...";
-            StartCoroutine(CreateOrCancelPMatch("cancel"));
+            StartCoroutine(CreateOrCancelPublicMatch("cancel"));
         }
+    }
+
+    /// <summary>
+    /// Método ejecutado para crear una partida privada
+    /// </summary>
+    public void OnCreatePrivateMatchClick()
+    {
+        CreatePrivateMatchButton.interactable = false;
+        
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Creating private game...";
+        StartCoroutine(CreatePrivateMatch());
     }
 
     /// <summary>
@@ -268,6 +313,18 @@ public class MainMenuController : MonoBehaviour
         PrivateMatchButton.interactable = false;
         
         ConnectToMatch();
+    }
+
+    /// <summary>
+    /// Método de evento ejecutado al pulsar el botón de unirse a partida privada
+    /// </summary>
+    public void OnJoinPrivateMatchClick()
+    {
+        _inputCode = InputPrivateMatchCode.text;
+        
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joining " + _inputCode + "...";
+        
+        ConnectPrivateMatch();
     }
 
     /// <summary>
@@ -319,12 +376,13 @@ public class MainMenuController : MonoBehaviour
     #endregion
 
     #region ButtonInteractionsMethods
-
+    
     /// <summary>
-    /// Corutina ejecutada tras crear una partida o buscarla
+    /// Corutina ejecutada tras pulsar el botón de crear partida pública
     /// </summary>
+    /// <param name="mode"></param>
     /// <returns></returns>
-    private IEnumerator CreateOrCancelPMatch(string mode)
+    private IEnumerator CreateOrCancelPublicMatch(string mode)
     {
         yield return new WaitForSeconds(2);
         
@@ -340,7 +398,6 @@ public class MainMenuController : MonoBehaviour
                     PrivateMatchButton.interactable = true;
                     ChangeMatchListInteractions(true);
                     BackButton.interactable = true;
-                    
                 }
                 else
                 {
@@ -361,6 +418,27 @@ public class MainMenuController : MonoBehaviour
                 BackButton.interactable = true;
                 
                 break;
+        }
+    }
+
+    /// <summary>
+    /// Corutina ejecutada tras pulsar el botón de crear partida privada
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator CreatePrivateMatch()
+    {
+        yield return new WaitForSeconds(2);
+        
+        if (_localPlayer.Lives < 1)
+        {
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "You can´t look for a match." +
+                " You don´t have enough lives.";
+                    
+            CreatePrivateMatchButton.interactable = false;
+        }
+        else
+        {
+            CreateAndConnectPrivateMatch();
         }
     }
     
@@ -436,6 +514,14 @@ public class MainMenuController : MonoBehaviour
     public void ClearLog()
     {
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "";
+    }
+
+    /// <summary>
+    /// Método para obtener la clave de la partida privada
+    /// </summary>
+    public void GeneratePrivateCode()
+    {
+        _privateRoomCode = _gameManager.GetRoomCode();
     }
 
     public void SelectButton1()

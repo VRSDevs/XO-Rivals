@@ -13,13 +13,15 @@ using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Tipos de salas a las que unirse
-///     RANDOM_ROON - Sala aleatoria
-///     SPECIFIC_ROOM - Sala específica
+///     RandomRoom - Sala aleatoria (pública)
+///     SpecificRoom - Sala específica (pública)
+///     PrivateRoom - Sala privada
 /// </summary>
 public enum JoinType
 {
-    RANDOM_ROON,
-    SPECIFIC_ROOM
+    RandomRoom,
+    SpecificRoom,
+    PrivateRoom
 }
 
 public class NetworkController : MonoBehaviourPunCallbacks
@@ -155,6 +157,30 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
+    /// Método de creación de partida privada
+    /// </summary>
+    /// <param name="name">Nombre de la sala</param>
+    public void CreatePrivateRoom(string name)
+    {
+        _joinType = JoinType.PrivateRoom;
+        PhotonNetwork.CreateRoom(name, new Photon.Realtime.RoomOptions()
+        {
+            MaxPlayers = MAX_PLAYERS_INROOM,
+            PlayerTtl = -1,
+        });
+    }
+
+    /// <summary>
+    /// Método de unión a partida privada
+    /// </summary>
+    /// <param name="code">Código de la sala</param>
+    public void ConnectToPrivateRoom(string code)
+    {
+        _joinType = JoinType.PrivateRoom;
+        PhotonNetwork.JoinRoom(code);
+    }
+
+    /// <summary>
     /// Corutina para tratar de unirse a una sala
     /// </summary>
     /// <returns></returns>
@@ -162,7 +188,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(1);
 
-        _joinType = JoinType.RANDOM_ROON;
+        _joinType = JoinType.RandomRoom;
         PhotonNetwork.JoinRandomRoom();
     }
 
@@ -174,7 +200,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(1);
 
-        _joinType = JoinType.SPECIFIC_ROOM;
+        _joinType = JoinType.SpecificRoom;
         PhotonNetwork.RejoinRoom(_nameRoom);
     }
 
@@ -362,9 +388,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
         switch (_joinType)
         {
-            case JoinType.RANDOM_ROON:
-                
-                UpdateCreatingStatus();
+            case JoinType.RandomRoom:
 
                 if (PhotonNetwork.CurrentRoom.PlayerCount < MAX_PLAYERS_INROOM)
                 {
@@ -381,11 +405,24 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 }
                 
                 break;
-            case JoinType.SPECIFIC_ROOM:
+            case JoinType.SpecificRoom:
                 GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joined the match.";
                 
                 FindObjectOfType<GameManager>().IsPlaying = true;
                 SceneManager.LoadScene("TicTacToe_Server");
+                break;
+            case JoinType.PrivateRoom:
+                if (PhotonNetwork.CurrentRoom.PlayerCount < MAX_PLAYERS_INROOM)
+                {
+                    GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Waiting for opponent...";
+                }
+                else
+                {
+                    GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Starting match...";
+                    FindObjectOfType<GameManager>().SetupMatch("X");
+                    StartCoroutine(StartMatch());
+                }
+                
                 break;
         }
     }
@@ -427,6 +464,12 @@ public class NetworkController : MonoBehaviourPunCallbacks
         {
             // Caso 32758 - No existe ninguna partida con ese ID
             case 32758:
+                if (_joinType == JoinType.PrivateRoom)
+                {
+                    GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "No matches found.";
+                    return;
+                }
+                
                 StartCoroutine(RecreateMatchRoom(_nameRoom));
                 break;
             // Caso 32748 - No existe el usuario en la partida
@@ -466,10 +509,21 @@ public class NetworkController : MonoBehaviourPunCallbacks
    
         if (PhotonNetwork.CurrentRoom.PlayerCount != MAX_PLAYERS_INROOM) return;
 
-        FindObjectOfType<GameManager>().Matchmaking = true;
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Player found! Starting match...";
-        FindObjectOfType<GameManager>().SetupMatch("O");
-        StartCoroutine(StartMatch());
+        switch (_joinType)
+        {
+            case JoinType.RandomRoom:
+            case JoinType.SpecificRoom:
+                FindObjectOfType<GameManager>().Matchmaking = true;
+                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Player found! Starting match...";
+                FindObjectOfType<GameManager>().SetupMatch("O");
+                StartCoroutine(StartMatch());
+                break;
+            case JoinType.PrivateRoom:
+                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Starting match...";
+                FindObjectOfType<GameManager>().SetupMatch("O");
+                StartCoroutine(StartMatch());
+                break;
+        }
     }
 
     /// <summary>
@@ -553,7 +607,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// Método para generar una clave de sala
     /// </summary>
     /// <returns>Clave de sala</returns>
-    private string GenerateRoomCode()
+    public string GenerateRoomCode()
     {
         // Variables //
         string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";   // Posibles caracteres
