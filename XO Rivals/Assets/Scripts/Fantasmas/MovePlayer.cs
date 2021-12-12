@@ -11,6 +11,7 @@ public class MovePlayer : MonoBehaviour
     public float horizontal;
     public float vertical;
     private Rigidbody player;
+    private bool botonPulsado = false;
 
     //ROTACIONES NORMALES
     private Quaternion quatR = new Quaternion(0.7071068f,0,0, 0.7071068f);
@@ -85,35 +86,63 @@ public class MovePlayer : MonoBehaviour
 
     public void MoveLeft()
     {
-        horizontal = -1;
-        transform.rotation = quatL;
+        if (!botonPulsado)
+        {
+            botonPulsado = true;
+            horizontal = -1;
+            transform.rotation = quatL;
+        }
+       
     }
 
     public void MoveRight()
     {
-        horizontal = 1;
-        transform.rotation = quatR;
+        if (!botonPulsado)
+        {
+            botonPulsado = true;
+            horizontal = 1;
+            transform.rotation = quatR;
+        }
+       
     }
 
     public void StopHor()
     {
-        horizontal = 0;
+        
+            botonPulsado = false;
+            horizontal = 0;
+        
+       
         
     }
 
     public void StopVer()
     {
-        vertical = 0;
+
+            botonPulsado = false;
+            vertical = 0;
+        
+       
     }
     public void MoveDown()
     {
-        vertical = -1;
-        transform.rotation = quatB;
+        if (!botonPulsado)
+        {
+            botonPulsado = true;
+            vertical = -1;
+            transform.rotation = quatB;
+        }
+       
     }
     public void MoveUp()
     {
-        vertical = 1;
-        transform.rotation = quatT;
+        if (!botonPulsado)
+        {
+            botonPulsado = true;
+            vertical = 1;
+            transform.rotation = quatT;
+        }
+        
     }
 
     private void rotarPersonaje()
