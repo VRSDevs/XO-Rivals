@@ -9,20 +9,30 @@ public class AudioManager : MonoBehaviour
     // ANTES DE START
     void Awake()
     {
-        // Añadir componente de audio a cada sonido en el array
-        foreach (Sound s in sounds)
+        if (FindObjectsOfType<AudioManager>().Length < 2)
         {
-            // Añadir componente de AudioSource al sonido
-            s.source = gameObject.AddComponent<AudioSource>();
+            Debug.Log("No hay AudioManager duplicado");
+            
+            // Añadir componente de audio a cada sonido en el array
+            foreach (Sound s in sounds)
+            {
+                // Añadir componente de AudioSource al sonido
+                s.source = gameObject.AddComponent<AudioSource>();
 
-            // Asignación de atributos del sonido en el inspector a los correspondientes del AudioSource
-            s.source.clip = s.clip;
-            s.source.volume = s.volume;
-            s.source.pitch = s.pitch;
-            s.source.loop = s.loop;
+                // Asignación de atributos del sonido en el inspector a los correspondientes del AudioSource
+                s.source.clip = s.clip;
+                s.source.volume = s.volume;
+                s.source.pitch = s.pitch;
+                s.source.loop = s.loop;
+            }
+
+            DontDestroyOnLoad(gameObject);
         }
-
-        DontDestroyOnLoad(this.gameObject);
+        else
+        {
+            Destroy(gameObject);
+        }
+        
     }
 
     public void ChangeMusic(AudioClip song, String soundName) {

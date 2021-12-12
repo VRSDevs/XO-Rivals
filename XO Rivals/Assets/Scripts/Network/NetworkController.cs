@@ -27,7 +27,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     #region Variables
     
     ////////////////// CONEXIÓN //////////////////
-    private bool _connected = false;
+    private bool _connected;
     
     ////////////////// SALAS //////////////////
     /// <summary>
@@ -41,20 +41,20 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <summary>
     /// Lista de códigos de salas
     /// </summary>
-    private List<string> roomCodes = new List<string>();
+    private List<string> roomCodes;
 
     /// <summary>
     /// ¿La partida está lista para comenzar?
     /// </summary>
-    private bool _isReady = false;
+    private bool _isReady;
     /// <summary>
     /// ¿Se está creando una partida?
     /// </summary>
-    private bool _creatingRoom = false;
+    private bool _creatingRoom;
     /// <summary>
     /// Nombre de la sala específica
     /// </summary>
-    private string _nameRoom = "";
+    private string _nameRoom;
     /// <summary>
     /// Tipo de unión a sala
     /// </summary>
@@ -95,8 +95,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
     
     #region UnityCB
 
-    void Awake()
+    void Start()
     {
+        InitObject();
     }
 
     // Update is called once per frame
@@ -282,9 +283,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
             DataType.Logout);
 
         // Destrucción de GameObjects
-        Destroy(GameObject.Find("@GameManager"));
         Destroy(GameObject.Find("PlayerObject"));
-        Destroy(GameObject.Find("@SoundManager"));
+        FindObjectOfType<GameManager>().ResetObject();
 
         SceneManager.LoadScene("Login");
     }
@@ -498,6 +498,20 @@ public class NetworkController : MonoBehaviourPunCallbacks
     #endregion
 
     #region OtherMethods
+
+    /// <summary>
+    /// Método para inicializar las variables del objeto
+    /// </summary>
+    private void InitObject()
+    {
+        _connected = false;
+        
+        roomCodes = new List<string>();
+
+        _isReady = false;
+        _creatingRoom = false;
+        _nameRoom = "";
+    }
     
     /// <summary>
     /// Método para generar una clave de sala
@@ -526,6 +540,14 @@ public class NetworkController : MonoBehaviourPunCallbacks
         }
 
         return code;
+    }
+
+    /// <summary>
+    /// Método para reiniciar el objeto
+    /// </summary>
+    public void ResetObject()
+    {
+        InitObject();
     }
 
     #endregion
