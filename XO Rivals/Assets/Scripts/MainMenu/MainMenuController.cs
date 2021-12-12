@@ -390,6 +390,11 @@ public class MainMenuController : MonoBehaviour
     /// <param name="interactable"></param>
     private void ChangeMatchListInteractions(bool interactable)
     {
+        if (_gameManager.PlayerMatches.Count == 0)
+        {
+            return;
+        }
+        
         for (int i = 0; i < ViewContent.transform.childCount; i++)
         {
             GameObject child = ViewContent.transform.GetChild(i).gameObject;
