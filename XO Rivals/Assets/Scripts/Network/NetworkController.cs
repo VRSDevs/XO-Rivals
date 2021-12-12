@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using Photon.Pun;
 using Photon.Realtime;
 using PlayFab;
@@ -123,7 +124,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <returns></returns>
     public void DisconnectFromServer()
     {
-        PlayFabClientAPI.ForgetAllCredentials();
         PhotonNetwork.Disconnect();
     }
 
@@ -264,15 +264,29 @@ public class NetworkController : MonoBehaviourPunCallbacks
         {
             // Caso ClientTimeout -> El cliente deja de recibir respuestas por parte del servidor
             case DisconnectCause.ClientTimeout:
-                FindObjectOfType<GameManager>().ResetObject();
-                Destroy(GameObject.Find("PlayerObject"));
-
-                SceneManager.LoadScene("Login");
+                Debug.Log("Se dejó de recibir respuestas por parte del cliente");
+                
                 break;
             default:
                 Debug.Log("Desconexión del servidor: " + cause);
                 break;
         }
+        
+        FindObjectOfType<GameManager>().UpdateCloudData(new Dictionary<string, string>()
+        {
+            {DataType.Online.GetString(), "false"},
+            {DataType.Lives.GetString(), FindObjectOfType<PlayerInfo>().Lives.ToString()},
+            {DataType.Level.GetString(), FindObjectOfType<PlayerInfo>().Level.ToString(CultureInfo.InvariantCulture)},
+            {DataType.LifeLost.GetString(), FindObjectOfType<PlayerInfo>().LostLifeTime.ToString(CultureInfo.InvariantCulture)}
+        },
+            DataType.Logout);
+
+        // Destrucción de GameObjects
+        Destroy(GameObject.Find("@GameManager"));
+        Destroy(GameObject.Find("PlayerObject"));
+        Destroy(GameObject.Find("@SoundManager"));
+
+        SceneManager.LoadScene("Login");
     }
 
     /// <summary>

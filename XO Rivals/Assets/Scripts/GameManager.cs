@@ -89,6 +89,32 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Método para obtener el autentificador de usuario conectado
+    /// </summary>
+    /// <returns>Objeto de autentificación de usuario conectado</returns>
+    public AuthObject GetOnlineAuth()
+    {
+        return _cloudController.Obj;
+    }
+
+    /// <summary>
+    /// Método para reiniciar el objeto de validación de estado de conexión
+    /// </summary>
+    public void ResetOnlineAuth()
+    {
+        _cloudController.Obj = new AuthObject();
+    }
+
+    /// <summary>
+    /// Método para obtener si se está creando una partida
+    /// </summary>
+    /// <returns>¿Se está creando la partida?</returns>
+    public bool GetCheckedOnline()
+    {
+        return _cloudController.IsOnlineChecked();
+    }
+
+    /// <summary>
     /// Método para obtener el estado de sincronización
     /// </summary>
     /// <returns>Estado de sincronización</returns>
@@ -193,9 +219,7 @@ public class GameManager : MonoBehaviour
     {
         _networkController.DisconnectFromRoom();
     }
-    
-    
-    
+
     #endregion
 
     #region MatchMethods
@@ -243,9 +267,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="data">Datos a cargar</param>
     /// <returns>Estado de la operación</returns>
-    public void UpdateCloudData(Dictionary<string, string> data)
+    public void UpdateCloudData(Dictionary<string, string> data, DataType type)
     {
-        _cloudController.SendData(data);
+        _cloudController.SendData(data, type);
     }
 
     #endregion

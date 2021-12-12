@@ -84,21 +84,25 @@ public class Login : MonoBehaviour
 
     ////////////////// TECLADO EN MÓVILES //////////////////
     TouchScreenKeyboard keyboard;
-
-
+    
     #endregion
 
     #region UnityCB
 
     private void Start()
     {
+        // Generación objeto de PlayerInfo
+        GameObject myPlayer = new GameObject();
+        _playerInfo = myPlayer.AddComponent<PlayerInfo>();
+        DontDestroyOnLoad(myPlayer);
+        _playerInfo.name = "PlayerObject";
+        
         // Limitación de caracteres máximos de los inputs
         UsernameInput.characterLimit = MAX_CHARS;
         PasswordInput.characterLimit = MAX_CHARS;
 
         // Limpieza del log
         Log.text = "";
-        
     }
 
     #endregion
@@ -155,7 +159,6 @@ public class Login : MonoBehaviour
                     ErrorCode = Authenticator.Obj.ErrorCode
                 };
             }
-            
             Authenticator.Reset();
 
             Log.text = "Connecting to server...";
@@ -167,7 +170,7 @@ public class Login : MonoBehaviour
             {
                 Log.text = "Oops! Something went wrong.";
                 _isConnecting = false;
-                Authenticator = new PlayFabAuthenticator();
+                Authenticator = gameObject.AddComponent<PlayFabAuthenticator>();
             }
         }
         catch (LoginFailedException e)
@@ -186,8 +189,7 @@ public class Login : MonoBehaviour
             }
 
             _isConnecting = false;
-
-            Authenticator = new PlayFabAuthenticator();
+            Authenticator = gameObject.AddComponent<PlayFabAuthenticator>();
 
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
         }
@@ -202,19 +204,53 @@ public class Login : MonoBehaviour
         yield return new WaitUntil(_gameManager.GetConnected);
         
         _gameManager.SetPhotonNick(_username);
-                
-        GameObject myPlayer = new GameObject();
-                
-        _playerInfo = myPlayer.AddComponent<PlayerInfo>();
-        DontDestroyOnLoad(myPlayer);
-        _playerInfo.name = "PlayerObject";
+        
         _playerInfo.ID = Authenticator.playFabPlayerIdCache;
         _playerInfo.Name = _username;
 
         _gameManager.GetCloudData(DataType.Login);
         Log.text = "Getting data...";
 
-        StartCoroutine(OnGetPlayerData());
+        StartCoroutine(OnOnlineChecked()); 
+    }
+
+    /// <summary>
+    /// Corutina ejecutada tras comprobar si el usuario está conectado
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator OnOnlineChecked()
+    {
+        yield return new WaitUntil(_gameManager.GetCheckedOnline);
+
+        try
+        {
+            if (_gameManager.GetOnlineAuth().Failed)
+            {
+                throw new LoginFailedException(_gameManager.GetOnlineAuth().Message)
+                {
+                    ErrorCode = _gameManager.GetOnlineAuth().ErrorCode
+                };
+            }
+            
+            _gameManager.ResetOnlineAuth();
+            StartCoroutine(OnGetPlayerData()); 
+        }
+        catch (LoginFailedException e)
+        {
+            switch (e.ErrorCode)
+            {
+                case PlayFabErrorCode.ConnectionError:
+                    Log.text = "This user is already connected.";
+                    break;
+            }
+
+            _gameManager.ResetOnlineAuth();
+
+            _gameManager.OnDisconnectToServer();
+            _isConnecting = false;
+
+            Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
+        }
     }
 
     /// <summary>
@@ -230,25 +266,30 @@ public class Login : MonoBehaviour
         switch (int.Parse(data["ResultCode"]))
         {
             case 1:
-                        
+
+                data[DataType.Online.GetString()] = "true";
+                _playerInfo.Online = bool.Parse(data[DataType.Online.GetString()]);
                 _playerInfo.Lives = int.Parse(data[DataType.Lives.GetString()]);
                 _playerInfo.Level = float.Parse(data[DataType.Level.GetString()]);
                 _playerInfo.LostLifeTime = DateTime.ParseExact(data[DataType.LifeLost.GetString()],
                     "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                 
-                _gameManager.UpdateCloudData(data);
+                _gameManager.UpdateCloudData(data, DataType.Login);
                             
                 break;
             case 2:
 
+                _playerInfo.Online = true;
                 _playerInfo.Lives = 3;
                 _playerInfo.Level = 0.0f;
 
                 _gameManager.UpdateCloudData(new Dictionary<string, string>()
                 {
+                    {DataType.Online.GetString(), _playerInfo.Online.ToString()},
                     {DataType.Lives.GetString(), _playerInfo.Lives.ToString()},
                     {DataType.Level.GetString(), _playerInfo.Level.ToString(CultureInfo.InvariantCulture)}
-                });
+                },
+                    DataType.Login);
                         
                 break;
             case 3:

@@ -9,6 +9,7 @@ using UnityEngine;
 /// <summary>
 /// Tipos de datos que se pueden solicitar
 ///     Login - Datos necesarios para el inicio de sesión
+///     Online - ¿Está conectado el usuario?
 ///     Lives - Vidas del usuario
 ///     Level - Nivel del usuario
 ///     LifeLost - Tiempo de las vidas perdidas
@@ -17,6 +18,8 @@ using UnityEngine;
 public enum DataType
 {
     Login,
+    Logout,
+    Online,
     Lives,
     Level,
     LifeLost
@@ -36,8 +39,8 @@ public static class DataTypeExtension
     {
         switch (type)
         {
-            case DataType.Login:
-                return "";
+            case DataType.Online:
+                return "Online";
             case DataType.Lives:
                 return "Lives";
             case DataType.Level:
@@ -55,15 +58,23 @@ public class CloudDataController : MonoBehaviour
     #region Vars
 
     /// <summary>
+    /// ¿Se comprobó si está en línea?
+    /// </summary>
+    private bool _checkedOnline = false;
+    /// <summary>
     /// ¿Se sincronizaron los datos?
     /// </summary>
     private bool _synchronized = false;
 
     /// <summary>
+    /// Objeto de autentificación
+    /// </summary>
+    public AuthObject Obj;
+
+    /// <summary>
     /// Diccionario de datos de la nube
     /// </summary>
     private Dictionary<string, string> _cloudData;
-
     /// <summary>
     /// Diccionario con el estado de envío de datos
     /// </summary>
@@ -72,6 +83,15 @@ public class CloudDataController : MonoBehaviour
     #endregion
 
     #region Getters
+
+    /// <summary>
+    /// Método para devolver el valor de la comprobación de estado en línea
+    /// </summary>
+    /// <returns>Valor de la comrpobación</returns>
+    public bool IsOnlineChecked()
+    {
+        return _checkedOnline;
+    }
 
     /// <summary>
     /// Método para devolver el valor de control de sincronización
@@ -105,11 +125,18 @@ public class CloudDataController : MonoBehaviour
     #region UpdateMethods
 
     /// <summary>
+    /// Método actualización del estado de comprobación de si el jugador está en línea
+    /// </summary>
+    public void UpdateOnlineChecked()
+    {
+        _checkedOnline = !_checkedOnline;
+    }
+
+    /// <summary>
     /// Método actualización del estado de sincronización
     /// </summary>
     public void UpdateSynchronizedStatus()
     {
-        Debug.Log("Valor actualizado.");
         _synchronized = !_synchronized;
     }
 
@@ -138,8 +165,9 @@ public class CloudDataController : MonoBehaviour
     /// Método para enviar datos
     /// </summary>
     /// <param name="data">Diccionario de datos a enviar</param>
+    /// /// <param name="type">Tipo de dato a enviar</param>
     /// <returns>Estado de la operación</returns>
-    public void SendData(Dictionary<string, string> data)
+    public void SendData(Dictionary<string, string> data, DataType type)
     {
         data.Remove("ResultCode");
         
@@ -148,7 +176,7 @@ public class CloudDataController : MonoBehaviour
             Data = data
         }, (result) =>
         {
-            OnDataSend();
+            OnDataSend(type);
         }, OnSendError);
     }
 
@@ -190,6 +218,22 @@ public class CloudDataController : MonoBehaviour
         {
             case DataType.Login:
 
+                if (result.Data.ContainsKey(DataType.Online.GetString()) && bool.Parse(result.Data[DataType.Online.GetString()].Value))
+                {
+                    Debug.Log("Usuario ya conectado");
+                    
+                    Obj.Failed = true;
+                    Obj.ErrorCode = PlayFabErrorCode.ConnectionError;
+                    Obj.Message = "Account already online";
+                    
+                    UpdateOnlineChecked();
+
+                    return;
+                }
+                
+                UpdateOnlineChecked();
+
+                _cloudData.Add(DataType.Online.GetString(), !result.Data.ContainsKey(DataType.Online.GetString()) ? "false" : result.Data[DataType.Online.GetString()].Value);
                 _cloudData.Add(DataType.Lives.GetString(), !result.Data.ContainsKey(DataType.Lives.GetString()) ? "3" : result.Data[DataType.Lives.GetString()].Value);
                 _cloudData.Add(DataType.Level.GetString(), !result.Data.ContainsKey(DataType.Level.GetString()) ? "0.0" : result.Data[DataType.Level.GetString()].Value);
                 _cloudData.Add(DataType.LifeLost.GetString(), !result.Data.ContainsKey(DataType.LifeLost.GetString()) || string.IsNullOrEmpty(result.Data[DataType.LifeLost.GetString()].Value)
@@ -212,13 +256,23 @@ public class CloudDataController : MonoBehaviour
     /// <summary>
     /// Método ejecutado cuando se mandan los datos de manera correcta
     /// </summary>
+    /// <param name="type">Tipo de dato a obtener</param>
     /// <returns>Diccionario con el resultado del envío</returns>
-    private void OnDataSend()
+    private void OnDataSend(DataType type)
     {
         _sendDataStatus = new Dictionary<string, string>()
         {
             {"ResultCode", "1"}
         };
+
+        switch (type)
+        {
+            // Caso Logout -> Procedimiento tras enviar datos de cierre de sesión
+            case DataType.Logout:
+                PlayFabClientAPI.ForgetAllCredentials();
+                
+                break;
+        }
     }
 
     /// <summary>

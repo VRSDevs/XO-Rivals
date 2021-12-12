@@ -95,7 +95,8 @@ public class BetaShop : MonoBehaviour
         FindObjectOfType<GameManager>().UpdateCloudData(new Dictionary<string, string>()
         {
             {DataType.Lives.GetString(), _localPlayer.Lives.ToString()}
-        });
+        },
+            DataType.Lives);
         
         FindObjectOfType<GameManager>().UpdatePurchaseStatus();
     }
