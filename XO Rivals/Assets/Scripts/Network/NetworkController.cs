@@ -493,10 +493,21 @@ public class NetworkController : MonoBehaviourPunCallbacks
    
         if (PhotonNetwork.CurrentRoom.PlayerCount != MAX_PLAYERS_INROOM) return;
 
-        FindObjectOfType<GameManager>().Matchmaking = true;
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Player found! Starting match...";
-        FindObjectOfType<GameManager>().SetupMatch("O");
-        StartCoroutine(StartMatch());
+        switch (_joinType)
+        {
+            case JoinType.RandomRoom:
+            case JoinType.SpecificRoom:
+                FindObjectOfType<GameManager>().Matchmaking = true;
+                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Player found! Starting match...";
+                FindObjectOfType<GameManager>().SetupMatch("O");
+                StartCoroutine(StartMatch());
+                break;
+            case JoinType.PrivateRoom:
+                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Starting match...";
+                FindObjectOfType<GameManager>().SetupMatch("O");
+                StartCoroutine(StartMatch());
+                break;
+        }
     }
 
     /// <summary>
