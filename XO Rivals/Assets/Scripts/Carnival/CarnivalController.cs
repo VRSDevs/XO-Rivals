@@ -83,6 +83,7 @@ public class CarnivalController : MonoBehaviour
     private void FixedUpdate()
     {
         BarMovement();
+        speed += 0.02f;
     }
 
     // Update is called once per frame
