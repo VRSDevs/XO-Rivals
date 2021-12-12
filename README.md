@@ -9,7 +9,18 @@ La partida terminará cuando uno de los dos jugadores consiga colocar tres ficha
 Una vez colocadas las fichas de manera correcta, los resultados se enviarán a ambos jugadores dando por cerrada la anterior partida activa. 
 
 ## Instrucciones del juego
-Al empezar una partida, el jugador deberá pulsar el botón de inicio de partida donde seleccionará si unirse a una partida o crear una nueva, posteriormente, se le enviará al propio juego. En esta pantalla, antes de que la ficha termine de ser colocada, el jugador tendrá que seleccionar uno de los minijuegos que aparecen en la pantalla para que sea el propio juego el que decida si puede colocar ficha. Al acabar el minijuego, se habrá acabado su turno y tendrá que esperar hasta que el jugador rival termine su turno para poder continuar con la partida. Para ganar la partida, el jugador tiene que plantar 3 fichas en línea, ya sea de manera horizontal, vertical o diagonal.
+  1. Inicia el juego
+	2. Crea una cuenta y registrate con tu usuario y contraseña pulsando el botón de "Register".
+	3. Pulsa el botón "Play" en el menú principal.
+	4a. Crea una nueva partida seleccionando el botón "Public Game".
+	4b. Crea una partida privada seleccionado el botón "Private Game"
+	5. Espera a que otro jugador se una a tu partida para comenzar.
+	6. Una vez hayas encontrado partida se te mostrará el tablero del tres en raya y podrás colocar una ficha.
+	7. Al colocar una ficha deberás jugar a un minijuego.
+	8. Antes de jugar el minijuego aparecerá una pantalla con las instrucciones donde deberás pulsar "Play" para iniciar el juego.
+	9. Juega el minijuego (si vences tu ficha se colocará, si pierdes no podrás colocarla).
+	10. Selecciona el minijuego que jugará el rival en su turno.
+	11. Espera a que tu rival acabe su turno para volver a colocar ficha y jugar tu minijuego.
 
 ## Instalación y Uso
 El juego no requiere instalación, para poder jugarlo será necesario acceder a la pagina de Itch.io donde se encuentra [XO Rivals](https://vrsdevs.itch.io/xo-rivals).
