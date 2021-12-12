@@ -542,5 +542,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
         return code;
     }
 
+    public void ResetObject()
+    {
+        InitObject();
+    }
+
     #endregion
 }
