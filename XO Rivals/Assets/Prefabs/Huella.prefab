@@ -129,6 +129,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sigHuella: {fileID: 0}
+  renderX: {fileID: 8426481059289550}
+  renderO: {fileID: 810685512876261979}
 --- !u!65 &18749046126125368
 BoxCollider:
   m_ObjectHideFlags: 0

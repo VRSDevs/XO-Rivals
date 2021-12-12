@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Photon.Pun;
 
 public class MovePlayer : MonoBehaviour
 {
@@ -25,20 +26,45 @@ public class MovePlayer : MonoBehaviour
     private Quaternion quatBL = new Quaternion(-0.2705979f, -0.6532816f, 0.6532816f, -0.2705979f);
     private Quaternion quatTL = new Quaternion(0.2705981f, -0.6532816f, 0.6532816f, 0.2705981f);
 
-    [SerializeField]
     private Animator anim;
+    [SerializeField]private Animator animX;
+    [SerializeField] private Animator animO;
+
+    public GameObject xSprite;
+    public GameObject oSprite;
+
+    public Match thisMatch;
+
+    public PlayerInfo localPlayer;
+    private GameManager _gameManager;
 
     private bool vivo = true;
 
     private void Awake()
     {
         player = GetComponent<Rigidbody>();
+        _gameManager = FindObjectOfType<GameManager>();
+        thisMatch = _gameManager.PlayerMatches[PhotonNetwork.CurrentRoom.Name];
+        localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-      
+
+        // Recoger de quien es el turno y activar los personajes necesarios
+        if (thisMatch.PlayerOName == localPlayer.Name) //TURNO O
+        {
+            xSprite.SetActive(false);
+            anim = animO;
+        }
+        else
+        {
+            oSprite.SetActive(false);                   //TURNO X
+            anim = animX;
+        }
+
+
     }
 
     // Update is called once per frame
