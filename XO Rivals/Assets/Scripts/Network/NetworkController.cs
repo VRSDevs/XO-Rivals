@@ -224,6 +224,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(1);
         
+        Debug.Log( FindObjectOfType<PlayerInfo>().UserID + " vs. " + FindObjectOfType<GameManager>().PlayerMatches[roomName].OpponentId);
+        
         PhotonNetwork.CreateRoom(roomName, new Photon.Realtime.RoomOptions()
         {
             MaxPlayers = MAX_PLAYERS_INROOM,
@@ -358,6 +360,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
 
         FindObjectOfType<PlayerInfo>().MatchId = PhotonNetwork.LocalPlayer.ActorNumber;
+        
+        Debug.Log("a");
 
         switch (_joinType)
         {
@@ -380,6 +384,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 
                 break;
             case JoinType.SPECIFIC_ROOM:
+                GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joined the match.";
+                
                 FindObjectOfType<GameManager>().IsPlaying = true;
                 SceneManager.LoadScene("TicTacToe_Server");
                 break;
@@ -424,7 +430,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
             case 32758:
                 StartCoroutine(RecreateMatchRoom(_nameRoom));
                 break;
-            // Caso 32748 - No existe ninguna partida con ese ID
+            // Caso 32748 - No existe el usuario en la partida
             case 32748:
                 break;
             default:

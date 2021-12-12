@@ -350,9 +350,7 @@ public class MainMenuController : MonoBehaviour
     private IEnumerator ChangeInteractionAfterJm()
     {
         yield return new WaitForSeconds(2);
-        
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joined the match.";
-        
+
         CreateGameButton.interactable = true;
 
         ChangeMatchListInteractions(true);
