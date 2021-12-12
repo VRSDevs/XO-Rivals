@@ -273,12 +273,6 @@ public class CloudDataController : MonoBehaviour
             case DataType.Logout:
                 PlayFabClientAPI.ForgetAllCredentials();
                 
-                // Destrucción de GameObjects
-                FindObjectOfType<GameManager>().ResetObject();
-                Destroy(GameObject.Find("PlayerObject"));
-                Destroy(GameObject.Find("@SoundManager"));
-
-                SceneManager.LoadScene("Login");
                 break;
         }
     }
