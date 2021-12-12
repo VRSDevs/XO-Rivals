@@ -63,7 +63,9 @@ public class ButtonScriptAI : MonoBehaviour
 
         thisMatch = FindObjectOfType<MatchAI>();
         DontDestroyOnLoad(thisMatch);
-        //localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();        
+
+        //localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
+        DontDestroyOnLoad(localPlayer);      
         thisMatch.PlayerOName = localPlayer.Name;
 
         //Initialize ScreenManager
@@ -189,23 +191,23 @@ public class ButtonScriptAI : MonoBehaviour
             switch(thisMatch.MiniGameChosen){
 
                 case 0:
-                    SceneManager.LoadScene("Pistolero");
+                    SceneManager.LoadScene("Pistolero_Off");
                 break;
 
                 case 1:
-                    SceneManager.LoadScene("MinijuegoComida");
+                    SceneManager.LoadScene("MinijuegoComida_Off");
                 break;
 
                 case 2:
-                    SceneManager.LoadScene("PlatformMinigame");
+                    SceneManager.LoadScene("PlatformMinigame_Off");
                 break;
                 
                 case 3:
-                    SceneManager.LoadScene("Fanstasmas3D");
+                    SceneManager.LoadScene("Fanstasmas3D_Off");
                 break;
 
                 case 4:
-                    SceneManager.LoadScene("CarnivalMinigame");
+                    SceneManager.LoadScene("CarnivalMinigame_Off");
                 break;
             }
         }
@@ -246,36 +248,18 @@ public class ButtonScriptAI : MonoBehaviour
             if (miniWin)
             {
                 GameObject actual;
-                if (thisMatch.ActualChipTeam == "cross")
-                {
-                    //Save position
-                    thisMatch.FilledPositions[thisMatch.ActualChip % 3, thisMatch.ActualChip / 3] = 1;
-                    
-                    //Paint tile completely
-                    actual = Instantiate(crossGO, botonesCuadricula[thisMatch.ActualChip].position, Quaternion.identity);
-                    actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
-                    actual.SetActive(true);
+                //Save position
+                thisMatch.FilledPositions[thisMatch.ActualChip % 3, thisMatch.ActualChip / 3] = 0;
+                //Paint tile completely
 
-                    //Add chip to list
-                    ChipsList.Add(actual);
-                    //Add one to filled count
-                    thisMatch.NumFilled++;
-                }
-                else if (thisMatch.ActualChipTeam == "circle")
-                {
-                    //Save position
-                    thisMatch.FilledPositions[thisMatch.ActualChip % 3, thisMatch.ActualChip / 3] = 0;
-                    //Paint tile completely
+                actual = Instantiate(circleGO, botonesCuadricula[thisMatch.ActualChip].position, Quaternion.identity);
+                actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+                actual.SetActive(true);
 
-                    actual = Instantiate(circleGO, botonesCuadricula[thisMatch.ActualChip].position, Quaternion.identity);
-                    actual.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
-                    actual.SetActive(true);
-
-                    //Add chip to list
-                    ChipsList.Add(actual);
-                    //Add one to filled count
-                    thisMatch.NumFilled++;
-                }
+                //Add chip to list
+                ChipsList.Add(actual);
+                //Add one to filled count
+                thisMatch.NumFilled++;
             }//Fin win
 
             Debug.Log("SE HACE MINIGAME SELECTION");

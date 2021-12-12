@@ -1,11 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-public class PlayerMovement : MonoBehaviour
+
+public class PlayerMovementOff : MonoBehaviour
 {
 
     [SerializeField]
@@ -38,9 +36,12 @@ public class PlayerMovement : MonoBehaviour
     private float speed = 5f;
     private float jumpingPower = 6f;
 
+    private MatchAI thisMatch;
+
     private void Awake()
     {
         player = GetComponent<Rigidbody2D>();
+        thisMatch = FindObjectOfType<MatchAI>();
 
     }
 
@@ -112,6 +113,7 @@ public class PlayerMovement : MonoBehaviour
         {
             player.velocity = new Vector2(player.velocity.x, jumpingPower);
             anim.SetBool("isJumping", true);
+            FindObjectOfType<AudioManager>().Play("Jump");
         }
 
         
@@ -178,15 +180,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void Defeat()
     {
-        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        thisMatch.TurnMoment = 2;
         PlayerPrefs.SetInt("minigameWin", 0);
-        SceneManager.LoadScene("TicTacToe_Server");
+        SceneManager.LoadScene("TicTac_AI");
     }
 
     public void Victory()
     {
-        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        thisMatch.TurnMoment = 2;
         PlayerPrefs.SetInt("minigameWin", 1);
-        SceneManager.LoadScene("TicTacToe_Server");
+        SceneManager.LoadScene("TicTac_AI");
     }
 }

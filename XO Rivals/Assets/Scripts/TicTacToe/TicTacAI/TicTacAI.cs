@@ -15,13 +15,12 @@ public class TicTacAI : MonoBehaviour
 
     //Match
     private MatchAI thisMatch;
-    private ButtonScriptAI butonScriptReference;
+    [SerializeField] private ButtonScriptAI butonScriptReference;
     private ScreenManagerAI screenManagerReference;
 
     // Start is called before the first frame update
     void Start()
     {
-        butonScriptReference = FindObjectOfType<ButtonScriptAI>();
         screenManagerReference = FindObjectOfType<ScreenManagerAI>();
         thisMatch = butonScriptReference.thisMatch;
 
@@ -435,6 +434,11 @@ public class TicTacAI : MonoBehaviour
 
     void PlaceTile(){
         
+        if(butonScriptReference == null){
+            butonScriptReference = FindObjectOfType<ButtonScriptAI>();
+            thisMatch = butonScriptReference.thisMatch;
+        }
+        
         //Save new position
         thisMatch.FilledPositions[nextRow,nextCol] = ai;
 
@@ -445,7 +449,8 @@ public class TicTacAI : MonoBehaviour
 
         butonScriptReference.ChipsList.Add(chip);
         thisMatch.NumFilled++;
-        thisMatch.MiniGameChosen = Random.Range(0,5);
+        //thisMatch.MiniGameChosen = Random.Range(0,5);
+        thisMatch.MiniGameChosen = 0;
         screenManagerReference.UpdateTurn();
     }
 }

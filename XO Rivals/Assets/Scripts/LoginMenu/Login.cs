@@ -91,6 +91,8 @@ public class Login : MonoBehaviour
 
     private void Start()
     {
+        FindObjectOfType<AudioManager>().StopAllSongs();
+
         _gameManager = FindObjectOfType<GameManager>();
         
         // Generación objeto de PlayerInfo
