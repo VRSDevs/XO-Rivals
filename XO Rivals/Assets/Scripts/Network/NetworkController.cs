@@ -176,7 +176,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1);
 
         _joinType = JoinType.SPECIFIC_ROOM;
-        PhotonNetwork.JoinRoom(_nameRoom);
+        PhotonNetwork.RejoinRoom(_nameRoom);
     }
 
     /// <summary>
@@ -190,7 +190,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded())
             {
                 FindObjectOfType<GameManager>().PlayerMatches.Remove(PhotonNetwork.CurrentRoom.Name);
-                PhotonNetwork.LeaveRoom(true);
+                PhotonNetwork.LeaveRoom(false);
             }
         }
         
@@ -212,6 +212,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(roomName, new Photon.Realtime.RoomOptions()
         {
             MaxPlayers = MAX_PLAYERS_INROOM,
+            EmptyRoomTtl = -1,
             PlayerTtl = -1
         });
     }
