@@ -207,7 +207,7 @@ public class Login : MonoBehaviour
         
         _gameManager.SetPhotonNick(_username);
         
-        _playerInfo.ID = Authenticator.playFabPlayerIdCache;
+        _playerInfo.PlayfabID = Authenticator.playFabPlayerIdCache;
         _playerInfo.Name = _username;
 
         _gameManager.GetCloudData(DataType.Login);

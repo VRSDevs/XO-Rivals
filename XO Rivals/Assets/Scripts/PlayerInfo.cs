@@ -7,9 +7,13 @@ public class PlayerInfo : MonoBehaviour {
     #region Vars
 
     /// <summary>
-    /// Id de usuario
+    /// ID de usuario (Photon)
     /// </summary>
-    public string ID = "";
+    public string UserID = "";
+    /// <summary>
+    /// ID de usuario (Playfab)
+    /// </summary>
+    public string PlayfabID = "";
     /// <summary>
     /// Nombre de usuario
     /// </summary>

@@ -165,7 +165,7 @@ public class CloudDataController : MonoBehaviour
     {
         PlayFabClientAPI.GetUserData(new GetUserDataRequest()
         {
-            PlayFabId = FindObjectOfType<PlayerInfo>().ID,
+            PlayFabId = FindObjectOfType<PlayerInfo>().PlayfabID,
             Keys = null
         }, (result) =>
         {
