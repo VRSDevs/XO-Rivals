@@ -36,6 +36,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] public Button PublicMatchButton;
     [SerializeField] public Button PrivateMatchButton;
     [SerializeField] public TextMeshProUGUI PrivateMatchCode;
+    [SerializeField] public Button CreatePrivateMatchButton;
     
     // BOTONES //
     [SerializeField] public Button BackButton;
