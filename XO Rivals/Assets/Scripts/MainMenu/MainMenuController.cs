@@ -340,6 +340,10 @@ public class MainMenuController : MonoBehaviour
                         " You don´t have enough lives.";
                     
                     CreateGameButton.interactable = true;
+                    JoinGameButton.interactable = true;
+                    ChangeMatchListInteractions(true);
+                    BackButton.interactable = true;
+                    
                     _gameManager.SetCreatingRoomStatus();
                 }
                 else
