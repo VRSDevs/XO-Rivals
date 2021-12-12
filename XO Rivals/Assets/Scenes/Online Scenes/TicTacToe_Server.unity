@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 155701404}
   - component: {fileID: 155701403}
   - component: {fileID: 155701402}
+  - component: {fileID: 155701405}
   m_Layer: 0
   m_Name: VideoTutorial (2)
   m_TagString: Untagged
@@ -450,6 +451,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155701400}
   m_CullTransparentMesh: 1
+--- !u!114 &155701405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155701400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 999ca70e9810c7d4296df02e48b4954b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  videoPlayer: {fileID: 155701402}
 --- !u!1 &175324816
 GameObject:
   m_ObjectHideFlags: 0
@@ -4262,6 +4276,7 @@ GameObject:
   - component: {fileID: 831076878}
   - component: {fileID: 831076877}
   - component: {fileID: 831076876}
+  - component: {fileID: 831076879}
   m_Layer: 0
   m_Name: VideoTutorial (3)
   m_TagString: Untagged
@@ -4358,6 +4373,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 831076874}
   m_CullTransparentMesh: 1
+--- !u!114 &831076879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831076874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e715126ef74a244db10ff0d14b5a4c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  videoPlayer: {fileID: 831076876}
 --- !u!1 &902076682 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2486690511515172944, guid: ca765bcd4c7d02e4bac898492a9300cb, type: 3}
@@ -6916,6 +6944,7 @@ GameObject:
   - component: {fileID: 1406794900}
   - component: {fileID: 1406794899}
   - component: {fileID: 1406794898}
+  - component: {fileID: 1406794901}
   m_Layer: 0
   m_Name: VideoTutorial (4)
   m_TagString: Untagged
@@ -7012,6 +7041,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1406794896}
   m_CullTransparentMesh: 1
+--- !u!114 &1406794901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406794896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75f14c460a121ea4c90b184ebfbb3406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  videoPlayer: {fileID: 1406794898}
 --- !u!1001 &1408917826
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7646,6 +7688,7 @@ GameObject:
   - component: {fileID: 1569989062}
   - component: {fileID: 1569989061}
   - component: {fileID: 1569989060}
+  - component: {fileID: 1569989063}
   m_Layer: 0
   m_Name: VideoTutorial (1)
   m_TagString: Untagged
@@ -7742,6 +7785,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1569989058}
   m_CullTransparentMesh: 1
+--- !u!114 &1569989063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569989058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a70fb218441443541a20bef9d6d539f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  videoPlayer: {fileID: 1569989060}
 --- !u!1 &1571318606
 GameObject:
   m_ObjectHideFlags: 0
@@ -8324,6 +8380,7 @@ GameObject:
   - component: {fileID: 1709770864}
   - component: {fileID: 1709770863}
   - component: {fileID: 1709770865}
+  - component: {fileID: 1709770866}
   m_Layer: 0
   m_Name: VideoTutorial
   m_TagString: Untagged
@@ -8420,6 +8477,19 @@ VideoPlayer:
   m_WaitForFirstFrame: 0
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
+--- !u!114 &1709770866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709770861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3844c5ab20d4e4a4ca501b05bc994bf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  videoPlayer: {fileID: 1709770865}
 --- !u!1 &1755892086
 GameObject:
   m_ObjectHideFlags: 0
