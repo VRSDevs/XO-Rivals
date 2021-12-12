@@ -223,7 +223,7 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     private void ConnectPrivateMatch()
     {
-        
+        _gameManager.CreatePrivateRoom(_privateRoomCode);
     }
 
     /// <summary>

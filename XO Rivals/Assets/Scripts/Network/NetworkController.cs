@@ -155,6 +155,19 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
+    /// Método de creación de partida privada
+    /// </summary>
+    /// <param name="name">Nombre de la sala</param>
+    public void CreatePrivateRoom(string name)
+    {
+        PhotonNetwork.CreateRoom(name, new Photon.Realtime.RoomOptions()
+        {
+            MaxPlayers = MAX_PLAYERS_INROOM,
+            PlayerTtl = -1,
+        });
+    }
+
+    /// <summary>
     /// Corutina para tratar de unirse a una sala
     /// </summary>
     /// <returns></returns>
@@ -363,8 +376,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
         switch (_joinType)
         {
             case JoinType.RANDOM_ROON:
-                
-                UpdateCreatingStatus();
 
                 if (PhotonNetwork.CurrentRoom.PlayerCount < MAX_PLAYERS_INROOM)
                 {
