@@ -251,7 +251,7 @@ public class MainMenuController : MonoBehaviour
         }
         else
         {
-            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Cancelling matchmaking...";
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Stopping matchmaking...";
             StartCoroutine(CreateOrCancelPMatch("cancel"));
         }
     }
