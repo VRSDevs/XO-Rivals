@@ -283,7 +283,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
         // Destrucción de GameObjects
         Destroy(GameObject.Find("PlayerObject"));
-        Destroy(GameObject.Find("@SoundManager"));
         FindObjectOfType<GameManager>().ResetObject();
 
         SceneManager.LoadScene("Login");
