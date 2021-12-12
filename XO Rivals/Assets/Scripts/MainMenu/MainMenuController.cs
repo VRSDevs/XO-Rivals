@@ -342,7 +342,6 @@ public class MainMenuController : MonoBehaviour
                     ChangeMatchListInteractions(true);
                     BackButton.interactable = true;
                     
-                    _gameManager.SetCreatingRoomStatus();
                 }
                 else
                 {
@@ -358,7 +357,6 @@ public class MainMenuController : MonoBehaviour
                 ChangeMatchListInteractions(true);
                 BackButton.interactable = true;
                 
-                _gameManager.SetCreatingRoomStatus();
                 break;
         }
     }

@@ -170,14 +170,6 @@ public class GameManager : MonoBehaviour
         _networkController.UpdateReadyStatus();
     }
 
-    /// <summary>
-    /// Método para actualizar la variable de control de creación de partida
-    /// </summary>
-    public void SetCreatingRoomStatus()
-    {
-        _networkController.UpdateCreatingStatus();
-    }
-
     #endregion
 
     #region ConnectionMethods
