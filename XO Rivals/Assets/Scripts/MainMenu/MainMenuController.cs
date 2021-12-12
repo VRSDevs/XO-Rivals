@@ -236,8 +236,6 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void OnCreateMatchClick()
     {
-        _gameManager.Matchmaking = !_gameManager.Matchmaking;
-        
         CreateGameButton.onClick.RemoveAllListeners();
 
         CreateGameButton.interactable = false;
@@ -247,22 +245,20 @@ public class MainMenuController : MonoBehaviour
 
         if (_gameManager.Matchmaking)
         {
-            StartCoroutine(ChangeInteractionAfterCm("connect"));
-            ConnectRandomMatch();
-            CreateMatchImage.sprite = CancelMatchmakingSprite;
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Searching games...";
+            StartCoroutine(CreateOrCancelPMatch("connect"));
         }
         else
         {
-            StartCoroutine(ChangeInteractionAfterCm("cancel"));
-            LeaveMatchmaking();
-            CreateMatchImage.sprite = CreateMatchSprite;
+            GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Stopping matchmaking...";
+            StartCoroutine(CreateOrCancelPMatch("cancel"));
         }
     }
 
     /// <summary>
     /// Método de evento ejecutado al pulsar el botón de unirse a partida
     /// </summary>
-    public void OnJoinMatchClick()
+    private void OnJoinMatchClick()
     {
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joining " + _matchToJoin.MatchName + "...";
         
@@ -302,14 +298,13 @@ public class MainMenuController : MonoBehaviour
 
             if (grandChildren["MatchName"].GetComponent<TextMeshProUGUI>().text.Equals(selectedChildren["MatchName"].GetComponent<TextMeshProUGUI>().text))
             {
-                child.GetComponent<Button>().interactable = false;
-                JoinGameButton.interactable = true;
                 _matchToJoin.MatchId = selectedChildren["MatchID"].GetComponent<TextMeshProUGUI>().text;
                 _matchToJoin.MatchName = selectedChildren["MatchName"].GetComponent<TextMeshProUGUI>().text;
+                OnJoinMatchClick();
                 continue;
             }
             
-            child.GetComponent<Button>().interactable = true;
+            child.GetComponent<Button>().interactable = false;
         }
     }
     
@@ -319,11 +314,6 @@ public class MainMenuController : MonoBehaviour
     public void OnExitClick()
     {
         _gameManager.OnDisconnectToServer();
-
-        _gameManager.ResetObject();
-        Destroy(GameObject.Find("PlayerObject"));
-
-        SceneManager.LoadScene("Login");
     }
 
     #endregion
@@ -334,19 +324,44 @@ public class MainMenuController : MonoBehaviour
     /// Corutina ejecutada tras crear una partida o buscarla
     /// </summary>
     /// <returns></returns>
-    private IEnumerator ChangeInteractionAfterCm(string mode)
+    private IEnumerator CreateOrCancelPMatch(string mode)
     {
-        yield return new WaitUntil(_gameManager.GetIsCreatingMatch);
-
-        CreateGameButton.interactable = true;
-
-        if (mode.Equals("cancel"))
-        {
-            ChangeMatchListInteractions(true);
-            BackButton.interactable = true;
-        }
+        yield return new WaitForSeconds(2);
         
-        _gameManager.SetCreatingRoomStatus();
+        switch (mode)
+        {
+            case "connect":
+                if (_localPlayer.Lives < 1)
+                {
+                    GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "You can´t look for a match." +
+                        " You don´t have enough lives.";
+                    
+                    CreateGameButton.interactable = true;
+                    JoinGameButton.interactable = true;
+                    ChangeMatchListInteractions(true);
+                    BackButton.interactable = true;
+                    
+                }
+                else
+                {
+                    _gameManager.Matchmaking = !_gameManager.Matchmaking;
+                    ConnectRandomMatch();
+                }
+                
+                break;
+            case "cancel":
+                _gameManager.Matchmaking = !_gameManager.Matchmaking;
+                
+                LeaveMatchmaking();
+                ChangePublicMatchSprite(mode);
+                
+                CreateGameButton.interactable = true;
+                JoinGameButton.interactable = true;
+                ChangeMatchListInteractions(true);
+                BackButton.interactable = true;
+                
+                break;
+        }
     }
     
     /// <summary>
@@ -356,20 +371,32 @@ public class MainMenuController : MonoBehaviour
     private IEnumerator ChangeInteractionAfterJm()
     {
         yield return new WaitForSeconds(2);
-        
-        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joined the match.";
-        
+
         CreateGameButton.interactable = true;
 
         ChangeMatchListInteractions(true);
     }
 
     /// <summary>
+    /// Método para cambiar la interacción del botón de Partida pública
+    /// </summary>
+    /// <param name="interactable">¿Es interaccionable?</param>
+    public void ChangePublicMatchInteraction(bool interactable)
+    {
+        CreateGameButton.interactable = interactable;
+    }
+
+    /// <summary>
     /// Método para cambiar la interacción con las partidas de la lista de partidas del jugador
     /// </summary>
-    /// <param name="interactable"></param>
+    /// <param name="interactable">¿Es interaccionable?</param>
     private void ChangeMatchListInteractions(bool interactable)
     {
+        if (_gameManager.PlayerMatches.Count == 0)
+        {
+            return;
+        }
+        
         for (int i = 0; i < ViewContent.transform.childCount; i++)
         {
             GameObject child = ViewContent.transform.GetChild(i).gameObject;
@@ -380,7 +407,36 @@ public class MainMenuController : MonoBehaviour
 
     #endregion
 
+    #region ChangeSpritesMethods
+
+    /// <summary>
+    /// Método para cambiar el sprite del botón de Partida pública
+    /// </summary>
+    /// <param name="mode">Modo en el que se solicita el cambio</param>
+    public void ChangePublicMatchSprite(string mode)
+    {
+        switch (mode)
+        {
+            case "connect":
+                CreateMatchImage.sprite = CancelMatchmakingSprite;
+                break;
+            case "cancel":
+                CreateMatchImage.sprite = CreateMatchSprite;
+                break;
+        }
+    }
+
+    #endregion
+
     #region OtherMethods
+
+    /// <summary>
+    /// Método para limpiar el log del menú jugar
+    /// </summary>
+    public void ClearLog()
+    {
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "";
+    }
 
     public void SelectButton1()
     { 

@@ -7,9 +7,9 @@ public class PlayerInfo : MonoBehaviour {
     #region Vars
 
     /// <summary>
-    /// Id de usuario
+    /// ID de usuario
     /// </summary>
-    public string ID = "";
+    public string UserID = "";
     /// <summary>
     /// Nombre de usuario
     /// </summary>

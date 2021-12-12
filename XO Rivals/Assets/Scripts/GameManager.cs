@@ -64,10 +64,9 @@ public class GameManager : MonoBehaviour
             GetComponent<PhotonView>().ViewID = 1;
             _cloudController = gameObject.AddComponent<CloudDataController>();
             _purchasesController = gameObject.AddComponent<PurchasesController>();
-        
-
+            
             PlayerMatches = new Dictionary<string, Match>();
-            Matchmaking = false;
+            Matchmaking = true;
             IsPlaying = false;
 
             DontDestroyOnLoad(this);
@@ -168,14 +167,6 @@ public class GameManager : MonoBehaviour
     public void SetReadyStatus()
     {
         _networkController.UpdateReadyStatus();
-    }
-
-    /// <summary>
-    /// Método para actualizar la variable de control de creación de partida
-    /// </summary>
-    public void SetCreatingRoomStatus()
-    {
-        _networkController.UpdateCreatingStatus();
     }
 
     #endregion
@@ -328,18 +319,20 @@ public class GameManager : MonoBehaviour
         switch (playerType)
         {
             case "O":
-                object[] objO = new object[3];
+                object[] objO = new object[4];
 
                 objO[0] = playerType;
-                objO[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName;
-                objO[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
+                objO[1] = FindObjectOfType<PlayerInfo>().UserID;
+                objO[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName;
+                objO[3] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
 
                 return objO;
             case "X":
-                object[] objX = new object[2];
+                object[] objX = new object[3];
 
                 objX[0] = playerType;
-                objX[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName;
+                objX[1] = FindObjectOfType<PlayerInfo>().UserID;
+                objX[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName;
 
                 return objX;
         }
@@ -447,7 +440,7 @@ public class GameManager : MonoBehaviour
         _purchasesController.ResetObject();
 
         PlayerMatches.Clear();
-        Matchmaking = false;
+        Matchmaking = true;
         IsPlaying = false;
     }
 

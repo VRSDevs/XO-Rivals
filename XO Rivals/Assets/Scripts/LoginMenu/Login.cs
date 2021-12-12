@@ -209,7 +209,7 @@ public class Login : MonoBehaviour
         
         _gameManager.SetPhotonNick(_username);
         
-        _playerInfo.ID = Authenticator.playFabPlayerIdCache;
+        _playerInfo.UserID = PhotonNetwork.LocalPlayer.UserId;
         _playerInfo.Name = _username;
 
         _gameManager.GetCloudData(DataType.Login);

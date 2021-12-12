@@ -70,8 +70,9 @@ public class NetworkCommunications : MonoBehaviourPun
             case "O":
                 Debug.Log("RPC del jugador O");
 
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = obj[1] as string;
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = obj[2] as string;
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].OpponentId = obj[1] as string;
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = obj[2] as string;
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = obj[3] as string;
 
                 FindObjectOfType<GameManager>().SetReadyStatus();
 
@@ -79,7 +80,8 @@ public class NetworkCommunications : MonoBehaviourPun
             case "X":
                 Debug.Log("RPC del jugador X");
 
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = obj[1] as string;
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].OpponentId = obj[1] as string;
+                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = obj[2] as string;
 
                 FindObjectOfType<GameManager>().SetReadyStatus();
 
