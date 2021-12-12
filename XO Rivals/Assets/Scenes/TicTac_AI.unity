@@ -1186,6 +1186,7 @@ GameObject:
   - component: {fileID: 131233167}
   - component: {fileID: 131233166}
   - component: {fileID: 131233165}
+  - component: {fileID: 131233169}
   m_Layer: 5
   m_Name: MainGame
   m_TagString: Untagged
@@ -1336,6 +1337,19 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: -1
   m_TargetDisplay: 0
+--- !u!114 &131233169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131233163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3c06c63130d61e41bd347ce3ac3bd14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  butonScriptReference: {fileID: 247037161}
 --- !u!1 &138966600
 GameObject:
   m_ObjectHideFlags: 0
@@ -2870,8 +2884,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ScreenManager, Assembly-CSharp
+      - m_Target: {fileID: 131233165}
+        m_TargetAssemblyTypeName: ScreenManagerAI, Assembly-CSharp
         m_MethodName: MinigameSelection
         m_Mode: 3
         m_Arguments:
@@ -4353,8 +4367,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ScreenManager, Assembly-CSharp
+      - m_Target: {fileID: 131233165}
+        m_TargetAssemblyTypeName: ScreenManagerAI, Assembly-CSharp
         m_MethodName: MinigameSelection
         m_Mode: 3
         m_Arguments:
@@ -5169,8 +5183,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ScreenManager, Assembly-CSharp
+      - m_Target: {fileID: 131233165}
+        m_TargetAssemblyTypeName: ScreenManagerAI, Assembly-CSharp
         m_MethodName: MinigameSelection
         m_Mode: 3
         m_Arguments:
@@ -7127,7 +7141,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1481371696}
   - component: {fileID: 1481371695}
-  - component: {fileID: 1481371697}
   - component: {fileID: 1481371698}
   m_Layer: 0
   m_Name: '@MatchController'
@@ -7162,18 +7175,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1481371697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1481371694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3c06c63130d61e41bd347ce3ac3bd14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1481371698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7188,6 +7189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 0
   Name: AV
+  Online: 0
   MatchId: -1
   Level: 0
   Lives: 0
@@ -7311,8 +7313,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ScreenManager, Assembly-CSharp
+      - m_Target: {fileID: 131233165}
+        m_TargetAssemblyTypeName: ScreenManagerAI, Assembly-CSharp
         m_MethodName: MinigameSelection
         m_Mode: 3
         m_Arguments:
@@ -8573,8 +8575,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ScreenManager, Assembly-CSharp
+      - m_Target: {fileID: 131233165}
+        m_TargetAssemblyTypeName: ScreenManagerAI, Assembly-CSharp
         m_MethodName: MinigameSelection
         m_Mode: 3
         m_Arguments:

@@ -17,8 +17,8 @@ public class StartPistolero : MonoBehaviour
  
         StartCoroutine("Esperar"); //esperamos 3 segundos para que el jugador lea el texto
 
-        FindObjectOfType<AudioManager>().StopAllSongs();
-        FindObjectOfType<AudioManager>().ChangeMusic(GunmanMusic,"Tic-Tac-Toe");
+        //FindObjectOfType<AudioManager>().StopAllSongs();
+        //FindObjectOfType<AudioManager>().ChangeMusic(GunmanMusic,"Tic-Tac-Toe");
     }
 
     // Update is called once per frame
@@ -28,11 +28,11 @@ public class StartPistolero : MonoBehaviour
     }
     public void playReloadSound()
     {
-        FindObjectOfType<AudioManager>().Play("Reload");
+        //FindObjectOfType<AudioManager>().Play("Reload");
     }
     public void playShotSound()
     {
-        FindObjectOfType<AudioManager>().Play("Shot");
+        //FindObjectOfType<AudioManager>().Play("Shot");
     }
 
 

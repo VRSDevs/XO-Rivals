@@ -12,21 +12,39 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: fc053ccb2ed40b7409ede95395356516
   - enabled: 1
-    path: Assets/Scenes/TicTacToe_Server.unity
+    path: Assets/Scenes/Online Scenes/TicTacToe_Server.unity
     guid: 4b715a1e71a77684dacd49aa789d3b54
   - enabled: 1
-    path: Assets/Scenes/PlatformMinigame.unity
+    path: Assets/Scenes/Online Scenes/PlatformMinigame.unity
     guid: 13414cc9793dc6d489cea673e7718cb0
   - enabled: 1
-    path: Assets/Scenes/MinijuegoComida.unity
+    path: Assets/Scenes/Online Scenes/MinijuegoComida.unity
     guid: 03b764ba96595d64dac02c6347f4fbc7
   - enabled: 1
-    path: Assets/Scenes/Pistolero.unity
+    path: Assets/Scenes/Online Scenes/Pistolero.unity
     guid: 4a4575736a555134aae06631f071b295
   - enabled: 1
-    path: Assets/Scenes/Fanstasmas3D.unity
+    path: Assets/Scenes/Online Scenes/Fanstasmas3D.unity
     guid: f594e3e9a76eb564eabc6b9f84efa143
   - enabled: 1
-    path: Assets/Scenes/CarnivalMinigame.unity
+    path: Assets/Scenes/Online Scenes/CarnivalMinigame.unity
     guid: 142ed5f8f6f771e46a19b58626b6eb4f
+  - enabled: 1
+    path: Assets/Scenes/TicTac_AI.unity
+    guid: 542f1804a2bf678449c42841277c8e73
+  - enabled: 1
+    path: Assets/Scenes/Offline Scenes/CarnivalMinigame_Off.unity
+    guid: 8407401523d56b14fb70ff97609d1d15
+  - enabled: 1
+    path: Assets/Scenes/Offline Scenes/MinijuegoComida_Off.unity
+    guid: f04df1b09806def418885e8047c7c65e
+  - enabled: 1
+    path: Assets/Scenes/Offline Scenes/Pistolero_Off.unity
+    guid: 20abc6fea9590e54c922c0d14c9b3bec
+  - enabled: 1
+    path: Assets/Scenes/Offline Scenes/PlatformMinigame_Off.unity
+    guid: 15ad142ebe5cf9644a5e95161f806475
+  - enabled: 1
+    path: Assets/Scenes/Offline Scenes/Fanstasmas3D_Off.unity
+    guid: 912e1bebd2f5aca46bc1f2d3fba5b845
   m_configObjects: {}
