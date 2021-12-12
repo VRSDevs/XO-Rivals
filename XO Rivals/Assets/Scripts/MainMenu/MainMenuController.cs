@@ -94,7 +94,7 @@ public class MainMenuController : MonoBehaviour
             recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(30);
             CheckLivesTime();
         }else
-            LivesTime.text = "-:--";
+            LivesTime.text = "Lives container is full";
     }
 
     private void Update(){
@@ -132,7 +132,7 @@ public class MainMenuController : MonoBehaviour
             //Restart timer
             recoverLifeTime = _localPlayer.LostLifeTime.AddMinutes(30);
             recoverRemainingTime = recoverLifeTime.Subtract(System.DateTime.Now);
-            LivesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds; 
+            LivesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds + " min"; 
         } else
         {
             _gameManager.UpdateCloudData(new Dictionary<string, string>() {
@@ -140,7 +140,7 @@ public class MainMenuController : MonoBehaviour
                 {DataType.LifeLost.GetString(), ""}
             });
             
-            LivesTime.text = "MAX";
+            LivesTime.text = "Lives container is full";
         }
     }
 
@@ -179,7 +179,7 @@ public class MainMenuController : MonoBehaviour
                 {DataType.Lives.GetString(), _localPlayer.Lives.ToString()},
             });
                 
-            LivesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;
+            LivesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds + " min";
         }
     }
 
@@ -387,7 +387,7 @@ public class MainMenuController : MonoBehaviour
             //Recover one life
             IncreaseLives();
         }else{
-            LivesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds;  
+            LivesTime.text = "" + recoverRemainingTime.Minutes + ":" + recoverRemainingTime.Seconds + " min";  
         }
     }
 
