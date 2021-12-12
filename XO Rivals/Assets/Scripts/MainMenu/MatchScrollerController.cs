@@ -119,9 +119,9 @@ public class MatchScrollerController : MonoBehaviour
         {
             matchesList[_totalMatches] = new MatchModel
             {
-                MatchId = "[][]",
+                MatchId = "",
                 MatchName = "You don´t have active matches!",
-                MatchStatus = "[][]"
+                MatchStatus = ""
             };
         }
         else
