@@ -44,6 +44,9 @@ public class CarnivalController : MonoBehaviour
     [SerializeField]
     private Animator glassAnim;
 
+    [SerializeField]
+    private Button boton;
+
     // Control del indicador
     public bool goingUp = true;
     private float speed = 500;
@@ -70,6 +73,7 @@ public class CarnivalController : MonoBehaviour
     void Start()
     {
 
+        Invoke("ActivateButton", 1f);
         speed = Random.Range(700,850);
         // Recoger de quien es el turno y activar los personajes necesarios
         if (thisMatch.PlayerOName == localPlayer.Name)
@@ -87,8 +91,10 @@ public class CarnivalController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        BarMovement();
-        speed += 0.02f;
+        if (!win && !lost)
+        {
+            BarMovement();
+        }      
     }
 
     // Update is called once per frame
@@ -109,6 +115,7 @@ public class CarnivalController : MonoBehaviour
     // Movimiento del indicador
     private void BarMovement()
     {
+        speed += 3f;
         if (goingUp)
         {      
             float step = speed * Time.deltaTime;
@@ -193,5 +200,10 @@ public class CarnivalController : MonoBehaviour
         PlayerPrefs.SetInt("minigameWin", 1);
         FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
         SceneManager.LoadScene("TicTacToe_Server");
+    }
+
+    private void ActivateButton()
+    {
+        boton.interactable = true;
     }
 }
