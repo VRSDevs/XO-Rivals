@@ -442,7 +442,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetObject()
     {
-        _networkController = new NetworkController();
+        _networkController.ResetObject();
         _networkCommunications = new NetworkCommunications();
         _cloudController = new CloudDataController();
         _purchasesController = new PurchasesController();

@@ -542,6 +542,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
         return code;
     }
 
+    /// <summary>
+    /// Método para reiniciar el objeto
+    /// </summary>
     public void ResetObject()
     {
         InitObject();
