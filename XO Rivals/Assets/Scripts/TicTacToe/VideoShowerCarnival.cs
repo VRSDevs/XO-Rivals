@@ -19,4 +19,9 @@ public class VideoShowerCarnival : MonoBehaviour
     {
         videoPlayer.Play();
     }
+
+    public void StartVideoPhone()
+    {
+        videoPlayer.Play();
+    }
 }

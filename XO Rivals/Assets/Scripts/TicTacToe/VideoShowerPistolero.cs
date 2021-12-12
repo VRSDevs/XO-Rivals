@@ -19,4 +19,9 @@ public class VideoShowerPistolero : MonoBehaviour
     {
         videoPlayer.Play();
     }
+
+    public void StartVideoPhone()
+    {
+        videoPlayer.Play();
+    }
 }

@@ -20,4 +20,9 @@ public class VideoShower : MonoBehaviour
     {
         videoPlayer.Play();
     }
+
+    public void StartVideoPhone()
+    {
+        videoPlayer.Play();
+    }
 }

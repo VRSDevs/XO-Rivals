@@ -19,4 +19,9 @@ public class VideoShowerComi : MonoBehaviour
     {
         videoPlayer.Play();
     }
+
+    public void StartVideoPhone()
+    {
+        videoPlayer.Play();
+    }
 }
