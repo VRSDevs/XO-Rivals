@@ -320,7 +320,7 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void OnJoinPrivateMatchClick()
     {
-        _inputCode = InputPrivateMatchCode.text;
+        _inputCode = InputPrivateMatchCode.text.ToUpper();
         
         GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joining " + _inputCode + "...";
         
