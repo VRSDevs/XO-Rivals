@@ -318,7 +318,7 @@ public class MainMenuController : MonoBehaviour
     /// <summary>
     /// Método de evento ejecutado al pulsar el botón de unirse a partida privada
     /// </summary>
-    private void OnJoinPrivateMatchClick()
+    public void OnJoinPrivateMatchClick()
     {
         _inputCode = InputPrivateMatchCode.text;
         
