@@ -31,9 +31,9 @@ public class TaskPerseguirHuella : Node
             {
                 //Cosas que hacer
                 Debug.Log(t.name);
-                t.GetComponent<Animator>().SetTrigger("Ask");
-                t.GetComponent<Animator>().ResetTrigger("Normal");
-                t.GetComponent<Animator>().ResetTrigger("Alert");
+                t.GetComponent<Animator>().SetBool("Ask", true);
+                t.GetComponent<Animator>().SetBool("Normal", false);
+                t.GetComponent<Animator>().SetBool("Alert", false);
 
             }
         }
