@@ -267,9 +267,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="data">Datos a cargar</param>
     /// <returns>Estado de la operación</returns>
-    public void UpdateCloudData(Dictionary<string, string> data)
+    public void UpdateCloudData(Dictionary<string, string> data, DataType type)
     {
-        _cloudController.SendData(data);
+        _cloudController.SendData(data, type);
     }
 
     #endregion
