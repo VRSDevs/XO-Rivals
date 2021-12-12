@@ -181,8 +181,6 @@ public class CloudDataController : MonoBehaviour
     /// <returns>Estado de la operación</returns>
     public void SendData(Dictionary<string, string> data, DataType type)
     {
-        data.Remove("ResultCode");
-        
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
         {
             Data = data
@@ -232,8 +230,6 @@ public class CloudDataController : MonoBehaviour
 
                 if (result.Data.ContainsKey(DataType.Online.GetString()) && bool.Parse(result.Data[DataType.Online.GetString()].Value))
                 {
-                    Debug.Log("Usuario ya conectado");
-                    
                     Obj.Failed = true;
                     Obj.ErrorCode = PlayFabErrorCode.ConnectionError;
                     Obj.Message = "Account already online";
@@ -294,10 +290,15 @@ public class CloudDataController : MonoBehaviour
     /// <returns>Diccionario con un código de error</returns>
     private void OnRecieveError(PlayFabError error)
     {
+        Debug.Log("a");
+        
         _cloudData = new Dictionary<string, string>()
         {
-            {"ResultCode", "3"}
+            {"ResultCode", "2"}
         };
+        
+        UpdateOnlineChecked();
+        UpdateSynchronizedStatus();
     }
     
     /// <summary>
