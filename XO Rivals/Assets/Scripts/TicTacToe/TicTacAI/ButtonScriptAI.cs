@@ -37,6 +37,7 @@ public class ButtonScriptAI : MonoBehaviour
 
     //Match information
     public MatchAI thisMatch;
+    private TicTacAI ticTacAIReference;
 
     //Local player
     public PlayerInfo localPlayer;
@@ -72,19 +73,7 @@ public class ButtonScriptAI : MonoBehaviour
         screenManager = FindObjectOfType<ScreenManagerAI>();
     }
 
-    public void updateIconTurn(bool change){
-
-        if (change)//CAMBIA A QUE ME TOCA A MI
-        {
-            if (localPlayer.Name == thisMatch.PlayerXName)
-            {
-                thisMatch.WhosTurn = thisMatch.PlayerXName;
-            }
-            else
-            {
-                thisMatch.WhosTurn = thisMatch.PlayerOName;
-            }
-        }
+    public void updateIconTurn(){
 
         //Activate player turn tile
         if (thisMatch.WhosTurn == thisMatch.PlayerOName)
@@ -138,7 +127,7 @@ public class ButtonScriptAI : MonoBehaviour
             }
         }
         
-        updateIconTurn(false);
+        updateIconTurn();
     }
 
     #endregion
@@ -187,11 +176,11 @@ public class ButtonScriptAI : MonoBehaviour
         if(thisMatch.TurnMoment == 1){
             miniWin = false;
             PlayerPrefs.SetInt("minigameWin", 0);
-            thisMatch.TurnMoment = 2;
             switch(thisMatch.MiniGameChosen){
 
                 case 0:
-                    SceneManager.LoadScene("Pistolero_Off");
+                    //SceneManager.LoadScene("Pistolero_Off");
+                    SceneManager.LoadScene("PruebaMini");
                 break;
 
                 case 1:
@@ -260,6 +249,9 @@ public class ButtonScriptAI : MonoBehaviour
                 ChipsList.Add(actual);
                 //Add one to filled count
                 thisMatch.NumFilled++;
+
+                ticTacAIReference = FindObjectOfType<TicTacAI>();
+                ticTacAIReference.UpdateState();
             }//Fin win
 
             Debug.Log("SE HACE MINIGAME SELECTION");

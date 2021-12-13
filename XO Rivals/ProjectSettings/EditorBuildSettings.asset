@@ -30,7 +30,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Online Scenes/CarnivalMinigame.unity
     guid: 142ed5f8f6f771e46a19b58626b6eb4f
   - enabled: 1
-    path: Assets/Scenes/TicTac_AI.unity
+    path: Assets/Scenes/Offline Scenes/TicTac_AI.unity
     guid: 542f1804a2bf678449c42841277c8e73
   - enabled: 1
     path: Assets/Scenes/Offline Scenes/CarnivalMinigame_Off.unity
@@ -47,4 +47,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Offline Scenes/Fanstasmas3D_Off.unity
     guid: 912e1bebd2f5aca46bc1f2d3fba5b845
+  - enabled: 1
+    path: Assets/Scenes/Offline Scenes/PruebaMini.unity
+    guid: 47b85d8b3f2aad9429dc35afc20fb58d
   m_configObjects: {}
