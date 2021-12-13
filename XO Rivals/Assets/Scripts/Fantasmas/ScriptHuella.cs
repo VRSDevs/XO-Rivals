@@ -38,7 +38,6 @@ public class ScriptHuella : MonoBehaviour
 
         }
 
-
         StartCoroutine(deleteHuella());
 
 
