@@ -316,6 +316,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 break;
             default:
                 Debug.Log("Desconexión del servidor: " + cause);
+
+                foreach (var match in FindObjectOfType<GameManager>().PlayerMatches)
+                {
+                    Debug.Log(match.ToString());
+                }
                 break;
         }
         

@@ -6,7 +6,6 @@ using UnityEngine;
 public class Match
 {
     #region Vars
-
     
     /// <summary>
     /// ID de la partida
@@ -148,7 +147,7 @@ public class Match
     /// Método para incorporar el contenido de una partida en una cadena de texto
     /// </summary>
     /// <returns>Cadena de texto con la información de la partida</returns>
-    public string ToString()
+    public override string ToString()
     {
         string match = "";
 
