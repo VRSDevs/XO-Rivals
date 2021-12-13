@@ -151,7 +151,7 @@ public class Match
     {
         string match = "";
 
-        match += MatchId;
+        match += this.MatchId;
         match += ";";
         
         match += OpponentId;

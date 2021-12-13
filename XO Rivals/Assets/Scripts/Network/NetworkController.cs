@@ -233,7 +233,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     private IEnumerator CreateMatchRoom(string roomName)
     {
         yield return new WaitForSeconds(1);
-        
+
+        _nameRoom = roomName;
         PhotonNetwork.CreateRoom(roomName, new Photon.Realtime.RoomOptions()
         {
             MaxPlayers = MAX_PLAYERS_INROOM,
