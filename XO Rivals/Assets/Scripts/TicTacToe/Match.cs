@@ -141,4 +141,61 @@ public class Match
     }
     
     #endregion
+
+    #region OtherMethods
+
+    /// <summary>
+    /// Método para incorporar el contenido de una partida en una cadena de texto
+    /// </summary>
+    /// <returns>Cadena de texto con la información de la partida</returns>
+    public string ToString()
+    {
+        string match = "";
+
+        match += MatchId;
+        match += ";";
+        
+        match += OpponentId;
+        match += ";";
+
+        match += PlayerOName;
+        match += ";";
+
+        match += PlayerXName;
+        match += ";";
+
+        match += WhosTurn;
+        match += ";";
+
+        match += TurnMoment.ToString();
+        match += ";";
+
+        match += MiniGameChosen.ToString();
+        match += ";";
+
+        int i = 0;
+        foreach (var t in FilledPositions)
+        {
+            match += t.ToString();
+
+            if (i < FilledPositions.Length * FilledPositions.Length)
+            {
+                match += ",";
+            }
+        }
+        match += ";";
+
+        match += NumFilled.ToString();
+        match += ";";
+
+        match += ActualChip.ToString();
+        match += ";";
+
+        match += ActualChipTeam;
+        match += ";";
+
+        return match;
+    }
+
+    #endregion
 }
