@@ -19,12 +19,24 @@ public class ScriptHuella : MonoBehaviour
     public PlayerInfo localPlayer;
     private void Awake()
     {
-       
+        _gameManager = FindObjectOfType<GameManager>();
+        thisMatch = _gameManager.PlayerMatches[PhotonNetwork.CurrentRoom.Name];
+        localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
     }
     // Start is called before the first frame update
     void Start()
     {
-       
+        // Recoger de quien es el turno y activar los personajes necesarios
+        if (thisMatch.PlayerOName == localPlayer.Name)
+        {
+            renderX.SetActive(false);
+
+        }
+        else
+        {
+            renderO.SetActive(false);
+
+        }
 
         StartCoroutine(deleteHuella());
 
