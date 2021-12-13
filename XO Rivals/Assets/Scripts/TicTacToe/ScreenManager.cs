@@ -78,9 +78,9 @@ public class ScreenManager : MonoBehaviour
         }
 
         if(buttonsScript.localPlayer.Name == buttonsScript.thisMatch.PlayerOName){
-            buttonsScript.crossTurnRival.SetActive(true);
+            //buttonsScript.crossTurnRival.SetActive(true);
         }else{
-            buttonsScript.circleTurnRival.SetActive(true);
+           // buttonsScript.circleTurnRival.SetActive(true);
         }
     }
     

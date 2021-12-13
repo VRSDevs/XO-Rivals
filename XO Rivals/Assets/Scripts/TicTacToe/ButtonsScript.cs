@@ -102,16 +102,38 @@ public class ButtonsScript : MonoBehaviour
         Debug.Log("TurnoPlayerDSPS " + thisMatch.WhosTurn);
         //Activate player turn tile
         if (thisMatch.WhosTurn == thisMatch.PlayerOName)
-        {
+        {//TURNO CIRCLE
             circleTurn.SetActive(true);
             crossTurn.SetActive(false);
+            Debug.Log(localPlayer.Name + "POS ME LLAMO ASI+++");
+            Debug.Log(thisMatch.PlayerOName + "ESTE ES EL CIRCULO YATUSABE");
+            if (localPlayer.Name != thisMatch.PlayerOName)
+            {
+                Debug.Log("ACTIVO BIEN ACTIVAO");
+                circleTurnRival.SetActive(true) ;
+            }
+            else
+            {
+                circleTurnRival.SetActive(false);
+                crossTurnRival.SetActive(false);
+            }
 
 
         }
         else
-        {
+        {//TURNO CROSS
             crossTurn.SetActive(true);
             circleTurn.SetActive(false);
+
+            if (localPlayer.Name != thisMatch.PlayerXName)
+            {
+                crossTurnRival.SetActive(true);
+            }
+            else
+            {
+                circleTurnRival.SetActive(false);
+                crossTurnRival.SetActive(false);
+            }
         }
     }
 
@@ -190,8 +212,8 @@ public class ButtonsScript : MonoBehaviour
     /// </summary>
     public void startGame()
     {
-        crossTurnRival.SetActive(false);
-        circleTurnRival.SetActive(false);
+        //crossTurnRival.SetActive(false);
+        //circleTurnRival.SetActive(false);
         //If its your turn, play, if its not, only can see
         if(thisMatch.WhosTurn == localPlayer.Name){
 
@@ -199,8 +221,8 @@ public class ButtonsScript : MonoBehaviour
             if (thisMatch.TurnMoment == 0)
             {
                 screenManager.EnableButtons();
-                circleTurnRival.SetActive(false);
-                crossTurnRival.SetActive(false);
+                //circleTurnRival.SetActive(false);
+                //crossTurnRival.SetActive(false);
             }
       
         }else{
