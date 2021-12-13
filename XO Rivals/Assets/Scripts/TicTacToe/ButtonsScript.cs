@@ -436,7 +436,9 @@ public class ButtonsScript : MonoBehaviour
 
 
         if (win)
-        {  
+        {
+            circleTurnRival.SetActive(false);
+            crossTurnRival.SetActive(false);
             //Call endgame
             if (thisMatch.FilledPositions[col, row] == 0)
             {            
