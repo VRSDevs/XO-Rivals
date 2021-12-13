@@ -56,6 +56,7 @@ public class MovePlayer : MonoBehaviour
         if (thisMatch.PlayerOName == localPlayer.Name) //TURNO O
         {
             xSprite.SetActive(false);
+
             anim = animO;
         }
         else
@@ -63,6 +64,7 @@ public class MovePlayer : MonoBehaviour
             oSprite.SetActive(false);                   //TURNO X
             anim = animX;
         }
+
 
 
     }
