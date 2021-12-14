@@ -283,6 +283,7 @@ public class Login : MonoBehaviour
                 {
                     Match m = new Match();
                     string key = m.Parse(data[DataType.Match.GetString() + i]);
+                    Debug.Log(key);
                     
                     _gameManager.PlayerMatches.Add(key, m);
                 }

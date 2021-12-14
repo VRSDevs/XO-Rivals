@@ -249,9 +249,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     private IEnumerator RecreateMatchRoom(string roomName)
     {
         yield return new WaitForSeconds(1);
-        
-        Debug.Log( FindObjectOfType<PlayerInfo>().UserID + " vs. " + FindObjectOfType<GameManager>().PlayerMatches[roomName].OpponentId);
-        
+
         PhotonNetwork.CreateRoom(roomName, new Photon.Realtime.RoomOptions()
         {
             MaxPlayers = MAX_PLAYERS_INROOM,
