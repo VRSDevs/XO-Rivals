@@ -161,7 +161,7 @@ public class CloudDataController : MonoBehaviour
     #region ClouldMethods
 
     /// <summary>
-    /// Método para la obtención de datos de la nube
+    /// Método para la obtención de datos del jugador
     /// </summary>
     /// <param name="type">Tipo de dato a obtener</param>
     /// <returns>Diccionario con los datos solicitados</returns>
@@ -175,6 +175,18 @@ public class CloudDataController : MonoBehaviour
         {
             OnDataRecieved(result, type);
         }, OnRecieveError);
+    }
+
+    /// <summary>
+    /// Método para obtener datos del juego
+    /// </summary>
+    /// <param name="type">Tipo de dato a obtener</param>
+    public void GetTitleData(DataType type)
+    {
+        PlayFabClientAPI.GetTitleData(
+            new GetTitleDataRequest(), 
+            result => OnTitleDataRecieved(result, type),
+            error => Debug.Log(""));
     }
 
     /// <summary>
@@ -278,6 +290,41 @@ public class CloudDataController : MonoBehaviour
         UpdateSynchronizedStatus();
     }
 
+    
+    private void OnTitleDataRecieved(GetTitleDataResult result, DataType type)
+    {
+        // Si no ha devuelto ningún dato
+        if (result.Data == null)
+        {
+            _cloudData = new Dictionary<string, string>()
+            {
+                {"ResultCode", "2"}
+            };
+
+            return;
+        }
+
+        switch (type)
+        {
+            case DataType.Match:
+
+                // Si el resultado no contiene la clave deseada
+                if (!result.Data.ContainsKey(type.GetString() + ""))
+                {
+                    _cloudData = new Dictionary<string, string>()
+                    {
+                        {"ResultCode", "2"}
+                    };
+
+                    return;
+                }
+                
+                _cloudData.Add(type.GetString() + "", result.Data[type.GetString() + ""]);
+                
+                break;
+        }
+    }
+    
     /// <summary>
     /// Método ejecutado cuando se mandan los datos de manera correcta
     /// </summary>
