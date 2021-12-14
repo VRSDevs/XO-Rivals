@@ -327,7 +327,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
         {
             FindObjectOfType<GameManager>().UpdateCloudData(new Dictionary<string, string>()
                 {
-                    {DataType.Match.GetString(), i.ToString()},
                     {DataType.Match.GetString() + i, match.ToString()},
                 },
                 DataType.Match);
@@ -341,7 +340,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
             {DataType.Online.GetString(), "false"},
             {DataType.Lives.GetString(), FindObjectOfType<PlayerInfo>().Lives.ToString()},
             {DataType.Level.GetString(), FindObjectOfType<PlayerInfo>().Level.ToString(CultureInfo.InvariantCulture)},
-            {DataType.LifeLost.GetString(), FindObjectOfType<PlayerInfo>().LostLifeTime.ToString(CultureInfo.InvariantCulture)}
+            {DataType.LifeLost.GetString(), FindObjectOfType<PlayerInfo>().LostLifeTime.ToString(CultureInfo.InvariantCulture)},
+            {DataType.Match.GetString(), FindObjectOfType<GameManager>().PlayerMatches.Count.ToString()},
         },
             DataType.Logout);
 
