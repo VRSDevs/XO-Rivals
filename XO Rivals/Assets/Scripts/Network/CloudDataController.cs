@@ -260,7 +260,8 @@ public class CloudDataController : MonoBehaviour
 
                 for (int i = 0; i < totalMatches; i++)
                 {
-                    
+                    string key = DataType.Match.GetString() + i;
+                    _cloudData.Add(key, result.Data[key].Value);
                 }
 
                 break;
