@@ -279,7 +279,7 @@ public class Match
             }
 
             // Siguiente carácter en aquellos no necesarios
-            if (s[i].Equals('['))
+            if (s[i].Equals('[') || s[i].Equals(' '))
             {
                 continue;
             }
