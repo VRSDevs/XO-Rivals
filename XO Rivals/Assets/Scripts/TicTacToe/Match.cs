@@ -198,5 +198,15 @@ public class Match
         return match;
     }
 
+    /// <summary>
+    /// Método para transformar una cadena de texto en una partida
+    /// </summary>
+    public string Parse()
+    {
+        
+        
+        return "";
+    }
+
     #endregion
 }

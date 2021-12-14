@@ -272,11 +272,20 @@ public class Login : MonoBehaviour
             case 1:
 
                 data[DataType.Online.GetString()] = "true";
+                
                 _playerInfo.Online = bool.Parse(data[DataType.Online.GetString()]);
                 _playerInfo.Lives = int.Parse(data[DataType.Lives.GetString()]);
                 _playerInfo.Level = float.Parse(data[DataType.Level.GetString()]);
                 _playerInfo.LostLifeTime = DateTime.ParseExact(data[DataType.LifeLost.GetString()],
                     "MM/dd/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+
+                for (int i = 0; i < int.Parse(data[DataType.Match.GetString()]); i++)
+                {
+                    Match m = new Match();
+                    string key = m.Parse();
+                    
+                    _gameManager.PlayerMatches.Add(key, m);
+                }
                 
                 _gameManager.UpdateCloudData(data, DataType.Login);
                             
