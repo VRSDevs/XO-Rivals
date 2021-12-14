@@ -15,6 +15,7 @@ using UnityEngine.SceneManagement;
 ///     Lives - Vidas del usuario
 ///     Level - Nivel del usuario
 ///     LifeLost - Tiempo de las vidas perdidas
+///     Match - Partida del jugador
 /// </summary>
 [Serializable]
 public enum DataType
@@ -24,7 +25,8 @@ public enum DataType
     Online,
     Lives,
     Level,
-    LifeLost
+    LifeLost,
+    Match
 }
 
 /// <summary>
@@ -49,6 +51,8 @@ public static class DataTypeExtension
                 return "Level";
             case DataType.LifeLost:
                 return "LifeLost";
+            case DataType.Match:
+                return "Match";
             default:
                 return "";
         }

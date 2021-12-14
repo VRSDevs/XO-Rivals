@@ -317,14 +317,17 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 break;
             default:
                 Debug.Log("Desconexión del servidor: " + cause);
-
-                foreach (var match in FindObjectOfType<GameManager>().PlayerMatches)
-                {
-                    Debug.Log(match.ToString());
-                }
+                
                 break;
         }
+
+        // Subida de las partidas
+        foreach (var match in FindObjectOfType<GameManager>().PlayerMatches)
+        {
+            
+        }
         
+        // Subida de la información básica del jugador
         FindObjectOfType<GameManager>().UpdateCloudData(new Dictionary<string, string>()
         {
             {DataType.Online.GetString(), "false"},
