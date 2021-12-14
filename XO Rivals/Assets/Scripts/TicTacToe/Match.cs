@@ -92,6 +92,8 @@ public class Match
         NumFilled = 0;
 
         Chips = new List<GameObject>();
+        ActualChip = -1;
+        ActualChipTeam = "";
 
         _ended = false;
         _youSurrended = false;
@@ -151,9 +153,9 @@ public class Match
     {
         string match = "";
 
-        match += this.MatchId;
+        match += MatchId;
         match += ";";
-        
+
         match += OpponentId;
         match += ";";
 
