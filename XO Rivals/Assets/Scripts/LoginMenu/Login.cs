@@ -282,7 +282,7 @@ public class Login : MonoBehaviour
                 for (int i = 0; i < int.Parse(data[DataType.Match.GetString()]); i++)
                 {
                     Match m = new Match();
-                    string key = m.Parse();
+                    string key = m.Parse(data[DataType.Match.GetString() + i]);
                     
                     _gameManager.PlayerMatches.Add(key, m);
                 }
