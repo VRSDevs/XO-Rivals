@@ -261,6 +261,7 @@ public class GameManager : MonoBehaviour
     public void SetupMatch(string playerType)
     {
         PlayerMatches.Add(PhotonNetwork.CurrentRoom.Name, new Match());
+        PlayerMatches[PhotonNetwork.CurrentRoom.Name].MatchId = PhotonNetwork.CurrentRoom.Name;
         
         switch (playerType)
         {
