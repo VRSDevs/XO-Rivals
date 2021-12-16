@@ -29,7 +29,16 @@ public class BetaShop : MonoBehaviour
     public void OfferBought(int offer)
     {
         if(_localPlayer.Lives < 999){
-            shopText.text = "You bought " + offer + " lives";
+
+            if (offer == 1)
+            {
+                shopText.text = "You bought " + offer + " life";
+            }
+            else
+            {
+                shopText.text = "You bought " + offer + " lives";
+            }
+            
             
             switch (offer)
             {

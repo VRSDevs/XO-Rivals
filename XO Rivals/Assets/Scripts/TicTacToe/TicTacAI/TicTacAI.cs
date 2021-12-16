@@ -1,5 +1,8 @@
 using UnityEngine;
 
+
+public enum ticTacMachState {MIDEMPTY, MIDPLACED, CORNERSFULL};
+
 public class TicTacAI : MonoBehaviour
 {
     //Who is the Ai
@@ -72,50 +75,6 @@ public class TicTacAI : MonoBehaviour
         newConditionNode2.updateValue(canLose);
         ticTacTree.update();
     }
-
-    /*private int MiniMax(int[,] thisMatch.FilledPositions, int originalTurn, int turn, int numFilled, int lastCol, int lastRow){
-
-        //Check if its victory state
-        int victory = CheckVictory(thisMatch.FilledPositions);
-        if(victory != 0){
-            //Return 1 if its player win, -1 if its opponent
-            return victory == originalTurn ? 1 : -1;
-        }
-
-        //If its not terminal, create score for this node
-        int score = -2;
-        int move = -1;
-
-        //Create child for every move
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
-                //If place is empty
-                if(thisMatch.FilledPositions[i,j] == 3){
-                    //Create thisMatch.FilledPositions with new posible move
-                    int[,] newthisMatch.FilledPositions = thisMatch.FilledPositions;
-                    newthisMatch.FilledPositions[i,j] = turn;
-                    numFilled++;
-
-                    //Change turn & check newthisMatch.FilledPositions
-                    turn = (turn == 0 ? 1 : 0);
-                    int newScore = -MiniMax(newthisMatch.FilledPositions, originalTurn, turn, numFilled, i, j);
-
-                    //Save new score if its better for the opponent??
-                    if(newScore > score){
-                        score = newScore;
-                        move = i;
-                    }
-                }
-            }
-        }
-
-        //If no more moves, return 0
-        if(move == -1){
-            return 0;
-        }
-
-        return score;
-    }*/
     
     #region TestMethods
 
@@ -417,17 +376,46 @@ public class TicTacAI : MonoBehaviour
 
     void StateMachine(){
 
-        bool found = false;
-        int i = 0;
+        switch(thisMatch.actualState){
+            
+            case ticTacMachState.MIDEMPTY:
+                nextCol = 1;
+                nextRow = 1;
+            break;
 
-        do{
-            if(thisMatch.FilledPositions[i % 3,i / 3] == 3){
-                nextRow = i % 3;
-                nextCol = i / 3;
-                found = true;
-            }
-            i++;
-        }while(!found);
+            case ticTacMachState.MIDPLACED:
+                for(int i = 0; i <= 2; i+=2){
+                    for(int j = 0; j <= 2; i+=2){
+                        if(thisMatch.FilledPositions[i,j] == 3){
+                            nextRow = i;
+                            nextCol = j;
+                            goto outLoop;
+                        }
+                    }
+                }
+            outLoop : break;
+
+            case ticTacMachState.CORNERSFULL:
+                for(int i = 0; i <= 2;i++){
+                    if(i%2 == 0){
+                        if(thisMatch.FilledPositions[i,1] == 3){
+                            nextRow = i;
+                            nextCol = 1;
+                            goto outLoop2;
+                        }
+                    }else{
+                        for(int j = 0; j <= 2; j+=2){
+                            if(thisMatch.FilledPositions[i,j] == 3){
+                                nextRow = i;
+                                nextCol = j;
+                                goto outLoop2;
+                            }
+                        }
+                    }
+                }
+            outLoop2: break;
+
+        }
 
         PlaceTile();
     }
@@ -441,16 +429,29 @@ public class TicTacAI : MonoBehaviour
         
         //Save new position
         thisMatch.FilledPositions[nextRow,nextCol] = ai;
-
-        //Put chip
-        GameObject chip = Instantiate(butonScriptReference.crossGO, butonScriptReference.botonesCuadricula[nextRow*3 + nextCol].position, Quaternion.identity);
-        chip.GetComponent<SpriteRenderer>().color = new Color(1,1,1,1f);
-        chip.SetActive(true);
-
-        butonScriptReference.ChipsList.Add(chip);
         thisMatch.NumFilled++;
         //thisMatch.MiniGameChosen = Random.Range(0,5);
         thisMatch.MiniGameChosen = 0;
+
+        UpdateState();
         screenManagerReference.UpdateTurn();
+    }
+
+    public void UpdateState(){
+
+        switch(thisMatch.actualState){
+
+            case ticTacMachState.MIDEMPTY:
+                if(thisMatch.FilledPositions[1,1] != 3)
+                    thisMatch.actualState = ticTacMachState.MIDPLACED;
+            break;
+
+            case ticTacMachState.MIDPLACED:
+
+                if(thisMatch.FilledPositions[0,0] != 3 && thisMatch.FilledPositions[0,2] != 3 && thisMatch.FilledPositions[2,0] != 3 && thisMatch.FilledPositions[2,2] != 3)
+                    thisMatch.actualState = ticTacMachState.CORNERSFULL;  
+            break;
+        }
+
     }
 }

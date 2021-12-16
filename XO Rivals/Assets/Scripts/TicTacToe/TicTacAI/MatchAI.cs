@@ -54,13 +54,9 @@ public class MatchAI : MonoBehaviour
     public string ActualChipTeam { get; internal set; }
 
     /// <summary>
-    /// ¿Terminó la partida?
+    /// Estado actual
     /// </summary>
-    private bool _ended;
-    /// <summary>
-    /// ¿Te rendiste?
-    /// </summary>
-    private bool _youSurrended;
+    public ticTacMachState actualState;
     
     #endregion
 
@@ -90,8 +86,7 @@ public class MatchAI : MonoBehaviour
 
         Chips = new List<GameObject>();
 
-        _ended = false;
-        _youSurrended = false;
+        actualState = ticTacMachState.MIDEMPTY;
     }
     
     #endregion
