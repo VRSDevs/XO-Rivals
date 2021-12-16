@@ -12,11 +12,10 @@ public class Match
     /// ID de la partida
     /// </summary>
     public string MatchId { get; set; }
-    /*
     /// <summary>
-    /// ID del dueño de la partida
+    /// ID del oponente
     /// </summary>
-    public string OwnerId { get; set; }*/
+    public string OpponentId { get; set; }
     /// <summary>
     /// Nombre del jugador O
     /// </summary>
@@ -64,9 +63,7 @@ public class Match
     /// ¿Te rendiste?
     /// </summary>
     private bool _youSurrended;
- 
-
-
+    
     #endregion
 
     #region Constructors
@@ -77,13 +74,12 @@ public class Match
     public Match()
     {
         MatchId = PhotonNetwork.CurrentRoom.Name;
-        //OwnerId = "";
+        OpponentId = "";
         PlayerOName = "";
         PlayerXName = "";
         WhosTurn = "";
         TurnMoment = 0;
-        //MiniGameChosen = Random.Range(0,2);
-        MiniGameChosen = 0;
+        MiniGameChosen = Random.Range(0,5);
 
         FilledPositions = new int[3, 3];
         for (int i = 0; i < FilledPositions.GetLength(0); i++)
@@ -145,6 +141,4 @@ public class Match
     }
     
     #endregion
-    
-    
 }

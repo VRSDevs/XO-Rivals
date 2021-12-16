@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using PlayFab;
 using TMPro;
 using UnityEditor;
@@ -9,16 +10,16 @@ using Photon.Pun;
 
 /// <summary>
 /// Modo de inicio de sesión activo
-///     NONE - Ninguno
-///     REGISTER - Registrarse
-///     LOGIN - Iniciar sesión
+///     None - Ninguno
+///     Register - Registrarse
+///     Login - Iniciar sesión
 /// </summary>
 [Serializable]
 public enum LoginMode
 {
-    NONE,
-    REGISTER,
-    LOGIN
+    None,
+    Register,
+    Login
 }
 
 public class Login : MonoBehaviour
@@ -29,7 +30,7 @@ public class Login : MonoBehaviour
     /// <summary>
     /// Referencia a la clase GameManager
     /// </summary>
-    [SerializeField] public GameManager _gameManager;
+    private GameManager _gameManager;
     /// <summary>
     /// Referencia a la clase de autentificación de inicio de sesión
     /// </summary>
@@ -57,7 +58,21 @@ public class Login : MonoBehaviour
     /// <summary>
     /// ¿Se está conectando el usuario?
     /// </summary>
-    private bool IsConnecting;
+    private bool _isConnecting;
+    /// <summary>
+    /// 
+    /// </summary>
+    private PlayerInfo _playerInfo;
+    /// <summary>
+    /// Nombre de usuario
+    /// </summary>
+    private string _username;
+    /// <summary>
+    /// Contraseña
+    /// </summary>
+    private string _password;
+
+    
     /// <summary>
     /// Mínimo número de caracteres para nombre de usuario y contraseña
     /// </summary>
@@ -69,23 +84,29 @@ public class Login : MonoBehaviour
 
     ////////////////// TECLADO EN MÓVILES //////////////////
     TouchScreenKeyboard keyboard;
-
-
+    
     #endregion
 
     #region UnityCB
 
     private void Start()
     {
+        FindObjectOfType<AudioManager>().StopAllSongs();
+
+        _gameManager = FindObjectOfType<GameManager>();
+        
+        // Generación objeto de PlayerInfo
+        GameObject myPlayer = new GameObject();
+        _playerInfo = myPlayer.AddComponent<PlayerInfo>();
+        DontDestroyOnLoad(myPlayer);
+        _playerInfo.name = "PlayerObject";
+        
         // Limitación de caracteres máximos de los inputs
         UsernameInput.characterLimit = MAX_CHARS;
         PasswordInput.characterLimit = MAX_CHARS;
 
         // Limpieza del log
         Log.text = "";
-        
-        FindObjectOfType<AudioManager>().Play("Main_menu");
-
     }
 
     #endregion
@@ -97,14 +118,15 @@ public class Login : MonoBehaviour
     /// </summary>
     public void OnConnect()
     {
-        if (!IsConnecting && ValidateInputs())
+        _username = UsernameInput.text;
+        _password = PasswordInput.text;
+        
+        if (!_isConnecting && ValidateInputs())
         {
-            IsConnecting = true;
-
-            string username = UsernameInput.text, password = PasswordInput.text;
-            
-            OnAuthentication(username, password);
-            StartCoroutine(OnEstablishConnection(username, password, Mode));
+            _isConnecting = true;
+                
+            OnAuthentication(_username, _password);
+            StartCoroutine(EstablishConnection());
         }
     }
 
@@ -128,7 +150,7 @@ public class Login : MonoBehaviour
     /// <param name="mode">Modo de inicio de sesión</param>
     /// <returns></returns>
     /// <exception cref="LoginFailedException">Excepción producida por fallo al iniciar sesión</exception>
-    private IEnumerator OnEstablishConnection(string username, string password, LoginMode mode)
+    private IEnumerator EstablishConnection()
     {
         yield return new WaitUntil(Authenticator.IsAuthenticated);
 
@@ -141,93 +163,18 @@ public class Login : MonoBehaviour
                     ErrorCode = Authenticator.Obj.ErrorCode
                 };
             }
-            
             Authenticator.Reset();
 
-            Log.text = "Connecting...";
-            
+            Log.text = "Connecting to server...";
             if (_gameManager.OnConnectToServer())
             {
-                Log.text = "Connected.";
-                
-                _gameManager.SetPhotonNick(username);
-                
-                GameObject myPlayer = new GameObject();
-                PlayerInfo playerInfo = myPlayer.AddComponent<PlayerInfo>();
-                DontDestroyOnLoad(myPlayer);
-                playerInfo.name = "PlayerObject";
-                playerInfo.Name = username;
-                playerInfo.ID = Authenticator.playFabPlayerIdCache;
-                
-                //Get client data from PlayFab
-                PlayFabClientAPI.GetUserData(new PlayFab.ClientModels.GetUserDataRequest() {
-                    PlayFabId = playerInfo.ID,
-                    Keys = null
-                }, result => {
-                    Debug.Log("Got user data:");
-                    if (result.Data != null){
-                        //Get lifes
-                        if(result.Data.ContainsKey("Lifes")){
-                            playerInfo.Lifes = int.Parse(result.Data["Lifes"].Value);
-                            playerInfo.Lifes = 3;
-                            Debug.Log("Successfully got player lifes");
-                        }else{
-                            PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                                Data = new Dictionary<string, string>() {
-                                    {"Lifes", "5"}
-                                }
-                            },
-                            result => Debug.Log("Successfully updated user lifes"),
-                            error => {
-                                Debug.Log("Got error setting user lifes");
-                            });
-                        }
-
-                        //Get level
-                        if(result.Data.ContainsKey("Level")){
-                            playerInfo.Level = float.Parse(result.Data["Level"].Value);
-                            playerInfo.Level += 3.43f;
-                            Debug.Log("Successfully got player level");
-                        }else{
-                            PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                                Data = new Dictionary<string, string>() {
-                                    {"Level", "0.0"}
-                                }
-                            },
-                            result => Debug.Log("Successfully updated user level"),
-                            error => {
-                                Debug.Log("Got error setting user level");
-                            });
-                        }
-
-                        //Get moment of life lost(if exists)
-                        if(result.Data.ContainsKey("Life Lost") && result.Data["Life Lost"].Value != "" && result.Data["Life Lost"].Value != null){
-                            playerInfo.LostLifeTime = DateTime.ParseExact(result.Data["Life Lost"].Value, "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                            Debug.Log("Successfully got player life lost moment");
-                        }  
-                        playerInfo.LostLifeTime = System.DateTime.Now;               
-                    }else{
-                        //Setup all information
-                        PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
-                            Data = new Dictionary<string, string>() {
-                                {"Lifes", "5"},
-                                {"Level", "0"}
-                            }
-                        },
-                        result => Debug.Log("Successfully updated user information"),
-                        error => {
-                            Debug.Log("Got error setting user information");
-                        });
-                    }
-                }, (error) => {
-                    Debug.Log("Got error retrieving user data:");
-                });
-                
+                StartCoroutine(OnEstablishedConnection());
             }
             else
             {
                 Log.text = "Oops! Something went wrong.";
-                IsConnecting = false;
+                _isConnecting = false;
+                Authenticator = gameObject.AddComponent<PlayFabAuthenticator>();
             }
         }
         catch (LoginFailedException e)
@@ -235,7 +182,7 @@ public class Login : MonoBehaviour
             switch (e.ErrorCode)
             {
                 case PlayFabErrorCode.UsernameNotAvailable:
-                    Log.text = "Username not available.";
+                    Log.text = "Username not available. Already exists!";
                     break;
                 case PlayFabErrorCode.AccountNotFound:
                     Log.text = "Account not found.";
@@ -245,12 +192,120 @@ public class Login : MonoBehaviour
                     break;
             }
 
-            IsConnecting = false;
-
-            Authenticator = new PlayFabAuthenticator();
+            _isConnecting = false;
+            Authenticator = gameObject.AddComponent<PlayFabAuthenticator>();
 
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
         }
+    }
+
+    /// <summary>
+    /// Corutina ejecutada tras establecer conexión con el servidor
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator OnEstablishedConnection()
+    {
+        yield return new WaitUntil(_gameManager.GetConnected);
+        
+        _gameManager.SetPhotonNick(_username);
+        
+        _playerInfo.UserID = PhotonNetwork.LocalPlayer.UserId;
+        _playerInfo.Name = _username;
+
+        _gameManager.GetCloudData(DataType.Login);
+        Log.text = "Getting data...";
+
+        StartCoroutine(OnOnlineChecked()); 
+    }
+
+    /// <summary>
+    /// Corutina ejecutada tras comprobar si el usuario está conectado
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator OnOnlineChecked()
+    {
+        yield return new WaitUntil(_gameManager.GetCheckedOnline);
+
+        try
+        {
+            if (_gameManager.GetOnlineAuth().Failed)
+            {
+                throw new LoginFailedException(_gameManager.GetOnlineAuth().Message)
+                {
+                    ErrorCode = _gameManager.GetOnlineAuth().ErrorCode
+                };
+            }
+            
+            _gameManager.ResetOnlineAuth();
+            StartCoroutine(OnGetPlayerData()); 
+        }
+        catch (LoginFailedException e)
+        {
+            switch (e.ErrorCode)
+            {
+                case PlayFabErrorCode.ConnectionError:
+                    Log.text = "This user is already connected.";
+                    break;
+            }
+
+            _gameManager.ResetOnlineAuth();
+
+            _gameManager.OnDisconnectToServer();
+            _isConnecting = false;
+
+            Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
+        }
+    }
+
+    /// <summary>
+    /// Corutina ejecutada tras obtener datos de la nube
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator OnGetPlayerData()
+    {
+        yield return new WaitUntil(_gameManager.GetSynchronizeStatus);
+
+        Dictionary<string, string> data = _gameManager.GetDataDictionary();
+
+        switch (int.Parse(data["ResultCode"]))
+        {
+            case 1:
+
+                data[DataType.Online.GetString()] = "true";
+                _playerInfo.Online = bool.Parse(data[DataType.Online.GetString()]);
+                _playerInfo.Lives = int.Parse(data[DataType.Lives.GetString()]);
+                _playerInfo.Level = float.Parse(data[DataType.Level.GetString()]);
+                _playerInfo.LostLifeTime = DateTime.ParseExact(data[DataType.LifeLost.GetString()],
+                    "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                
+                _gameManager.UpdateCloudData(data, DataType.Login);
+                            
+                break;
+            case 2:
+
+                _playerInfo.Online = true;
+                _playerInfo.Lives = 3;
+                _playerInfo.Level = 0.0f;
+
+                _gameManager.UpdateCloudData(new Dictionary<string, string>()
+                {
+                    {DataType.Online.GetString(), _playerInfo.Online.ToString()},
+                    {DataType.Lives.GetString(), _playerInfo.Lives.ToString()},
+                    {DataType.Level.GetString(), _playerInfo.Level.ToString(CultureInfo.InvariantCulture)}
+                },
+                    DataType.Login);
+                        
+                break;
+            case 3:
+                Debug.Log("Got error retrieving user data:");
+                        
+                break;
+            default:
+                break;
+        }
+
+        Log.text = "Connecting to lobby...";
+        _gameManager.OnConnectToLobby();
     }
 
     #endregion
@@ -263,16 +318,24 @@ public class Login : MonoBehaviour
     /// <returns>¿Inputs válidos?</returns>
     private bool ValidateInputs()
     {
-        // Eliminación de espacios en la cadena de caracteres
-        UsernameInput.text = UsernameInput.text.Trim();
-        PasswordInput.text = PasswordInput.text.Trim();
-                
-        if (UsernameInput.text.Length < MIN_CHARS || PasswordInput.text.Length < MIN_CHARS)
+        // Sin espacios
+        if (_username.Contains(" ") || _password.Contains(" "))
         {
-            Log.text = "Incorrect length. Minimum " + MIN_CHARS + " chars.";
+            Log.text = "No whitespaces allowed";
+
+            _isConnecting = false;
             return false;
         }
 
+        // Contraseña con mínimo de caracteres
+        if (_password.Length < MIN_CHARS)
+        {
+            Log.text = "Incorrect length. Password has a minimum of " + MIN_CHARS + " chars.";
+            
+            _isConnecting = false;
+            return false;
+        }
+        
         return true;
     }
     
@@ -286,20 +349,23 @@ public class Login : MonoBehaviour
     /// <param name="mode">Código del modo</param>
     public void UpdateLoginMode(int mode)
     {
-        FindObjectOfType<AudioManager>().Play("SelecctionButton");
-
         switch (mode)
         {
             case 0:
-                Mode = LoginMode.NONE;
+                Mode = LoginMode.None;
                 break;
             case 1:
-                Mode = LoginMode.REGISTER;
+                Mode = LoginMode.Register;
                 break;
             case 2:
-                Mode = LoginMode.LOGIN;
+                Mode = LoginMode.Login;
                 break;
         }
+    }
+
+    public void SelectButton()
+    { 
+        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
     }
     
     /// <summary>

@@ -1,18 +1,23 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerInfo : MonoBehaviour {
         
-    #region Variables
+    #region Vars
 
     /// <summary>
-    /// Id de usuario
+    /// ID de usuario
     /// </summary>
-    public string ID = "";
+    public string UserID = "";
     /// <summary>
     /// Nombre de usuario
     /// </summary>
     public string Name = "";
+    /// <summary>
+    /// ¿Está en línea el jugador?
+    /// </summary>
+    public bool Online = false;
     /// <summary>
     /// ID del jugador en partida
     /// </summary>
@@ -24,7 +29,7 @@ public class PlayerInfo : MonoBehaviour {
     /// <summary>
     /// Vidas del jugador
     /// </summary>
-    public int Lifes;
+    public int Lives;
     /// <summary>
     /// Instante de ultima vida perdida
     /// </summary>

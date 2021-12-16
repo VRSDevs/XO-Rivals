@@ -19,6 +19,14 @@ public class GameManager : MonoBehaviour
     /// 
     /// </summary>
     public NetworkCommunications _networkCommunications;
+    /// <summary>
+    /// 
+    /// </summary>
+    private CloudDataController _cloudController;
+    /// <summary>
+    /// 
+    /// </summary>
+    private PurchasesController _purchasesController;
     
     ////////////////// PARTIDA //////////////////
     /// <summary>
@@ -46,19 +54,41 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
-        _networkController = gameObject.AddComponent<NetworkController>();
-        _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
+        if (FindObjectsOfType<GameManager>().Length < 2)
+        {
+            Debug.Log("No hay GameManager duplicado");
+            
+            _networkController = gameObject.AddComponent<NetworkController>();
+            _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
+            gameObject.AddComponent<PhotonView>();
+            GetComponent<PhotonView>().ViewID = 1;
+            _cloudController = gameObject.AddComponent<CloudDataController>();
+            _purchasesController = gameObject.AddComponent<PurchasesController>();
+            
+            PlayerMatches = new Dictionary<string, Match>();
+            Matchmaking = true;
+            IsPlaying = false;
 
-        PlayerMatches = new Dictionary<string, Match>();
-        Matchmaking = false;
-        IsPlaying = false;
-
-        DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     #endregion
 
     #region Getters
+
+    /// <summary>
+    /// Método para obtener si se está conectado al servidor
+    /// </summary>
+    /// <returns>¿Está conectado al servidor?</returns>
+    public bool GetConnected()
+    {
+        return _networkController.IsConnected();
+    }
 
     /// <summary>
     /// Método para obtener si se está creando una partida
@@ -67,6 +97,64 @@ public class GameManager : MonoBehaviour
     public bool GetIsCreatingMatch()
     {
         return _networkController.GetCreatingRoom();
+    }
+
+    /// <summary>
+    /// Método para obtener el autentificador de usuario conectado
+    /// </summary>
+    /// <returns>Objeto de autentificación de usuario conectado</returns>
+    public AuthObject GetOnlineAuth()
+    {
+        return _cloudController.Obj;
+    }
+
+    /// <summary>
+    /// Método para reiniciar el objeto de validación de estado de conexión
+    /// </summary>
+    public void ResetOnlineAuth()
+    {
+        _cloudController.Obj = new AuthObject();
+    }
+
+    /// <summary>
+    /// Método para obtener si se está creando una partida
+    /// </summary>
+    /// <returns>¿Se está creando la partida?</returns>
+    public bool GetCheckedOnline()
+    {
+        return _cloudController.IsOnlineChecked();
+    }
+
+    /// <summary>
+    /// Método para obtener el estado de sincronización
+    /// </summary>
+    /// <returns>Estado de sincronización</returns>
+    public bool GetSynchronizeStatus()
+    {
+        return _cloudController.IsSynchronized();
+    }
+
+    /// <summary>
+    /// Método para obtener el código de la sala
+    /// </summary>
+    /// <returns>Estado de sincronización</returns>
+    public string GetRoomCode()
+    {
+        return _networkController.GenerateRoomCode();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<string, string> GetDataDictionary()
+    {
+        return _cloudController.GetDataDictionary();
+    }
+
+    public Dictionary<string, string> GetSendStatus()
+    {
+        return _cloudController.GetSendStatus();
     }
 
     #endregion
@@ -88,14 +176,6 @@ public class GameManager : MonoBehaviour
     public void SetReadyStatus()
     {
         _networkController.UpdateReadyStatus();
-    }
-
-    /// <summary>
-    /// Método para actualizar la variable de control de creación de partida
-    /// </summary>
-    public void SetCreatingRoomStatus()
-    {
-        _networkController.UpdateCreatingStatus();
     }
 
     #endregion
@@ -120,11 +200,28 @@ public class GameManager : MonoBehaviour
     }
     
     /// <summary>
+    /// Método para conectarse a la lobby general
+    /// </summary>
+    public void OnConnectToLobby()
+    {
+        _networkController.ConnectToLobby();
+    }
+    
+    /// <summary>
     /// Método para conectarse a una sala en Photon
     /// </summary>
     public void OnConnectToRoom()
     {
         _networkController.ConnectToRandomRoom();
+    }
+
+    /// <summary>
+    /// Método para crear la sala privada
+    /// </summary>
+    /// <param name="code">Código de la sala</param>
+    public void CreatePrivateRoom(string code)
+    {
+        _networkController.CreatePrivateRoom(code);
     }
 
     /// <summary>
@@ -137,11 +234,12 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Método para conectarse a la lobby general
+    /// Método para conectarse a una sala privada
     /// </summary>
-    public void OnConnectToLobby()
+    /// <param name="code">Código de la sala</param>
+    public void ConnectToPrivateRoom(string code)
     {
-        _networkController.ConnectToLobby();
+        _networkController.ConnectToPrivateRoom(code);
     }
 
     /// <summary>
@@ -151,7 +249,7 @@ public class GameManager : MonoBehaviour
     {
         _networkController.DisconnectFromRoom();
     }
-    
+
     #endregion
 
     #region MatchMethods
@@ -181,6 +279,60 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+    
+    #region CloudMethods
+
+    /// <summary>
+    /// Método para obtener datos de la nube
+    /// </summary>
+    /// <param name="type">Tipo de dato a obtener</param>
+    /// <returns>Diccionario con los datos solicitados</returns>
+    public void GetCloudData(DataType type)
+    {
+        _cloudController.GetData(type);
+    }
+
+    /// <summary>
+    /// Método para cargar datos en la nube
+    /// </summary>
+    /// <param name="data">Datos a cargar</param>
+    /// <returns>Estado de la operación</returns>
+    public void UpdateCloudData(Dictionary<string, string> data, DataType type)
+    {
+        _cloudController.SendData(data, type);
+    }
+
+    #endregion
+
+    #region PurchaseMethods
+
+    /// <summary>
+    /// ¿Completó la compra?
+    /// </summary>
+    /// <returns>Estado de la compra</returns>
+    public bool IsPurchaseCompleted()
+    {
+        return _purchasesController.HasPurchased();
+    }
+
+    /// <summary>
+    /// Método para actualizar el estado de compra
+    /// </summary>
+    public void UpdatePurchaseStatus()
+    {
+        _purchasesController.UpdatePurchaseStatus();
+    }
+    
+    /// <summary>
+    /// Método para realizar la compra de un item de la tienda
+    /// </summary>
+    /// <param name="item">Item a comprar</param>
+    public void PurchaseItem(ShopItem item)
+    {
+        _purchasesController.StartPurchase(item);
+    }
+
+    #endregion
 
     #region ConversiontMethods
     
@@ -194,18 +346,20 @@ public class GameManager : MonoBehaviour
         switch (playerType)
         {
             case "O":
-                object[] objO = new object[3];
+                object[] objO = new object[4];
 
                 objO[0] = playerType;
-                objO[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName;
-                objO[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
+                objO[1] = FindObjectOfType<PlayerInfo>().UserID;
+                objO[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName;
+                objO[3] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
 
                 return objO;
             case "X":
-                object[] objX = new object[2];
+                object[] objX = new object[3];
 
                 objX[0] = playerType;
-                objX[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName;
+                objX[1] = FindObjectOfType<PlayerInfo>().UserID;
+                objX[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName;
 
                 return objX;
         }
@@ -308,11 +462,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetObject()
     {
-        _networkController = gameObject.AddComponent<NetworkController>();
-        _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
-        
+        _networkController.ResetObject();
+        _cloudController.ResetObject();
+        _purchasesController.ResetObject();
+
         PlayerMatches.Clear();
-        Matchmaking = false;
+        Matchmaking = true;
         IsPlaying = false;
     }
 

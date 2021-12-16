@@ -3,6 +3,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class ScreenManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class ScreenManager : MonoBehaviour
 
     //Control of miniGameChoosing
     [SerializeField] private GameObject miniGameChoosing;
+    [SerializeField] private Transform[] miniGamePlaces;
+    [SerializeField] private Button[] miniGameImages;
     [SerializeField] private GameObject ticTacScreen;
     [SerializeField] private GameObject instructions;
 
@@ -33,31 +36,28 @@ public class ScreenManager : MonoBehaviour
     [SerializeField] private GameObject instructionsPlataformasLore;
     [SerializeField] private GameObject instructionsPlataformasInstr;
 
+    [SerializeField] private GameObject instructionsCarnival;
+    [SerializeField] private GameObject instructionsCarnivalLore;
+    [SerializeField] private GameObject instructionsCarnivalInstr;
+
     [SerializeField] private ButtonsScript buttonsScript;
     public static int minigame = -1;
 
     //Reference to all butons
     [SerializeField] private Button[] buttonsReference;
 
-    void Start(){
-
-        if(buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn == buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName){
-            StartCoroutine(txtTimer("Turno de O"));
-        }else{
-            StartCoroutine(txtTimer("Turno de X"));
-        }
-    }
 
     public void UpdateTurn(){
         
         Debug.Log("X: " + buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
         Debug.Log("O: " + buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
-        
-        if(buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName == buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn)
+        Debug.Log("TURNO SSCREENANTES" + buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn);
+        if (buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName == buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn)
             buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName;
         else
             buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName;
-        
+        buttonsScript.updateIconTurn(false);
+
         buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
         //Display turn in screen
         if(buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn == buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName){            
@@ -65,16 +65,22 @@ public class ScreenManager : MonoBehaviour
         }else{
             StartCoroutine(txtTimer("Turno de X"));
         }
-
+        Debug.Log("TURNO SSCREENFINAL" + buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn);
         if (buttonsScript.miniWin)
         {
-            Debug.Log("poshemosganao");
+         
             buttonsScript.gameState._networkCommunications.SendMatchInfo("OppWon");
         }
         else
         {
-            Debug.Log("poshemosperdido");
+           
             buttonsScript.gameState._networkCommunications.SendMatchInfo("OppLost");
+        }
+
+        if(buttonsScript.localPlayer.Name == buttonsScript.thisMatch.PlayerOName){
+            //buttonsScript.crossTurnRival.SetActive(true);
+        }else{
+           // buttonsScript.circleTurnRival.SetActive(true);
         }
     }
     
@@ -87,22 +93,36 @@ public class ScreenManager : MonoBehaviour
     }
 
     public void MinigameSelectionActivation(){
-        //ticTacScreen.SetActive(false);
-        //Hide chips
-        //for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
-        //    buttonsScript.ChipsList[i].SetActive(false);
-        //}
+
         miniGameChoosing.SetActive(true);
-    }    
+
+        //Randomly choose minigames
+        int located = 0;
+        int num;
+        List<int> selected = new List<int>();
+        while(located < 3){
+            num = Random.Range(0,5);
+            if(!selected.Contains(num)){
+                selected.Add(num);
+                located++;
+            }
+        }
+
+        //Locate each minigame in its place
+        for(int i = 0; i < selected.Count; i++){
+            
+            miniGameImages[selected[i]].gameObject.SetActive(true);
+            miniGameImages[selected[i]].transform.position = miniGamePlaces[i].transform.position;
+        }
+    } 
+   
 
     public void MinigameSelection(int n){
         buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = n;
         miniGameChoosing.SetActive(false);
         ticTacScreen.SetActive(true);
-        Debug.Log("PREEEUPDATETUENHECHO");
         //Update turn data and send it to opponent
         UpdateTurn();
-        Debug.Log("UPDATETUENHECHO");
         ////Unhide chips
         //for(int i = 0; i < buttonsScript.thisMatch.Chips.Count; i++){
         //    buttonsScript.thisMatch.Chips[i].SetActive(true);
@@ -177,37 +197,41 @@ public class ScreenManager : MonoBehaviour
                 instructionsLaberinto.SetActive(true);
                 instructionsLaberintoInstr.SetActive(true);
                 break;
+            case 4://Feria
+                instructionsCarnival.SetActive(true);
+                instructionsCarnivalInstr.SetActive(true);
+                break;
         }
-
-
-
     }
 
     public void unshowInstructions()
     {
 
+        instructionsPistolero.SetActive(false);
+        instructionsPistoleroInstr.SetActive(false);
+        instructionsPistoleroLore.SetActive(false);
+
+
+        instructionsPlataformas.SetActive(false);
+        instructionsPlataformasInstr.SetActive(false);
+        instructionsPlataformasLore.SetActive(false);
+
+        instructionsCocinitas.SetActive(false);
+        instructionsCocinitasInstr.SetActive(false);
+        instructionsCocinitasLore.SetActive(false);
+
+
+        instructionsLaberinto.SetActive(false);
+        instructionsLaberintoInstr.SetActive(false);
+        instructionsLaberintoLore.SetActive(false);
+
+        instructionsCarnival.SetActive(false);
+        instructionsCarnivalInstr.SetActive(false);
+        instructionsCarnivalLore.SetActive(false);
 
 
 
-                    instructionsPistolero.SetActive(false);
-                    instructionsPistoleroInstr.SetActive(false);
-                    instructionsPistoleroLore.SetActive(false);
-
-
-                    instructionsCocinitas.SetActive(false);
-                    instructionsCocinitasInstr.SetActive(false);
-                    instructionsCocinitasLore.SetActive(false);
-
-
-
-                    instructionsPlataformas.SetActive(false);
-                    instructionsPlataformasInstr.SetActive(false);
-                    instructionsPlataformasLore.SetActive(false);
-
-
-                    instructions.SetActive(false);
-
-
+        instructions.SetActive(false);
 
     }
 
@@ -243,11 +267,18 @@ public class ScreenManager : MonoBehaviour
                 instructionsLaberintoLore.SetActive(true);
 
                 break;
+            case 4://Feria
+
+                instructionsCarnivalInstr.SetActive(false);
+                instructionsCarnivalLore.SetActive(true);
+
+                break;
         }
 
 
 
     }
+    
     public void goInstrtext()
     {
         int i = buttonsScript.thisMatch.MiniGameChosen;
@@ -277,6 +308,12 @@ public class ScreenManager : MonoBehaviour
 
                 instructionsLaberintoInstr.SetActive(true);
                 instructionsLaberintoLore.SetActive(false);
+
+                break;
+            case 4://Carnival
+
+                instructionsCarnivalInstr.SetActive(true);
+                instructionsCarnivalLore.SetActive(false);
 
                 break;
         }

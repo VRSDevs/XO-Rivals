@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Random = UnityEngine.Random;
+using PlayFab;
+using TMPro;
 
 public class ButtonsScript : MonoBehaviour
 {
@@ -15,7 +17,19 @@ public class ButtonsScript : MonoBehaviour
     public GameObject circleGO;
     public GameObject crossGO;
 
+    public GameObject circleTurnRival;
+    public GameObject crossTurnRival;
+
+    [SerializeField] private GameObject circleTurn;
+    [SerializeField] private GameObject crossTurn;
+
+    //Player names
+    [SerializeField] private TextMeshProUGUI nameO;
+    [SerializeField] private TextMeshProUGUI nameX;
+
     public List<Transform> botonesCuadricula;
+    
+    //public string TurnoPlayer;
 
     //Screen manager
     private ScreenManager screenManager;
@@ -67,38 +81,93 @@ public class ButtonsScript : MonoBehaviour
         //Initialize ScreenManager
         screenManager = FindObjectOfType<ScreenManager>();
     }
-    
+    public void updateIconTurn(bool change)
+    {
+        if (change)//CAMBIA A QUE ME TOCA A MI
+        {
+            Debug.Log("LOCAL PLAYER " + localPlayer.Name);
+            Debug.Log("X PLAYER " + thisMatch.PlayerXName);
+            Debug.Log("O PLAYER " + thisMatch.PlayerOName);
+            Debug.Log("TurnoPlayerANTES " + thisMatch.WhosTurn);
+
+            if (localPlayer.Name == thisMatch.PlayerXName)
+            {
+                thisMatch.WhosTurn = thisMatch.PlayerXName;
+            }
+            else
+            {
+                thisMatch.WhosTurn = thisMatch.PlayerOName;
+            }
+        }
+        Debug.Log("TurnoPlayerDSPS " + thisMatch.WhosTurn);
+        //Activate player turn tile
+        if (thisMatch.WhosTurn == thisMatch.PlayerOName)
+        {//TURNO CIRCLE
+            circleTurn.SetActive(true);
+            crossTurn.SetActive(false);
+            Debug.Log(localPlayer.Name + "POS ME LLAMO ASI+++");
+            Debug.Log(thisMatch.PlayerOName + "ESTE ES EL CIRCULO YATUSABE");
+            if (localPlayer.Name != thisMatch.PlayerOName)
+            {
+                Debug.Log("ACTIVO BIEN ACTIVAO");
+                circleTurnRival.SetActive(true) ;
+            }
+            else
+            {
+                circleTurnRival.SetActive(false);
+                crossTurnRival.SetActive(false);
+            }
+
+
+        }
+        else
+        {//TURNO CROSS
+            crossTurn.SetActive(true);
+            circleTurn.SetActive(false);
+
+            if (localPlayer.Name != thisMatch.PlayerXName)
+            {
+                crossTurnRival.SetActive(true);
+            }
+            else
+            {
+                circleTurnRival.SetActive(false);
+                crossTurnRival.SetActive(false);
+            }
+        }
+    }
+
+    public void Update()
+    {
+        if (nameO.text == "")
+        {
+            nameO.text = thisMatch.PlayerOName;
+        }
+        if (nameX.text == "")
+        {
+            nameX.text = thisMatch.PlayerXName;
+        }
+       
+    }
+
     public void Start(){
-        
-        Debug.Log("Player O name: " + thisMatch.PlayerOName);
-        Debug.Log("Player X name: " + thisMatch.PlayerXName);
-        Debug.Log("Turn: " + thisMatch.WhosTurn);
-        Debug.Log("Turn moment: " + thisMatch.TurnMoment);
-        Debug.Log("Numfilled: " + thisMatch.NumFilled);
-        Debug.Log(thisMatch.FilledPositions[0,0] + " " + thisMatch.FilledPositions[0,1] + " " + thisMatch.FilledPositions[0,2] + "\n" 
-        + thisMatch.FilledPositions[1,0] + " " + thisMatch.FilledPositions[1,1] + " " + thisMatch.FilledPositions[1,2] + "\n" 
-        + thisMatch.FilledPositions[2,0] + " " + thisMatch.FilledPositions[2,1] + " " + thisMatch.FilledPositions[2,2]);
-        Debug.Log("Minigame chosen: " + thisMatch.MiniGameChosen);
-
+    
         startGame();
-
-
+        updateIconTurn(false);
         colocarFichas();
-
-        CheckVictory();
+        //Set name to each player
+        nameO.text = thisMatch.PlayerOName;
+        nameX.text = thisMatch.PlayerXName;
 
         //SI VIENES DE UN MINIJUEGO SE HACE START Y SE ELIGE MINIJUEGO
         if (thisMatch.TurnMoment == 2)
         {
-            Debug.Log("AAAAAAAA");
 
             miniWin = (PlayerPrefs.GetInt("minigameWin") == 1);
             Debug.Log(miniWin);
 
             if (miniWin)
             {
-
-
                 GameObject actual;
                 if (thisMatch.ActualChipTeam == "cross")
                 {
@@ -130,24 +199,12 @@ public class ButtonsScript : MonoBehaviour
                     //Add one to filled count
                     thisMatch.NumFilled++;
                 }
-
-
-
-
             }//Fin win
 
-            Debug.Log("SE HACE MINIGAMESEÑLECTION");
+            Debug.Log("SE HACE MINIGAME SELECTION");
             screenManager.MinigameSelectionActivation();
-
-
-
-
         }
-       
-
-
-
-
+        CheckVictory();
     }
 
     /// <summary>
@@ -155,6 +212,8 @@ public class ButtonsScript : MonoBehaviour
     /// </summary>
     public void startGame()
     {
+        //crossTurnRival.SetActive(false);
+        //circleTurnRival.SetActive(false);
         //If its your turn, play, if its not, only can see
         if(thisMatch.WhosTurn == localPlayer.Name){
 
@@ -162,20 +221,23 @@ public class ButtonsScript : MonoBehaviour
             if (thisMatch.TurnMoment == 0)
             {
                 screenManager.EnableButtons();
+                //circleTurnRival.SetActive(false);
+                //crossTurnRival.SetActive(false);
             }
-            else if(thisMatch.TurnMoment == 1 || thisMatch.TurnMoment == 2){
-                //Go directly to minigame
-                //PlayMinigame();
-            }else if(thisMatch.TurnMoment == 3){
-                //Go to check victory
-               // CheckVictory();
-            }else if(thisMatch.TurnMoment == 4){
-                //Go to choose minigame
-                //screenManager.MinigameSelectionActivation();
-            }
+      
         }else{
             //Disable interaction with tictac cause its not your turn
             screenManager.DisableButtons();
+            /*if (thisMatch.WhosTurn == thisMatch.PlayerOName)
+            {
+                circleTurnRival.SetActive(true);
+                crossTurnRival.SetActive(false);
+            }
+            else
+            {
+                circleTurnRival.SetActive(false);
+                crossTurnRival.SetActive(true);
+            }*/
         }
     }
 
@@ -220,7 +282,7 @@ public class ButtonsScript : MonoBehaviour
             screenManager.showInstruction(thisMatch.MiniGameChosen);
 
         }else{
-            Debug.Log("Tile not empty");
+            Debug.Log("Tile not empty");Debug.Log("Tile not empty");
         }
     }
 
@@ -231,6 +293,7 @@ public class ButtonsScript : MonoBehaviour
             miniWin = false;
             PlayerPrefs.SetInt("minigameWin", 0);
             switch(thisMatch.MiniGameChosen){
+
                 case 0:
                     SceneManager.LoadScene("Pistolero");
                     //SceneManager.LoadScene("Pistolero", LoadSceneMode.Additive);
@@ -245,17 +308,17 @@ public class ButtonsScript : MonoBehaviour
                     SceneManager.LoadScene("PlatformMinigame");
                     //SceneManager.LoadScene("PlatformMinigame", LoadSceneMode.Additive);
                 break;
+                
                 case 3:
-                    SceneManager.LoadScene("Fantasmas3D");
+                    SceneManager.LoadScene("Fanstasmas3D");
                     //SceneManager.LoadScene("PlatformMinigame", LoadSceneMode.Additive);
-                    break;
+                break;
+
+                case 4:
+                    SceneManager.LoadScene("CarnivalMinigame");
+                    //SceneManager.LoadScene("PlatformMinigame", LoadSceneMode.Additive);
+                break;
             }
-
-
-           
-
-
-
         }
 
         /*
@@ -322,11 +385,104 @@ public class ButtonsScript : MonoBehaviour
 
         }
     }
+
     public void CheckVictory(){
 
         bool[] array = new bool[8];
         int col = thisMatch.ActualChip%3;
         int row = thisMatch.ActualChip / 3;
+        bool win=false;
+        //Primera Fila
+        if (thisMatch.FilledPositions[0 % 3, 0 / 3] != 3 && (thisMatch.FilledPositions[0 % 3, 0 / 3] == thisMatch.FilledPositions[1 % 3, 1 / 3]) && (thisMatch.FilledPositions[1 % 3,1 / 3] == thisMatch.FilledPositions[2 % 3, 2 / 3]))
+        {
+            win = true ;
+        }
+        //Segunda Fila
+        if (thisMatch.FilledPositions[3 % 3, 3 / 3] != 3 && (thisMatch.FilledPositions[3 % 3, 3 / 3] == thisMatch.FilledPositions[4 % 3, 4 / 3]) && (thisMatch.FilledPositions[4 % 3, 4 / 3] == thisMatch.FilledPositions[5 % 3, 5 / 3]))
+        {
+            win = true;
+        }
+        //Tercera Fila
+        if (thisMatch.FilledPositions[6 % 3, 6 / 3] != 3 && (thisMatch.FilledPositions[6 % 3, 6 / 3] == thisMatch.FilledPositions[7 % 3, 7 / 3]) && (thisMatch.FilledPositions[7 % 3, 7 / 3] == thisMatch.FilledPositions[8 % 3, 8 / 3]))
+        {
+            win = true;
+        }
+        //Primera columna
+        if (thisMatch.FilledPositions[0 % 3, 0 / 3] != 3 && (thisMatch.FilledPositions[0 % 3, 0 / 3] == thisMatch.FilledPositions[3 % 3, 3 / 3]) && (thisMatch.FilledPositions[3 % 3, 3 / 3] == thisMatch.FilledPositions[6 % 3, 6 / 3]))
+        {
+            win = true;
+        }
+        //Segunda columna
+        if (thisMatch.FilledPositions[1 % 3, 1 / 3] != 3 &&  (thisMatch.FilledPositions[1 % 3, 1 / 3] == thisMatch.FilledPositions[4 % 3, 4 / 3]) && (thisMatch.FilledPositions[4 % 3, 4 / 3] == thisMatch.FilledPositions[7 % 3, 7 / 3]))
+        {
+            win = true;
+        }
+        //Tercera columna
+        if (thisMatch.FilledPositions[2 % 3, 2 / 3] != 3 && (thisMatch.FilledPositions[2 % 3, 2 / 3] == thisMatch.FilledPositions[5 % 3, 5 / 3]) && (thisMatch.FilledPositions[5 % 3, 5 / 3] == thisMatch.FilledPositions[8 % 3, 8 / 3]))
+        {
+            win = true;
+        }
+        //Primera diagonal
+        if (thisMatch.FilledPositions[0 % 3, 0 / 3] != 3 && (thisMatch.FilledPositions[0 % 3, 0 / 3] == thisMatch.FilledPositions[4 % 3, 4 / 3]) && (thisMatch.FilledPositions[4 % 3, 4 / 3] == thisMatch.FilledPositions[8 % 3, 8 / 3]))
+        {
+            win = true;
+        }
+        //Segunda diagonal
+        if (thisMatch.FilledPositions[2 % 3, 2 / 3] != 3 && (thisMatch.FilledPositions[2 % 3, 2 / 3] == thisMatch.FilledPositions[4 % 3,4 / 3]) && (thisMatch.FilledPositions[4 % 3, 4 / 3] == thisMatch.FilledPositions[6 % 3, 6 / 3]))
+        {
+            win = true;
+        }
+
+
+
+        if (win)
+        {
+            circleTurnRival.SetActive(false);
+            crossTurnRival.SetActive(false);
+            //Call endgame
+            if (thisMatch.FilledPositions[col, row] == 0)
+            {            
+
+                if (localPlayer.Name == thisMatch.PlayerOName)
+                {
+                    localPlayer.Level += 0.75f;
+                    UpdateLevel();
+                    FindObjectOfType<EndGameScript>().ShowMatchVictory();
+                    gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                    FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
+                }
+                else
+                {
+                    localPlayer.Level += 0.45f;
+                    UpdateLevel();
+                    FindObjectOfType<EndGameScript>().ShowMatchDefeat();
+                    gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                }
+            }
+            else
+            {
+                if (localPlayer.Name == thisMatch.PlayerXName)
+                {
+                    localPlayer.Level += 0.75f;
+                    UpdateLevel();
+                    FindObjectOfType<EndGameScript>().ShowMatchVictory();
+                    FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
+                    gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                }
+                else
+                {
+                    localPlayer.Level += 0.45f;
+                    UpdateLevel();
+                    FindObjectOfType<EndGameScript>().ShowMatchDefeat();
+                    gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                }
+
+
+            }
+            
+        }
+
+        /*
 
         //Fill array with true every loop
         for (int w = 0; w < 8; w++){
@@ -387,6 +543,8 @@ public class ButtonsScript : MonoBehaviour
             }
 
             Debug.Log("HASA NO O SI GAANAO");
+
+        
             if (win)
             {
                 Debug.Log("HASA GAANAO");
@@ -399,10 +557,14 @@ public class ButtonsScript : MonoBehaviour
                     
                     if (localPlayer.Name == thisMatch.PlayerOName)
                     {
+                        localPlayer.Level += 0.75f;
+                        UpdateLevel();
                         gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                     }
                     else
                     {
+                        localPlayer.Level += 0.35f;
+                        UpdateLevel();
                         gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                     }
                 }
@@ -412,10 +574,14 @@ public class ButtonsScript : MonoBehaviour
 
                     if (localPlayer.Name == thisMatch.PlayerXName)
                     {
+                        localPlayer.Level += 0.75f;
+                        UpdateLevel();
                         gameState._networkCommunications.SendEndMatchInfo("win", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
                     }
                     else
                     {
+                        localPlayer.Level += 0.35f;
+                        UpdateLevel();
                         gameState._networkCommunications.SendEndMatchInfo("defeat", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
                     }
                 }
@@ -424,10 +590,13 @@ public class ButtonsScript : MonoBehaviour
             i++;
         }while(i < 8);
 
+        */
+
         //Table full (draw)
-        if(thisMatch.NumFilled == 9){
+        if (thisMatch.NumFilled == 9){
             Debug.Log("Draw");
-            gameState._networkCommunications.SendEndMatchInfo("draw", "");
+            FindObjectOfType<EndGameScript>().ShowMatchDraw();
+            gameState._networkCommunications.SendEndMatchInfo("DW", "");
         }
 
         //thisMatch.TurnMoment = 4;
@@ -435,109 +604,21 @@ public class ButtonsScript : MonoBehaviour
         //screenManager.MinigameSelectionActivation();
     }
 
-    #endregion
+    private void UpdateLevel(){
 
-    #region TestMethods
-
-    bool TestCol(int col){
-        int type;
-        int j = 0;
-
-        //Pick first tile in column if its not empty
-        if(thisMatch.FilledPositions[col,j] != 3){
-            type = thisMatch.FilledPositions[col,j];
-            j++;
-        }else{
-            return false;
-        }
-
-        //Check if all other tiles are the same
-        do{
-            if(thisMatch.FilledPositions[col,j] != type){
-                return false;
+        //Upload lifes to server
+        PlayFabClientAPI.UpdateUserData(new PlayFab.ClientModels.UpdateUserDataRequest() {
+                Data = new Dictionary<string, string>() {
+                    {"Level", localPlayer.Level.ToString()}}
+            },
+            result => Debug.Log("Successfully updated user level"),
+            error => {
+                Debug.Log("Got error setting user level");
             }
-            j++;
-        }while(j < 3);
-
-        return true;
-    }
-    
-    bool TestRow(int row){
-        int type;
-        int j = 0;
-
-        //Pick first tile in column if its not empty
-        if(thisMatch.FilledPositions[j,row] != 3){
-            type = thisMatch.FilledPositions[j,row];
-            j++;
-        }else{
-            return false;
-        }
-
-        //Check if all other tiles are the same
-        do{
-            if(thisMatch.FilledPositions[j,row] != type){
-                return false;
-            }
-            j++;
-        }while(j < 3);
-
-        return true;
-    }
-
-    bool TestDiag(int diag){
-        int type;
-        int j = 0;
-
-        //First diagonal
-        if(diag == 0){
-            //Pick first tile in column if its not empty
-            if(thisMatch.FilledPositions[diag,j] != 3){
-                type = thisMatch.FilledPositions[diag,j];
-                j++;
-                diag++;
-            }else{
-                return false;
-            }
-
-            //Check if all other tiles are the same
-            do{
-                if(thisMatch.FilledPositions[diag,j] != type){
-                    return false;
-                }
-                diag++;
-                j++;
-            }while(j < 3);
-
-            return true;
-
-        //Second diagonal
-        }else{
-            diag++;
-            //Pick first tile in column if its not empty
-            if(thisMatch.FilledPositions[diag,j] != 3){
-                type = thisMatch.FilledPositions[diag,j];
-                j++;
-                diag--;
-            }else{
-                return false;
-            }
-
-            //Check if all other tiles are the same
-            do{
-                if(thisMatch.FilledPositions[diag,j] != type){
-                    return false;
-                }
-                diag--;
-                j++;
-            }while(j < 3);
-
-            return true;
-        }
+        );
     }
 
     #endregion
-
 }
 
     

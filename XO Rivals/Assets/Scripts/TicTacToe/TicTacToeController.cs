@@ -18,7 +18,11 @@ public class TicTacToeController : MonoBehaviour
     void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
+        
         FindObjectOfType<AudioManager>().StopAllSongs();
+        //FindObjectOfType<AudioManager>().Stop("Main_Menu");
+
+        //FindObjectOfType<AudioManager>().Play("Tic-Tac-Toe");
 
         FindObjectOfType<AudioManager>().ChangeMusic(Tic_Tac_toe_Music,"Main_menu");
 
@@ -40,6 +44,16 @@ public class TicTacToeController : MonoBehaviour
     {
         _gameManager.OnLeaveRoom();
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void PutChip()
+    {
+        FindObjectOfType<AudioManager>().Play("Chip");
+    }
+    
+    public void SelectButton()
+    { 
+        FindObjectOfType<AudioManager>().Play("SelecctionButton1");
     }
 
     /// <summary>
