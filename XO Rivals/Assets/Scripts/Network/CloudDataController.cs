@@ -4,9 +4,14 @@ using System.Collections.Generic;
 using System.Globalization;
 using Photon.Pun;
 using PlayFab;
-using PlayFab.ClientModels;
+using PlayFab.ServerModels;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using GetTitleDataRequest = PlayFab.ClientModels.GetTitleDataRequest;
+using GetTitleDataResult = PlayFab.ClientModels.GetTitleDataResult;
+using GetUserDataRequest = PlayFab.ClientModels.GetUserDataRequest;
+using GetUserDataResult = PlayFab.ClientModels.GetUserDataResult;
+using UpdateUserDataRequest = PlayFab.ClientModels.UpdateUserDataRequest;
 
 /// <summary>
 /// Tipos de datos que se pueden solicitar
@@ -186,20 +191,38 @@ public class CloudDataController : MonoBehaviour
         PlayFabClientAPI.GetTitleData(
             new GetTitleDataRequest(), 
             result => OnTitleDataRecieved(result, type),
-            error => Debug.Log(""));
+            error => OnRecieveTitleError(error));
     }
 
     /// <summary>
     /// Método para enviar datos
     /// </summary>
     /// <param name="data">Diccionario de datos a enviar</param>
-    /// /// <param name="type">Tipo de dato a enviar</param>
+    /// <param name="type">Tipo de dato a enviar</param>
     /// <returns>Estado de la operación</returns>
     public void SendData(Dictionary<string, string> data, DataType type)
     {
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
         {
             Data = data
+        }, (result) =>
+        {
+            OnDataSend(type);
+        }, OnSendError);
+    }
+    
+    /// <summary>
+    /// Método para actualizar los datos del título
+    /// </summary>
+    /// <param name="key">Clave del dato a actualizar</param>
+    /// <param name="value">Nuevo dato de la clave a actualizar</param>
+    /// <param name="type">Tipo de dato</param>
+    public void SendTitleData(string key, string value, DataType type)
+    {
+        PlayFabServerAPI.SetTitleData(new SetTitleDataRequest()
+        {
+            Key = key,
+            Value = value
         }, (result) =>
         {
             OnDataSend(type);
@@ -290,7 +313,11 @@ public class CloudDataController : MonoBehaviour
         UpdateSynchronizedStatus();
     }
 
-    
+    /// <summary>
+    /// CB ejecutado tras recibir los datos del título
+    /// </summary>
+    /// <param name="result">Resultado obtenido</param>
+    /// <param name="type">Tipo de dato del resultado</param>
     private void OnTitleDataRecieved(GetTitleDataResult result, DataType type)
     {
         // Si no ha devuelto ningún dato
@@ -346,6 +373,27 @@ public class CloudDataController : MonoBehaviour
                 break;
         }
     }
+    
+    /// <summary>
+    /// CB ejecutado tras enviar los datos del título
+    /// </summary>
+    /// <param name="type">Tipo de dato enviado</param>
+    private void OnTitleDataSend(DataType type)
+    {
+        _sendDataStatus = new Dictionary<string, string>()
+        {
+            {"ResultCode", "1"}
+        };
+
+        switch (type)
+        {
+            // Caso Logout -> Procedimiento tras enviar datos de cierre de sesión
+            case DataType.Logout:
+                PlayFabClientAPI.ForgetAllCredentials();
+                
+                break;
+        }
+    }
 
     /// <summary>
     /// Método CB llamado cuando falla la petición de datos
@@ -354,23 +402,45 @@ public class CloudDataController : MonoBehaviour
     /// <returns>Diccionario con un código de error</returns>
     private void OnRecieveError(PlayFabError error)
     {
-        Debug.Log("a");
-        
         _cloudData = new Dictionary<string, string>()
         {
             {"ResultCode", "2"}
         };
         
-        UpdateOnlineChecked();
-        UpdateSynchronizedStatus();
+    }
+    
+    /// <summary>
+    /// CB llamado cuando falla la petición de datos del título
+    /// </summary>
+    /// <param name="error">Error devuelto por el servidor</param>
+    /// <returns>Diccionario con un código de error</returns>
+    private void OnRecieveTitleError(PlayFabError error)
+    {
+        _cloudData = new Dictionary<string, string>()
+        {
+            {"ResultCode", "2"}
+        };
+        
+        
     }
     
     /// <summary>
     /// Método CB llamado cuando falla la petición de datos
     /// </summary>
     /// <param name="error">Error devuelto por el servidor</param>
-    /// <returns>Diccionario con un código de error</returns>
     private void OnSendError(PlayFabError error)
+    {
+        _sendDataStatus = new Dictionary<string, string>()
+        {
+            {"ResultCode", "3"}
+        };
+    }
+    
+    /// <summary>
+    /// CB llamado tras fallar el envío de datos del título
+    /// </summary>
+    /// <param name="error">Error devuelto por el servidor</param>
+    private void OnSendTitleError(PlayFabError error)
     {
         _sendDataStatus = new Dictionary<string, string>()
         {
