@@ -392,9 +392,16 @@ public class CloudDataController : MonoBehaviour, ICloudData
             {
                 {"ResultCode", "2"}
             };
+            
+            GotTitleData = true;
 
             return;
         }
+        
+        _cloudData = new Dictionary<string, string>()
+        {
+            {"ResultCode", "1"}
+        };
 
         switch (type)
         {
@@ -407,6 +414,8 @@ public class CloudDataController : MonoBehaviour, ICloudData
 
                 break;
         }
+        
+        GotTitleData = true;
     }
     
     /// <summary>

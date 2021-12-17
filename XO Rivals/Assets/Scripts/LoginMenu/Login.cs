@@ -286,8 +286,10 @@ public class Login : MonoBehaviour
                 }
                 
                 _gameManager.UpdateCloudData(data, DataType.Login);
+                
+                _gameManager.GetCloudDataController().GetTitleData(DataType.Match);
 
-                StartCoroutine(ConnectToLobby());
+                StartCoroutine(OnGetTitleData(codeMatches));
                             
                 break;
             case 2:
@@ -316,6 +318,40 @@ public class Login : MonoBehaviour
                 break;
         }
         
+    }
+    
+    /// <summary>
+    /// Corutina ejecutada tras obtener todos los datos relacionados con el juego
+    /// </summary>
+    /// <param name="codes">Lista de códigos de partidas del usuario</param>
+    /// <returns></returns>
+    private IEnumerator OnGetTitleData(List<string> codes)
+    {
+        yield return new WaitUntil(() => _gameManager.GetCloudDataController().GotTitleData);
+        
+        Dictionary<string, string> data = _gameManager.CloudDataController.GetDataDictionary();
+
+        switch (int.Parse(data["ResultCode"]))
+        {
+            case 1:
+
+                foreach (var code in codes)
+                {
+                    Match m = new Match();
+                    m.Parse(data[DataType.Match + code]);
+                    
+                    _gameManager.SetMatch(
+                        code,
+                        m);
+                }
+                
+                break;
+            case 2:
+                break;
+        }
+        
+        Log.text = "Connecting to lobby...";
+        _gameManager.ConnectToLobby();
     }
 
     #endregion
@@ -420,18 +456,6 @@ public class Login : MonoBehaviour
     {
         keyboard.active = false;
         
-    }
-
-    /// <summary>
-    /// Corutina ejecutada tras obtener todos los datos relacionados con el juego
-    /// </summary>
-    /// <returns></returns>
-    public IEnumerator ConnectToLobby()
-    {
-        yield return new WaitUntil(() => _gameManager.GetCloudDataController().GotTitleData);
-        
-        Log.text = "Connecting to lobby...";
-        _gameManager.ConnectToLobby();
     }
 
     #endregion
