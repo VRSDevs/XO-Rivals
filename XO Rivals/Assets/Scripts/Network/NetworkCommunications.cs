@@ -71,6 +71,11 @@ public class NetworkCommunications : MonoBehaviourPun
                     RpcTarget.OthersBuffered, 
                     (object)objToSend);
                 
+                FindObjectOfType<GameManager>().CloudDataController.SendTitleData(
+                    DataType.Match + PhotonNetwork.CurrentRoom.Name,
+                    FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).ToString(),
+                    DataType.Match);
+                
                 break;
             case SendingState.EndMatchInfo:
                 objToSend = FindObjectOfType<ButtonsScript>().gameState.EndMatchInfoToObject(data["Event"], 

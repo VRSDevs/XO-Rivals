@@ -203,18 +203,15 @@ public class Match
     /// </summary>
     /// <param name="s">Cadena de texto a transformar</param>
     /// <returns>Clave de la partida</returns>
-    public string Parse(string s)
+    public void Parse(string s)
     {
         // Variables
-        string key = "";
         int section = 0;
-        bool foundKey = false;
         string value = "";
         int x = 0;
         int y = 0;
         
         // Lectura
-        s = s.Trim();
         for (int i = 0; i < s.Length; i++)
         {
             // Condición salida
@@ -287,28 +284,8 @@ public class Match
             // Lectura para variables
             switch (section)
             {
-                // Caso 0 - Clave + MatchID
+                // Caso 0 -  MatchID
                 case 0:
-                    if (!foundKey)
-                    {
-                        // Condición para cambio a variable
-                        if (s[i].Equals(','))
-                        {
-                            foundKey = true;
-
-                            key = value;
-                            value = "";
-                            continue;
-                        }
-
-                        value += s[i];
-                    }
-                    else
-                    {
-                        value += s[i];
-                    }
-                    
-                    break;
                 // Caso 1 - OpponentID
                 case 1:
                 // Caso 2 - PlayerOName
@@ -352,9 +329,6 @@ public class Match
                     break;
             }
         }
-        
-        // Retorno
-        return key;
     }
 
     #endregion

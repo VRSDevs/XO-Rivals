@@ -153,6 +153,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public void ConnectToSpecificRoom(string name)
     {
         _nameRoom = name;
+        
+        FindObjectOfType<GameManager>().CloudDataController.GetTitleData(DataType.Match);
         StartCoroutine(RejoinRoom());
     }
 
@@ -198,8 +200,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// <returns></returns>
     private IEnumerator RejoinRoom()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitUntil(() => FindObjectOfType<GameManager>().CloudDataController.GotTitleData);
 
+        Dictionary<string, string> data = FindObjectOfType<GameManager>().CloudDataController.GetDataDictionary();
+        Match m = new Match();
+        m.Parse(data[DataType.Match.ToString() + _nameRoom]);
+        FindObjectOfType<GameManager>().GetMatches()[_nameRoom] = m;
+        
         _joinType = JoinType.ActiveRoom;
         PhotonNetwork.RejoinRoom(_nameRoom);
     }
@@ -319,7 +326,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 break;
         }
 
-        // Subida de las partidas
+        // Subida de los códigos de partidas del jugador
         int i = 0;
         foreach (var match in FindObjectOfType<GameManager>().GetMatches())
         {

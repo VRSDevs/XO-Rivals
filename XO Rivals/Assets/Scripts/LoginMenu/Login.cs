@@ -349,6 +349,8 @@ public class Login : MonoBehaviour
             case 2:
                 break;
         }
+
+        _gameManager.CloudDataController.GotTitleData = false;
         
         Log.text = "Connecting to lobby...";
         _gameManager.ConnectToLobby();
