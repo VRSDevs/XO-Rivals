@@ -476,7 +476,9 @@ public class CloudDataController : MonoBehaviour, ICloudData
         {
             {"ResultCode", "2"}
         };
-        
+
+        CheckedOnline = true;
+        GotPlayerData = true;
     }
     
     /// <summary>
@@ -490,6 +492,8 @@ public class CloudDataController : MonoBehaviour, ICloudData
         {
             {"ResultCode", "2"}
         };
+        
+        GotTitleData = true;
     }
     
     /// <summary>
