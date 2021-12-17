@@ -80,7 +80,7 @@ interface IGameManager
     /// </summary>
     /// <param name="key">Clave de la partida a agregar</param>
     /// <param name="match">Partida a agregar</param>
-    void SetMatch(string key, Match match);
+    void AddMatch(string key, Match match);
 
     #endregion
 
@@ -360,7 +360,7 @@ public class GameManager : MonoBehaviour, IGameManager
     
     #region Setters
     
-    public void SetMatch(string key, Match match)
+    public void AddMatch(string key, Match match)
     {
         _playerMatches.Add(key, match);
     }
