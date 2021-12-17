@@ -4,6 +4,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
+#region Enums
+
+/// <summary>
+/// Tipos de datos que se pueden solicitar
+/// </summary>
+[Serializable]
+public enum SendingState
+{
+    /// <summary>
+    /// Datos del jugador de la partida
+    /// </summary>
+    PlayerInfo,
+    /// <summary>
+    /// Información de la partida
+    /// </summary>
+    MatchInfo,
+    /// <summary>
+    /// Información de final de partida
+    /// </summary>
+    EndMatchInfo,
+}
+
+#endregion
+
 public class NetworkCommunications : MonoBehaviourPun
 {
     #region Vars
@@ -22,38 +46,41 @@ public class NetworkCommunications : MonoBehaviourPun
     #endregion
     
     #region SendingMethods
-    
-    /// <summary>
-    /// Método para enviar información del jugador al oponente
-    /// </summary>
-    /// <param name="playerType">Tipo del jugador (en partida)</param>
-    public void SendPlayerInfoPackage(string playerType)
-    {
-        object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject(playerType);
-        _View.RPC("PlayerInfoRPC", RpcTarget.Others, (object)objToSend);
 
-    }
-    
     /// <summary>
-    /// Método para enviar información del estado de la partida al oponente
+    /// Método para enviar un objeto de información por RPC
     /// </summary>
-    public void SendMatchInfo(string type)
+    /// <param name="data">Diccionario con datos a enviar</param>
+    /// <param name="state">Estado en el cual se enviará el RPC</param>
+    public void SendRPC(Dictionary<string, string> data, SendingState state)
     {
-        object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.MatchInfoToObject(type);
-        _View.RPC("RPCUpdateMatch", RpcTarget.OthersBuffered, (object)objToSend);
+        object[] objToSend;
+        
+        switch (state)
+        {
+            case SendingState.PlayerInfo:
+                objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject(data["PlayerType"]);
+                _View.RPC("PlayerInfoRPC",
+                    RpcTarget.Others,
+                    (object)objToSend);
+                
+                break;
+            case SendingState.MatchInfo:
+                objToSend = FindObjectOfType<ButtonsScript>().gameState.MatchInfoToObject(data["Event"]);
+                _View.RPC("RPCUpdateMatch", 
+                    RpcTarget.OthersBuffered, 
+                    (object)objToSend);
+                
+                break;
+            case SendingState.EndMatchInfo:
+                objToSend = FindObjectOfType<ButtonsScript>().gameState.EndMatchInfoToObject(data["Event"], 
+                    data["Winner"]);
+                _View.RPC("RPCEndMatch", RpcTarget.OthersBuffered, (object)objToSend);
+                
+                break;
+        }
     }
-    
-    /// <summary>
-    /// Método para enviar información de la finalización de la partida
-    /// </summary>
-    /// <param name="type"></param>
-    /// <param name="winner"></param>
-    public void SendEndMatchInfo(string type, string winner)
-    {
-        object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.EndMatchInfoToObject(type, winner);
-        _View.RPC("RPCEndMatch", RpcTarget.OthersBuffered, (object)objToSend);
-    }
-    
+
     #endregion
 
     #region RPCMethods
