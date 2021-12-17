@@ -42,7 +42,7 @@ public class RobotStateMachine : MonoBehaviour{
         nextPoint = points[0].transform;
 
         gameState = FindObjectOfType<GameManager>();
-        thisMatch = gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name];
+        thisMatch = gameState.GetMatch(PhotonNetwork.CurrentRoom.Name);
         localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
         if(localPlayer.Name == thisMatch.PlayerOName){
             characterPlaying = characterO;

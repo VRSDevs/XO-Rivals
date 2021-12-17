@@ -166,7 +166,7 @@ public class Login : MonoBehaviour
             Authenticator.Reset();
 
             Log.text = "Connecting to server...";
-            if (_gameManager.OnConnectToServer())
+            if (_gameManager.ConnectToServer())
             {
                 StartCoroutine(OnEstablishedConnection());
             }
@@ -250,7 +250,7 @@ public class Login : MonoBehaviour
 
             _gameManager.ResetOnlineAuth();
 
-            _gameManager.OnDisconnectToServer();
+            _gameManager.DisconnectFromServer();
             _isConnecting = false;
 
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
@@ -283,9 +283,8 @@ public class Login : MonoBehaviour
                 {
                     Match m = new Match();
                     string key = m.Parse(data[DataType.Match.GetString() + i]);
-                    Debug.Log(key);
                     
-                    _gameManager.PlayerMatches.Add(key, m);
+                    _gameManager.SetMatch(key, m);
                 }
                 
                 _gameManager.UpdateCloudData(data, DataType.Login);
@@ -315,7 +314,7 @@ public class Login : MonoBehaviour
         }
 
         Log.text = "Connecting to lobby...";
-        _gameManager.OnConnectToLobby();
+        _gameManager.ConnectToLobby();
     }
 
     #endregion

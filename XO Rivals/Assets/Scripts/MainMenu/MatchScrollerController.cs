@@ -51,7 +51,7 @@ public class MatchScrollerController : MonoBehaviour
     /// </summary>
     private void GetMatchesList()
     {
-        _totalMatches = FindObjectOfType<GameManager>().PlayerMatches.Count;
+        _totalMatches = FindObjectOfType<GameManager>().GetMatches().Count;
         
         FetchPlayerMatches(OnRecievedMatches);
     }
@@ -127,7 +127,7 @@ public class MatchScrollerController : MonoBehaviour
         else
         {
             int i = 0;
-            foreach (Match match in FindObjectOfType<GameManager>().PlayerMatches.Values)
+            foreach (Match match in FindObjectOfType<GameManager>().GetMatches().Values)
             {
                 string opponent = match.PlayerOName.Equals(FindObjectOfType<PlayerInfo>().Name)
                     ? match.PlayerXName

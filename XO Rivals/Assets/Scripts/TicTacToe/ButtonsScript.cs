@@ -75,7 +75,7 @@ public class ButtonsScript : MonoBehaviour
         crossGO.SetActive(false);
 
         gameState = FindObjectOfType<GameManager>();
-        thisMatch = gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name];
+        thisMatch = gameState.GetMatch(PhotonNetwork.CurrentRoom.Name);
         localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
         
         //Initialize ScreenManager
@@ -448,15 +448,15 @@ public class ButtonsScript : MonoBehaviour
                     localPlayer.Level += 0.75f;
                     UpdateLevel();
                     FindObjectOfType<EndGameScript>().ShowMatchVictory();
-                    gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
-                    FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
+                    gameState._networkCommunications.SendEndMatchInfo("WN", gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerOName);
+                    FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).SetIsEnded();
                 }
                 else
                 {
                     localPlayer.Level += 0.45f;
                     UpdateLevel();
                     FindObjectOfType<EndGameScript>().ShowMatchDefeat();
-                    gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
+                    gameState._networkCommunications.SendEndMatchInfo("DF", gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerOName);
                 }
             }
             else
@@ -466,15 +466,15 @@ public class ButtonsScript : MonoBehaviour
                     localPlayer.Level += 0.75f;
                     UpdateLevel();
                     FindObjectOfType<EndGameScript>().ShowMatchVictory();
-                    FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
-                    gameState._networkCommunications.SendEndMatchInfo("WN", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                    FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).SetIsEnded();
+                    gameState._networkCommunications.SendEndMatchInfo("WN", gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerXName);
                 }
                 else
                 {
                     localPlayer.Level += 0.45f;
                     UpdateLevel();
                     FindObjectOfType<EndGameScript>().ShowMatchDefeat();
-                    gameState._networkCommunications.SendEndMatchInfo("DF", gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
+                    gameState._networkCommunications.SendEndMatchInfo("DF", gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerXName);
                 }
 
 

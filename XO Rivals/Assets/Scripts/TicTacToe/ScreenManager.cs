@@ -49,23 +49,23 @@ public class ScreenManager : MonoBehaviour
 
     public void UpdateTurn(){
         
-        Debug.Log("X: " + buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName);
-        Debug.Log("O: " + buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName);
-        Debug.Log("TURNO SSCREENANTES" + buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn);
-        if (buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName == buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn)
-            buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName;
+        Debug.Log("X: " + buttonsScript.gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerXName);
+        Debug.Log("O: " + buttonsScript.gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerOName);
+        Debug.Log("TURNO SSCREENANTES" + buttonsScript.gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).WhosTurn);
+        if (buttonsScript.gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerOName == buttonsScript.gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).WhosTurn)
+            buttonsScript.gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).WhosTurn = buttonsScript.gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerXName;
         else
-            buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName;
+            buttonsScript.gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).WhosTurn = buttonsScript.gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerOName;
         buttonsScript.updateIconTurn(false);
 
-        buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
+        buttonsScript.gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).TurnMoment = 0;
         //Display turn in screen
-        if(buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn == buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName){            
+        if(buttonsScript.gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).WhosTurn == buttonsScript.gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerOName){            
             StartCoroutine(txtTimer("Turno de O"));
         }else{
             StartCoroutine(txtTimer("Turno de X"));
         }
-        Debug.Log("TURNO SSCREENFINAL" + buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn);
+        Debug.Log("TURNO SSCREENFINAL" + buttonsScript.gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).WhosTurn);
         if (buttonsScript.miniWin)
         {
          
@@ -118,7 +118,7 @@ public class ScreenManager : MonoBehaviour
    
 
     public void MinigameSelection(int n){
-        buttonsScript.gameState.PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = n;
+        buttonsScript.gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).MiniGameChosen = n;
         miniGameChoosing.SetActive(false);
         ticTacScreen.SetActive(true);
         //Update turn data and send it to opponent

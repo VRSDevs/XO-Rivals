@@ -42,7 +42,7 @@ public class TicTacToeController : MonoBehaviour
     /// </summary>
     public void GoBack()
     {
-        _gameManager.OnLeaveRoom();
+        _gameManager.LeaveMatch();
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -61,9 +61,9 @@ public class TicTacToeController : MonoBehaviour
     /// </summary>
     public void Surrender()
     {
-        FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetSurrenderStatus();
+        FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).SetSurrenderStatus();
         _gameManager._networkCommunications.SendEndMatchInfo("SR", "");
-        _gameManager.OnLeaveRoom();
+        _gameManager.LeaveMatch();
         SceneManager.LoadScene("MainMenu");
     }
 
