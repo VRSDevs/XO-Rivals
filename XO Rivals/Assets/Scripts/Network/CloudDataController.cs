@@ -248,6 +248,8 @@ public class CloudDataController : MonoBehaviour, ICloudData
 
     public void GetPlayerData(DataType type)
     {
+        _cloudData = new Dictionary<string, string>();
+        
         PlayFabClientAPI.GetUserData(new GetUserDataRequest()
         {
             PlayFabId = FindObjectOfType<PlayerInfo>().UserID,
@@ -260,6 +262,8 @@ public class CloudDataController : MonoBehaviour, ICloudData
     
     public void GetTitleData(DataType type)
     {
+        _cloudData = new Dictionary<string, string>();
+        
         PlayFabClientAPI.GetTitleData(
             new GetTitleDataRequest(), 
             result => OnTitleDataRecieved(result, type),
@@ -442,7 +446,7 @@ public class CloudDataController : MonoBehaviour, ICloudData
         {
             // Caso Logout -> Procedimiento tras enviar datos de cierre de sesión
             case DataType.Logout:
-                PlayFabClientAPI.ForgetAllCredentials();
+                //PlayFabClientAPI.ForgetAllCredentials();
                 
                 break;
         }
