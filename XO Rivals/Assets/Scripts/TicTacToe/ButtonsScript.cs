@@ -432,9 +432,7 @@ public class ButtonsScript : MonoBehaviour
         {
             win = true;
         }
-
-
-
+        
         if (win)
         {
             circleTurnRival.SetActive(false);
@@ -447,8 +445,15 @@ public class ButtonsScript : MonoBehaviour
                 {
                     localPlayer.Level += 0.75f;
                     UpdateLevel();
+                    
                     FindObjectOfType<EndGameScript>().ShowMatchVictory();
-                    gameState._networkCommunications.SendEndMatchInfo("WN", gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerOName);
+                    
+                    gameState.SendInfo(new Dictionary<string, string>()
+                    {
+                        {"Event", "WN"},
+                        {"Winner", gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerOName}
+                    }, SendingState.EndMatchInfo);
+                    
                     FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).SetIsEnded();
                 }
                 else
@@ -456,7 +461,12 @@ public class ButtonsScript : MonoBehaviour
                     localPlayer.Level += 0.45f;
                     UpdateLevel();
                     FindObjectOfType<EndGameScript>().ShowMatchDefeat();
-                    gameState._networkCommunications.SendEndMatchInfo("DF", gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerOName);
+                    
+                    gameState.SendInfo(new Dictionary<string, string>()
+                    {
+                        {"Event", "DF"},
+                        {"Winner", gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerOName}
+                    }, SendingState.EndMatchInfo);
                 }
             }
             else
@@ -465,21 +475,30 @@ public class ButtonsScript : MonoBehaviour
                 {
                     localPlayer.Level += 0.75f;
                     UpdateLevel();
+                    
                     FindObjectOfType<EndGameScript>().ShowMatchVictory();
                     FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).SetIsEnded();
-                    gameState._networkCommunications.SendEndMatchInfo("WN", gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerXName);
+
+                    gameState.SendInfo(new Dictionary<string, string>()
+                    {
+                        {"Event", "WN"},
+                        {"Winner", gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerXName}
+                    }, SendingState.EndMatchInfo);
                 }
                 else
                 {
                     localPlayer.Level += 0.45f;
                     UpdateLevel();
+                    
                     FindObjectOfType<EndGameScript>().ShowMatchDefeat();
-                    gameState._networkCommunications.SendEndMatchInfo("DF", gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerXName);
+                    
+                    gameState.SendInfo(new Dictionary<string, string>()
+                    {
+                        {"Event", "DF"},
+                        {"Winner", gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerXName}
+                    }, SendingState.EndMatchInfo);
                 }
-
-
             }
-            
         }
 
         /*
@@ -593,11 +612,14 @@ public class ButtonsScript : MonoBehaviour
         */
 
         //Table full (draw)
-        if (thisMatch.NumFilled == 9){
-            Debug.Log("Draw");
-            FindObjectOfType<EndGameScript>().ShowMatchDraw();
-            gameState._networkCommunications.SendEndMatchInfo("DW", "");
-        }
+        if (thisMatch.NumFilled != 9) return;
+        FindObjectOfType<EndGameScript>().ShowMatchDraw();
+            
+        gameState.SendInfo(new Dictionary<string, string>()
+        {
+            {"Event", "DW"},
+            {"Winner", ""}
+        }, SendingState.EndMatchInfo);
 
         //thisMatch.TurnMoment = 4;
         //Go to selectMinigame for opponent

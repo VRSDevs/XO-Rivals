@@ -68,13 +68,17 @@ public class ScreenManager : MonoBehaviour
         Debug.Log("TURNO SSCREENFINAL" + buttonsScript.gameState.GetMatch(PhotonNetwork.CurrentRoom.Name).WhosTurn);
         if (buttonsScript.miniWin)
         {
-         
-            buttonsScript.gameState._networkCommunications.SendMatchInfo("OppWon");
+            buttonsScript.gameState.SendInfo(new Dictionary<string, string>()
+            {
+                {"Event", "OppWon"},
+            }, SendingState.EndMatchInfo);
         }
         else
         {
-           
-            buttonsScript.gameState._networkCommunications.SendMatchInfo("OppLost");
+            buttonsScript.gameState.SendInfo(new Dictionary<string, string>()
+            {
+                {"Event", "OppLost"},
+            }, SendingState.EndMatchInfo);
         }
 
         if(buttonsScript.localPlayer.Name == buttonsScript.thisMatch.PlayerOName){

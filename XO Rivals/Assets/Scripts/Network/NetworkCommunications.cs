@@ -32,7 +32,7 @@ public class NetworkCommunications : MonoBehaviourPun
 {
     #region Vars
 
-    private PhotonView _View;
+    private PhotonView _view;
 
     #endregion
     
@@ -40,7 +40,7 @@ public class NetworkCommunications : MonoBehaviourPun
 
     private void Start()
     {
-        _View = PhotonView.Get(this);
+        _view = PhotonView.Get(this);
     }
 
     #endregion
@@ -60,14 +60,14 @@ public class NetworkCommunications : MonoBehaviourPun
         {
             case SendingState.PlayerInfo:
                 objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject(data["PlayerType"]);
-                _View.RPC("PlayerInfoRPC",
+                _view.RPC("PlayerInfoRPC",
                     RpcTarget.Others,
                     (object)objToSend);
                 
                 break;
             case SendingState.MatchInfo:
                 objToSend = FindObjectOfType<ButtonsScript>().gameState.MatchInfoToObject(data["Event"]);
-                _View.RPC("RPCUpdateMatch", 
+                _view.RPC("RPCUpdateMatch", 
                     RpcTarget.OthersBuffered, 
                     (object)objToSend);
                 
@@ -75,7 +75,7 @@ public class NetworkCommunications : MonoBehaviourPun
             case SendingState.EndMatchInfo:
                 objToSend = FindObjectOfType<ButtonsScript>().gameState.EndMatchInfoToObject(data["Event"], 
                     data["Winner"]);
-                _View.RPC("RPCEndMatch", RpcTarget.OthersBuffered, (object)objToSend);
+                _view.RPC("RPCEndMatch", RpcTarget.OthersBuffered, (object)objToSend);
                 
                 break;
         }

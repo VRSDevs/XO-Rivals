@@ -121,8 +121,13 @@ interface IGameManager
     #endregion
     
     #region CommsMethods
-    
-    
+
+    /// <summary>
+    /// Método para enviar información al servidor
+    /// </summary>
+    /// <param name="data">Diccionario de datos a enviar</param>
+    /// <param name="state">Estado en el que se enviarán los datos</param>
+    void SendInfo(Dictionary<string, string> data, SendingState state);
     
     #endregion
 
@@ -465,7 +470,19 @@ public class GameManager : MonoBehaviour, IGameManager
                 break;
         }
         
-        _networkCommunications.SendPlayerInfoPackage(playerType);
+        _networkCommunications.SendRPC(new Dictionary<string, string>()
+        {
+            {"PlayerType", playerType}
+        }, SendingState.PlayerInfo);
+    }
+
+    #endregion
+
+    #region CommsMethods
+
+    public void SendInfo(Dictionary<string, string> data, SendingState state)
+    {
+        _networkCommunications.SendRPC(data, state);
     }
 
     #endregion
