@@ -45,13 +45,7 @@ interface IGameManager
     #endregion
 
     #region Getters
-
-    /// <summary>
-    /// Método para obtener el CloudDataController
-    /// </summary>
-    /// <returns>Referencia a CloudDataController</returns>
-    CloudDataController GetCloudDataController();
-
+    
     /// <summary>
     /// Método para obtener si se obtenieron los datos del juego
     /// </summary>
