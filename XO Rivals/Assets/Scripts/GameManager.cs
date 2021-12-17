@@ -14,22 +14,22 @@ interface IGameManager
     /// <summary>
     /// Referencia al controlador de la conexión con el servidor
     /// </summary>
-    NetworkController NetworkController { get; set; }
+    NetworkController NetworkController { get; }
     
     /// <summary>
     /// Referencia al controlador de comunicaciones
     /// </summary>
-    NetworkCommunications NetworkCommunications { get; set; }
+    NetworkCommunications NetworkCommunications { get; }
     
     /// <summary>
     /// Referencia al controlador de datos de la nube
     /// </summary>
-    CloudDataController CloudDataController { get; set; }
+    CloudDataController CloudDataController { get; }
     
     /// <summary>
     /// Referencia al controlador de compras
     /// </summary>
-    PurchasesController PurchasesController { get; set; }
+    PurchasesController PurchasesController { get; }
     
     ////////////////// CLIENTE //////////////////
     /// <summary>
@@ -245,29 +245,10 @@ public class GameManager : MonoBehaviour, IGameManager
 
     #region Properties
 
-    public NetworkController NetworkController
-    {
-        get => _networkController; 
-        set => _networkController = value;
-    }
-
-    public NetworkCommunications NetworkCommunications
-    {
-        get => _networkCommunications;
-        set => _networkCommunications = value;
-    }
-
-    public CloudDataController CloudDataController
-    {
-        get => _cloudController;
-        set => _cloudController = value;
-    }
-
-    public PurchasesController PurchasesController
-    {
-        get => _purchasesController;
-        set => _purchasesController = value;
-    }
+    public NetworkController NetworkController => _networkController;
+    public NetworkCommunications NetworkCommunications => _networkCommunications;
+    public CloudDataController CloudDataController => _cloudController;
+    public PurchasesController PurchasesController => _purchasesController;
 
     public bool IsWebGLMobile { 
         get => _isWebGLMobile;
@@ -283,11 +264,6 @@ public class GameManager : MonoBehaviour, IGameManager
     #endregion
     
     #region Getters
-
-    public CloudDataController GetCloudDataController()
-    {
-        return _cloudController;
-    }
 
     public bool GotTitleData()
     {
