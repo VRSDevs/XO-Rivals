@@ -47,6 +47,18 @@ interface IGameManager
     #region Getters
 
     /// <summary>
+    /// Método para obtener el CloudDataController
+    /// </summary>
+    /// <returns>Referencia a CloudDataController</returns>
+    CloudDataController GetCloudDataController();
+
+    /// <summary>
+    /// Método para obtener si se obtenieron los datos del juego
+    /// </summary>
+    /// <returns>¿Se obtenieron los datos del juego?</returns>
+    bool GotTitleData();
+
+    /// <summary>
     /// Método para obtener una partida del diccionario de partidas
     /// </summary>
     /// <param name="key">Clave de la partida a obtener</param>
@@ -271,7 +283,17 @@ public class GameManager : MonoBehaviour, IGameManager
     #endregion
     
     #region Getters
-    
+
+    public CloudDataController GetCloudDataController()
+    {
+        return _cloudController;
+    }
+
+    public bool GotTitleData()
+    {
+        return _cloudController.GotTitleData;
+    }
+
     public Match GetMatch(string key)
     {
         return _playerMatches[key];

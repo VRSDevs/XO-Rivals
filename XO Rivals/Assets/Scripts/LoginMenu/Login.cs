@@ -303,6 +303,9 @@ public class Login : MonoBehaviour
                     {DataType.Level.GetString(), _playerInfo.Level.ToString(CultureInfo.InvariantCulture)}
                 },
                     DataType.Login);
+                
+                Log.text = "Connecting to lobby...";
+                _gameManager.ConnectToLobby();
                         
                 break;
             case 3:
@@ -312,9 +315,7 @@ public class Login : MonoBehaviour
             default:
                 break;
         }
-
-        Log.text = "Connecting to lobby...";
-        _gameManager.ConnectToLobby();
+        
     }
 
     #endregion
@@ -420,7 +421,6 @@ public class Login : MonoBehaviour
         keyboard.active = false;
         
     }
-    
 
     #endregion
 }

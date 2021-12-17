@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using Photon.Pun;
+using System.Linq;
 using PlayFab;
 using PlayFab.ServerModels;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using GetTitleDataRequest = PlayFab.ClientModels.GetTitleDataRequest;
 using GetTitleDataResult = PlayFab.ClientModels.GetTitleDataResult;
 using GetUserDataRequest = PlayFab.ClientModels.GetUserDataRequest;
@@ -17,22 +15,37 @@ using UpdateUserDataRequest = PlayFab.ClientModels.UpdateUserDataRequest;
 
 /// <summary>
 /// Tipos de datos que se pueden solicitar
-///     Login - Datos necesarios para el inicio de sesión
-///     Online - ¿Está conectado el usuario?
-///     Lives - Vidas del usuario
-///     Level - Nivel del usuario
-///     LifeLost - Tiempo de las vidas perdidas
-///     Match - Partida del jugador
 /// </summary>
 [Serializable]
 public enum DataType
 {
+    /// <summary>
+    /// Datos necesarios para el inicio de sesión
+    /// </summary>
     Login,
+    /// <summary>
+    /// Datos necesarios para el cierre de sesión
+    /// </summary>
     Logout,
+    /// <summary>
+    /// Datos de conexión del usuario
+    /// </summary>
     Online,
+    /// <summary>
+    /// Vidas del usuario
+    /// </summary>
     Lives,
+    /// <summary>
+    /// Nivel del usuario
+    /// </summary>
     Level,
+    /// <summary>
+    /// Tiempo de las vida perdida
+    /// </summary>
     LifeLost,
+    /// <summary>
+    /// Partida del jugador
+    /// </summary>
     Match
 }
 
@@ -158,6 +171,7 @@ public class CloudDataController : MonoBehaviour, ICloudData
     private AuthObject _authObject;
     private bool _gotPlayerData;
     private bool _gotTitleData;
+    private List<string> _codeMatches;
 
     ////////////////// DICCIONARIOS DE DATOS //////////////////
     /// <summary>
@@ -340,7 +354,10 @@ public class CloudDataController : MonoBehaviour, ICloudData
                 for (int i = 0; i < totalMatches; i++)
                 {
                     string key = DataType.Match.GetString() + i;
-                    _cloudData.Add(key, result.Data[key].Value);
+                    string value = result.Data[key].Value;
+                    
+                    _cloudData.Add(key, value);
+                    _codeMatches.Add(value);
                 }
 
                 break;
@@ -379,19 +396,11 @@ public class CloudDataController : MonoBehaviour, ICloudData
         {
             case DataType.Match:
 
-                // Si el resultado no contiene la clave deseada
-                if (!result.Data.ContainsKey(type.GetString() + ""))
+                foreach (var key in _codeMatches.Select(code => type.GetString() + code).Where(key => result.Data.ContainsKey(key)))
                 {
-                    _cloudData = new Dictionary<string, string>()
-                    {
-                        {"ResultCode", "2"}
-                    };
-
-                    return;
+                    _cloudData.Add(key, result.Data[key]);
                 }
-                
-                _cloudData.Add(type.GetString() + "", result.Data[type.GetString() + ""]);
-                
+
                 break;
         }
     }
@@ -506,6 +515,7 @@ public class CloudDataController : MonoBehaviour, ICloudData
         _checkedOnline = false;
         _gotPlayerData = false;
         _gotTitleData = false;
+        _codeMatches = new List<string>();
     }
 
     /// <summary>
