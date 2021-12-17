@@ -516,6 +516,9 @@ public class CloudDataController : MonoBehaviour, ICloudData
         _gotPlayerData = false;
         _gotTitleData = false;
         _codeMatches = new List<string>();
+
+        _cloudData = new Dictionary<string, string>();
+        _sendDataStatus = new Dictionary<string, string>();
     }
 
     /// <summary>
