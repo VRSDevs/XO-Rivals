@@ -287,7 +287,7 @@ public class Login : MonoBehaviour
                 
                 _gameManager.UpdateCloudData(data, DataType.Login);
                 
-                _gameManager.GetCloudDataController().GetTitleData(DataType.Match);
+                _gameManager.CloudDataController.GetTitleData(DataType.Match);
 
                 StartCoroutine(OnGetTitleData(codeMatches));
                             
@@ -327,7 +327,7 @@ public class Login : MonoBehaviour
     /// <returns></returns>
     private IEnumerator OnGetTitleData(List<string> codes)
     {
-        yield return new WaitUntil(() => _gameManager.GetCloudDataController().GotTitleData);
+        yield return new WaitUntil(() => _gameManager.CloudDataController.GotTitleData);
         
         Dictionary<string, string> data = _gameManager.CloudDataController.GetDataDictionary();
 
@@ -340,7 +340,7 @@ public class Login : MonoBehaviour
                     Match m = new Match();
                     m.Parse(data[DataType.Match + code]);
                     
-                    _gameManager.SetMatch(
+                    _gameManager.AddMatch(
                         code,
                         m);
                 }
