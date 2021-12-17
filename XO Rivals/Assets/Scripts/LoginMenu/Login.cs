@@ -279,15 +279,15 @@ public class Login : MonoBehaviour
                 _playerInfo.LostLifeTime = DateTime.ParseExact(data[DataType.LifeLost.GetString()],
                     "MM/dd/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
+                List<string> codeMatches = new List<string>();
                 for (int i = 0; i < int.Parse(data[DataType.Match.GetString()]); i++)
                 {
-                    Match m = new Match();
-                    string key = m.Parse(data[DataType.Match.GetString() + i]);
-                    
-                    _gameManager.SetMatch(key, m);
+                    codeMatches.Add(data[DataType.Match.GetString() + i]);
                 }
                 
                 _gameManager.UpdateCloudData(data, DataType.Login);
+
+                StartCoroutine(ConnectToLobby());
                             
                 break;
             case 2:
@@ -420,6 +420,18 @@ public class Login : MonoBehaviour
     {
         keyboard.active = false;
         
+    }
+
+    /// <summary>
+    /// Corutina ejecutada tras obtener todos los datos relacionados con el juego
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator ConnectToLobby()
+    {
+        yield return new WaitUntil(() => _gameManager.GetCloudDataController().GotTitleData);
+        
+        Log.text = "Connecting to lobby...";
+        _gameManager.ConnectToLobby();
     }
 
     #endregion
