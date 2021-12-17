@@ -325,7 +325,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         {
             FindObjectOfType<GameManager>().UpdateCloudData(new Dictionary<string, string>()
                 {
-                    {DataType.Match.GetString() + i, match.ToString()},
+                    {DataType.Match.GetString() + i, match.Key},
                 },
                 DataType.Match);
 
