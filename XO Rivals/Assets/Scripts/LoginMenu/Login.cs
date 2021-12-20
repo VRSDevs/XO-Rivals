@@ -279,17 +279,18 @@ public class Login : MonoBehaviour
                 _playerInfo.LostLifeTime = DateTime.ParseExact(data[DataType.LifeLost.GetString()],
                     "MM/dd/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
-                List<string> codeMatches = new List<string>();
                 for (int i = 0; i < int.Parse(data[DataType.Match.GetString()]); i++)
                 {
-                    codeMatches.Add(data[DataType.Match.GetString() + i]);
+                    Match m = new Match();
+                    string key = m.Parse(data[DataType.Match.GetString() + i]);
+                    
+                    _gameManager.GetMatches().Add(key, m);
                 }
                 
                 _gameManager.UpdateCloudData(data, DataType.Login);
                 
-                _gameManager.CloudDataController.GetTitleData(DataType.Match);
-
-                StartCoroutine(OnGetTitleData(codeMatches));
+                
+                //StartCoroutine(OnGetTitleData(codeMatches));
                             
                 break;
             case 2:

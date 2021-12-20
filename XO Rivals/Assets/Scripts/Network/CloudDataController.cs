@@ -361,10 +361,7 @@ public class CloudDataController : MonoBehaviour, ICloudData
                 for (int i = 0; i < totalMatches; i++)
                 {
                     string key = DataType.Match.GetString() + i;
-                    string value = result.Data[key].Value;
-                    
-                    _cloudData.Add(key, value);
-                    _codeMatches.Add(value);
+                    _cloudData.Add(key, result.Data[key].Value);
                 }
 
                 break;
