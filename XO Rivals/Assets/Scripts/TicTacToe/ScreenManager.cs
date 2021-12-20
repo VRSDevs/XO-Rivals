@@ -71,14 +71,14 @@ public class ScreenManager : MonoBehaviour
             buttonsScript.gameState.SendInfo(new Dictionary<string, string>()
             {
                 {"Event", "OppWon"},
-            }, SendingState.EndMatchInfo);
+            }, SendingState.MatchInfo);
         }
         else
         {
             buttonsScript.gameState.SendInfo(new Dictionary<string, string>()
             {
                 {"Event", "OppLost"},
-            }, SendingState.EndMatchInfo);
+            }, SendingState.MatchInfo);
         }
 
         if(buttonsScript.localPlayer.Name == buttonsScript.thisMatch.PlayerOName){
