@@ -281,6 +281,7 @@ public class CloudDataController : MonoBehaviour, ICloudData
         }, OnSendError);
     }
     
+    /*
     public void SendTitleData(string key, string value, DataType type)
     {
         PlayFabServerAPI.SetTitleData(new SetTitleDataRequest()
@@ -292,6 +293,7 @@ public class CloudDataController : MonoBehaviour, ICloudData
             OnTitleDataSend(type);
         }, OnSendTitleError);
     }
+    */
 
     #endregion
 
