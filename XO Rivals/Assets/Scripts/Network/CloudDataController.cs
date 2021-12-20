@@ -274,7 +274,7 @@ public class CloudDataController : MonoBehaviour, ICloudData
     {
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
         {
-            Data = data
+            Data = data,
         }, (result) =>
         {
             OnDataSend(type);
