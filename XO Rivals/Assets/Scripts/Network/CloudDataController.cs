@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using PlayFab;
-using PlayFab.ServerModels;
 using UnityEngine;
 using GetTitleDataRequest = PlayFab.ClientModels.GetTitleDataRequest;
 using GetTitleDataResult = PlayFab.ClientModels.GetTitleDataResult;
@@ -149,6 +148,7 @@ interface ICloudData
     /// <param name="type">Tipo de datos enviados</param>
     void SendPlayerData(Dictionary<string, string> data, DataType type);
     
+    /*
     /// <summary>
     /// Método para enviar datos del juego a la nube
     /// </summary>
@@ -156,6 +156,7 @@ interface ICloudData
     /// <param name="value">Nuevo valor del dato</param>
     /// <param name="type">Tipo de dato a enviar</param>
     void SendTitleData(string key, string value, DataType type);
+    */
 
     #endregion
 }
