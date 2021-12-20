@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using PlayFab;
+using PlayFab.ClientModels;
 using UnityEngine;
 using GetTitleDataRequest = PlayFab.ClientModels.GetTitleDataRequest;
 using GetTitleDataResult = PlayFab.ClientModels.GetTitleDataResult;
@@ -273,13 +274,36 @@ public class CloudDataController : MonoBehaviour, ICloudData
     
     public void SendPlayerData(Dictionary<string, string> data, DataType type)
     {
-        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
+        switch (type)
         {
-            Data = data,
-        }, (result) =>
-        {
-            OnDataSend(type);
-        }, OnSendError);
+            case DataType.Login:
+            case DataType.Logout:
+            case DataType.Online:
+            case DataType.Lives:
+            case DataType.Level:
+            case DataType.LifeLost:
+                PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
+                {
+                    Data = data,
+                    Permission = UserDataPermission.Private
+                }, (result) =>
+                {
+                    OnDataSend(type);
+                }, OnSendError);
+                
+                break;
+            case DataType.Match:
+                PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
+                {
+                    Data = data,
+                    Permission = UserDataPermission.Public
+                }, (result) =>
+                {
+                    OnDataSend(type);
+                }, OnSendError);
+                
+                break;
+        }
     }
     
     /*

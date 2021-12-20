@@ -85,10 +85,6 @@ public class ButtonsScript : MonoBehaviour
     {
         if (change)//CAMBIA A QUE ME TOCA A MI
         {
-            Debug.Log("LOCAL PLAYER " + localPlayer.Name);
-            Debug.Log("X PLAYER " + thisMatch.PlayerXName);
-            Debug.Log("O PLAYER " + thisMatch.PlayerOName);
-            Debug.Log("TurnoPlayerANTES " + thisMatch.WhosTurn);
 
             if (localPlayer.Name == thisMatch.PlayerXName)
             {
@@ -99,17 +95,15 @@ public class ButtonsScript : MonoBehaviour
                 thisMatch.WhosTurn = thisMatch.PlayerOName;
             }
         }
-        Debug.Log("TurnoPlayerDSPS " + thisMatch.WhosTurn);
+        
         //Activate player turn tile
         if (thisMatch.WhosTurn == thisMatch.PlayerOName)
         {//TURNO CIRCLE
             circleTurn.SetActive(true);
             crossTurn.SetActive(false);
-            Debug.Log(localPlayer.Name + "POS ME LLAMO ASI+++");
-            Debug.Log(thisMatch.PlayerOName + "ESTE ES EL CIRCULO YATUSABE");
+            
             if (localPlayer.Name != thisMatch.PlayerOName)
             {
-                Debug.Log("ACTIVO BIEN ACTIVAO");
                 circleTurnRival.SetActive(true) ;
             }
             else

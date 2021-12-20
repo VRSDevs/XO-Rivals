@@ -272,7 +272,8 @@ public class Login : MonoBehaviour
             case 1:
 
                 data[DataType.Online.GetString()] = "true";
-                
+
+                data.Remove("ResultCode");
                 _playerInfo.Online = bool.Parse(data[DataType.Online.GetString()]);
                 _playerInfo.Lives = int.Parse(data[DataType.Lives.GetString()]);
                 _playerInfo.Level = float.Parse(data[DataType.Level.GetString()]);
@@ -285,13 +286,11 @@ public class Login : MonoBehaviour
                     string key = m.Parse(data[DataType.Match.GetString() + i]);
                     
                     _gameManager.GetMatches().Add(key, m);
+                    data.Remove(DataType.Match.GetString() + i);
                 }
                 
                 _gameManager.UpdateCloudData(data, DataType.Login);
-                
-                
-                //StartCoroutine(OnGetTitleData(codeMatches));
-                            
+
                 break;
             case 2:
 
@@ -306,10 +305,7 @@ public class Login : MonoBehaviour
                     {DataType.Level.GetString(), _playerInfo.Level.ToString(CultureInfo.InvariantCulture)}
                 },
                     DataType.Login);
-                
-                Log.text = "Connecting to lobby...";
-                _gameManager.ConnectToLobby();
-                        
+
                 break;
             case 3:
                 Debug.Log("Got error retrieving user data:");
@@ -318,40 +314,6 @@ public class Login : MonoBehaviour
             default:
                 break;
         }
-        
-    }
-    
-    /// <summary>
-    /// Corutina ejecutada tras obtener todos los datos relacionados con el juego
-    /// </summary>
-    /// <param name="codes">Lista de códigos de partidas del usuario</param>
-    /// <returns></returns>
-    private IEnumerator OnGetTitleData(List<string> codes)
-    {
-        yield return new WaitUntil(() => _gameManager.CloudDataController.GotTitleData);
-        
-        Dictionary<string, string> data = _gameManager.CloudDataController.GetDataDictionary();
-
-        switch (int.Parse(data["ResultCode"]))
-        {
-            case 1:
-
-                foreach (var code in codes)
-                {
-                    Match m = new Match();
-                    m.Parse(data[DataType.Match + code]);
-                    
-                    _gameManager.AddMatch(
-                        code,
-                        m);
-                }
-                
-                break;
-            case 2:
-                break;
-        }
-
-        _gameManager.CloudDataController.GotTitleData = false;
         
         Log.text = "Connecting to lobby...";
         _gameManager.ConnectToLobby();

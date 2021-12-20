@@ -154,8 +154,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         _nameRoom = name;
         
-        FindObjectOfType<GameManager>().CloudDataController.GetTitleData(DataType.Match);
-        StartCoroutine(RejoinRoom());
+        StartCoroutine(JoinActiveRoom());
     }
 
     /// <summary>
@@ -198,16 +197,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// Corutina para tratar de unirse a una sala específica
     /// </summary>
     /// <returns></returns>
-    private IEnumerator RejoinRoom()
+    private IEnumerator JoinActiveRoom()
     {
-        yield return new WaitUntil(() => FindObjectOfType<GameManager>().CloudDataController.GotTitleData);
-
-        Dictionary<string, string> data = FindObjectOfType<GameManager>().CloudDataController.GetDataDictionary();
-        Match m = new Match();
-        m.Parse(data[DataType.Match.ToString() + _nameRoom]);
-        FindObjectOfType<GameManager>().GetMatches()[_nameRoom] = m;
+        yield return new WaitForSeconds(2);
         
         _joinType = JoinType.ActiveRoom;
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joined " + _nameRoom;
+
         PhotonNetwork.RejoinRoom(_nameRoom);
     }
 
