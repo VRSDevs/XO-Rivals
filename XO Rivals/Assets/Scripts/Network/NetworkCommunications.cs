@@ -4,11 +4,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
+#region Enums
+
+/// <summary>
+/// Tipos de datos que se pueden solicitar
+/// </summary>
+[Serializable]
+public enum SendingState
+{
+    /// <summary>
+    /// Datos del jugador de la partida
+    /// </summary>
+    PlayerInfo,
+    /// <summary>
+    /// Información de la partida
+    /// </summary>
+    MatchInfo,
+    /// <summary>
+    /// Información de final de partida
+    /// </summary>
+    EndMatchInfo,
+}
+
+#endregion
+
 public class NetworkCommunications : MonoBehaviourPun
 {
     #region Vars
 
-    private PhotonView _View;
+    private PhotonView _view;
 
     #endregion
     
@@ -16,44 +40,47 @@ public class NetworkCommunications : MonoBehaviourPun
 
     private void Start()
     {
-        _View = PhotonView.Get(this);
+        _view = PhotonView.Get(this);
     }
 
     #endregion
     
     #region SendingMethods
-    
-    /// <summary>
-    /// Método para enviar información del jugador al oponente
-    /// </summary>
-    /// <param name="playerType">Tipo del jugador (en partida)</param>
-    public void SendPlayerInfoPackage(string playerType)
-    {
-        object[] objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject(playerType);
-        _View.RPC("PlayerInfoRPC", RpcTarget.Others, (object)objToSend);
 
-    }
-    
     /// <summary>
-    /// Método para enviar información del estado de la partida al oponente
+    /// Método para enviar un objeto de información por RPC
     /// </summary>
-    public void SendMatchInfo(string type)
+    /// <param name="data">Diccionario con datos a enviar</param>
+    /// <param name="state">Estado en el cual se enviará el RPC</param>
+    public void SendRPC(Dictionary<string, string> data, SendingState state)
     {
-        object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.MatchInfoToObject(type);
-        _View.RPC("RPCUpdateMatch", RpcTarget.OthersBuffered, (object)objToSend);
+        object[] objToSend;
+        
+        switch (state)
+        {
+            case SendingState.PlayerInfo:
+                objToSend = FindObjectOfType<GameManager>().PlayerInfoToObject(data["PlayerType"]);
+                _view.RPC("PlayerInfoRPC",
+                    RpcTarget.Others,
+                    (object)objToSend);
+                
+                break;
+            case SendingState.MatchInfo:
+                objToSend = FindObjectOfType<ButtonsScript>().gameState.MatchInfoToObject(data["Event"]);
+                _view.RPC("RPCUpdateMatch", 
+                    RpcTarget.OthersBuffered, 
+                    (object)objToSend);
+
+                break;
+            case SendingState.EndMatchInfo:
+                objToSend = FindObjectOfType<ButtonsScript>().gameState.EndMatchInfoToObject(data["Event"], 
+                    data["Winner"]);
+                _view.RPC("RPCEndMatch", RpcTarget.OthersBuffered, (object)objToSend);
+                
+                break;
+        }
     }
-    
-    /// <summary>
-    /// Método para enviar información de la finalización de la partida
-    /// </summary>
-    /// <param name="type"></param>
-    /// <param name="winner"></param>
-    public void SendEndMatchInfo(string type, string winner)
-    {
-        object[] objToSend = FindObjectOfType<ButtonsScript>().gameState.EndMatchInfoToObject(type, winner);
-        _View.RPC("RPCEndMatch", RpcTarget.OthersBuffered, (object)objToSend);
-    }
-    
+
     #endregion
 
     #region RPCMethods
@@ -70,9 +97,9 @@ public class NetworkCommunications : MonoBehaviourPun
             case "O":
                 Debug.Log("RPC del jugador O");
 
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].OpponentId = obj[1] as string;
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = obj[2] as string;
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = obj[3] as string;
+                FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).OpponentId = obj[1] as string;
+                FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerOName = obj[2] as string;
+                FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).WhosTurn = obj[3] as string;
 
                 FindObjectOfType<GameManager>().SetReadyStatus();
 
@@ -80,8 +107,8 @@ public class NetworkCommunications : MonoBehaviourPun
             case "X":
                 Debug.Log("RPC del jugador X");
 
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].OpponentId = obj[1] as string;
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = obj[2] as string;
+                FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).OpponentId = obj[1] as string;
+                FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).PlayerXName = obj[2] as string;
 
                 FindObjectOfType<GameManager>().SetReadyStatus();
 
@@ -112,9 +139,9 @@ public class NetworkCommunications : MonoBehaviourPun
 
 
 
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = obj[1] as string;
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].NumFilled = (int)obj[2];
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions[
+                FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).WhosTurn = obj[1] as string;
+                FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).NumFilled = (int)obj[2];
+                FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).FilledPositions[
                     (int)obj[3], (int)obj[4]
                 ] = (int)obj[5];
                 
@@ -125,9 +152,9 @@ public class NetworkCommunications : MonoBehaviourPun
                     (string)obj[6]
                 );
                 
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = (int)obj[7];
+                FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).MiniGameChosen = (int)obj[7];
 
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
+                FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).TurnMoment = 0;
 
                 FindObjectOfType<ButtonsScript>().startGame();
                 FindObjectOfType<ButtonsScript>().updateIconTurn(true);
@@ -142,10 +169,10 @@ public class NetworkCommunications : MonoBehaviourPun
                 
                 Debug.Log("RPC oponente perdió");
                 
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = obj[1] as string;
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen = (int)obj[2];
+                FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).WhosTurn = obj[1] as string;
+                FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).MiniGameChosen = (int)obj[2];
                 
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].TurnMoment = 0;
+                FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).TurnMoment = 0;
 
                 FindObjectOfType<ButtonsScript>().startGame();
                 FindObjectOfType<ButtonsScript>().updateIconTurn(true);
@@ -172,7 +199,7 @@ public class NetworkCommunications : MonoBehaviourPun
                 else
                 {
                      FindObjectOfType<EndGameScript>().ShowMatchDefeat();
-                     FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SetIsEnded();
+                     FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).SetIsEnded();
                 }
 
                 break;

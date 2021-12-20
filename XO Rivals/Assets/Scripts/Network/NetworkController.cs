@@ -14,13 +14,13 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Tipos de salas a las que unirse
 ///     RandomRoom - Sala aleatoria (pública)
-///     SpecificRoom - Sala específica (pública)
+///     ActiveRoom - Sala de partida activa (pública)
 ///     PrivateRoom - Sala privada
 /// </summary>
 public enum JoinType
 {
     RandomRoom,
-    SpecificRoom,
+    ActiveRoom,
     PrivateRoom
 }
 
@@ -153,7 +153,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public void ConnectToSpecificRoom(string name)
     {
         _nameRoom = name;
-        StartCoroutine(RejoinRoom());
+        
+        StartCoroutine(JoinActiveRoom());
     }
 
     /// <summary>
@@ -196,11 +197,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
     /// Corutina para tratar de unirse a una sala específica
     /// </summary>
     /// <returns></returns>
-    private IEnumerator RejoinRoom()
+    private IEnumerator JoinActiveRoom()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
+        
+        _joinType = JoinType.ActiveRoom;
+        GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joined " + _nameRoom;
 
-        _joinType = JoinType.SpecificRoom;
         PhotonNetwork.RejoinRoom(_nameRoom);
     }
 
@@ -211,10 +214,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         if (FindObjectOfType<GameManager>().IsPlaying)
         {
-            if (FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].SurrenderStatus() ||
-                FindObjectOfType<GameManager>().PlayerMatches[PhotonNetwork.CurrentRoom.Name].IsEnded())
+            if (FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).SurrenderStatus() ||
+                FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).IsEnded())
             {
-                FindObjectOfType<GameManager>().PlayerMatches.Remove(PhotonNetwork.CurrentRoom.Name);
+                FindObjectOfType<GameManager>().GetMatches().Remove(PhotonNetwork.CurrentRoom.Name);
                 PhotonNetwork.LeaveRoom(false);
             }
         }
@@ -233,7 +236,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     private IEnumerator CreateMatchRoom(string roomName)
     {
         yield return new WaitForSeconds(1);
-        
+
+        _nameRoom = roomName;
         PhotonNetwork.CreateRoom(roomName, new Photon.Realtime.RoomOptions()
         {
             MaxPlayers = MAX_PLAYERS_INROOM,
@@ -248,9 +252,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     private IEnumerator RecreateMatchRoom(string roomName)
     {
         yield return new WaitForSeconds(1);
-        
-        Debug.Log( FindObjectOfType<PlayerInfo>().UserID + " vs. " + FindObjectOfType<GameManager>().PlayerMatches[roomName].OpponentId);
-        
+
         PhotonNetwork.CreateRoom(roomName, new Photon.Realtime.RoomOptions()
         {
             MaxPlayers = MAX_PLAYERS_INROOM,
@@ -258,7 +260,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         }, null, new []
         {
             FindObjectOfType<PlayerInfo>().UserID,
-            FindObjectOfType<GameManager>().PlayerMatches[roomName].OpponentId
+            FindObjectOfType<GameManager>().GetMatch(roomName).OpponentId
         });
     }
 
@@ -316,15 +318,31 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 break;
             default:
                 Debug.Log("Desconexión del servidor: " + cause);
+                
                 break;
         }
+
+        // Subida de partidas del jugador
+        int i = 0;
+        foreach (var match in FindObjectOfType<GameManager>().GetMatches())
+        {
+            FindObjectOfType<GameManager>().UpdateCloudData(new Dictionary<string, string>()
+                {
+                    {DataType.Match.GetString() + i, match.ToString()},
+                },
+                DataType.Match);
+
+            i++;
+        }
         
+        // Subida de la información básica del jugador
         FindObjectOfType<GameManager>().UpdateCloudData(new Dictionary<string, string>()
         {
             {DataType.Online.GetString(), "false"},
             {DataType.Lives.GetString(), FindObjectOfType<PlayerInfo>().Lives.ToString()},
             {DataType.Level.GetString(), FindObjectOfType<PlayerInfo>().Level.ToString(CultureInfo.InvariantCulture)},
-            {DataType.LifeLost.GetString(), FindObjectOfType<PlayerInfo>().LostLifeTime.ToString(CultureInfo.InvariantCulture)}
+            {DataType.LifeLost.GetString(), FindObjectOfType<PlayerInfo>().LostLifeTime.ToString(CultureInfo.InvariantCulture)},
+            {DataType.Match.GetString(), FindObjectOfType<GameManager>().GetMatches().Count.ToString()},
         },
             DataType.Logout);
 
@@ -398,14 +416,14 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 }
                 else
                 {
-                    FindObjectOfType<GameManager>().Matchmaking = true;
+                    FindObjectOfType<GameManager>().InMatchmaking = true;
                     GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Player found! Starting match...";
                     FindObjectOfType<GameManager>().SetupMatch("X");
                     StartCoroutine(StartMatch());
                 }
                 
                 break;
-            case JoinType.SpecificRoom:
+            case JoinType.ActiveRoom:
                 GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Joined the match.";
                 
                 FindObjectOfType<GameManager>().IsPlaying = true;
@@ -512,8 +530,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
         switch (_joinType)
         {
             case JoinType.RandomRoom:
-            case JoinType.SpecificRoom:
-                FindObjectOfType<GameManager>().Matchmaking = true;
+            case JoinType.ActiveRoom:
+                FindObjectOfType<GameManager>().InMatchmaking = true;
                 GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "¡Player found! Starting match...";
                 FindObjectOfType<GameManager>().SetupMatch("O");
                 StartCoroutine(StartMatch());

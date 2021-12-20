@@ -4,82 +4,275 @@ using TMPro;
 using Photon.Pun;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
-{
-    #region Variables
+#region Interfaces
 
+interface IGameManager
+{
+    #region Properties
+
+    ////////////////// SERVIDOR //////////////////
+    /// <summary>
+    /// Referencia al controlador de la conexión con el servidor
+    /// </summary>
+    NetworkController NetworkController { get; }
+    
+    /// <summary>
+    /// Referencia al controlador de comunicaciones
+    /// </summary>
+    NetworkCommunications NetworkCommunications { get; }
+    
+    /// <summary>
+    /// Referencia al controlador de datos de la nube
+    /// </summary>
+    CloudDataController CloudDataController { get; }
+    
+    /// <summary>
+    /// Referencia al controlador de compras
+    /// </summary>
+    PurchasesController PurchasesController { get; }
+    
+    ////////////////// CLIENTE //////////////////
+    /// <summary>
+    /// ¿En qué versión de WebGL está?
+    /// </summary>
+    bool IsWebGLMobile { get; set; }
+    
+    /// <summary>
+    /// ¿Está en matchmaking?
+    /// </summary>
+    bool InMatchmaking { get; set; }
+
+    #endregion
+
+    #region Getters
+    
+    /// <summary>
+    /// Método para obtener si se obtenieron los datos del juego
+    /// </summary>
+    /// <returns>¿Se obtenieron los datos del juego?</returns>
+    bool GotTitleData();
+
+    /// <summary>
+    /// Método para obtener una partida del diccionario de partidas
+    /// </summary>
+    /// <param name="key">Clave de la partida a obtener</param>
+    /// <returns>Información de la partida</returns>
+    Match GetMatch(string key);
+
+    /// <summary>
+    /// Método para obtener el diccionario de partidas
+    /// </summary>
+    /// <returns>Diccionario de partidas</returns>
+    Dictionary<string, Match> GetMatches();
+
+    #endregion
+
+    #region Setters
+
+    /// <summary>
+    /// Método para agregar una partida al diccionario de partidas
+    /// </summary>
+    /// <param name="key">Clave de la partida a agregar</param>
+    /// <param name="match">Partida a agregar</param>
+    void AddMatch(string key, Match match);
+
+    #endregion
+
+    #region ConnectionMethods
+
+    /// <summary>
+    /// Método para conectarse al servidor
+    /// </summary>
+    /// <returns>¿Se conectó al servidor?</returns>
+    bool ConnectToServer();
+
+    /// <summary>
+    /// Método para desconectarse del servidor
+    /// </summary>
+    void DisconnectFromServer();
+
+    /// <summary>
+    /// Método para conectarse a la lobby del juego
+    /// </summary>
+    void ConnectToLobby();
+
+    /// <summary>
+    /// Método para conectarse a una sala
+    /// </summary>
+    /// <param name="join">Modo de unión a sala</param>
+    /// <param name="code">Código de la sala</param>
+    void ConnectToMatch(JoinType join, string code);
+
+    /// <summary>
+    /// Método para abandonar una sala
+    /// </summary>
+    void LeaveMatch();
+
+    #endregion
+
+    #region MatchManagementMethods
+
+    /// <summary>
+    /// Método para crear una sala privada
+    /// </summary>
+    /// <param name="code">Código de la sala</param>
+    void CreatePrivateMatch(string code);
+
+    /// <summary>
+    /// Método para configurar y añadir una partida
+    /// </summary>
+    /// <param name="playerType">Tipo de jugador (ficha) que crea la partida</param>
+    void SetupMatch(string playerType);
+
+    #endregion
+    
+    #region CommsMethods
+
+    /// <summary>
+    /// Método para enviar información al servidor
+    /// </summary>
+    /// <param name="data">Diccionario de datos a enviar</param>
+    /// <param name="state">Estado en el que se enviarán los datos</param>
+    void SendInfo(Dictionary<string, string> data, SendingState state);
+    
+    #endregion
+
+    #region CloudMethods
+
+    /// <summary>
+    /// Método para obtener datos de la nube
+    /// </summary>
+    /// <param name="type">Tipo de datos a obtener</param>
+    void GetCloudData(DataType type);
+
+    /// <summary>
+    /// Método para enviar datos a la nube
+    /// </summary>
+    /// <param name="data">Diccionario de datos a enviar</param>
+    /// <param name="type">Tipo de datos a enviar</param>
+    void UpdateCloudData(Dictionary<string, string> data, DataType type);
+
+    #endregion
+
+    #region PurchaseMethods
+
+    /// <summary>
+    /// Método para realizar la compra de un item
+    /// </summary>
+    /// <param name="item">Item a comprar</param>
+    void PurchaseItem(ShopItem item);
+
+    #endregion
+
+    #region CoversionMethods
+
+    /// <summary>
+    /// Método para transformar la información del jugador en objeto
+    /// </summary>
+    /// <param name="playerType">Tipo de jugador (ficha)</param>
+    /// <returns>Objeto con la información</returns>
+    object[] PlayerInfoToObject(string playerType);
+
+    /// <summary>
+    /// Método para transformar la información de la partida en objeto
+    /// </summary>
+    /// <param name="type">Tipo de información a enviar (minijuego)</param>
+    /// <returns>Objeto con la información de la partida</returns>
+    object[] MatchInfoToObject(string type);
+
+    /// <summary>
+    /// Método para transformar la información del final de la partida en objeto
+    /// </summary>
+    /// <param name="playerType">Tipo de jugador (ficha)</param>
+    /// <returns>Objeto con la información del final de partida</returns>
+    object[] EndMatchInfoToObject(string playerType, string winner);
+
+    #endregion
+
+    #region OtherMethods
+
+    /// <summary>
+    /// Método para inicializar el objeto
+    /// </summary>
+    void InitObject();
+
+    /// <summary>
+    /// Método para resetear el objeto al estado inicial
+    /// </summary>
+    void ResetObject();
+
+    #endregion
+}
+
+#endregion
+
+public class GameManager : MonoBehaviour, IGameManager
+{
+    #region Vars
+    
+    ////////////////// REFERENCIAS //////////////////
     [SerializeField] public TMP_Text log;
     
     ////////////////// SERVIDOR //////////////////
-    /// <summary>
-    /// Referencia a funciones del servidor
-    /// </summary>
     private NetworkController _networkController;
-    /// <summary>
-    /// 
-    /// </summary>
-    public NetworkCommunications _networkCommunications;
-    /// <summary>
-    /// 
-    /// </summary>
+    private NetworkCommunications _networkCommunications;
     private CloudDataController _cloudController;
-    /// <summary>
-    /// 
-    /// </summary>
     private PurchasesController _purchasesController;
+    
+    ////////////////// CLIENTE //////////////////
+    private bool _isWebGLMobile;
+    private bool _inMatchmaking;
     
     ////////////////// PARTIDA //////////////////
     /// <summary>
     /// Lista de partidas del jugador
     /// </summary>
-    public Dictionary<string, Match> PlayerMatches;
+    private Dictionary<string, Match> _playerMatches;
     
     ////////////////// USUARIO //////////////////
-    /// <summary>
-    /// ¿En qué versión de WebGL está?
-    /// </summary>
-    [NonSerialized] public bool IsWebGLMobile;
     /// <summary>
     /// ¿Está jugando?
     /// </summary>
     [NonSerialized] public bool IsPlaying;
-    /// <summary>
-    /// ¿Está buscando partida?
-    /// </summary>
-    [NonSerialized] public bool Matchmaking;
 
     #endregion
 
-    #region UnityCB
-    
-    private void Awake()
-    {
-        if (FindObjectsOfType<GameManager>().Length < 2)
-        {
-            Debug.Log("No hay GameManager duplicado");
-            
-            _networkController = gameObject.AddComponent<NetworkController>();
-            _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
-            gameObject.AddComponent<PhotonView>();
-            GetComponent<PhotonView>().ViewID = 1;
-            _cloudController = gameObject.AddComponent<CloudDataController>();
-            _purchasesController = gameObject.AddComponent<PurchasesController>();
-            
-            PlayerMatches = new Dictionary<string, Match>();
-            Matchmaking = true;
-            IsPlaying = false;
+    #region Properties
 
-            DontDestroyOnLoad(this);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+    public NetworkController NetworkController => _networkController;
+    public NetworkCommunications NetworkCommunications => _networkCommunications;
+    public CloudDataController CloudDataController => _cloudController;
+    public PurchasesController PurchasesController => _purchasesController;
+
+    public bool IsWebGLMobile { 
+        get => _isWebGLMobile;
+        set => _isWebGLMobile = value;
+    }
+
+    public bool InMatchmaking
+    {
+        get => _inMatchmaking;
+        set => _inMatchmaking = value;
     }
 
     #endregion
-
+    
     #region Getters
+
+    public bool GotTitleData()
+    {
+        return _cloudController.GotTitleData;
+    }
+
+    public Match GetMatch(string key)
+    {
+        return _playerMatches[key];
+    }
+
+    public Dictionary<string, Match> GetMatches()
+    {
+        return _playerMatches;
+    }
 
     /// <summary>
     /// Método para obtener si se está conectado al servidor
@@ -105,7 +298,7 @@ public class GameManager : MonoBehaviour
     /// <returns>Objeto de autentificación de usuario conectado</returns>
     public AuthObject GetOnlineAuth()
     {
-        return _cloudController.Obj;
+        return _cloudController.AuthObject;
     }
 
     /// <summary>
@@ -113,7 +306,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetOnlineAuth()
     {
-        _cloudController.Obj = new AuthObject();
+        _cloudController.AuthObject = new AuthObject();
     }
 
     /// <summary>
@@ -122,7 +315,7 @@ public class GameManager : MonoBehaviour
     /// <returns>¿Se está creando la partida?</returns>
     public bool GetCheckedOnline()
     {
-        return _cloudController.IsOnlineChecked();
+        return _cloudController.CheckedOnline;
     }
 
     /// <summary>
@@ -131,7 +324,7 @@ public class GameManager : MonoBehaviour
     /// <returns>Estado de sincronización</returns>
     public bool GetSynchronizeStatus()
     {
-        return _cloudController.IsSynchronized();
+        return _cloudController.GotPlayerData;
     }
 
     /// <summary>
@@ -161,6 +354,11 @@ public class GameManager : MonoBehaviour
     
     #region Setters
     
+    public void AddMatch(string key, Match match)
+    {
+        _playerMatches.Add(key, match);
+    }
+    
     /// <summary>
     /// Método para actualizar el nick del cliente en Photon
     /// </summary>
@@ -180,72 +378,59 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    #region ConnectionMethods
+    #region UnityCB
+    
+    private void Awake()
+    {
+        if (FindObjectsOfType<GameManager>().Length < 2)
+        {
+            InitObject();
 
-    /// <summary>
-    /// Método para conectarse al servidor de Photon
-    /// </summary>
-    /// <returns>Devuelve "true" si el cliente pudo establecer conexión con el servidor</returns>
-    public bool OnConnectToServer()
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    #endregion
+
+    #region ConnectionMethods
+    
+    public bool ConnectToServer()
     {
         return _networkController.ConnectToServer();
     }
-
-    /// <summary>
-    /// Método para desconectarse del servidor
-    /// </summary>
-    public void OnDisconnectToServer()
+    
+    public void DisconnectFromServer()
     {
         _networkController.DisconnectFromServer();
     }
     
-    /// <summary>
-    /// Método para conectarse a la lobby general
-    /// </summary>
-    public void OnConnectToLobby()
+    public void ConnectToLobby()
     {
         _networkController.ConnectToLobby();
     }
     
-    /// <summary>
-    /// Método para conectarse a una sala en Photon
-    /// </summary>
-    public void OnConnectToRoom()
+    public void ConnectToMatch(JoinType join, string code)
     {
-        _networkController.ConnectToRandomRoom();
+        switch (join)
+        {
+            case JoinType.RandomRoom:
+                _networkController.ConnectToRandomRoom();
+                break;
+            case JoinType.ActiveRoom:
+                _networkController.ConnectToSpecificRoom(code);
+                break;
+            case JoinType.PrivateRoom:
+                _networkController.ConnectToPrivateRoom(code);
+                break;
+        }
+        
     }
 
-    /// <summary>
-    /// Método para crear la sala privada
-    /// </summary>
-    /// <param name="code">Código de la sala</param>
-    public void CreatePrivateRoom(string code)
-    {
-        _networkController.CreatePrivateRoom(code);
-    }
-
-    /// <summary>
-    /// Método para conectarse a una sala específica en Photon
-    /// </summary>
-    /// <param name="name"></param>
-    public void OnConnectToSpecificRoom(string name)
-    {
-        _networkController.ConnectToSpecificRoom(name);
-    }
-
-    /// <summary>
-    /// Método para conectarse a una sala privada
-    /// </summary>
-    /// <param name="code">Código de la sala</param>
-    public void ConnectToPrivateRoom(string code)
-    {
-        _networkController.ConnectToPrivateRoom(code);
-    }
-
-    /// <summary>
-    /// Método para abandonar una sala en Photon
-    /// </summary>
-    public void OnLeaveRoom()
+    public void LeaveMatch()
     {
         _networkController.DisconnectFromRoom();
     }
@@ -253,53 +438,57 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region MatchMethods
-
-    /// <summary>
-    /// Método para configurar partida y enviar los datos necesarios
-    /// </summary>
-    /// <param name="playerType">Tipo del jugador (ficha)</param>
+    
+    public void CreatePrivateMatch(string code)
+    {
+        _networkController.CreatePrivateRoom(code);
+    }
+    
     public void SetupMatch(string playerType)
     {
-        PlayerMatches.Add(PhotonNetwork.CurrentRoom.Name, new Match());
+        _playerMatches.Add(PhotonNetwork.CurrentRoom.Name, new Match());
+        _playerMatches[PhotonNetwork.CurrentRoom.Name].MatchId = PhotonNetwork.CurrentRoom.Name;
         
         switch (playerType)
         {
             case "O":
-                PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = FindObjectOfType<PlayerInfo>().Name;
-                PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = FindObjectOfType<PlayerInfo>().Name;
+                _playerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName = FindObjectOfType<PlayerInfo>().Name;
+                _playerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn = FindObjectOfType<PlayerInfo>().Name;
 
                 break;
             case "X":
-                PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = FindObjectOfType<PlayerInfo>().Name;
+                _playerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName = FindObjectOfType<PlayerInfo>().Name;
 
                 break;
         }
         
-        _networkCommunications.SendPlayerInfoPackage(playerType);
+        _networkCommunications.SendRPC(new Dictionary<string, string>()
+        {
+            {"PlayerType", playerType}
+        }, SendingState.PlayerInfo);
+    }
+
+    #endregion
+
+    #region CommsMethods
+
+    public void SendInfo(Dictionary<string, string> data, SendingState state)
+    {
+        _networkCommunications.SendRPC(data, state);
     }
 
     #endregion
     
     #region CloudMethods
-
-    /// <summary>
-    /// Método para obtener datos de la nube
-    /// </summary>
-    /// <param name="type">Tipo de dato a obtener</param>
-    /// <returns>Diccionario con los datos solicitados</returns>
+    
     public void GetCloudData(DataType type)
     {
-        _cloudController.GetData(type);
+        _cloudController.GetPlayerData(type);
     }
-
-    /// <summary>
-    /// Método para cargar datos en la nube
-    /// </summary>
-    /// <param name="data">Datos a cargar</param>
-    /// <returns>Estado de la operación</returns>
+    
     public void UpdateCloudData(Dictionary<string, string> data, DataType type)
     {
-        _cloudController.SendData(data, type);
+        _cloudController.SendPlayerData(data, type);
     }
 
     #endregion
@@ -323,10 +512,6 @@ public class GameManager : MonoBehaviour
         _purchasesController.UpdatePurchaseStatus();
     }
     
-    /// <summary>
-    /// Método para realizar la compra de un item de la tienda
-    /// </summary>
-    /// <param name="item">Item a comprar</param>
     public void PurchaseItem(ShopItem item)
     {
         _purchasesController.StartPurchase(item);
@@ -336,11 +521,6 @@ public class GameManager : MonoBehaviour
 
     #region ConversiontMethods
     
-    /// <summary>
-    /// Método para convertir los datos del jugador en un objeto a enviar
-    /// </summary>
-    /// <param name="playerType">Tipo del jugador (ficha)</param>
-    /// <returns>Objeto de datos</returns>
     public object[] PlayerInfoToObject(string playerType)
     {
         switch (playerType)
@@ -350,8 +530,8 @@ public class GameManager : MonoBehaviour
 
                 objO[0] = playerType;
                 objO[1] = FindObjectOfType<PlayerInfo>().UserID;
-                objO[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName;
-                objO[3] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
+                objO[2] = _playerMatches[PhotonNetwork.CurrentRoom.Name].PlayerOName;
+                objO[3] = _playerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
 
                 return objO;
             case "X":
@@ -359,7 +539,7 @@ public class GameManager : MonoBehaviour
 
                 objX[0] = playerType;
                 objX[1] = FindObjectOfType<PlayerInfo>().UserID;
-                objX[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName;
+                objX[2] = _playerMatches[PhotonNetwork.CurrentRoom.Name].PlayerXName;
 
                 return objX;
         }
@@ -367,11 +547,6 @@ public class GameManager : MonoBehaviour
         return null;
     }
     
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="localPlayer"></param>
-    /// <returns></returns>
     public object[] MatchInfoToObject(string type)
     {
         switch (type)
@@ -380,47 +555,33 @@ public class GameManager : MonoBehaviour
                 object[] objOppWon = new object[8];
 
                 objOppWon[0] = type;
-                objOppWon[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
-                objOppWon[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].NumFilled;
+                objOppWon[1] = _playerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
+                objOppWon[2] = _playerMatches[PhotonNetwork.CurrentRoom.Name].NumFilled;
                 objOppWon[3] = FindObjectOfType<ButtonsScript>().thisMatch.ActualChip%3;
                
                 objOppWon[4] = FindObjectOfType<ButtonsScript>().thisMatch.ActualChip /3;
                 
-                objOppWon[5] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions[
+                objOppWon[5] = _playerMatches[PhotonNetwork.CurrentRoom.Name].FilledPositions[
                     FindObjectOfType<ButtonsScript>().thisMatch.ActualChip % 3,
                    FindObjectOfType<ButtonsScript>().thisMatch.ActualChip / 3
                 ];
                 objOppWon[6] = FindObjectOfType<ButtonsScript>().SelectedTile;
-                objOppWon[7] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen;
-
-                for(int i = 0; i < objOppWon.Length; i++){
-                    Debug.Log("Envio turno ganar " + i + ": " + objOppWon[i]);
-                }
+                objOppWon[7] = _playerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen;
+                
                 return objOppWon;
             case "OppLost":
                 object[] objOppLost = new object[3];
-                
-                Debug.Log(PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn);
-                
+
                 objOppLost[0] = type;
-                objOppLost[1] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
-                objOppLost[2] = PlayerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen;
+                objOppLost[1] = _playerMatches[PhotonNetwork.CurrentRoom.Name].WhosTurn;
+                objOppLost[2] = _playerMatches[PhotonNetwork.CurrentRoom.Name].MiniGameChosen;
                 
-                for(int i = 0; i < objOppLost.Length; i++){
-                    Debug.Log("Envio turno perder " + i + ": " + objOppLost[i]);
-                }
                 return objOppLost;
         }
 
         return null;
     }
 
-    /// <summary>
-    /// Método para convertir los datos del final de la partida en un objeto a enviar
-    /// </summary>
-    /// <param name="type">Tipo de final</param>
-    /// <param name="winner">Ganador de la partida</param>
-    /// <returns>Objeto a enviar</returns>
     public object[] EndMatchInfoToObject(string type, string winner)
     {
         object[] obj;
@@ -457,17 +618,29 @@ public class GameManager : MonoBehaviour
 
     #region OtherMethods
 
-    /// <summary>
-    /// Método para resetear las variables del objeto
-    /// </summary>
+    public void InitObject()
+    {
+        _networkController = gameObject.AddComponent<NetworkController>();
+        _networkCommunications = gameObject.AddComponent<NetworkCommunications>();
+        _cloudController = gameObject.AddComponent<CloudDataController>();
+        _purchasesController = gameObject.AddComponent<PurchasesController>();
+        
+        gameObject.AddComponent<PhotonView>();
+        GetComponent<PhotonView>().ViewID = 1;
+        
+        _playerMatches = new Dictionary<string, Match>();
+        _inMatchmaking = true;
+        IsPlaying = false;
+    }
+
     public void ResetObject()
     {
         _networkController.ResetObject();
         _cloudController.ResetObject();
         _purchasesController.ResetObject();
 
-        PlayerMatches.Clear();
-        Matchmaking = true;
+        _playerMatches.Clear();
+        _inMatchmaking = true;
         IsPlaying = false;
     }
 

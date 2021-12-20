@@ -1,30 +1,52 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using Photon.Pun;
+using System.Linq;
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using GetTitleDataRequest = PlayFab.ClientModels.GetTitleDataRequest;
+using GetTitleDataResult = PlayFab.ClientModels.GetTitleDataResult;
+using GetUserDataRequest = PlayFab.ClientModels.GetUserDataRequest;
+using GetUserDataResult = PlayFab.ClientModels.GetUserDataResult;
+using UpdateUserDataRequest = PlayFab.ClientModels.UpdateUserDataRequest;
+
+#region Enums&Classes
 
 /// <summary>
 /// Tipos de datos que se pueden solicitar
-///     Login - Datos necesarios para el inicio de sesión
-///     Online - ¿Está conectado el usuario?
-///     Lives - Vidas del usuario
-///     Level - Nivel del usuario
-///     LifeLost - Tiempo de las vidas perdidas
 /// </summary>
 [Serializable]
 public enum DataType
 {
+    /// <summary>
+    /// Datos necesarios para el inicio de sesión
+    /// </summary>
     Login,
+    /// <summary>
+    /// Datos necesarios para el cierre de sesión
+    /// </summary>
     Logout,
+    /// <summary>
+    /// Datos de conexión del usuario
+    /// </summary>
     Online,
+    /// <summary>
+    /// Vidas del usuario
+    /// </summary>
     Lives,
+    /// <summary>
+    /// Nivel del usuario
+    /// </summary>
     Level,
-    LifeLost
+    /// <summary>
+    /// Tiempo de las vida perdida
+    /// </summary>
+    LifeLost,
+    /// <summary>
+    /// Partida del jugador
+    /// </summary>
+    Match
 }
 
 /// <summary>
@@ -49,29 +71,109 @@ public static class DataTypeExtension
                 return "Level";
             case DataType.LifeLost:
                 return "LifeLost";
+            case DataType.Match:
+                return "Match";
             default:
                 return "";
         }
     }
 }
 
-public class CloudDataController : MonoBehaviour
+#endregion
+
+#region Interfaces
+
+/// <summary>
+/// Interfaz de CloudData
+/// </summary>
+interface ICloudData
+{
+    #region Properties
+
+    /// <summary>
+    /// ¿Se comprobó si el jugador está conectado?
+    /// </summary>
+    bool CheckedOnline
+    {
+        get;
+        set;
+    }
+    
+    /// <summary>
+    /// Objeto de autentificación de datos
+    /// </summary>
+    AuthObject AuthObject
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
+    /// ¿Se recibieron los datos del jugador?
+    /// </summary>
+    bool GotPlayerData
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
+    /// ¿Se recibieron los datos del juego?
+    /// </summary>
+    bool GotTitleData
+    {
+        get;
+        set;
+    }
+
+    #endregion
+    
+    #region CloudMethods
+
+    /// <summary>
+    /// Método para obtener los datos especificados del jugador
+    /// </summary>
+    /// <param name="type">Tipo de dato a obtener</param>
+    void GetPlayerData(DataType type);
+    
+    /// <summary>
+    /// Método para obtener datos especificados del juego
+    /// </summary>
+    /// <param name="type">Tipo de dato a obtener</param>
+    void GetTitleData(DataType type);
+    
+    /// <summary>
+    /// Método para enviar datos del jugador a la nube
+    /// </summary>
+    /// <param name="data">Diccionario de datos a enviar</param>
+    /// <param name="type">Tipo de datos enviados</param>
+    void SendPlayerData(Dictionary<string, string> data, DataType type);
+    
+    /*
+    /// <summary>
+    /// Método para enviar datos del juego a la nube
+    /// </summary>
+    /// <param name="key">Clave del dato a enviar</param>
+    /// <param name="value">Nuevo valor del dato</param>
+    /// <param name="type">Tipo de dato a enviar</param>
+    void SendTitleData(string key, string value, DataType type);
+    */
+
+    #endregion
+}
+
+#endregion
+
+public class CloudDataController : MonoBehaviour, ICloudData
 {
     #region Vars
-
+    
     ////////////////// VARIABLES DE CONTROL //////////////////
-    /// <summary>
-    /// ¿Se comprobó si está en línea?
-    /// </summary>
     private bool _checkedOnline;
-    /// <summary>
-    /// ¿Se sincronizaron los datos?
-    /// </summary>
-    private bool _synchronized;
-    /// <summary>
-    /// Objeto de autentificación
-    /// </summary>
-    public AuthObject Obj;
+    private AuthObject _authObject;
+    private bool _gotPlayerData;
+    private bool _gotTitleData;
+    private List<string> _codeMatches;
 
     ////////////////// DICCIONARIOS DE DATOS //////////////////
     /// <summary>
@@ -85,25 +187,35 @@ public class CloudDataController : MonoBehaviour
 
     #endregion
 
+    #region Properties
+
+    public bool CheckedOnline
+    {
+        get => _checkedOnline;
+        set => _checkedOnline = value;
+    }
+
+    public AuthObject AuthObject
+    {
+        get => _authObject;
+        set => _authObject = value;
+    }
+
+    public bool GotPlayerData
+    {
+        get => _gotPlayerData;
+        set => _gotPlayerData = value;
+    }
+
+    public bool GotTitleData
+    {
+        get => _gotTitleData;
+        set => _gotTitleData = value;
+    }
+
+    #endregion
+
     #region Getters
-
-    /// <summary>
-    /// Método para devolver el valor de la comprobación de estado en línea
-    /// </summary>
-    /// <returns>Valor de la comrpobación</returns>
-    public bool IsOnlineChecked()
-    {
-        return _checkedOnline;
-    }
-
-    /// <summary>
-    /// Método para devolver el valor de control de sincronización
-    /// </summary>
-    /// <returns>Valor de la sincronización</returns>
-    public bool IsSynchronized()
-    {
-        return _synchronized;
-    }
 
     /// <summary>
     /// Método para obtener el diccionario de datos de la nube
@@ -125,26 +237,6 @@ public class CloudDataController : MonoBehaviour
 
     #endregion
 
-    #region UpdateMethods
-
-    /// <summary>
-    /// Método actualización del estado de comprobación de si el jugador está en línea
-    /// </summary>
-    private void UpdateOnlineChecked()
-    {
-        _checkedOnline = !_checkedOnline;
-    }
-
-    /// <summary>
-    /// Método actualización del estado de sincronización
-    /// </summary>
-    private void UpdateSynchronizedStatus()
-    {
-        _synchronized = !_synchronized;
-    }
-
-    #endregion
-
     #region UnityCB
 
     private void Start()
@@ -156,13 +248,10 @@ public class CloudDataController : MonoBehaviour
 
     #region ClouldMethods
 
-    /// <summary>
-    /// Método para la obtención de datos de la nube
-    /// </summary>
-    /// <param name="type">Tipo de dato a obtener</param>
-    /// <returns>Diccionario con los datos solicitados</returns>
-    public void GetData(DataType type)
+    public void GetPlayerData(DataType type)
     {
+        _cloudData = new Dictionary<string, string>();
+        
         PlayFabClientAPI.GetUserData(new GetUserDataRequest()
         {
             PlayFabId = FindObjectOfType<PlayerInfo>().UserID,
@@ -172,27 +261,68 @@ public class CloudDataController : MonoBehaviour
             OnDataRecieved(result, type);
         }, OnRecieveError);
     }
-
-    /// <summary>
-    /// Método para enviar datos
-    /// </summary>
-    /// <param name="data">Diccionario de datos a enviar</param>
-    /// /// <param name="type">Tipo de dato a enviar</param>
-    /// <returns>Estado de la operación</returns>
-    public void SendData(Dictionary<string, string> data, DataType type)
+    
+    public void GetTitleData(DataType type)
     {
-        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
+        _cloudData = new Dictionary<string, string>();
+        
+        PlayFabClientAPI.GetTitleData(
+            new GetTitleDataRequest(), 
+            result => OnTitleDataRecieved(result, type),
+            error => OnRecieveTitleError(error));
+    }
+    
+    public void SendPlayerData(Dictionary<string, string> data, DataType type)
+    {
+        switch (type)
         {
-            Data = data
+            case DataType.Login:
+            case DataType.Logout:
+            case DataType.Online:
+            case DataType.Lives:
+            case DataType.Level:
+            case DataType.LifeLost:
+                PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
+                {
+                    Data = data,
+                    Permission = UserDataPermission.Private
+                }, (result) =>
+                {
+                    OnDataSend(type);
+                }, OnSendError);
+                
+                break;
+            case DataType.Match:
+                PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
+                {
+                    Data = data,
+                    Permission = UserDataPermission.Public
+                }, (result) =>
+                {
+                    OnDataSend(type);
+                }, OnSendError);
+                
+                break;
+        }
+    }
+    
+    /*
+    public void SendTitleData(string key, string value, DataType type)
+    {
+        PlayFabServerAPI.SetTitleData(new SetTitleDataRequest()
+        {
+            Key = key,
+            Value = value
         }, (result) =>
         {
-            OnDataSend(type);
-        }, OnSendError);
+            OnTitleDataSend(type);
+        }, OnSendTitleError);
     }
+    */
 
     #endregion
 
-    #region CBMethods
+    #region SuccessCB
 
     /// <summary>
     /// Método ejecutado tras recibir los datos del servidor
@@ -205,14 +335,12 @@ public class CloudDataController : MonoBehaviour
     {
         if (result == null)
         {
-            Debug.Log("Era nulo");
-            
-            UpdateSynchronizedStatus();
-            
             _cloudData = new Dictionary<string, string>()
             {
                 {"ResultCode", "2"}
             };
+
+            _gotPlayerData = true;
 
             return;
         }
@@ -230,22 +358,35 @@ public class CloudDataController : MonoBehaviour
 
                 if (result.Data.ContainsKey(DataType.Online.GetString()) && bool.Parse(result.Data[DataType.Online.GetString()].Value))
                 {
-                    Obj.Failed = true;
-                    Obj.ErrorCode = PlayFabErrorCode.ConnectionError;
-                    Obj.Message = "Account already online";
-                    
-                    UpdateOnlineChecked();
+                    _authObject.Failed = true;
+                    _authObject.ErrorCode = PlayFabErrorCode.ConnectionError;
+                    _authObject.Message = "Account already online";
+
+                    _checkedOnline = true;
 
                     return;
                 }
-                
-                UpdateOnlineChecked();
 
+                _checkedOnline = true;
+
+                // Inserción en diccionario la información básica del jugador
                 _cloudData.Add(DataType.Online.GetString(), !result.Data.ContainsKey(DataType.Online.GetString()) ? "false" : result.Data[DataType.Online.GetString()].Value);
                 _cloudData.Add(DataType.Lives.GetString(), !result.Data.ContainsKey(DataType.Lives.GetString()) ? "3" : result.Data[DataType.Lives.GetString()].Value);
                 _cloudData.Add(DataType.Level.GetString(), !result.Data.ContainsKey(DataType.Level.GetString()) ? "0.0" : result.Data[DataType.Level.GetString()].Value);
                 _cloudData.Add(DataType.LifeLost.GetString(), !result.Data.ContainsKey(DataType.LifeLost.GetString()) || string.IsNullOrEmpty(result.Data[DataType.LifeLost.GetString()].Value)
                     ? System.DateTime.Now.ToString(CultureInfo.InvariantCulture) : result.Data[DataType.LifeLost.GetString()].Value);
+                
+                // Inserción de información sobre partidas
+                int totalMatches = !result.Data.ContainsKey(DataType.Match.GetString())
+                    ? 0
+                    : int.Parse(result.Data[DataType.Match.GetString()].Value);
+                _cloudData.Add(DataType.Match.GetString(), totalMatches.ToString());
+
+                for (int i = 0; i < totalMatches; i++)
+                {
+                    string key = DataType.Match.GetString() + i;
+                    _cloudData.Add(key, result.Data[key].Value);
+                }
 
                 break;
             case DataType.Lives:
@@ -258,9 +399,49 @@ public class CloudDataController : MonoBehaviour
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
         
-        UpdateSynchronizedStatus();
+        _gotPlayerData = true;
     }
 
+    /// <summary>
+    /// CB ejecutado tras recibir los datos del título
+    /// </summary>
+    /// <param name="result">Resultado obtenido</param>
+    /// <param name="type">Tipo de dato del resultado</param>
+    private void OnTitleDataRecieved(GetTitleDataResult result, DataType type)
+    {
+        // Si no ha devuelto ningún dato
+        if (result.Data == null)
+        {
+            _cloudData = new Dictionary<string, string>()
+            {
+                {"ResultCode", "2"}
+            };
+            
+            GotTitleData = true;
+
+            return;
+        }
+        
+        _cloudData = new Dictionary<string, string>()
+        {
+            {"ResultCode", "1"}
+        };
+
+        switch (type)
+        {
+            case DataType.Match:
+
+                foreach (var key in _codeMatches.Select(code => type.GetString() + code).Where(key => result.Data.ContainsKey(key)))
+                {
+                    _cloudData.Add(key, result.Data[key]);
+                }
+
+                break;
+        }
+        
+        GotTitleData = true;
+    }
+    
     /// <summary>
     /// Método ejecutado cuando se mandan los datos de manera correcta
     /// </summary>
@@ -282,6 +463,31 @@ public class CloudDataController : MonoBehaviour
                 break;
         }
     }
+    
+    /// <summary>
+    /// CB ejecutado tras enviar los datos del título
+    /// </summary>
+    /// <param name="type">Tipo de dato enviado</param>
+    private void OnTitleDataSend(DataType type)
+    {
+        _sendDataStatus = new Dictionary<string, string>()
+        {
+            {"ResultCode", "1"}
+        };
+
+        switch (type)
+        {
+            // Caso Logout -> Procedimiento tras enviar datos de cierre de sesión
+            case DataType.Logout:
+                //PlayFabClientAPI.ForgetAllCredentials();
+                
+                break;
+        }
+    }
+    
+    #endregion
+
+    #region FailureCB
 
     /// <summary>
     /// Método CB llamado cuando falla la petición de datos
@@ -290,23 +496,47 @@ public class CloudDataController : MonoBehaviour
     /// <returns>Diccionario con un código de error</returns>
     private void OnRecieveError(PlayFabError error)
     {
-        Debug.Log("a");
-        
+        _cloudData = new Dictionary<string, string>()
+        {
+            {"ResultCode", "2"}
+        };
+
+        CheckedOnline = true;
+        GotPlayerData = true;
+    }
+    
+    /// <summary>
+    /// CB llamado cuando falla la petición de datos del título
+    /// </summary>
+    /// <param name="error">Error devuelto por el servidor</param>
+    /// <returns>Diccionario con un código de error</returns>
+    private void OnRecieveTitleError(PlayFabError error)
+    {
         _cloudData = new Dictionary<string, string>()
         {
             {"ResultCode", "2"}
         };
         
-        UpdateOnlineChecked();
-        UpdateSynchronizedStatus();
+        GotTitleData = true;
     }
     
     /// <summary>
     /// Método CB llamado cuando falla la petición de datos
     /// </summary>
     /// <param name="error">Error devuelto por el servidor</param>
-    /// <returns>Diccionario con un código de error</returns>
     private void OnSendError(PlayFabError error)
+    {
+        _sendDataStatus = new Dictionary<string, string>()
+        {
+            {"ResultCode", "3"}
+        };
+    }
+    
+    /// <summary>
+    /// CB llamado tras fallar el envío de datos del título
+    /// </summary>
+    /// <param name="error">Error devuelto por el servidor</param>
+    private void OnSendTitleError(PlayFabError error)
     {
         _sendDataStatus = new Dictionary<string, string>()
         {
@@ -319,16 +549,21 @@ public class CloudDataController : MonoBehaviour
     #region OtherMethods
 
     /// <summary>
-    /// Método para inicializar las variables del objeto
+    /// Método para inicializar el objeto
     /// </summary>
     private void InitObject()
     {
         _checkedOnline = false;
-        _synchronized = false;
+        _gotPlayerData = false;
+        _gotTitleData = false;
+        _codeMatches = new List<string>();
+
+        _cloudData = new Dictionary<string, string>();
+        _sendDataStatus = new Dictionary<string, string>();
     }
 
     /// <summary>
-    /// Método para resetear las variables del objeto
+    /// Método para resetear el  objeto
     /// </summary>
     public void ResetObject()
     {

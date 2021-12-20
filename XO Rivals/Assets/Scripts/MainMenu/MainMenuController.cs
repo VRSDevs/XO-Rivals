@@ -217,7 +217,7 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     private void ConnectRandomMatch()
     {
-        _gameManager.OnConnectToRoom();
+        _gameManager.ConnectToMatch(JoinType.RandomRoom, "");
     }
 
     /// <summary>
@@ -225,7 +225,7 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     private void CreateAndConnectPrivateMatch()
     {
-        _gameManager.CreatePrivateRoom(_privateRoomCode);
+        _gameManager.CreatePrivateMatch(_privateRoomCode);
     }
 
     /// <summary>
@@ -233,7 +233,7 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     private void ConnectToMatch()
     {
-        _gameManager.OnConnectToSpecificRoom(_matchToJoin.MatchId);
+        _gameManager.ConnectToMatch(JoinType.ActiveRoom, _matchToJoin.MatchId);
     }
     
     /// <summary>
@@ -241,7 +241,7 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     private void ConnectPrivateMatch()
     {
-        _gameManager.ConnectToPrivateRoom(_inputCode);
+        _gameManager.ConnectToMatch(JoinType.PrivateRoom, _inputCode);
     }
 
     /// <summary>
@@ -249,7 +249,7 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     private void LeaveMatchmaking()
     {
-        _gameManager.OnLeaveRoom();
+        _gameManager.LeaveMatch();
     }
 
     #endregion
@@ -277,7 +277,7 @@ public class MainMenuController : MonoBehaviour
         ChangeMatchListInteractions(false);
         BackButton.interactable = false;
 
-        if (_gameManager.Matchmaking)
+        if (_gameManager.InMatchmaking)
         {
             GameObject.FindGameObjectWithTag("Log").GetComponent<TMP_Text>().text = "Searching games...";
             StartCoroutine(CreateOrCancelPublicMatch("connect"));
@@ -370,7 +370,7 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void OnExitClick()
     {
-        _gameManager.OnDisconnectToServer();
+        _gameManager.DisconnectFromServer();
     }
 
     #endregion
@@ -401,13 +401,13 @@ public class MainMenuController : MonoBehaviour
                 }
                 else
                 {
-                    _gameManager.Matchmaking = !_gameManager.Matchmaking;
+                    _gameManager.InMatchmaking = !_gameManager.InMatchmaking;
                     ConnectRandomMatch();
                 }
                 
                 break;
             case "cancel":
-                _gameManager.Matchmaking = !_gameManager.Matchmaking;
+                _gameManager.InMatchmaking = !_gameManager.InMatchmaking;
                 
                 LeaveMatchmaking();
                 ChangePublicMatchSprite(mode);
@@ -470,7 +470,7 @@ public class MainMenuController : MonoBehaviour
     /// <param name="interactable">¿Es interaccionable?</param>
     private void ChangeMatchListInteractions(bool interactable)
     {
-        if (_gameManager.PlayerMatches.Count == 0)
+        if (_gameManager.GetMatches().Count == 0)
         {
             return;
         }

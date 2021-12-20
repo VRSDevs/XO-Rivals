@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using Photon.Pun;
 using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
@@ -178,14 +179,14 @@ public class PlayerMovement : MonoBehaviour
 
     public void Defeat()
     {
-        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).TurnMoment = 2;
         PlayerPrefs.SetInt("minigameWin", 0);
         SceneManager.LoadScene("TicTacToe_Server");
     }
 
     public void Victory()
     {
-        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).TurnMoment = 2;
         PlayerPrefs.SetInt("minigameWin", 1);
         SceneManager.LoadScene("TicTacToe_Server");
     }

@@ -75,7 +75,7 @@ public class ComidaController : MonoBehaviour
     private void Awake()
     {
         _gameManager = FindObjectOfType<GameManager>();
-        thisMatch = _gameManager.PlayerMatches[PhotonNetwork.CurrentRoom.Name];
+        thisMatch = _gameManager.GetMatch(PhotonNetwork.CurrentRoom.Name);
         localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
 
     }
@@ -167,14 +167,14 @@ public class ComidaController : MonoBehaviour
     public void Defeat()
     {
         PlayerPrefs.SetInt("minigameWin", 0);
-        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).TurnMoment = 2;
         SceneManager.LoadScene("TicTacToe_Server");
     }
 
     public void Victory()
     {
         PlayerPrefs.SetInt("minigameWin", 1);
-        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).TurnMoment = 2;
         SceneManager.LoadScene("TicTacToe_Server");
     }
 

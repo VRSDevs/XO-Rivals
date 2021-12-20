@@ -1,4 +1,5 @@
 using System;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -149,8 +150,7 @@ private void OnTriggerEnter2D(Collider2D other)
             textValue = "Victory";
             Victory = true;
             OnDisable();
-
-            FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+            FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).TurnMoment = 2;
             PlayerPrefs.SetInt("minigameWin", 1);
             SceneManager.LoadScene("TicTacToe_Server");
         }

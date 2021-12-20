@@ -46,7 +46,7 @@ public class AnimationsController : MonoBehaviour
     private void Awake()
     {
         _gameManager = FindObjectOfType<GameManager>();
-        thisMatch = _gameManager.PlayerMatches[PhotonNetwork.CurrentRoom.Name];
+        thisMatch = _gameManager.GetMatch(PhotonNetwork.CurrentRoom.Name);
         localPlayer = GameObject.Find("PlayerObject").GetComponent<PlayerInfo>();
 
     }

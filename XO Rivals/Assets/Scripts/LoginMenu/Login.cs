@@ -166,7 +166,7 @@ public class Login : MonoBehaviour
             Authenticator.Reset();
 
             Log.text = "Connecting to server...";
-            if (_gameManager.OnConnectToServer())
+            if (_gameManager.ConnectToServer())
             {
                 StartCoroutine(OnEstablishedConnection());
             }
@@ -250,7 +250,7 @@ public class Login : MonoBehaviour
 
             _gameManager.ResetOnlineAuth();
 
-            _gameManager.OnDisconnectToServer();
+            _gameManager.DisconnectFromServer();
             _isConnecting = false;
 
             Debug.Log("[SISTEMA]: " + e.Message + ". (" + e.ErrorCode + ")");
@@ -272,14 +272,25 @@ public class Login : MonoBehaviour
             case 1:
 
                 data[DataType.Online.GetString()] = "true";
+
+                data.Remove("ResultCode");
                 _playerInfo.Online = bool.Parse(data[DataType.Online.GetString()]);
                 _playerInfo.Lives = int.Parse(data[DataType.Lives.GetString()]);
                 _playerInfo.Level = float.Parse(data[DataType.Level.GetString()]);
                 _playerInfo.LostLifeTime = DateTime.ParseExact(data[DataType.LifeLost.GetString()],
                     "MM/dd/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+
+                for (int i = 0; i < int.Parse(data[DataType.Match.GetString()]); i++)
+                {
+                    Match m = new Match();
+                    string key = m.Parse(data[DataType.Match.GetString() + i]);
+                    
+                    _gameManager.GetMatches().Add(key, m);
+                    data.Remove(DataType.Match.GetString() + i);
+                }
                 
                 _gameManager.UpdateCloudData(data, DataType.Login);
-                            
+
                 break;
             case 2:
 
@@ -294,7 +305,7 @@ public class Login : MonoBehaviour
                     {DataType.Level.GetString(), _playerInfo.Level.ToString(CultureInfo.InvariantCulture)}
                 },
                     DataType.Login);
-                        
+
                 break;
             case 3:
                 Debug.Log("Got error retrieving user data:");
@@ -303,9 +314,9 @@ public class Login : MonoBehaviour
             default:
                 break;
         }
-
+        
         Log.text = "Connecting to lobby...";
-        _gameManager.OnConnectToLobby();
+        _gameManager.ConnectToLobby();
     }
 
     #endregion
@@ -411,7 +422,6 @@ public class Login : MonoBehaviour
         keyboard.active = false;
         
     }
-    
 
     #endregion
 }

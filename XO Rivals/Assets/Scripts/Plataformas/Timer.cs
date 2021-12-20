@@ -1,3 +1,4 @@
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -34,7 +35,7 @@ public class Timer : MonoBehaviour
                 lost = true;
                 ScriptPlayer.OnDisable();
 
-                FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+                FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).TurnMoment = 2;
                 PlayerPrefs.SetInt("minigameWin", 0);
                 SceneManager.LoadScene("TicTacToe_Server");
             }

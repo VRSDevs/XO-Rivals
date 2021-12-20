@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -155,7 +156,7 @@ public class Cronometro : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         PlayerPrefs.SetInt("minigameWin", 1);
-        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).TurnMoment = 2;
         SceneManager.LoadScene("TicTacToe_Server");
         //SceneManager.LoadScene("PistoleroVictoria", LoadSceneMode.Additive);
     }
@@ -163,7 +164,7 @@ public class Cronometro : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         PlayerPrefs.SetInt("minigameWin", 0);
-        FindObjectOfType<GameManager>().PlayerMatches[Photon.Pun.PhotonNetwork.CurrentRoom.Name].TurnMoment = 2;
+        FindObjectOfType<GameManager>().GetMatch(PhotonNetwork.CurrentRoom.Name).TurnMoment = 2;
         SceneManager.LoadScene("TicTacToe_Server");
         //SceneManager.LoadScene("Pistolero Derrota", LoadSceneMode.Additive);
     }
