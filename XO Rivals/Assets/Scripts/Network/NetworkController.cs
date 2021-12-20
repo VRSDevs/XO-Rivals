@@ -326,13 +326,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
                 break;
         }
 
-        // Subida de los códigos de partidas del jugador
+        // Subida de partidas del jugador
         int i = 0;
         foreach (var match in FindObjectOfType<GameManager>().GetMatches())
         {
             FindObjectOfType<GameManager>().UpdateCloudData(new Dictionary<string, string>()
                 {
-                    {DataType.Match.GetString() + i, match.Key},
+                    {DataType.Match.GetString() + i, match.ToString()},
                 },
                 DataType.Match);
 
